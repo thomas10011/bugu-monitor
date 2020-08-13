@@ -10,6 +10,12 @@
   <modules>
     <module>common-utils</module>
     <module>common-pojo</module>
+    <module>service-monitor</module>
+    <module>service-pk</module>
+    <module>service-message</module>
+    <module>service-user</module>
+    <module>service-store</module>
+    <module>service-transaction</module>
   </modules>
   <packaging>pom</packaging>
   <description>聚合工程</description>
@@ -27,6 +33,7 @@
     <mybatis.version>3.5.5</mybatis.version>
     <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
     <mybatisplus.version>3.3.2</mybatisplus.version>
+    <hutool.version>5.3.10</hutool.version>
     <swagger.version>2.9.2</swagger.version>
   </properties>
 
@@ -101,6 +108,13 @@
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-boot-starter</artifactId>
         <version>${mybatisplus.version}</version>
+      </dependency>
+
+      <!-- hutool工具包 -->
+      <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-all</artifactId>
+        <version>${hutool.version}</version>
       </dependency>
 
       <!--junit-->

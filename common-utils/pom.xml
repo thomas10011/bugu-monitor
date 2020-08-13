@@ -11,5 +11,12 @@
 
     <artifactId>common-utils</artifactId>
 
+    <dependencies>
+        <!--hutool工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
