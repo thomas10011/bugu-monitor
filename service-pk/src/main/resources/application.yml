@@ -1,0 +1,9 @@
+server:
+  port: 10003
+spring:
+  application:
+    name: service-pk
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

@@ -25,6 +25,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <boot.version>2.2.6.RELEASE</boot.version>
+    <cloud.version>2.1.2.RELEASE</cloud.version>
+    <nacos.version>2.2.1.RELEASE</nacos.version>
     <junit.version>4.12</junit.version>
     <log4j.version>1.2.17</log4j.version>
     <lombok.version>1.16.22</lombok.version>
@@ -33,6 +36,7 @@
     <mybatis.version>3.5.5</mybatis.version>
     <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
     <mybatisplus.version>3.3.2</mybatisplus.version>
+    <pagehelper.version>5.1.11</pagehelper.version>
     <hutool.version>5.3.10</hutool.version>
     <swagger.version>2.9.2</swagger.version>
   </properties>
@@ -45,7 +49,7 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>2.2.6.RELEASE</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -63,9 +67,16 @@
       <dependency>
         <groupId>com.alibaba.cloud</groupId>
         <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-        <version>2.1.2.RELEASE</version>
+        <version>${cloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+
+      <!-- nacos -->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        <version>${nacos.version}</version>
       </dependency>
 
       <!--mysql-->
@@ -108,6 +119,12 @@
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-boot-starter</artifactId>
         <version>${mybatisplus.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper</artifactId>
+        <version>${pagehelper.version}</version>
       </dependency>
 
       <!-- hutool工具包 -->
