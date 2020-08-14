@@ -2,7 +2,7 @@ server:
   port: 10001
 spring:
   application:
-    name: service-message
+    name: message-service
   cloud:
     nacos:
       discovery:

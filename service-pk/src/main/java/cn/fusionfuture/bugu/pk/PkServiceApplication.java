@@ -3,16 +3,18 @@ package cn.fusionfuture.bugu.pk;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * @ClassName PkServiceApplication
- * @Description pk计划微服务祝启动类
- * @Author thomas
- * @Date 2020/8/14 12:56 上午
- * @Version 1.0
+ * @class PkServiceApplication
+ * @description pk计划微服务祝启动类
+ * @author thomas
+ * @date 2020/8/14 12:56 上午
+ * @version 1.0
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableFeignClients
 public class PkServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(PkServiceApplication.class, args);
