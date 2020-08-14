@@ -36,6 +36,8 @@
     <mybatis.version>3.5.5</mybatis.version>
     <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
     <mybatisplus.version>3.3.2</mybatisplus.version>
+    <openfeign.version>2.2.2.RELEASE</openfeign.version>
+    <oss.version>3.10.2</oss.version>
     <pagehelper.version>5.1.11</pagehelper.version>
     <hutool.version>5.3.10</hutool.version>
     <swagger.version>2.9.2</swagger.version>
@@ -77,6 +79,20 @@
         <groupId>com.alibaba.cloud</groupId>
         <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         <version>${nacos.version}</version>
+      </dependency>
+
+      <!-- openfeign -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-openfeign</artifactId>
+        <version>${openfeign.version}</version>
+      </dependency>
+
+      <!-- 阿里云oss -->
+      <dependency>
+        <groupId>com.aliyun.oss</groupId>
+        <artifactId>aliyun-sdk-oss</artifactId>
+        <version>${oss.version}</version>
       </dependency>
 
       <!--mysql-->

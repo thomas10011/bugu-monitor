@@ -1,20 +1,20 @@
-package cn.fusionfuture.bugu;
+package cn.fusionfuture.bugu.transaction;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
- * @ClassName MonitorServiceApplication
- * @Description 监督计划微服务祝启动类
+ * @ClassName TransactionServiceApplication
+ * @Description 交易微服务祝启动类
  * @Author thomas
- * @Date 2020/8/14 12:55 上午
+ * @Date 2020/8/14 12:58 上午
  * @Version 1.0
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-public class MonitorServiceApplication {
+public class TransactionServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MonitorServiceApplication.class, args);
+        SpringApplication.run(TransactionServiceApplication.class, args);
     }
 }
