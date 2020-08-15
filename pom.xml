@@ -16,6 +16,7 @@
     <module>service-user</module>
     <module>service-store</module>
     <module>service-transaction</module>
+    <module>service-gateway</module>
   </modules>
   <packaging>pom</packaging>
   <description>聚合工程</description>
@@ -27,7 +28,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <boot.version>2.2.6.RELEASE</boot.version>
     <cloud.version>2.1.2.RELEASE</cloud.version>
-    <nacos.version>2.2.1.RELEASE</nacos.version>
+    <gateway.version>2.2.2.RELEASE</gateway.version>
     <junit.version>4.12</junit.version>
     <log4j.version>1.2.17</log4j.version>
     <lombok.version>1.16.22</lombok.version>
@@ -36,6 +37,8 @@
     <mybatis.version>3.5.5</mybatis.version>
     <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
     <mybatisplus.version>3.3.2</mybatisplus.version>
+    <nacos.version>2.2.1.RELEASE</nacos.version>
+    <nacosconf.version>2.2.1.RELEASE</nacosconf.version>
     <openfeign.version>2.2.2.RELEASE</openfeign.version>
     <oss.version>3.10.2</oss.version>
     <pagehelper.version>5.1.11</pagehelper.version>
@@ -79,6 +82,20 @@
         <groupId>com.alibaba.cloud</groupId>
         <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         <version>${nacos.version}</version>
+      </dependency>
+
+      <!-- nacos config -->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        <version>${nacosconf.version}</version>
+      </dependency>
+
+      <!-- Spring Cloud Gateway-->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-gateway</artifactId>
+        <version>${gateway.version}</version>
       </dependency>
 
       <!-- openfeign -->

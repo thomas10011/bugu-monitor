@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,5 +70,17 @@ public class CommonResult {
     public CommonResult append(String key,Object value){
         this.getData().put(key, value);
         return this;
+    }
+
+    /**
+     * @author thomas
+     * @description 根据key从data中获取数据
+     * @create 2020/8/15 1:42 下午
+     * @update 2020/8/15 1:42 下午
+     * @param key 数据的key
+     * @return java.lang.Object
+     **/
+    public Object get(String key) {
+        return this.data.get(key);
     }
 }
