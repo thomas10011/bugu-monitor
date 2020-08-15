@@ -7,3 +7,32 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: message-service-routh
+          uri: lb://message-service
+          predicates:
+            - Path=/message-service/**
+        - id: monitor-service-routh
+          uri: lb://monitor-service
+          predicates:
+            - Path=/monitor-service/**
+        - id: pk-service-routh
+          uri: lb://pk-service
+          predicates:
+            - Path=/pk-service/**
+        - id: store-service-routh
+          uri: lb://store-service
+          predicates:
+            - Path=/store-service/**
+        - id: transaction-service-routh
+          uri: lb://transaction-service
+          predicates:
+            - Path=/transaction-service/**
+        - id: user-service-routh
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/**

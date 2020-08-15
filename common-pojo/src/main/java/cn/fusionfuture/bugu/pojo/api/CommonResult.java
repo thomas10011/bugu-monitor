@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +49,7 @@ public class CommonResult {
      * @param resultCode 结果错误码
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult
      **/
-    public static CommonResult fail(ServiceCode serviceCode, ResultCode resultCode){
+    public static CommonResult fail(ServiceCode serviceCode, ResultCode resultCode) {
         CommonResult result = new CommonResult();
         result.setCode(resultCode.getCode());
         result.setMessage(resultCode.getMessage());
@@ -67,7 +66,7 @@ public class CommonResult {
      * @param value 值
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult
      **/
-    public CommonResult append(String key,Object value){
+    public CommonResult append(String key, Object value) {
         this.getData().put(key, value);
         return this;
     }
