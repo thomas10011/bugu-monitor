@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.message;
 
+import cn.fusionfuture.bugu.dispose.annotation.EnableGlobalDispose;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
+@EnableGlobalDispose
 public class MessageServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(MessageServiceApplication.class, args);

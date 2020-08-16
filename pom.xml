@@ -17,6 +17,7 @@
     <module>service-store</module>
     <module>service-transaction</module>
     <module>service-gateway</module>
+    <module>common-dispose</module>
   </modules>
   <packaging>pom</packaging>
   <description>聚合工程</description>
@@ -27,8 +28,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <boot.version>2.2.6.RELEASE</boot.version>
-    <cloud.version>2.1.2.RELEASE</cloud.version>
-    <gateway.version>2.2.2.RELEASE</gateway.version>
+    <spring.cloud.version>Hoxton.SR3</spring.cloud.version>
+    <alibaba.cloud.version>2.2.1.RELEASE</alibaba.cloud.version>
     <junit.version>4.12</junit.version>
     <log4j.version>1.2.17</log4j.version>
     <lombok.version>1.16.22</lombok.version>
@@ -37,9 +38,6 @@
     <mybatis.version>3.5.5</mybatis.version>
     <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
     <mybatisplus.version>3.3.2</mybatisplus.version>
-    <nacos.version>2.2.1.RELEASE</nacos.version>
-    <nacosconf.version>2.2.1.RELEASE</nacosconf.version>
-    <openfeign.version>2.2.2.RELEASE</openfeign.version>
     <oss.version>3.10.2</oss.version>
     <pagehelper.version>5.1.11</pagehelper.version>
     <hutool.version>5.3.10</hutool.version>
@@ -63,46 +61,18 @@
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Hoxton.SR3</version>
+        <version>${spring.cloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
 
-      <!--spring cloud alibaba 2.1.0.RELEASE-->
+      <!--spring cloud alibaba 2.2.1.RELEASE 控制所有相关依赖-->
       <dependency>
         <groupId>com.alibaba.cloud</groupId>
         <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-        <version>${cloud.version}</version>
+        <version>${alibaba.cloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
-      </dependency>
-
-      <!-- nacos -->
-      <dependency>
-        <groupId>com.alibaba.cloud</groupId>
-        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        <version>${nacos.version}</version>
-      </dependency>
-
-      <!-- nacos config -->
-      <dependency>
-        <groupId>com.alibaba.cloud</groupId>
-        <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        <version>${nacosconf.version}</version>
-      </dependency>
-
-      <!-- Spring Cloud Gateway-->
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-gateway</artifactId>
-        <version>${gateway.version}</version>
-      </dependency>
-
-      <!-- openfeign -->
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-openfeign</artifactId>
-        <version>${openfeign.version}</version>
       </dependency>
 
       <!-- 阿里云oss -->

@@ -2,7 +2,9 @@ package cn.fusionfuture.bugu.pojo.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.omg.CORBA.COMM_FAILURE;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +16,7 @@ import java.util.Map;
  * @date 2020/8/14 7:51 下午
  * @version  1.0
  */
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommonResult {
@@ -29,15 +31,11 @@ public class CommonResult {
      * @description 成功返回时调用
      * @create 2020/8/14 11:02 下午
      * @update 2020/8/14 11:02 下午
-     * @param serviceCode 微服务码
+     * @param service 微服务码
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult
      **/
-    public static CommonResult success(ServiceCode serviceCode) {
-        CommonResult result = new CommonResult();
-        result.setCode("00000");
-        result.setMessage("处理成功！");
-        result.setService(serviceCode.getName());
-        return result;
+    public static CommonResult success() {
+        return new CommonResult().setCode("00000").setMessage("处理成功！");
     }
 
     /**
@@ -49,12 +47,8 @@ public class CommonResult {
      * @param resultCode 结果错误码
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult
      **/
-    public static CommonResult fail(ServiceCode serviceCode, ResultCode resultCode) {
-        CommonResult result = new CommonResult();
-        result.setCode(resultCode.getCode());
-        result.setMessage(resultCode.getMessage());
-        result.setService(serviceCode.getName());
-        return result;
+    public static CommonResult fail(ResultCode resultCode) {
+        return new CommonResult().setCode(resultCode.getCode()).setMessage(resultCode.getMessage());
     }
 
     /**
@@ -67,7 +61,7 @@ public class CommonResult {
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult
      **/
     public CommonResult append(String key, Object value) {
-        this.getData().put(key, value);
+        this.data.put(key, value);
         return this;
     }
 
@@ -81,5 +75,25 @@ public class CommonResult {
      **/
     public Object get(String key) {
         return this.data.get(key);
+    }
+
+    public CommonResult setCode(String code) {
+        this.code = code;
+        return this;
+    }
+
+    public CommonResult setMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
+    public CommonResult setService(String service) {
+        this.service = service;
+        return this;
+    }
+
+    public CommonResult setService(ServiceCode serviceCode) {
+        this.service = serviceCode.getName();
+        return this;
     }
 }
