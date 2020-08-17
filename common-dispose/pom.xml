@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>dispose模块 用于进行全局统一异常处理、统一返回结果处理、字段自动填充等</description>
     <artifactId>common-dispose</artifactId>
     <dependencies>
         <dependency>

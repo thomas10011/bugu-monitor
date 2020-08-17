@@ -52,7 +52,8 @@ public class MmsVoteRemind implements Serializable {
     @ApiModelProperty(value = "与计划类型表相关联")
     private Integer planTypeId;
 
-    private Integer isApproved;
+    @ApiModelProperty(value = "表明投票类型是认可还是啄（不认可）")
+    private Boolean isApproved;
 
     @ApiModelProperty(value = "表明是否被查看")
     private Boolean isChecked;

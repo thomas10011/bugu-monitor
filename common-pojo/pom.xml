@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>pojo模块 包含了实体类以及其他的一些pojo</description>
     <artifactId>common-pojo</artifactId>
 
     <dependencies>

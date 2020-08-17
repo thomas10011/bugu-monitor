@@ -49,7 +49,7 @@ public class SmsProduct implements Serializable {
     private BigDecimal price;
 
     @ApiModelProperty(value = "0表示现金1表示羽毛")
-    private Integer currencyType;
+    private Boolean currencyType;
 
     @ApiModelProperty(value = "表示图片存储在oss中的访问url")
     private String imageUrl;

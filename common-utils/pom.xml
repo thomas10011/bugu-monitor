@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>utils模块 用于存放一些封装好的工具类</description>
     <artifactId>common-utils</artifactId>
 
     <dependencies>
