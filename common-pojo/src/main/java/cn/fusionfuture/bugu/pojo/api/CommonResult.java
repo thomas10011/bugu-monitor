@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.omg.CORBA.COMM_FAILURE;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,9 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommonResult {
+public class CommonResult implements Serializable {
+
+    private static final long serialVersionUID = 8270878156680327321L;
 
     private String code;
     private String message;

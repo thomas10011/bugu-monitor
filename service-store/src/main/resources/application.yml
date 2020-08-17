@@ -7,3 +7,9 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+  datasource:
+    url: jdbc:mysql://rm-bp17bfp26q7z51r10wo.mysql.rds.aliyuncs.com:3306/bugu_store_service?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root_bugu
+    password: Pengyuyan520!
+    type: com.alibaba.druid.pool.DruidDataSource   #配置阿里巴巴的Druid数据源

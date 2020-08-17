@@ -7,7 +7,12 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-    # 出现错误时, 直接抛出异常(便于异常统一处理，否则捕获不到404)
+  datasource:
+    url: jdbc:mysql://rm-bp17bfp26q7z51r10wo.mysql.rds.aliyuncs.com:3306/bugu_message_service?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root_bugu
+    password: Pengyuyan520!
+    type: com.alibaba.druid.pool.DruidDataSource   #配置阿里巴巴的Druid数据源
   mvc:
     throw-exception-if-no-handler-found: true
     # 不要为工程中的资源文件建立映射

@@ -26,6 +26,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="TmsPaymentType对象", description="")
 public class TmsPaymentType implements Serializable {
 
+    private static final long serialVersionUID = -7129749606939058577L;
 
     @ApiModelProperty(value = "主键，自增")
     @TableId(value = "id", type = IdType.AUTO)

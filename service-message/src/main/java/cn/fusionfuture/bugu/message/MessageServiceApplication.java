@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.message;
 
 import cn.fusionfuture.bugu.dispose.annotation.EnableGlobalDispose;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableGlobalDispose
+@MapperScan("cn.fusionfuture.bugu.message.mapper")
 public class MessageServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(MessageServiceApplication.class, args);
