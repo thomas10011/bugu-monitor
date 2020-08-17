@@ -8,8 +8,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -50,9 +52,11 @@ public class MmsCommentRemind implements Serializable {
     private Long punchId;
 
     @ApiModelProperty(value = "表明是否被查看")
+    @TableField(fill = FieldFill.INSERT)
     private Boolean isChecked;
 
     @ApiModelProperty(value = "表明是否被隐藏")
+    @TableField(fill = FieldFill.INSERT)
     private Boolean isHidden;
 
     @ApiModelProperty(value = "与计划类型表相关联")

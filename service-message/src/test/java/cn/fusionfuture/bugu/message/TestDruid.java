@@ -11,7 +11,7 @@ import javax.sql.DataSource;
  * @author thomas
  * @version 1.0
  * @class TestDruid
- * @description TODO
+ * @description 测试连接池
  * @date 2020/8/17 3:13 下午
  */
 @SpringBootTest

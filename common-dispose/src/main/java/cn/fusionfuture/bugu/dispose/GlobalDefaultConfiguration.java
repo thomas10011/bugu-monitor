@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.dispose;
 
 import cn.fusionfuture.bugu.dispose.exception.GlobalExceptionHandler;
+import cn.fusionfuture.bugu.dispose.fill.CustomMetaObjectHandler;
 import cn.fusionfuture.bugu.dispose.response.GlobalResponseHandler;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,5 +27,10 @@ public class GlobalDefaultConfiguration {
     @Bean
     public GlobalResponseHandler globalResponseHandler(GlobalResponseProperties globalDefaultProperties) {
         return new GlobalResponseHandler(globalDefaultProperties);
+    }
+
+    @Bean
+    public CustomMetaObjectHandler customMetaObjectHandler() {
+        return new CustomMetaObjectHandler();
     }
 }
