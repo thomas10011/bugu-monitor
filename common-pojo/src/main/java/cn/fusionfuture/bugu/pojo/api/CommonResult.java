@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.omg.CORBA.COMM_FAILURE;
 
 import java.io.Serializable;
@@ -17,7 +18,8 @@ import java.util.Map;
  * @date 2020/8/14 7:51 下午
  * @version  1.0
  */
-@Getter
+@Data
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommonResult implements Serializable {
@@ -34,7 +36,6 @@ public class CommonResult implements Serializable {
      * @description 成功返回时调用
      * @create 2020/8/14 11:02 下午
      * @update 2020/8/14 11:02 下午
-     * @param service 微服务码
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult
      **/
     public static CommonResult success() {
@@ -46,7 +47,6 @@ public class CommonResult implements Serializable {
      * @description 失败返回时调用
      * @create 2020/8/14 11:02 下午
      * @update 2020/8/14 11:02 下午
-     * @param serviceCode 微服务码
      * @param resultCode 结果错误码
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult
      **/
@@ -80,21 +80,10 @@ public class CommonResult implements Serializable {
         return this.data.get(key);
     }
 
-    public CommonResult setCode(String code) {
-        this.code = code;
-        return this;
-    }
-
-    public CommonResult setMessage(String message) {
-        this.message = message;
-        return this;
-    }
-
     public CommonResult setService(String service) {
         this.service = service;
         return this;
     }
-
     public CommonResult setService(ServiceCode serviceCode) {
         this.service = serviceCode.getName();
         return this;

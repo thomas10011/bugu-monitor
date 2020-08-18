@@ -3,7 +3,10 @@ package cn.fusionfuture.bugu.dispose.response;
 import cn.fusionfuture.bugu.dispose.GlobalResponseProperties;
 import cn.fusionfuture.bugu.dispose.annotation.EnableIgnoreResponse;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
+import cn.fusionfuture.bugu.pojo.api.ResultCode;
 import cn.fusionfuture.bugu.pojo.api.ServiceCode;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.json.JSONUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -14,6 +17,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.util.Map;
 
 /**
  * @author thomas
@@ -39,7 +44,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
         // 返回值为 Object 类型  并且返回为空是  AbstractMessageConverterMethodProcessor#writeWithMessageConverters 方法
         // 无法触发调用本类的 beforeBodyWrite 处理，开发在 Controller 尽量避免直接使用 Object 类型返回。
 
-        // o is null -> return response
+        // 返回值为null默认为成功状态
         if (o == null) {
             // 当 o 返回类型为 string 并且为null会出现 java.lang.ClassCastException: Result cannot be cast to java.lang.String
             if ("java.lang.String".equals(methodParameter.getParameterType().getName())) {
@@ -47,15 +52,27 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
             }
             return CommonResult.success().setService(globalResponseProperties.getServiceName());
         }
-        // o is instanceof ConmmonResponse -> return o
+        // 如果是Map类型直接将其设置为data 且默认为成功状态
+        if (o instanceof Map) {
+            // 强制类型转换会报警告 这里使用hutool的Convert工具进行类型转换
+            return CommonResult
+                    .success()
+                    .setService(globalResponseProperties.getServiceName())
+                    .setData(Convert.convert(new TypeReference<Map<String,Object>>() {}, o));
+        }
+        // 返回状态码则直接设置状态码
+        if (o instanceof ResultCode) {
+            return new CommonResult()
+                    .setCode(((ResultCode) o).getCode())
+                    .setMessage(((ResultCode) o).getMessage())
+                    .setService(globalResponseProperties.getServiceName());
+        }
+        // 如果是通用统一处理结果name直接返回
         if (o instanceof CommonResult) {
             return (CommonResult) ((CommonResult) o).setService(globalResponseProperties.getServiceName());
         }
-        // string 特殊处理 java.lang.ClassCastException: Result cannot be cast to java.lang.String
-        if (o instanceof String) {
-            return JSONUtil.parse(CommonResult.success().setService(globalResponseProperties.getServiceName()).append("data", o)).toString();
-        }
-        return CommonResult.success().setService(globalResponseProperties.getServiceName()).append("data", o);
+        // 返回其他的类型一律视为失败
+        return CommonResult.fail(ResultCode.INTERNAL_SERVER_ERROR);
     }
 
     /**
