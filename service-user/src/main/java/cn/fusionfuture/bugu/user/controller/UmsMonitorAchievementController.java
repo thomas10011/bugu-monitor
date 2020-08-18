@@ -1,6 +1,10 @@
 package cn.fusionfuture.bugu.user.controller;
 
 
+import cn.fusionfuture.bugu.pojo.entity.UmsUserFollow;
+import cn.fusionfuture.bugu.user.service.IUmsUserFollowService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -17,4 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user/ums-monitor-achievement")
 public class UmsMonitorAchievementController {
 
+    @Autowired
+    IUmsUserFollowService iUmsUserFollowService;
+
+    @GetMapping(value = "/test/swagger")
+    UmsUserFollow testSwagger() {
+        return iUmsUserFollowService.getById(1);
+    }
 }

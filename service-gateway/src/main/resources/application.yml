@@ -16,23 +16,36 @@ spring:
           uri: lb://message-service
           predicates:
             - Path=/message-service/**
+          filters:
+            - StripPrefix=1
         - id: monitor-service-routh
           uri: lb://monitor-service
           predicates:
             - Path=/monitor-service/**
+          filters:
+            - StripPrefix=1
         - id: pk-service-routh
           uri: lb://pk-service
           predicates:
             - Path=/pk-service/**
+          filters:
+            - StripPrefix=1
         - id: store-service-routh
           uri: lb://store-service
           predicates:
             - Path=/store-service/**
+          filters:
+            - StripPrefix=1
         - id: transaction-service-routh
           uri: lb://transaction-service
           predicates:
             - Path=/transaction-service/**
+          filters:
+            - StripPrefix=1
         - id: user-service-routh
           uri: lb://user-service
           predicates:
             - Path=/user-service/**
+          filters:
+            - StripPrefix=1
+
