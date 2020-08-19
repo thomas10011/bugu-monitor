@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    alicloud:
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: thomas10011-image
+        calllback-url: http://88.88.88.88:8888
+        sts:
+          access-key: LTAI4G4FGT6RrRPkDDPFW1Rw
+          secret-key: SqP6v8fV5Uc60LGZOzbva3lP4itZSS

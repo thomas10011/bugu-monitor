@@ -26,6 +26,8 @@ public enum ResultCode {
     UNSUPPORTED_MEDIA_TYPE("H0415", "未受保护的媒体类型！"),
     INTERNAL_SERVER_ERROR("H0500", "内部服务器错误！"),
 
+    OSS_SIGN_FAIL("O0000", "OSS签名出错！"),
+
 
 
     USER_DEFAULT("A0001", "用户端错误");

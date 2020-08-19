@@ -7,6 +7,13 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    alicloud:
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: thomas10011-image
+        calllback-url: http://88.88.88.88:12345
+      access-key: LTAI4G4FGT6RrRPkDDPFW1Rw
+      secret-key: SqP6v8fV5Uc60LGZOzbva3lP4itZSS
   datasource:
     url: jdbc:mysql://rm-bp17bfp26q7z51r10wo.mysql.rds.aliyuncs.com:3306/bugu_message_service?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
