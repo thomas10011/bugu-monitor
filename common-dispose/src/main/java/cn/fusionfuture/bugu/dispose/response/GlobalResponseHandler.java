@@ -54,6 +54,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
         if (o instanceof CommonResult) {
             return ((CommonResult<?>) o).setService(globalResponseProperties.getServiceName());
         }
+        // 如果是String类型需要另外处理，否则会报异常
         if (o instanceof String) {
             return JSONUtil.parseObj(
                     CommonResult
