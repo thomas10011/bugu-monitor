@@ -13,3 +13,6 @@ spring:
     username: root_bugu
     password: Pengyuyan520!
     type: com.alibaba.druid.pool.DruidDataSource   #配置阿里巴巴的Druid数据源
+  redis:
+    host: 127.0.0.1
+    port: 6379

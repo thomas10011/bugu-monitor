@@ -46,11 +46,21 @@ public class OssUtil {
 
     @PostConstruct
     public void init() {
+
         endpoint = ossUtilProperties.getEndpoint();
         bucket = ossUtilProperties.getBucket();
         callbackUrl = ossUtilProperties.getCallbackUrl();
+
     }
 
+    /**
+     * @author thomas
+     * @description 生成阿里云服务签名产生的policy
+     * @create 2020/8/19 7:51 下午
+     * @update 2020/8/19 7:51 下午
+     * @param dir oss的文件夹名称
+     * @return java.util.Map<java.lang.String,java.lang.String>
+     **/
     public static Map<String, String> getPolicy(String dir) throws ServletException, IOException {
         // host的格式为 bucketname.endpoint
         String host = "https://" + bucket + "." + endpoint;
@@ -87,15 +97,15 @@ public class OssUtil {
                     "filename=${object}&size=${size}&mimeType=${mimeType}&height=${imageInfo.height}&width=${imageInfo.width}");
             jasonCallback.put("callbackBodyType", "application/x-www-form-urlencoded");
             String base64CallbackBody = BinaryUtil.toBase64String(jasonCallback.toString().getBytes());
-            respMap.put("callback", base64CallbackBody);
+//            respMap.put("callback", base64CallbackBody);
 
             return respMap;
 
         } catch (Exception e) {
 
             System.out.println(e.getMessage());
-            // 向上抛出统一处理
             return null;
+
         } finally {
             ossClient.shutdown();
         }

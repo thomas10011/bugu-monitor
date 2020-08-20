@@ -23,6 +23,7 @@ public class OssUtilProperties {
 
     private String bucket;
 
+    @Value("${calllback-url}")
     private String callbackUrl;
 
 }

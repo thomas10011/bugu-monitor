@@ -35,12 +35,14 @@
     <junit.version>4.12</junit.version>
     <log4j.version>1.2.17</log4j.version>
     <lombok.version>1.16.22</lombok.version>
+    <jjwt.version>0.9.1</jjwt.version>
     <mysql.version>8.0.20</mysql.version>
     <druid.version>1.1.21</druid.version>
     <mybatis.version>3.5.5</mybatis.version>
     <mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
     <mybatisplus.version>3.3.2</mybatisplus.version>
     <oss.version>3.10.2</oss.version>
+    <osscloud.version>2.2.0.RELEASE</osscloud.version>
     <pagehelper.version>5.1.11</pagehelper.version>
     <hutool.version>5.3.10</hutool.version>
     <swagger.version>2.9.2</swagger.version>
@@ -75,6 +77,13 @@
         <version>${alibaba.cloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+
+      <!-- cloud oss -->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-starter-alicloud-oss</artifactId>
+        <version>${osscloud.version}</version>
       </dependency>
 
       <!-- 阿里云oss -->
@@ -160,6 +169,13 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
+      </dependency>
+
+      <!--JWT(Json Web Token)登录支持-->
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>${jjwt.version}</version>
       </dependency>
 
       <!--log4j-->

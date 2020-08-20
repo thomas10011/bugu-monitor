@@ -3,7 +3,6 @@ package cn.fusionfuture.bugu.dispose.exception;
 import cn.fusionfuture.bugu.dispose.annotation.EnableIgnoreResponse;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.api.ResultCode;
-import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -129,7 +128,7 @@ public class GlobalExceptionHandler {
         EnableIgnoreResponse methodAnnotation = method.getAnnotation(EnableIgnoreResponse.class);
         if (methodAnnotation != null) {
             // 是否使用异常处理
-            if (!methodAnnotation.errorDispose()) {
+            if (methodAnnotation.errorDispose()) {
                 throw e;
             } else {
                 return;
@@ -138,7 +137,7 @@ public class GlobalExceptionHandler {
         // 判类是否存在 IgnoreResponseAdvice 注解
         EnableIgnoreResponse classAnnotation = beanType.getAnnotation(EnableIgnoreResponse.class);
         if (classAnnotation != null) {
-            if (!classAnnotation.errorDispose()) {
+            if (classAnnotation.errorDispose()) {
                 throw e;
             }
         }
