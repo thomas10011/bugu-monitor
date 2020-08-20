@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.message.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author thomas
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @update 2020/8/20 3:26 下午
  **/
 @FeignClient(value = "pk-service")
+@RequestMapping(value = "/test")
 public interface PkFeignService {
     /**
      * @author thomas
