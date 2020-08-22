@@ -32,8 +32,7 @@ public class MmsEnrollRemindController {
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult<java.lang.Object> 
      **/
     @PostMapping(value = "/enroll-remind")
-    public CommonResult<Object> addEnroll ( MmsEnrollRemind mmsEnrollRemind) {
-        System.out.println("执行");
+    public CommonResult<?> addEnroll ( MmsEnrollRemind mmsEnrollRemind) {
         iMmsEnrollRemindService.addEnrollRemind(mmsEnrollRemind);
         return CommonResult.success();
     }
