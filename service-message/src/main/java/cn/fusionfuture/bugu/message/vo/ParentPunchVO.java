@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -58,7 +59,7 @@ public class ParentPunchVO implements Serializable {
     private Integer planTypeId;
 
     @ApiModelProperty(value = "消息发送时间")
-    private LocalTime SendTime;
+    private LocalDateTime SendTime;
 
     @ApiModelProperty(value = "表明是否被查看")
     private Boolean isChecked;
