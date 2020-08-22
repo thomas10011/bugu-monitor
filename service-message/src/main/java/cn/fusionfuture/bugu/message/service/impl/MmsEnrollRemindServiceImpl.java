@@ -33,21 +33,25 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
     PkFeignService pkFeignService;
 
     /**
-     *
+     * TODO 
+     * @author LiLan
+     * @since 2020/8/21 17:48
      * @param mmsEnrollRemind
-     * @return
-     */
+     * @return void 
+     **/
     @Override
     public void addEnrollRemind(MmsEnrollRemind mmsEnrollRemind){
         mmsEnrollRemindMapper.insert(mmsEnrollRemind);
 
     }
 
-    /**
-     *
-     * @param receiveUserId
-     * @return
-     */
+   /**
+    * TODO
+    * @author LiLan
+    * @since 2020/8/21 18:01
+    * @param receiveUserId
+    * @return java.util.List<cn.fusionfuture.bugu.message.vo.EnrollVO> 
+    **/
     @Override
     public List<EnrollVO> getEnrollRemind(Long receiveUserId){
 
@@ -59,7 +63,7 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
       for(MmsEnrollRemind mmsEnrollRemind:mmsEnrollRemindList){
           EnrollVO enrollVO = new EnrollVO();
           enrollVO.setId(mmsEnrollRemind.getId());
-          enrollVO.setEnrollTime(mmsEnrollRemind.getCreateTime().toLocalTime());
+          enrollVO.setSendTime(mmsEnrollRemind.getCreateTime());
           enrollVO.setSendUserId(mmsEnrollRemind.getSendUserId());
           enrollVO.setReceiveUserId(mmsEnrollRemind.getReceiveUserId());
           enrollVO.setPlanId(mmsEnrollRemind.getPlanId());
@@ -67,7 +71,7 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
           enrollVO.setIsChecked(mmsEnrollRemind.getIsChecked());
           enrollVO.setIsHidden(mmsEnrollRemind.getIsHidden());
           enrollVOList.add(enrollVO);
-//          调用其他微服务获取完整数据
+//          TODO:调用其他微服务获取完整数据
 
       }
       return enrollVOList;

@@ -12,5 +12,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-08-17
  */
 public interface MmsEnrollRemindMapper extends BaseMapper<MmsEnrollRemind> {
-
 }
