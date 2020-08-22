@@ -51,6 +51,9 @@ public class ParentPunchVO implements Serializable {
     @ApiModelProperty(value = "打卡的文字内容")
     private String punchContent;
 
+    @ApiModelProperty(value = "打卡的第一张图片内容")
+    private String punchImageUrl;
+
     @ApiModelProperty(value = "计划的类型id，表明是pk计划还是监督计划，决定去哪一个服务查找数据")
     private Integer planTypeId;
 
