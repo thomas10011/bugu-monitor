@@ -53,7 +53,7 @@ public class CodeGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = "/Users/thomas/Projects/bugu-monitor/service-user";
+        String projectPath = "/Users/thomas/Projects/bugu-monitor/service-pk";
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("thomas");
         gc.setOpen(false);
@@ -64,7 +64,7 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://rm-bp17bfp26q7z51r10wo.mysql.rds.aliyuncs.com:3306/bugu_user_service?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai");
+        dsc.setUrl("jdbc:mysql://rm-bp17bfp26q7z51r10wo.mysql.rds.aliyuncs.com:3306/bugu_pk_service?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root_bugu");
@@ -74,7 +74,7 @@ public class CodeGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("user");
+        pc.setModuleName("pk");
         pc.setParent("cn.fusionfuture.bugu");
         pc.setEntity("entity");
         pc.setController("controller");
