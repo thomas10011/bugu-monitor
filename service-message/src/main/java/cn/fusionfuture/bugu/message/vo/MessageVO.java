@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * @author LiLan
  * @version 1.0
- * @class PrivateChatVO
+ * @class MessageVO
  * @description TODO
  * @date 2020/8/27 10:08
  */
@@ -19,7 +19,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="PrivateChatVO对象", description="")
-public class PrivateChatVO extends ParentCommonVO implements Serializable {
+public class MessageVO extends ParentCommonVO implements Serializable {
 
     @ApiModelProperty(value = "接收消息者的名称")
     private String receiveUserName;

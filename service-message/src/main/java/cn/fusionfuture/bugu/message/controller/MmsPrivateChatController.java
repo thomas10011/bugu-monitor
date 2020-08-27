@@ -1,7 +1,7 @@
 package cn.fusionfuture.bugu.message.controller;
 
 import cn.fusionfuture.bugu.message.service.IMmsPrivateChatService;
-import cn.fusionfuture.bugu.message.vo.PrivateChatVO;
+import cn.fusionfuture.bugu.message.vo.MessageVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +32,15 @@ public class MmsPrivateChatController {
     }
 
     @GetMapping(value = "private-chat")
-    public List<PrivateChatVO> getAllUser(@RequestParam(name = "id") Long id){
-        List<PrivateChatVO> privateChatVOList = iMmsPrivateChatService.getAllUserChat(id);
-        return privateChatVOList;
+    public List<MessageVO> getAllUser(@RequestParam(name = "id") Long id){
+        List<MessageVO> messageVOList = iMmsPrivateChatService.getAllUserChat(id);
+        return messageVOList;
     }
 
-    @GetMapping(value = "private-chat")
-    public List<PrivateChatVO> getOneUser(@RequestParam(name = "id") Long id,@RequestParam(name="sendId")Long sendId){
-        List<PrivateChatVO> privateChatVOList = iMmsPrivateChatService.getOneUserAllChat(id,sendId);
-        return privateChatVOList;
+    @GetMapping(value = "private-detail")
+    public List<MessageVO> getOneUser(@RequestParam(name = "id") Long id, @RequestParam(name="sendId")Long sendId){
+        List<MessageVO> messageVOList = iMmsPrivateChatService.getOneUserAllChat(id,sendId);
+        return messageVOList;
     }
 
 }

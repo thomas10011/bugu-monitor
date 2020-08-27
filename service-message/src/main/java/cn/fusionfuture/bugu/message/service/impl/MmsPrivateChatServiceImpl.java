@@ -1,5 +1,5 @@
 package cn.fusionfuture.bugu.message.service.impl;
-import cn.fusionfuture.bugu.message.vo.PrivateChatVO;
+import cn.fusionfuture.bugu.message.vo.MessageVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
 import cn.fusionfuture.bugu.message.mapper.MmsPrivateChatMapper;
 import cn.fusionfuture.bugu.message.service.IMmsPrivateChatService;
@@ -32,7 +32,7 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
     }
 
     @Override
-    public List<PrivateChatVO> getAllUserChat(Long id) {
+    public List<MessageVO> getAllUserChat(Long id) {
         Map<Long,MmsPrivateChat> pairedChatMap = new HashMap<>();
         Map<String,Object> columnMap = new HashMap<>();
         columnMap.put("receive_user_id",id);
@@ -64,47 +64,47 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         }
 
         System.out.println("查询出数据");
-        List<PrivateChatVO> privateChatVOList = new ArrayList<>();
+        List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsPrivateChat mmsPrivateChat:pairedChatMap.values()) {
-            PrivateChatVO privateChatVO = new PrivateChatVO();
-            privateChatVO.setId(mmsPrivateChat.getId());
-            privateChatVO.setSendTime(mmsPrivateChat.getCreateTime());
-            privateChatVO.setSendUserId(mmsPrivateChat.getSendUserId());
-            privateChatVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
-            privateChatVO.setIsChecked(mmsPrivateChat.getIsChecked());
-            privateChatVO.setIsHidden(mmsPrivateChat.getIsHidden());
-            privateChatVO.setMessageContent((mmsPrivateChat.getMessageContent()));
-            privateChatVO.setImageUrl((mmsPrivateChat.getImageUrl()));
-            privateChatVO.setSendTime(mmsPrivateChat.getCreateTime());
+            MessageVO messageVO = new MessageVO();
+            messageVO.setId(mmsPrivateChat.getId());
+            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
+            messageVO.setSendUserId(mmsPrivateChat.getSendUserId());
+            messageVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
+            messageVO.setIsChecked(mmsPrivateChat.getIsChecked());
+            messageVO.setIsHidden(mmsPrivateChat.getIsHidden());
+            messageVO.setMessageContent((mmsPrivateChat.getMessageContent()));
+            messageVO.setImageUrl((mmsPrivateChat.getImageUrl()));
+            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
             //          TODO:调用其他微服务获取完整数据
-            privateChatVOList.add(privateChatVO);
+            messageVOList.add(messageVO);
 
         }
-        return privateChatVOList;
+        return messageVOList;
     }
 
     @Override
-    public List<PrivateChatVO> getOneUserAllChat(Long id, Long sendId) {
+    public List<MessageVO> getOneUserAllChat(Long id, Long sendId) {
         Map<String,Object> columnMap = new HashMap<>();
         columnMap.put("receive_user_id",id);
         columnMap.put("send_user_id",sendId);
         List<MmsPrivateChat> mmsReceivePrivateChatList = mmsPrivateChatMapper.selectByMap(columnMap);
-        List<PrivateChatVO> privateChatVOList = new ArrayList<>();
+        List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsPrivateChat mmsPrivateChat:mmsReceivePrivateChatList) {
-            PrivateChatVO privateChatVO = new PrivateChatVO();
-            privateChatVO.setId(mmsPrivateChat.getId());
-            privateChatVO.setSendTime(mmsPrivateChat.getCreateTime());
-            privateChatVO.setSendUserId(mmsPrivateChat.getSendUserId());
-            privateChatVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
-            privateChatVO.setIsChecked(mmsPrivateChat.getIsChecked());
-            privateChatVO.setIsHidden(mmsPrivateChat.getIsHidden());
-            privateChatVO.setMessageContent((mmsPrivateChat.getMessageContent()));
-            privateChatVO.setImageUrl((mmsPrivateChat.getImageUrl()));
-            privateChatVO.setSendTime(mmsPrivateChat.getCreateTime());
+            MessageVO messageVO = new MessageVO();
+            messageVO.setId(mmsPrivateChat.getId());
+            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
+            messageVO.setSendUserId(mmsPrivateChat.getSendUserId());
+            messageVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
+            messageVO.setIsChecked(mmsPrivateChat.getIsChecked());
+            messageVO.setIsHidden(mmsPrivateChat.getIsHidden());
+            messageVO.setMessageContent((mmsPrivateChat.getMessageContent()));
+            messageVO.setImageUrl((mmsPrivateChat.getImageUrl()));
+            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
             //          TODO:调用其他微服务获取完整数据
-            privateChatVOList.add(privateChatVO);
+            messageVOList.add(messageVO);
 
         }
-        return privateChatVOList;
+        return messageVOList;
     }
 }
