@@ -18,14 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-08-17
  */
 @RestController
-@RequestMapping("/user/ums-monitor-achievement")
+@RequestMapping("/test")
 public class UmsMonitorAchievementController {
 
     @Autowired
     IUmsUserFollowService iUmsUserFollowService;
 
-    @GetMapping(value = "/test/swagger")
+    @GetMapping(value = "/swagger")
     UmsUserFollow testSwagger() {
         return iUmsUserFollowService.getById(1);
+    }
+
+    @GetMapping(value = "security")
+    String testSecurity() {
+        return "test seurity result";
     }
 }
