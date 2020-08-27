@@ -21,24 +21,9 @@ import java.time.LocalTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="ParentPunchVO对象", description="")
-public class ParentPunchVO implements Serializable {
+public class ParentPunchVO extends ParentCommonVO implements Serializable {
 
     private static final long serialVersionUID = 6345826325975237230L;
-
-    @ApiModelProperty(value = "提醒本身id")
-    private Long id;
-
-    @ApiModelProperty(value = "发送消息者的id")
-    private Long sendUserId;
-
-    @ApiModelProperty(value = "发送消息者的名称")
-    private String sendUserName;
-
-    @ApiModelProperty(value = "发送消息者的头像")
-    private String sendAvatarUrl;
-
-    @ApiModelProperty(value = "当前用户id")
-    private Long receiveUserId;
 
     @ApiModelProperty(value = "打卡的id")
     private Long punchId;
@@ -58,12 +43,4 @@ public class ParentPunchVO implements Serializable {
     @ApiModelProperty(value = "计划的类型id，表明是pk计划还是监督计划，决定去哪一个服务查找数据")
     private Integer planTypeId;
 
-    @ApiModelProperty(value = "消息发送时间")
-    private LocalDateTime SendTime;
-
-    @ApiModelProperty(value = "表明是否被查看")
-    private Boolean isChecked;
-
-    @ApiModelProperty(value = "表明是否被隐藏")
-    private Boolean isHidden;
 }
