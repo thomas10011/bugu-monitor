@@ -44,6 +44,9 @@ public class MmsSystemUser implements Serializable {
     private Long systemMessageId;
 
     @ApiModelProperty(value = "外键，与用户表相关联")
+    private Long sendUserId;
+
+    @ApiModelProperty(value = "外键，与用户表相关联")
     private Long receiveUserId;
 
     @ApiModelProperty(value = "表明是否被查看")

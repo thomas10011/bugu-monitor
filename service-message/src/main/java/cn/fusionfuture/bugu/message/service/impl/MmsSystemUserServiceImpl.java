@@ -1,20 +1,103 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
+import cn.fusionfuture.bugu.message.mapper.MmsSystemMessageMapper;
+import cn.fusionfuture.bugu.message.vo.MessageVO;
+import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
+import cn.fusionfuture.bugu.pojo.entity.MmsSystemMessage;
 import cn.fusionfuture.bugu.pojo.entity.MmsSystemUser;
 import cn.fusionfuture.bugu.message.mapper.MmsSystemUserMapper;
 import cn.fusionfuture.bugu.message.service.IMmsSystemUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * <p>
- *  服务实现类
- * </p>
- *
- * @author thomas
- * @since 2020-08-17
+ * @author LiLan
+ * @version 1.0
+ * @class MmsSystemMessageServiceImpl
+ * @description TODO
+ * @date 2020/8/27 11:04
  */
 @Service
 public class MmsSystemUserServiceImpl extends ServiceImpl<MmsSystemUserMapper, MmsSystemUser> implements IMmsSystemUserService {
 
+    @Autowired
+    MmsSystemUserMapper mmsSystemUserMapper;
+
+    @Autowired
+    MmsSystemMessageMapper mmsSystemMessageMapper;
+
+    @Override
+    public MmsSystemUser getSystemUser(Long id){
+        MmsSystemUser mmsSystemUser= mmsSystemUserMapper.selectById(id);
+        return mmsSystemUser;
+    }
+
+    @Override
+    public List<MessageVO> getAllSystem(Long id) {
+        Map<String,Object> columnMap = new HashMap<>();
+        columnMap.put("receive_user_id",id);
+        List<MmsSystemUser> mmsSystemUserList = mmsSystemUserMapper.selectByMap(columnMap);
+        Map<Long,MmsSystemUser> pairedMessageMap = new HashMap<>();
+        List<MessageVO> messageVOList = new ArrayList<>();
+        for(MmsSystemUser mmsSystemUser:mmsSystemUserList){
+            if(!pairedMessageMap.containsKey(mmsSystemUser.getSendUserId())) {
+                LocalDateTime theTime = mmsSystemUser.getCreateTime();
+                LocalDateTime mapTime = pairedMessageMap.get(mmsSystemUser.getSendUserId()).getCreateTime();
+                if(theTime.isAfter(mapTime)){
+                    pairedMessageMap.put(mmsSystemUser.getSendUserId(),mmsSystemUser);
+                }
+            }else{
+                pairedMessageMap.put(mmsSystemUser.getSendUserId(),mmsSystemUser);
+            }
+        }
+        for(MmsSystemUser mmsSystemUser:pairedMessageMap.values()){
+            MessageVO messageVO = new MessageVO();
+            messageVO.setId(mmsSystemUser.getId());
+            messageVO.setSendTime(mmsSystemUser.getCreateTime());
+            messageVO.setReceiveUserId(mmsSystemUser.getReceiveUserId());
+            messageVO.setSendUserId(mmsSystemUser.getSendUserId());
+            messageVO.setIsChecked(mmsSystemUser.getIsChecked());
+            messageVO.setIsHidden(mmsSystemUser.getIsHidden());
+            Long systemMessageId = mmsSystemUser.getSystemMessageId();
+            MmsSystemMessage mmsSystemMessage = mmsSystemMessageMapper.selectById(systemMessageId);
+            messageVO.setMessageContent((mmsSystemMessage.getMessageContent()));
+            messageVO.setImageUrl((mmsSystemMessage.getImageUrl()));
+            //          TODO:调用其他微服务获取完整数据
+            messageVOList.add(messageVO);
+        }
+        return messageVOList;
+    }
+
+    @Override
+    public List<MessageVO> getOneSystemAll(Long id, Long sendId) {
+        Map<String,Object> columnMap = new HashMap<>();
+        columnMap.put("receive_user_id",id);
+        columnMap.put("send_user_id",sendId);
+        List<MmsSystemUser> mmsSystemUserList = mmsSystemUserMapper.selectByMap(columnMap);
+        List<MessageVO> messageVOList = new ArrayList<>();
+        for(MmsSystemUser mmsSystemUser:mmsSystemUserList) {
+            MessageVO messageVO = new MessageVO();
+            messageVO.setId(mmsSystemUser.getId());
+            messageVO.setSendTime(mmsSystemUser.getCreateTime());
+            messageVO.setSendUserId(mmsSystemUser.getSendUserId());
+            messageVO.setReceiveUserId(mmsSystemUser.getReceiveUserId());
+            messageVO.setIsChecked(mmsSystemUser.getIsChecked());
+            messageVO.setIsHidden(mmsSystemUser.getIsHidden());
+
+            MmsSystemMessage mmsSystemMessage = mmsSystemMessageMapper.selectById(mmsSystemUser.getSystemMessageId());
+            messageVO.setMessageContent((mmsSystemMessage.getMessageContent()));
+            messageVO.setImageUrl((mmsSystemMessage.getImageUrl()));
+            //          TODO:调用其他微服务获取完整数据
+            messageVOList.add(messageVO);
+
+        }
+        return messageVOList;
+    }
 }
