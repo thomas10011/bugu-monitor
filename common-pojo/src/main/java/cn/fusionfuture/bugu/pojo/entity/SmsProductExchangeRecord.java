@@ -2,6 +2,8 @@ package cn.fusionfuture.bugu.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -29,7 +31,7 @@ public class SmsProductExchangeRecord implements Serializable {
     private static final long serialVersionUID = -1610028325441688984L;
 
     @ApiModelProperty(value = "雪花算法，自增")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     @ApiModelProperty(value = "表示兑换的时间，时区为东八区")
@@ -54,6 +56,9 @@ public class SmsProductExchangeRecord implements Serializable {
 
     @ApiModelProperty(value = "商品兑换的数量")
     private Integer exchangeQuantity;
+
+    @ApiModelProperty(value = "商品单价")
+    private BigDecimal productPrice;
 
 
 }
