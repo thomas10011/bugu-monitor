@@ -19,5 +19,5 @@ spring:
   redis:
     database: 0
     port: 6379
-    host: localhost
-    password:
+    host: 47.101.158.49
+    password: Fusionfuture@365
