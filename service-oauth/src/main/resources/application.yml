@@ -7,7 +7,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 39.106.59.218:8848
+      username: nacos
+      password: Fusionfuture@365
+      server-addr: 39.106.59.218:8848
     alicloud:
       oss:
         endpoint: oss-cn-beijing.aliyuncs.com

@@ -1,13 +1,15 @@
 server:
-  port: 10000
+  port: 9527
 spring:
   application:
     name: gateway-service
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
-
+        server-addr: 39.106.59.218:8848
+      username: nacos
+      password: Fusionfuture@365
+      server-addr: 39.106.59.218:8848
     gateway:
       discovery:
         locator:
@@ -64,8 +66,8 @@ spring:
   redis:
     database: 0
     port: 6379
-    host: localhost
-    password:
+    host: 47.101.158.49
+    password: Fusionfuture@365
 secure:
   ignore:
     urls: #配置白名单路径
