@@ -3,10 +3,6 @@ server:
 spring:
   application:
     name: transaction-service
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
   datasource:
     url: jdbc:mysql://rm-bp17bfp26q7z51r10wo.mysql.rds.aliyuncs.com:3306/bugu_transaction_service?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver

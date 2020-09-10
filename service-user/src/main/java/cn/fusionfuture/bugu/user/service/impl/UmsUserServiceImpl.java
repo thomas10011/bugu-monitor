@@ -25,8 +25,6 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     @Autowired
     private UmsUserMapper umsUserMapper;
 
-
-
     @Override
     public UserDetailsVO getPersonalDetails(Long id) {
         UmsUser umsUser = umsUserMapper.selectById(id);
