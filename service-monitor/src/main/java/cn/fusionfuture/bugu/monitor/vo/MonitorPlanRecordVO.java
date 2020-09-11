@@ -42,7 +42,7 @@ public class MonitorPlanRecordVO {
     private BigDecimal monitorBonus;
 
     @ApiModelProperty(value = "计划详情")
-    private String decription;
+    private String description;
 
     @ApiModelProperty(value = "打卡Id")
     private Integer punchId;
