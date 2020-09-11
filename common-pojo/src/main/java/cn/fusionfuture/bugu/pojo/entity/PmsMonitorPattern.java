@@ -29,8 +29,8 @@ public class PmsMonitorPattern implements Serializable {
     private static final long serialVersionUID = 4918450804902009803L;
 
     @ApiModelProperty(value = "id")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

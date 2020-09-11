@@ -1,46 +1,27 @@
-package cn.fusionfuture.bugu.pojo.entity;
+package cn.fusionfuture.bugu.monitor.vo;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 /**
- * <p>
- * 
- * </p>
- *
- * @author thomas
- * @since 2020-08-24
+ * @author zwswl
+ * @version 1.0
+ * @class MonitorPlanVO
+ * @description TODO
+ * @date 2020/9/9 11:00
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PmsMonitorPlan对象", description="")
-public class PmsMonitorPlan implements Serializable {
-
-    private static final long serialVersionUID = -4359301589072447699L;
-
-    @ApiModelProperty(value = "ID")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "更新时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+@ApiModel(value="MonitorPlanVO对象", description="创建监督计划传入的对象")
+public class NewMonitorPlanVO {
 
     @ApiModelProperty(value = "计划标题")
     private String name;
@@ -78,9 +59,6 @@ public class PmsMonitorPlan implements Serializable {
     @ApiModelProperty(value = "打卡周期")
     private Integer punchCycle;
 
-    @ApiModelProperty(value = "已打卡次数")
-    private Integer punchCount;
-
     @ApiModelProperty(value = "奖池奖金形式")
     private Boolean bonusType;
 
@@ -98,10 +76,4 @@ public class PmsMonitorPlan implements Serializable {
 
     @ApiModelProperty(value = "计划状态id")
     private Integer planStatusId;
-
-    @ApiModelProperty(value = "计划是否删除")
-    @TableLogic
-    private Boolean isDeleted;
-
-
 }

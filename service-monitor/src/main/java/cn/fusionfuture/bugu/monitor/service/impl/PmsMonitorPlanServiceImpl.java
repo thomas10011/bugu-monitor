@@ -1,12 +1,17 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
+import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -23,8 +28,16 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
     PmsMonitorPlanMapper monitorPlanMapper;
 
     @Override
-    public Long createMonitorPlan(PmsMonitorPlan monitorPlan) {
-        monitorPlanMapper.insert(monitorPlan);
+    public Long createMonitorPlan(NewMonitorPlanVO newMonitorPlanVO) {
+        PmsMonitorPlan monitorPlan = new PmsMonitorPlan();
+        BeanUtils.copyProperties(newMonitorPlanVO, monitorPlan);
+        // 插入前把已打卡次数置为零
+        monitorPlanMapper.insert(monitorPlan.setPunchCount(0));
         return monitorPlan.getId();
+    }
+
+    @Override
+    public List<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Long uid) {
+        return monitorPlanMapper.queryBasicMonitorPlanVO(uid);
     }
 }

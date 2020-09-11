@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper">
+<!--    &lt;!&ndash; 简单监督计划结果集 &ndash;&gt;-->
+<!--    <resultMap id="BasicMonitorPlanMap" type="cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO">-->
+<!--        <id column="id" jdbcType="BIGINT" property="id" />-->
+<!--        <result column="name" jdbcType="VARCHAR" property="name"/>-->
+<!--        <result column="description" jdbcType="VARCHAR" property="description"/>-->
+<!--        <result column="punch_count" jdbcType="INTEGER" property="punchCount"/>-->
+<!--        <result column="punch_quantity" jdbcType="INTEGER" property="punchQuantity"/>-->
+<!--        <result column="start_time" jdbcType="DATETIME" property="startTime"/>-->
+<!--        <result column="end_time" jdbcType="DATETIME" property="endTime"/>-->
+<!--        &lt;!&ndash; 联合查询MonitorPlanPattern &ndash;&gt;-->
+<!--        <association property="planPattern">-->
 
+<!--        </association>-->
+<!--    </resultMap>-->
+
+    <select id="queryBasicMonitorPlanVO" resultType="cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO">
+        SELECT
+            pms_monitor_plan.id,
+            pms_monitor_plan.`name`,
+            pms_monitor_plan.description,
+            pms_monitor_plan.punch_count,
+            pms_monitor_plan.punch_quantity,
+            pms_monitor_plan.start_time,
+            pms_monitor_plan.end_time,
+            pms_monitor_pattern.description AS plan_pattern,
+            pms_monitor_plan_status.description AS plan_status
+        FROM
+            pms_monitor_plan,
+            pms_monitor_pattern,
+            pms_monitor_plan_status
+        WHERE
+            pms_monitor_plan.user_id = #{uid} AND
+            pms_monitor_plan.monitor_pattern_id = pms_monitor_pattern.id AND
+            pms_monitor_plan.plan_status_id = pms_monitor_plan_status.id;
+    </select>
 </mapper>
