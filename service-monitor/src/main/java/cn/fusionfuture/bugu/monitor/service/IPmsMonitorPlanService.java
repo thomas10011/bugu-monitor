@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPmsMonitorPlanService extends IService<PmsMonitorPlan> {
 
+    Long createMonitorPlan(PmsMonitorPlan monitorPlan);
+
 }
