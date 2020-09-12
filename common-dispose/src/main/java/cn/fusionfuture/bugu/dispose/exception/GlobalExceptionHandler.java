@@ -67,6 +67,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public CommonResult handlerException(Exception e) throws Throwable {
         errorDispose(e);
+        log.info(e.getMessage());
         return ifDepthExceptionType(e);
     }
 

@@ -1,7 +1,10 @@
 package cn.fusionfuture.bugu.monitor.mapper;
 
+import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserMonitorPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface PmsUserMonitorPlanMapper extends BaseMapper<PmsUserMonitorPlan> {
 
+    /**
+     * 查询用户参与的所有监督计划
+     * @author thomas
+     * @since 2020/9/12 11:27 上午
+     * @param uid 用户的id
+     * @return java.util.List<cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO>
+     **/
+    List<BasicMonitorPlanVO> queryMonitorPlanByUserId(Long uid);
 }

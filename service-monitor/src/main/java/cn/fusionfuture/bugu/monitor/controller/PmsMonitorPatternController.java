@@ -1,9 +1,15 @@
 package cn.fusionfuture.bugu.monitor.controller;
 
 
+import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPatternService;
+import cn.fusionfuture.bugu.monitor.vo.MonitorPlanPatternVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,7 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-08-24
  */
 @RestController
-@RequestMapping("/monitor/pms-monitor-pattern")
 public class PmsMonitorPatternController {
+
+    @Autowired
+    IPmsMonitorPatternService monitorPatternService;
+
+    @GetMapping(value = "/monitor-plan/pattern")
+    public List<MonitorPlanPatternVO> queryMonitorPlanPatter() {
+        return monitorPatternService.queryMonitorPlanPatter();
+    }
 
 }

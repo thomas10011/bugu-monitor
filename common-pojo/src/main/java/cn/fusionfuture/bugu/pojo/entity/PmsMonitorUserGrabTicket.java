@@ -1,8 +1,8 @@
 package cn.fusionfuture.bugu.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -18,19 +18,19 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author thomas
- * @since 2020-08-24
+ * @since 2020-09-11
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PmsMonitorPattern对象", description="")
-public class PmsMonitorPattern implements Serializable {
+@ApiModel(value="PmsMonitorUserGrabTicket对象", description="")
+public class PmsMonitorUserGrabTicket implements Serializable {
 
-    private static final long serialVersionUID = 4918450804902009803L;
+    private static final long serialVersionUID = 5526930902869566879L;
 
     @ApiModelProperty(value = "id")
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -40,8 +40,11 @@ public class PmsMonitorPattern implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @ApiModelProperty(value = "计划状态描述")
-    private String description;
+    @ApiModelProperty(value = "用户id")
+    private Long userId;
+
+    @ApiModelProperty(value = "监督计划id")
+    private Long monitorPlanId;
 
 
 }

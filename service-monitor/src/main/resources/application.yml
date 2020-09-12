@@ -3,6 +3,23 @@ server:
 spring:
   application:
     name: monitor-service
+
+  jackson:
+    # 日期格式（可根据自己的需求修改格式）
+    date-format: yyyy-MM-dd HH:mm:ss
+    generator:
+      # 将数值类型转换为字符串，解决long型精度丢失
+      write_numbers_as_strings: true
+
+  cloud:
+    alicloud:
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: thomas10011-image
+        calllback-url: http://88.88.88.88:12345
+      access-key: LTAI4G4FGT6RrRPkDDPFW1Rw
+      secret-key: SqP6v8fV5Uc60LGZOzbva3lP4itZSS
+
   datasource:
     url: jdbc:mysql://rm-bp17bfp26q7z51r10wo.mysql.rds.aliyuncs.com:3306/bugu_monitor_service?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
