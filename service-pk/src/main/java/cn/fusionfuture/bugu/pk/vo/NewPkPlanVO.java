@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="PkPlanVO对象", description="创建pk计划传入的对象")
-public class PkPlanVO {
+public class NewPkPlanVO {
 
     @ApiModelProperty(value = "计划id")
     private Long planId;
