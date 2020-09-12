@@ -1,9 +1,15 @@
 package cn.fusionfuture.bugu.pk.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import cn.fusionfuture.bugu.pk.service.IPmsPkPatternService;
+import cn.fusionfuture.bugu.pk.service.IPmsUserPkPlanService;
+import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.PkPlanPatternVO;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/pk/pms-user-pk-plan")
 public class PmsUserPkPlanController {
 
+    @Autowired
+    IPmsUserPkPlanService userPkPlanService;
+
+    @GetMapping(value = "/pk-plan/pk/{uid}")
+    PageInfo <BasicPkPlanVO> queryPkPlanByUserId(@PathVariable Long uid, @RequestParam Integer pn, @RequestParam Integer ps) {
+        return userPkPlanService.queryPkPlanByUserId(pn,ps,uid);
+    }
 }
