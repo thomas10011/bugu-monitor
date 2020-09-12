@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.message.mapper.MmsCommentRemindMapper;
 import cn.fusionfuture.bugu.message.mapper.MmsEnrollTypeMapper;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollType;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class TestCRUD {
         mmsCommentRemindMapper.insert(mmsCommentRemind);
 
         MmsCommentRemind m = iMmsCommentRemindService.getById(mmsCommentRemind.getId());
-        List<MmsCommentRemind> ls = mmsCommentRemindMapper.selectList(iMmsCommentRemindService.query().select("id"));
+        List<MmsCommentRemind> ls = mmsCommentRemindMapper.selectList(null);
         MmsEnrollType mmsEnrollType = new MmsEnrollType();
         mmsEnrollType.setDescription("test insert");
         mmsEnrollTypeMapper.insert(mmsEnrollType);
