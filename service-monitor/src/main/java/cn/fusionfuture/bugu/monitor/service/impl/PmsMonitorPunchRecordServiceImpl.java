@@ -1,7 +1,10 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
+import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchImageUrlMapper;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
+import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
+import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchImageUrl;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
@@ -29,8 +32,13 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     @Autowired
     PmsMonitorPunchImageUrlMapper monitorPunchImageUrlMapper;
 
+    @Autowired
+    PmsMonitorPlanMapper monitorPlanMapper;
+
     @Override
     public Long punch(Long planId, Long userId, String content, List<String> imageUrls) {
+
+        // 保存打卡记录
         PmsMonitorPunchRecord monitorPunchRecord = PmsMonitorPunchRecord.builder()
                 .userId(userId)
                 .monitorPlanId(planId)
@@ -42,8 +50,22 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
                 .punchTime(LocalDateTime.now())
                 .statusId(PunchStatus.PUNCHED)
                 .build();
-
         monitorPunchRecordMapper.insert(monitorPunchRecord);
+
+        // 保存图片路径
+        for (String imageUrl : imageUrls) {
+            monitorPunchImageUrlMapper.insert(
+                    new PmsMonitorPunchImageUrl()
+                            .setPunchId(monitorPunchRecord.getId())
+                            .setImageUrl(imageUrl));
+        }
+
+        // 对应的计划打卡次数加一
+        PmsMonitorPlan plan = monitorPlanMapper.selectById(planId);
+        plan.setPunchCount(plan.getPunchCount() + 1);
+        monitorPlanMapper.updateById(plan);
+
+        // 返回打卡记录的id
         return monitorPunchRecord.getId();
     }
 }
