@@ -5,7 +5,10 @@ import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
 import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
+import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,13 +32,12 @@ public class PmsMonitorPlanController {
         return monitorPlanService.createMonitorPlan(newMonitorPlanVO);
     }
 
-    @GetMapping(value = "testLongType")
-    public Long testLongType() {
-        return 1304393772401971208L;
-    }
 
     @GetMapping(value = "/monitor-plan/{uid}")
-    public List<BasicMonitorPlanVO> queryBasicMonitorPlanVO(@PathVariable(value = "uid") Long uid) {
-        return monitorPlanService.queryBasicMonitorPlanVO(uid);
+    public PageInfo<BasicMonitorPlanVO> queryBasicMonitorPlanVO(@Validated
+                                                                @PathVariable(value = "uid") Long uid,
+                                                                @RequestParam Integer pn,
+                                                                @RequestParam Integer ps) {
+        return monitorPlanService.queryBasicMonitorPlanVO(pn, ps, uid);
     }
 }

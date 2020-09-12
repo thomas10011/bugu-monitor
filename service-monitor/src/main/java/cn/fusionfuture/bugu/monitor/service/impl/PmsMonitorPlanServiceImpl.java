@@ -6,6 +6,8 @@ import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
@@ -37,7 +39,9 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
     }
 
     @Override
-    public List<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Long uid) {
-        return monitorPlanMapper.queryBasicMonitorPlanVO(uid);
+    public PageInfo<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Integer pn, Integer ps, Long uid) {
+        PageHelper.startPage(pn, ps);
+        return new PageInfo<>(monitorPlanMapper.queryBasicMonitorPlanVO(uid));
     }
+
 }

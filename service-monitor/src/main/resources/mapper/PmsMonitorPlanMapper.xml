@@ -34,6 +34,7 @@
         WHERE
             pms_monitor_plan.user_id = #{uid} AND
             pms_monitor_plan.monitor_pattern_id = pms_monitor_pattern.id AND
-            pms_monitor_plan.plan_status_id = pms_monitor_plan_status.id;
+            pms_monitor_plan.plan_status_id = pms_monitor_plan_status.id
+        ORDER BY pms_monitor_plan.id DESC
     </select>
 </mapper>

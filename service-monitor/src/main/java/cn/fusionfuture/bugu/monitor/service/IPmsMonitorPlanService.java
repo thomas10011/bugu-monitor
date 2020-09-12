@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -27,12 +28,14 @@ public interface IPmsMonitorPlanService extends IService<PmsMonitorPlan> {
     Long createMonitorPlan(NewMonitorPlanVO newMonitorPlanVO);
 
     /**
-     * 查询用户的所有监督计划
+     * 分页查询查询用户的所有监督计划
      * @author thomas
      * @since 2020/9/12 1:36 上午
-     * @param []
+     * @param pn 当前页码
+     * @param ps 页面大小
+     * @param uid 用户id
      * @return List<BasicMonitorPlanVO>
      **/
-    List<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Long uid);
+    PageInfo<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Integer pn, Integer ps, Long uid);
 
 }
