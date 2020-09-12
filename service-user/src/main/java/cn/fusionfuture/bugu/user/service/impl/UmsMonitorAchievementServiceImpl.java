@@ -17,4 +17,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class UmsMonitorAchievementServiceImpl extends ServiceImpl<UmsMonitorAchievementMapper, UmsMonitorAchievement> implements IUmsMonitorAchievementService {
 
+
 }

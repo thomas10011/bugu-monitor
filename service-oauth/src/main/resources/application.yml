@@ -1,0 +1,20 @@
+server:
+  port: 10007
+
+spring:
+  application:
+    name: oauth-service
+  cloud:
+    alicloud:
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: thomas10011-image
+        calllback-url: http://88.88.88.88:12345
+      access-key: LTAI4G4FGT6RrRPkDDPFW1Rw
+      secret-key: SqP6v8fV5Uc60LGZOzbva3lP4itZSS
+
+  redis:
+    database: 0
+    port: 6379
+    host: 47.101.158.49
+    password: Fusionfuture@365

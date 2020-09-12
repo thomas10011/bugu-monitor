@@ -1,12 +1,9 @@
 server:
-  port: 10000
+  port: 9527
 spring:
   application:
     name: gateway-service
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
     gateway:
       discovery:
         locator:
@@ -48,4 +45,34 @@ spring:
             - Path=/user-service/**
           filters:
             - StripPrefix=1
+        - id: oauth-service-routh
+          uri: lb://oauth-service
+          predicates:
+            - Path=/oauth-service/**
+          filters:
+            - StripPrefix=1
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+#          public-key-location: http://localhost:10007/rsa/publicKey
+          jwk-set-uri: http://localhost:10000/oauth-service/rsa/publicKey #配置RSA的公钥访问地址
 
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - /doc.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /swagger-ui.html
+#      - /oauth-service/rsa/publicKey
+#      - /oauth-service/oauth/token
+#      - /oauth-service/oauth/token_key
+#      - /oauth-service/oauth/check_token
+      - /**

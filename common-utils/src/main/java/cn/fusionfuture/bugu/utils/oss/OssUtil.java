@@ -27,7 +27,6 @@ import java.util.Map;
  * @description 上传文件至oss的工具类
  * @date 2020/8/19 12:56 下午
  */
-@ComponentScan
 @Component
 public class OssUtil {
 

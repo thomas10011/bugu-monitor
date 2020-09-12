@@ -31,7 +31,7 @@ public class AuthConstants {
     /**
      * 后台管理接口路径匹配
      */
-    public static final String ADMIN_URL_PATTERN = "/mall-admin/**";
+    public static final String ADMIN_URL_PATTERN = "/service-admin/**";
 
     /**
      * Redis缓存权限规则key

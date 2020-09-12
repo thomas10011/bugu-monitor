@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.store.mapper.SmsProductMapper">
 
+    <select id="queryProductVO" resultType="cn.fusionfuture.bugu.store.vo.ProductVO">
+        SELECT id, name, image_url, price, exchange_count FROM sms_product
+    </select>
 </mapper>

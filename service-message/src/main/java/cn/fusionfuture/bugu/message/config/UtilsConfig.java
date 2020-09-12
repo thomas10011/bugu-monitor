@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020/8/19 4:29 下午
  */
 @Configuration
-@ComponentScan("cn.fusionfuture.bugu.utils")
+@ComponentScan(value = "cn.fusionfuture.bugu.utils.oss")
 public class UtilsConfig {
+
 }

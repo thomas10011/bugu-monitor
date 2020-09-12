@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.25.31.179:8848
+      username: nacos
+      password: Fusionfuture@365
+      server-addr: 172.25.31.179:8848
+  redis:
+    database: 0
+    port: 6379
+    host: 172.17.48.96
+    password: Fusionfuture@365

@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 /**
  * @author thomas
  * @version 1.0
@@ -44,7 +46,7 @@ public class TestCRUD {
         mmsCommentRemindMapper.insert(mmsCommentRemind);
 
         MmsCommentRemind m = iMmsCommentRemindService.getById(mmsCommentRemind.getId());
-
+        List<MmsCommentRemind> ls = mmsCommentRemindMapper.selectList(iMmsCommentRemindService.query().select("id"));
         MmsEnrollType mmsEnrollType = new MmsEnrollType();
         mmsEnrollType.setDescription("test insert");
         mmsEnrollTypeMapper.insert(mmsEnrollType);

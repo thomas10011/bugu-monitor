@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.106.59.218:8848
+      username: nacos
+      password: Fusionfuture@365
+      server-addr: 39.106.59.218:8848

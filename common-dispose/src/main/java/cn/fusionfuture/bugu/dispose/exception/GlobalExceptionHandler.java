@@ -82,6 +82,7 @@ public class GlobalExceptionHandler {
 //            return handlerFeignException((FeignException) cause);
 //        }
 //        outPutError(Exception.class, CommonErrorCode.EXCEPTION, throwable);
+        log.info(cause.getMessage());
         return CommonResult.fail(ResultCode.INTERNAL_SERVER_ERROR);
     }
 

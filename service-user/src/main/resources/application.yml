@@ -4,9 +4,13 @@ spring:
   application:
     name: user-service
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
+    alicloud:
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: thomas10011-image
+        calllback-url: http://88.88.88.88:12345
+      access-key: LTAI4G4FGT6RrRPkDDPFW1Rw
+      secret-key: SqP6v8fV5Uc60LGZOzbva3lP4itZSS
   datasource:
     url: jdbc:mysql://rm-bp17bfp26q7z51r10wo.mysql.rds.aliyuncs.com:3306/bugu_user_service?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,5 +18,12 @@ spring:
     password: Pengyuyan520!
     type: com.alibaba.druid.pool.DruidDataSource   #配置阿里巴巴的Druid数据源
   redis:
-    host: 127.0.0.1
+    database: 0
     port: 6379
+    host: 47.101.158.49
+    password: Fusionfuture@365
+
+pagehelper:
+  helper-dialect: mysql # 配置使用哪种数据库语言，不配置的话pageHelper也会自动检测
+  reasonable: true # 配置分页参数合理化功能，默认是false。启用合理化时，如果pageNum<1会查询第一页，如果pageNum>总页数会查询最后一页；禁用合理化时，如果pageNum<1或pageNum>总页数会返回空数据。
+
