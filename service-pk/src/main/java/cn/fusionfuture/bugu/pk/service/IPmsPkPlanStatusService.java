@@ -1,7 +1,10 @@
 package cn.fusionfuture.bugu.pk.service;
 
+import cn.fusionfuture.bugu.pk.vo.PkPlanStatusVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlanStatus;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPmsPkPlanStatusService extends IService<PmsPkPlanStatus> {
 
+    /*
+     * TODO
+     * @author zws
+     * @since 2020/9/12 14:54
+     * @param []
+     * @return List<PkPlanStatusVO>
+     **/
+    List<PkPlanStatusVO> queryPkPlanStatus();
 }
