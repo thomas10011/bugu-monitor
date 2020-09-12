@@ -1,9 +1,9 @@
 package cn.fusionfuture.bugu.user.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -16,5 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user/ums-user")
 public class UmsUserController {
+
+
 
 }
