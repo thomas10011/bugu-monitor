@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author thomas
@@ -48,7 +48,7 @@ public class UmsUser implements Serializable {
     private String email;
 
     @ApiModelProperty(value = "用户性别")
-    private Boolean gender;
+    private Integer gender;
 
     @ApiModelProperty(value = "用户生日")
     private LocalDate birthday;

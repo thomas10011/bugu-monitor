@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author thomas
@@ -28,7 +28,12 @@ public class UmsUserAuthWechatController {
 
     @PostMapping("/wechat-bind")
     @Valid
-    WechatBindDetailsVO getWechatBind(@RequestBody HashMap<String, String> param) {
-        return iUmsUserAuthWechatService.getWechatBind(param.get("code"));
+    WechatBindDetailsVO getWechatBind(@RequestBody HashMap<String, Object> param) {
+        return iUmsUserAuthWechatService.getWechatBind(
+                (String) param.get("code"),
+                (String) param.get("username"),
+                (String) param.get("avatarUrl"),
+                (Integer) param.get("gender")
+        );
     }
 }

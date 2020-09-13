@@ -21,7 +21,4 @@ public class WechatBindDetailsVO {
 
     @ApiModelProperty(value = "用户的唯一标识")
     private String openid;
-
-    @ApiModelProperty(value = "若存在该用户，则返回该用户的id")
-    private String uid;
 }
