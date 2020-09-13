@@ -1,6 +1,9 @@
 package cn.fusionfuture.bugu.user.controller;
 
 
+import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.*;
 import cn.fusionfuture.bugu.user.service.IUmsUserService;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
 import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;

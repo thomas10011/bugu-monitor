@@ -1,9 +1,13 @@
 package cn.fusionfuture.bugu.pk.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
+import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.NewPkPlanVO;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -14,7 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-08-24
  */
 @RestController
-@RequestMapping("/pk/pms-pk-plan")
 public class PmsPkPlanController {
+
+    @Autowired
+    IPmsPkPlanService pkPlanService;
+
+    @PostMapping(value = "/pk-plan")
+    public Long createPkPlan(@RequestBody NewPkPlanVO newPkPlanVO) {
+        return pkPlanService.createPkPlan(newPkPlanVO);
+    }
+
+
+    @GetMapping(value = "/pk-plan/{uid}")
+    public PageInfo<BasicPkPlanVO> queryBasicPkPlanVO(@Validated
+                                                          @PathVariable(value = "uid") Long uid,
+                                                      @RequestParam Integer pn,
+                                                      @RequestParam Integer ps) {
+        return pkPlanService.queryBasicPkPlanVO(pn, ps, uid);
+    }
 
 }
