@@ -36,10 +36,6 @@ public class UmsUserFollow implements Serializable {
     @ApiModelProperty(value = "被关注的用户id")
     private Long followedUserId;
 
-    @ApiModelProperty(value = "关注信息是否有效")
-    @TableLogic
-    private Boolean isDelete;
-
     @ApiModelProperty(value = "创建的时间，时区为东八区")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
