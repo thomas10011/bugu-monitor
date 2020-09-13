@@ -20,7 +20,6 @@ import java.util.List;
  * @since 2020-08-24
  */
 @RestController
-@RequestMapping("/pk/pms-user-pk-plan")
 public class PmsUserPkPlanController {
 
     @Autowired

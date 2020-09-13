@@ -17,10 +17,10 @@ import java.util.List;
 public interface PmsUserPkPlanMapper extends BaseMapper<PmsUserPkPlan> {
 
     /*
-     * TODO
+     * 根据用户id查询pk计划
      * @author zws
-     * @since 2020/9/12 15:54
-     * @param []
+     * @since 2020/9/12 16:45
+     * @param [uid]
      * @return java.util.List<cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO>
      **/
     List<BasicPkPlanVO> queryPkPlanByUserId(Long uid);

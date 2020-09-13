@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PkPlanRecordVO对象", description="pk计划类型VO")
+@ApiModel(value="PkPlanPatternVO对象", description="pk模式VO")
 public class PkPlanPatternVO implements Serializable {
 
     private static final long serialVersionUID = 5176299205110529712L;

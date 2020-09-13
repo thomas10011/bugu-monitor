@@ -18,6 +18,7 @@
         WHERE
             pms_pk_plan.user_id = #{uid} AND
             pms_pk_plan.pk_pattern_id = pms_pk_pattern.id AND
-            pms_pk_plan.plan_status_id = pms_pk_plan_status.id;
+            pms_pk_plan.plan_status_id = pms_pk_plan_status.id
+        ORDER BY pms_pk_plan.id DESC
     </select>
 </mapper>

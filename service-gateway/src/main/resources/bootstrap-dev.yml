@@ -3,8 +3,8 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
-      #      username: nacos
-      #      password: Fusionfuture@365
+          # username: nacos
+          # password: nacos
       server-addr: localhost:8848
   redis:
     database: 0

@@ -36,9 +36,6 @@ public class BasicPkPlanVO {
     @ApiModelProperty(value = "计划类型描述")
     private String planPattern;
 
-    @ApiModelProperty(value = "已打卡次数")
-    private Integer punchCount;
-
     @ApiModelProperty(value = "打卡总次数")
     private Integer punchQuantity;
 

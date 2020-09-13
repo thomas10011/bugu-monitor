@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PkPlanRecordVO对象", description="pk计划状态VO")
+@ApiModel(value="PkPlanStatusVO对象", description="pk计划状态VO")
 public class PkPlanStatusVO implements Serializable {
 
     private static final long serialVersionUID = -7186178054085819876L;

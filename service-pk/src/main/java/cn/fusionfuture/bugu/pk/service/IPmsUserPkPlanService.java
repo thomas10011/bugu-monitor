@@ -18,11 +18,11 @@ import java.util.List;
 public interface IPmsUserPkPlanService extends IService<PmsUserPkPlan> {
 
     /*
-     * TODO
+     * 根据用户id查询计划
      * @author zws
-     * @since 2020/9/12 15:53
-     * @param []
-     * @return java.util.List<cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO>
+     * @since 2020/9/12 16:46
+     * @param [pn, ps, uid]
+     * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO>
      **/
     PageInfo<BasicPkPlanVO> queryPkPlanByUserId(Integer pn, Integer ps, Long uid);
 }
