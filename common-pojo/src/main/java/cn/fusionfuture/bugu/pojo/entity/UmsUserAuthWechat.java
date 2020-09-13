@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author thomas
@@ -28,8 +28,11 @@ public class UmsUserAuthWechat implements Serializable {
 
     private static final long serialVersionUID = 6659088657894760247L;
 
+    @ApiModelProperty(value = "id")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
+
     @ApiModelProperty(value = "用户id")
-    @TableId(value = "user_id", type = IdType.ASSIGN_ID)
     private Long userId;
 
     @ApiModelProperty(value = "微信用户唯一标识")
