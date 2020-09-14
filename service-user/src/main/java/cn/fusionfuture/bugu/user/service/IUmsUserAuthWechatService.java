@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUmsUserAuthWechatService extends IService<UmsUserAuthWechat> {
     WechatBindDetailsVO getWechatBind(String code, String userName, String avatarUrl, Integer gender);
+
+    Long getBindUid(String openid);
 }

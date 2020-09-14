@@ -74,4 +74,16 @@ public class UmsUserAuthWechatServiceImpl extends ServiceImpl<UmsUserAuthWechatM
 
         return wechatBindDetailsVO;
     }
+
+    @Override
+    public Long getBindUid(String openid) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("open_id", openid);
+        List<UmsUserAuthWechat> searchResult = umsUserAuthWechatMapper.selectByMap(map);
+        Long uid = null;
+        if(!searchResult.isEmpty()){
+            uid = searchResult.get(0).getUserId();
+        }
+        return uid;
+    }
 }
