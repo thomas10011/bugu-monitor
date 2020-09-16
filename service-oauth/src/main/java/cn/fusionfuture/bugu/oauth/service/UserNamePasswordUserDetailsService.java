@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.oauth.service;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  * @author thomas
@@ -11,6 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * @description TODO
  * @date 2020/8/21 10:38 下午
  */
-public interface IUserDetailsService extends UserDetailsService {
+public interface UserNamePasswordUserDetailsService extends UserDetailsService {
 
 }

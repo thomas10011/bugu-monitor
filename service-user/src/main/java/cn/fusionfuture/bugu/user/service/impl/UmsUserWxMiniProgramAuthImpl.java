@@ -5,7 +5,8 @@ import cn.fusionfuture.bugu.pojo.entity.UmsUser;
 import cn.fusionfuture.bugu.pojo.entity.UmsUserAuthWechat;
 import cn.fusionfuture.bugu.user.mapper.UmsUserAuthWechatMapper;
 import cn.fusionfuture.bugu.user.mapper.UmsUserMapper;
-import cn.fusionfuture.bugu.user.service.IUmsUserAuthWechatService;
+import cn.fusionfuture.bugu.user.service.IUmsUserWxMiniProgramAuthService;
+import cn.fusionfuture.bugu.user.vo.UserOauthVO;
 import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
@@ -13,6 +14,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +27,7 @@ import java.util.List;
  * @since 2020-08-17
  */
 @Service
-public class UmsUserAuthWechatServiceImpl extends ServiceImpl<UmsUserAuthWechatMapper, UmsUserAuthWechat> implements IUmsUserAuthWechatService {
+public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatMapper, UmsUserAuthWechat> implements IUmsUserWxMiniProgramAuthService {
     @Autowired
     UmsUserAuthWechatMapper umsUserAuthWechatMapper;
 
@@ -76,14 +78,20 @@ public class UmsUserAuthWechatServiceImpl extends ServiceImpl<UmsUserAuthWechatM
     }
 
     @Override
-    public Long getBindUid(String openid) {
+    public UserOauthVO getBindUid(String openid) {
+        UserOauthVO userOauthVO = new UserOauthVO();
         HashMap<String, Object> map = new HashMap<>();
         map.put("open_id", openid);
         List<UmsUserAuthWechat> searchResult = umsUserAuthWechatMapper.selectByMap(map);
         Long uid = null;
-        if(!searchResult.isEmpty()){
-            uid = searchResult.get(0).getUserId();
+        if(searchResult.isEmpty()){
+            return null;
         }
-        return uid;
+        List<String> grantedAuthorityList = new ArrayList<>();
+        grantedAuthorityList.add("admin");
+        grantedAuthorityList.add("user");
+        userOauthVO.setUserName(searchResult.get(0).getUserId().toString()).setPassword("123123").setGrantedAuthorityList(grantedAuthorityList);
+        userOauthVO.setIsEnabled(true);
+        return userOauthVO;
     }
 }

@@ -1,9 +1,17 @@
 package cn.fusionfuture.bugu.oauth.config;
 
+import cn.fusionfuture.bugu.oauth.component.WxMiniProgramAuthenticationProvider;
+import cn.fusionfuture.bugu.oauth.service.UserNamePasswordUserDetailsService;
+import cn.fusionfuture.bugu.oauth.service.WxMiniProgramUserDetailsService;
+import cn.fusionfuture.bugu.oauth.service.impl.UserNamePasswordUserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,9 +29,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    UserNamePasswordUserDetailsService userNamePasswordUserDetailsService;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public WxMiniProgramAuthenticationProvider wxMiniProgramAuthenticationProvider () {
+        WxMiniProgramAuthenticationProvider wxMiniProgramUserDetailsService = new WxMiniProgramAuthenticationProvider();
+        return wxMiniProgramUserDetailsService;
+    }
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userNamePasswordUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
     @Bean
@@ -47,5 +72,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();
+    }
+
+    /**
+     * 添加自定义的用于认证的provider
+     * @author thomas
+     * @since 2020/9/14 12:08 下午
+     * @param auth aut可以用于配置认证对象
+     * @return void
+     **/
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        super.configure(auth);
+        auth.authenticationProvider(wxMiniProgramAuthenticationProvider())
+            .authenticationProvider(daoAuthenticationProvider());
     }
 }

@@ -1,8 +1,9 @@
-package cn.fusionfuture.bugu.oauth.dto;
+package cn.fusionfuture.bugu.user.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -15,14 +16,16 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class UserDTO {
-
-    private Long id;
+@NoArgsConstructor
+@Accessors(chain = true)
+public class UserOauthVO {
 
     private String userName;
 
     private String password;
 
-    private List<GrantedAuthority> grantedAuthorityList;
+    private List<String> grantedAuthorityList;
+
+    private Boolean isEnabled;
 
 }

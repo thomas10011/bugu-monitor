@@ -1,6 +1,6 @@
 package cn.fusionfuture.bugu.oauth.config;
 
-import cn.fusionfuture.bugu.oauth.component.JwtTokenEnhancer;
+import cn.fusionfuture.bugu.oauth.service.UserNamePasswordUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +25,7 @@ import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
 import java.security.KeyPair;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -45,11 +46,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    @Qualifier(value = "userDetailsServiceImpl")
-    private UserDetailsService userDetailsService;
+    private UserNamePasswordUserDetailsService userNamePasswordUserDetailsService;
 
     @Autowired
-    private JwtTokenEnhancer jwtTokenEnhancer;
+    private TokenEnhancer jwtTokenEnhancer;
 
     @Autowired
     @Qualifier(value = "redisTokenService")
@@ -70,7 +70,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("client-app")
                 .secret(passwordEncoder.encode("123456"))
                 // 配置访问token的有效期
-                .accessTokenValiditySeconds(3600)
+                .accessTokenValiditySeconds(60)
                 // 配置刷新token的有效期
                 .refreshTokenValiditySeconds(864000)
                 // 配置redirect_uri，用于授权成功后跳转
@@ -99,14 +99,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
         List<TokenEnhancer> tokenEnhancers = new ArrayList<>();
         // 配置JWT的内容增强器
-        tokenEnhancers.add(jwtTokenEnhancer);
         tokenEnhancers.add(accessTokenConverter());
+        tokenEnhancers.add(jwtTokenEnhancer);
         enhancerChain.setTokenEnhancers(tokenEnhancers);
 
         endpoints
                 .authenticationManager(authenticationManager)
-                // 配置加载用户信息的服务
-                .userDetailsService(userDetailsService)
+                // 配置加载用户信息的服务 认证和刷新令牌都将调用该服务
+                .userDetailsService(userNamePasswordUserDetailsService)
                 .accessTokenConverter(accessTokenConverter())
                 .tokenEnhancer(enhancerChain)
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST)
@@ -138,7 +138,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+//        jwtAccessTokenConverter
         jwtAccessTokenConverter.setKeyPair(keyPair);
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("id", 123456);
+        jwtAccessTokenConverter.extractAccessToken("id", map);
+
         return jwtAccessTokenConverter;
     }
 

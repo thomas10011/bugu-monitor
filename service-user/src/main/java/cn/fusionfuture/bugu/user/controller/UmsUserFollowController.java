@@ -45,7 +45,7 @@ public class UmsUserFollowController {
         return "您已关注过该用户！";
     }
 
-    @ApiOperation(value = "关注用户")
+    @ApiOperation(value = "取消关注用户")
     @DeleteMapping(value = "/follow/{uid}")
     void unFollowUser(@PathVariable Long uid, @RequestParam Long fuid) {
         userFollowService.unFollowUser(uid, fuid);

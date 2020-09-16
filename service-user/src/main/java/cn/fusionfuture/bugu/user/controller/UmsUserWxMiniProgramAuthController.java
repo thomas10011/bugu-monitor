@@ -1,7 +1,8 @@
 package cn.fusionfuture.bugu.user.controller;
 
 
-import cn.fusionfuture.bugu.user.service.IUmsUserAuthWechatService;
+import cn.fusionfuture.bugu.user.service.IUmsUserWxMiniProgramAuthService;
+import cn.fusionfuture.bugu.user.vo.UserOauthVO;
 import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,9 @@ import java.util.HashMap;
  * @since 2020-08-17
  */
 @RestController
-public class UmsUserAuthWechatController {
+public class UmsUserWxMiniProgramAuthController {
     @Autowired
-    IUmsUserAuthWechatService iUmsUserAuthWechatService;
+    IUmsUserWxMiniProgramAuthService iUmsUserAuthWechatService;
 
     @PostMapping("/wechat-bind")
     @Valid
@@ -33,9 +34,8 @@ public class UmsUserAuthWechatController {
         );
     }
 
-    @GetMapping("/bind-info")
-    @Valid
-    Long getBindInfo(@RequestParam String openid) {
-        return iUmsUserAuthWechatService.getBindUid(openid);
+    @GetMapping(value = "/authentication/open-id")
+    UserOauthVO getBindUid(@RequestParam String openId) {
+        return iUmsUserAuthWechatService.getBindUid(openId);
     }
 }

@@ -13,8 +13,10 @@ spring:
       access-key: LTAI4G4FGT6RrRPkDDPFW1Rw
       secret-key: SqP6v8fV5Uc60LGZOzbva3lP4itZSS
 
-  redis:
-    database: 0
-    port: 6379
-    host: 47.101.158.49
-    password: Fusionfuture@365
+  jackson:
+    # 日期格式（可根据自己的需求修改格式）
+    date-format: yyyy-MM-dd HH:mm:ss
+    generator:
+      # 将数值类型转换为字符串，解决long型精度丢失
+      write_numbers_as_strings: true
+
