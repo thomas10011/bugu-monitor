@@ -39,11 +39,10 @@ public class WxMiniProgramAuthenticationProvider implements AuthenticationProvid
         // 假设用户名的值是openId
         String openId = authentication.getName();
 
-
         UserDetailsImpl userDetails = (UserDetailsImpl) userNamePasswordUserDetailsService.loadUserByUsername(openId);
 
         if(userDetails == null) {
-            throw new AuthenticationCredentialsNotFoundException("该用户尚未注册！");
+            throw new AuthenticationCredentialsNotFoundException("用户尚未注册！");
 //            return null;
         }
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), authentication.getCredentials(), userDetails.getAuthorities());

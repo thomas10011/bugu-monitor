@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.pojo.entity.UmsUser;
 import cn.fusionfuture.bugu.user.mapper.UmsUserMapper;
 import cn.fusionfuture.bugu.user.service.IUmsUserNamePasswordAuthService;
 import cn.fusionfuture.bugu.user.vo.UserOauthVO;
+import cn.fusionfuture.bugu.utils.auth.AuthUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,11 +48,8 @@ public class UmsUserNamePasswordAuthServiceImpl implements IUmsUserNamePasswordA
 
         userOauthVO.setUserName(userInfo.getId().toString());
         userOauthVO.setPassword(userInfo.getPassword());
-        userOauthVO.setIsEnabled(true);
-        List<String> grantedAuthorityList = new ArrayList<>();
-        grantedAuthorityList.add("admin");
-        grantedAuthorityList.add("user");
-        userOauthVO.setGrantedAuthorityList(grantedAuthorityList);
+        userOauthVO.setIsEnabled(userInfo.getIsEnabled());
+        userOauthVO.setGrantedAuthorityList(AuthUtil.authNumToList(userInfo.getPrivilege()));
 
         return userOauthVO;
     }

@@ -68,8 +68,6 @@ public class UserNamePasswordUserDetailsServiceImpl implements UserNamePasswordU
         else if (!securityUser.isCredentialsNonExpired()) {
             throw new CredentialsExpiredException("该账户的登录凭证已过期，请重新登录!");
         }
-
-
         return securityUser;
 
     }
@@ -79,7 +77,8 @@ public class UserNamePasswordUserDetailsServiceImpl implements UserNamePasswordU
         CommonResult<UserOauthVO> result = userFeignService.getBindUid(openId);
         UserOauthVO userVO = result.getData();
         if (userVO == null) {
-            throw new UsernameNotFoundException("用户名或密码错误！");
+//            throw new UsernameNotFoundException("用户名或密码错误！");
+            return null;
         }
         return new UserDetailsImpl(userVO);
 

@@ -83,5 +83,8 @@ public class UmsUser implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+    @ApiModelProperty(value = "用户账户是否被禁用")
+    private Boolean isEnabled;
+
 
 }
