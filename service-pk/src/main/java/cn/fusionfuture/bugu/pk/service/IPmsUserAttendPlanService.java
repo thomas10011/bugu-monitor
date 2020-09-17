@@ -1,11 +1,9 @@
 package cn.fusionfuture.bugu.pk.service;
 
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pojo.entity.PmsUserPkPlan;
+import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 /**
  * <p>
@@ -15,7 +13,7 @@ import java.util.List;
  * @author thomas
  * @since 2020-08-24
  */
-public interface IPmsUserPkPlanService extends IService<PmsUserPkPlan> {
+public interface IPmsUserAttendPlanService extends IService<PmsUserAttendPlan> {
 
     /*
      * 根据用户id查询计划

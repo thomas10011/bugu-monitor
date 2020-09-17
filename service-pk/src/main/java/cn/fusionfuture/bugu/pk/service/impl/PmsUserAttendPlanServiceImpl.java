@@ -1,16 +1,14 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pojo.entity.PmsUserPkPlan;
-import cn.fusionfuture.bugu.pk.mapper.PmsUserPkPlanMapper;
-import cn.fusionfuture.bugu.pk.service.IPmsUserPkPlanService;
+import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
+import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
+import cn.fusionfuture.bugu.pk.service.IPmsUserAttendPlanService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <p>
@@ -21,10 +19,10 @@ import java.util.List;
  * @since 2020-08-24
  */
 @Service
-public class PmsUserPkPlanServiceImpl extends ServiceImpl<PmsUserPkPlanMapper, PmsUserPkPlan> implements IPmsUserPkPlanService {
+public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanMapper, PmsUserAttendPlan> implements IPmsUserAttendPlanService {
 
     @Autowired
-    PmsUserPkPlanMapper userPkPlanMapper;
+    PmsUserAttendPlanMapper userPkPlanMapper;
 
     @Override
     public PageInfo<BasicPkPlanVO> queryPkPlanByUserId(Integer pn, Integer ps, Long uid){

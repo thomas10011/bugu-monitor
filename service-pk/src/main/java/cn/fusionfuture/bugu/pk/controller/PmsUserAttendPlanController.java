@@ -1,15 +1,11 @@
 package cn.fusionfuture.bugu.pk.controller;
 
 
-import cn.fusionfuture.bugu.pk.service.IPmsPkPatternService;
-import cn.fusionfuture.bugu.pk.service.IPmsUserPkPlanService;
+import cn.fusionfuture.bugu.pk.service.IPmsUserAttendPlanService;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.PkPlanPatternVO;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -20,10 +16,10 @@ import java.util.List;
  * @since 2020-08-24
  */
 @RestController
-public class PmsUserPkPlanController {
+public class PmsUserAttendPlanController {
 
     @Autowired
-    IPmsUserPkPlanService userPkPlanService;
+    IPmsUserAttendPlanService userPkPlanService;
 
     @GetMapping(value = "/pk-plan/pk/{uid}")
     PageInfo <BasicPkPlanVO> queryPkPlanByUserId(@PathVariable Long uid, @RequestParam Integer pn, @RequestParam Integer ps) {

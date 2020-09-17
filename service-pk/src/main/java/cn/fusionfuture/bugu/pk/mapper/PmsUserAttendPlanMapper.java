@@ -1,7 +1,7 @@
 package cn.fusionfuture.bugu.pk.mapper;
 
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pojo.entity.PmsUserPkPlan;
+import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author thomas
  * @since 2020-08-24
  */
-public interface PmsUserPkPlanMapper extends BaseMapper<PmsUserPkPlan> {
+public interface PmsUserAttendPlanMapper extends BaseMapper<PmsUserAttendPlan> {
 
     /*
      * 根据用户id查询pk计划

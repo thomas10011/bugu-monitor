@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.fusionfuture.bugu.pk.mapper.PmsUserPkPlanMapper">
+<mapper namespace="cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper">
 
     <select id="queryPkPlanByUserId" resultType="cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO">
     SELECT
@@ -16,9 +16,9 @@
         pms_pk_plan,
         pms_pk_pattern,
         pms_pk_plan_status,
-        pms_user_pk_plan
+        pms_user_attend_plan
     WHERE
-        pms_pk_plan.id IN ( SELECT pk_plan_id FROM pms_user_pk_plan WHERE pms_user_pk_plan.user_id = #{uid} )
+        pms_pk_plan.id IN ( SELECT pk_plan_id FROM pms_user_attend_plan WHERE pms_user_attend_plan.user_id = #{uid} )
         AND pms_pk_plan.pk_pattern_id = pms_pk_pattern.id
         AND pms_pk_plan.plan_status_id = pms_pk_plan_status.id
     ORDER BY

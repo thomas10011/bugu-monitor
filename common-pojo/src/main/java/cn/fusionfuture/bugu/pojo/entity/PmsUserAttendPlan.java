@@ -24,7 +24,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="PmsUserPkPlan对象", description="")
-public class PmsUserPkPlan implements Serializable {
+public class PmsUserAttendPlan implements Serializable {
 
     private static final long serialVersionUID = -2171642560092898188L;
 
@@ -47,7 +47,7 @@ public class PmsUserPkPlan implements Serializable {
     private Long pkPlanId;
 
     @ApiModelProperty(value = "打卡成功次数")
-    private Integer punchVictoryCount;
+    private Integer punchCount;
 
 
 }
