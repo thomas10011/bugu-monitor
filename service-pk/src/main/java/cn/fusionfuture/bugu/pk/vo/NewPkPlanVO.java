@@ -23,6 +23,9 @@ import java.time.LocalDateTime;
 @ApiModel(value="PkPlanVO对象", description="创建pk计划传入的对象")
 public class NewPkPlanVO {
 
+    @ApiModelProperty(value = "计划的id")
+    private Long id;
+
     @ApiModelProperty(value = "计划标题")
     private String name;
 

@@ -1,6 +1,8 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsUserAttendPlanService;
@@ -22,11 +24,16 @@ import org.springframework.stereotype.Service;
 public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanMapper, PmsUserAttendPlan> implements IPmsUserAttendPlanService {
 
     @Autowired
-    PmsUserAttendPlanMapper userPkPlanMapper;
+    PmsUserAttendPlanMapper userAttendPlanMapper;
 
     @Override
-    public PageInfo<BasicPkPlanVO> queryPkPlanByUserId(Integer pn, Integer ps, Long uid){
+    public PageInfo<BasicPkPlanVO> queryPkUserAttendPlanByUserId(Integer pn, Integer ps, Long uid){
         PageHelper.startPage(pn,ps);
-        return new PageInfo<>(userPkPlanMapper.queryPkPlanByUserId(uid));
+        return new PageInfo<>(userAttendPlanMapper.queryPkUserAttendPlanByUserId(uid));
     }
+
+//    @Override
+//    public BasicPkPlanVO queryPkUserAttendPlanByPlanId(Long pid){
+//        return new userPkPlanMapper.queryPkUserAttendPlanByPlanId(pid);
+//    }
 }
