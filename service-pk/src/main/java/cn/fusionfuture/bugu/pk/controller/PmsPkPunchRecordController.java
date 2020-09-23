@@ -1,9 +1,15 @@
 package cn.fusionfuture.bugu.pk.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
+import cn.fusionfuture.bugu.utils.oss.OssUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,4 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/pk/pms-pk-punch-record")
 public class PmsPkPunchRecordController {
 
+    @Autowired
+    IPmsPkPunchRecordService pkPunchRecordService;
+
+    @GetMapping("/policy")
+    public Map<String, String> getPolicy() throws IOException, ServletException {
+        return OssUtil.getPolicy("/punch");
+    }
+
+    @PostMapping("/punch")
+    public Long punch(@RequestParam Long planId,
+                      @RequestParam Long userId,
+                      @RequestParam String content,
+                      @RequestParam List<String> imageUrls) {
+        return pkPunchRecordService.punch(planId, userId, content, imageUrls);
+    }
 }

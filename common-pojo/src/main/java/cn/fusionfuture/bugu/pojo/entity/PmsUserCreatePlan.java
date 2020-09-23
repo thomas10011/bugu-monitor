@@ -28,7 +28,7 @@ public class PmsUserCreatePlan implements Serializable {
 
     private static final long serialVersionUID = -2171642560092898188L;
 
-    @ApiModelProperty(value = "表示一条用户与计划的记录")
+    @ApiModelProperty(value = "表示一条用户创建计划的记录")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 

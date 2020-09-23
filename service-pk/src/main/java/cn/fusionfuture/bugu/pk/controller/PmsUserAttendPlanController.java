@@ -19,10 +19,15 @@ import org.springframework.web.bind.annotation.*;
 public class PmsUserAttendPlanController {
 
     @Autowired
-    IPmsUserAttendPlanService userPkPlanService;
+    IPmsUserAttendPlanService userAttendPlanService;
 
-    @GetMapping(value = "/pk-plan/pk/{uid}")
-    PageInfo <BasicPkPlanVO> queryPkPlanByUserId(@PathVariable Long uid, @RequestParam Integer pn, @RequestParam Integer ps) {
-        return userPkPlanService.queryPkPlanByUserId(pn,ps,uid);
+    @GetMapping(value = "/pk-plan/attend-plan/{uid}")
+    PageInfo <BasicPkPlanVO> queryPkUserAttendPlanByUserId(@PathVariable Long uid, @RequestParam Integer pn, @RequestParam Integer ps) {
+        return userAttendPlanService.queryPkUserAttendPlanByUserId(pn,ps,uid);
     }
+
+//    @GetMapping(value = "/pk-plan/pk/{pid}")
+//    BasicPkPlanVO queryPkUserAttendPlanByPlanId(@PathVariable Long pid) {
+//        return userAttendPlanService.queryPkUserAttendPlanByPlanId(pid);
+//    }
 }

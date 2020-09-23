@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.pk.mapper;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.lettuce.core.dynamic.annotation.Param;
 
 import java.util.List;
 
@@ -23,5 +24,23 @@ public interface PmsUserAttendPlanMapper extends BaseMapper<PmsUserAttendPlan> {
      * @param [uid]
      * @return java.util.List<cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO>
      **/
-    List<BasicPkPlanVO> queryPkPlanByUserId(Long uid);
+    List<BasicPkPlanVO> queryPkUserAttendPlanByUserId(Long uid);
+
+    /*
+     * TODO 根据用户id和计划id选中用户参与计划表中的一条记录
+     * @author zws
+     * @since 2020/9/23 10:00
+     * @param [planId, userId] 
+     * @return cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan 
+     **/
+    PmsUserAttendPlan queryByUserIdAndPlanId(@Param("planId") Long planId, @Param("userId") Long userId);
+
+    /*
+     * 根据计划id查询一个pk计划
+     * @author zws
+     * @since 2020/9/21 11:35
+     * @param [uid, Pid]
+     * @return cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO
+     **/
+    //BasicPkPlanVO queryPkUserAttendPlanByPlanId(Long pid);
 }

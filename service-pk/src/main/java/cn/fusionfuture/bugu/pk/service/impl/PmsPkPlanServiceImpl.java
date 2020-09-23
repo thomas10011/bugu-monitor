@@ -1,11 +1,13 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import ch.qos.logback.classic.jmx.MBeanUtil;
+import cn.fusionfuture.bugu.pk.mapper.PmsUserCreatePlanMapper;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.NewPkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
+import cn.fusionfuture.bugu.pojo.entity.PmsUserCreatePlan;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -27,11 +29,19 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
     @Autowired
     PmsPkPlanMapper pkPlanMapper;
 
+    @Autowired
+    PmsUserCreatePlanMapper userCreatePlanMapper;
+
     @Override
     public Long createPkPlan(NewPkPlanVO newPkPlanVO) {
         PmsPkPlan pkPlan = new PmsPkPlan();
+        PmsUserCreatePlan pmsUserCreatePlan=new PmsUserCreatePlan();
         BeanUtils.copyProperties(newPkPlanVO, pkPlan);
         pkPlanMapper.insert(pkPlan);
+        pmsUserCreatePlan.setUserId(pkPlan.getUserId());
+        pmsUserCreatePlan.setPunchCount(0);
+        pmsUserCreatePlan.setPkPlanId(pkPlan.getId());
+        userCreatePlanMapper.insert(pmsUserCreatePlan);
         return pkPlan.getId();
     }
 
