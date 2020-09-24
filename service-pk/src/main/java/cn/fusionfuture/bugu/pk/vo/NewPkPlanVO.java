@@ -23,8 +23,8 @@ import java.time.LocalDateTime;
 @ApiModel(value="PkPlanVO对象", description="创建pk计划传入的对象")
 public class NewPkPlanVO {
 
-    @ApiModelProperty(value = "计划的id")
-    private Long id;
+//    @ApiModelProperty(value = "计划的id")
+//    private Long id;
 
     @ApiModelProperty(value = "计划标题")
     private String name;
@@ -44,8 +44,11 @@ public class NewPkPlanVO {
     @ApiModelProperty(value = "监督模式id")
     private Integer pkPatternId;
 
-    @ApiModelProperty(value = "监督人数")
+    @ApiModelProperty(value = "pk人数")
     private Integer pkQuantity;
+
+//    @ApiModelProperty(value = "已报名人数")
+//    private Integer enrolledQuantity;
 
     @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
@@ -65,8 +68,8 @@ public class NewPkPlanVO {
     @ApiModelProperty(value = "奖池奖金形式")
     private Boolean bonusType;
 
-    @ApiModelProperty(value = "监督者奖金总数")
-    private BigDecimal monitorBonus;
+    @ApiModelProperty(value = "pk者奖金总数")
+    private BigDecimal pkBonus;
 
     @ApiModelProperty(value = "投票者奖金总数")
     private BigDecimal voteBonus;
@@ -77,6 +80,6 @@ public class NewPkPlanVO {
     @ApiModelProperty(value = "是否上传至布谷金巢")
     private Boolean isUploadBugu;
 
-    @ApiModelProperty(value = "计划状态id")
-    private Integer planStatusId;
+//    @ApiModelProperty(value = "计划状态id")
+//    private Integer planStatusId;
 }

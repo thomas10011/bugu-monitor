@@ -24,4 +24,15 @@
     ORDER BY
         pms_pk_plan.id DESC
     </select>
+
+    <select id="queryByUserIdAndPlanId" resultType= "cn.fusionfuture.bugu.pk.vo.UserCreatePlanRecordVO">
+        SELECT
+            id,
+            punch_count
+        FROM
+            pms_user_create_plan
+        WHERE
+            pms_user_create_plan.user_id= #{userId}
+            AND pms_user_create_plan.pk_plan_id= #{planId}
+    </select>
 </mapper>

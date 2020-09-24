@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,7 +27,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="PmsUserPkPlan对象", description="")
-public class PmsUserAttendPlan implements Serializable {
+public class PmsUserAttendPlan extends Wrapper<PmsUserAttendPlan> implements Serializable {
 
     private static final long serialVersionUID = -2171642560092898188L;
 
@@ -50,4 +53,23 @@ public class PmsUserAttendPlan implements Serializable {
     private Integer punchCount;
 
 
+    @Override
+    public PmsUserAttendPlan getEntity() {
+        return null;
+    }
+
+    @Override
+    public MergeSegments getExpression() {
+        return null;
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public String getSqlSegment() {
+        return null;
+    }
 }

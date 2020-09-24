@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,7 +27,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="PmsUserPkPlan对象", description="")
-public class PmsUserCreatePlan implements Serializable {
+public class PmsUserCreatePlan extends Wrapper<PmsUserCreatePlan> implements Serializable {
 
     private static final long serialVersionUID = -2171642560092898188L;
 
@@ -49,5 +52,25 @@ public class PmsUserCreatePlan implements Serializable {
     @ApiModelProperty(value = "打卡成功次数")
     private Integer punchCount;
 
+
+    @Override
+    public PmsUserCreatePlan getEntity() {
+        return null;
+    }
+
+    @Override
+    public MergeSegments getExpression() {
+        return null;
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public String getSqlSegment() {
+        return null;
+    }
 
 }

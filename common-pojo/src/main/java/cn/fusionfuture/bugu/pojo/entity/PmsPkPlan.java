@@ -64,6 +64,9 @@ public class PmsPkPlan implements Serializable {
     @ApiModelProperty(value = "pk人数")
     private Integer pkQuantity;
 
+    @ApiModelProperty(value = "已报名人数")
+    private Integer enrolledQuantity;
+
     @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
 

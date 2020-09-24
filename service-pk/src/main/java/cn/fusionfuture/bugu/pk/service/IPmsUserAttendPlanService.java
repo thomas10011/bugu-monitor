@@ -25,6 +25,15 @@ public interface IPmsUserAttendPlanService extends IService<PmsUserAttendPlan> {
     PageInfo<BasicPkPlanVO> queryPkUserAttendPlanByUserId(Integer pn, Integer ps, Long uid);
 
     /*
+     * 根据用户id和计划id创建用户参与计划的记录
+     * @author zws
+     * @since 2020/9/23 14:19
+     * @param [userId, planId]
+     * @return java.lang.Long
+     **/
+    Long userAttendPlan(Long userId,Long planId);
+
+    /*
      * 根据用户id和计划id查询用户参与的一个pk计划
      * @author zws
      * @since 2020/9/21 11:42

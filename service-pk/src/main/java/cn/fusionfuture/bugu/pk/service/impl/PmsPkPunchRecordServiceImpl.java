@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.mapper.*;
+import cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
@@ -35,7 +36,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     PmsUserCreatePlanMapper userCreatePlanMapper;
 
     @Override
-    public Long punch(Long planId, Long userId, String content, List<String> imageUrls) {
+    public Long punch(Long userId, Long planId, String content, List<String> imageUrls) {
         // 保存打卡记录
         PmsPkPunchRecord pkPunchRecord = PmsPkPunchRecord.builder()
                 .userId(userId)
@@ -58,11 +59,18 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
                             .setImageUrl(imageUrl));
         }
 
-        // 对应的计划打卡次数加一
-//        PmsUserAttendPlan userAttendPlan = userAttendPlanMapper.selectById(userAttendPlanMapper.queryByUserIdAndPlanId(planId, userId).getId());
-//        userAttendPlan.setPunchCount(userAttendPlan.getPunchCount() + 1);
-//        userAttendPlanMapper.updateById(userAttendPlan);
-
+        // 对应的计划打卡次数加一(用户参加计划）
+        if(userAttendPlanMapper.queryByUserIdAndPlanId(userId,planId)!=null) {
+            PmsUserAttendPlan userAttendPlan = new PmsUserAttendPlan();
+            userAttendPlan.setPunchCount(userAttendPlanMapper.queryByUserIdAndPlanId(userId, planId).getPunchCount() + 1).setId(userAttendPlanMapper.queryByUserIdAndPlanId(userId, planId).getId());
+            userAttendPlanMapper.updateById(userAttendPlan);
+        }
+        //对应的计划打卡次数加一（用户创建计划）
+        if(userCreatePlanMapper.queryByUserIdAndPlanId(userId,planId)!=null) {
+            PmsUserCreatePlan userCreatePlan = new PmsUserCreatePlan();
+            userCreatePlan.setPunchCount(userCreatePlanMapper.queryByUserIdAndPlanId(userId, planId).getPunchCount() + 1).setId(userCreatePlanMapper.queryByUserIdAndPlanId(userId, planId).getId());
+            userCreatePlanMapper.updateById(userCreatePlan);
+        }
         // 返回打卡记录的id
         return pkPunchRecord.getId();
     }
