@@ -18,7 +18,7 @@ public interface IPmsMonitorUserGrabTicketService extends IService<PmsMonitorUse
     /*
      * TODO 用户通过抢票方式获得对监督计划进行监督和投票的机会
      * @author zws
-     * @since 2020/9/24 21:02
+     * @since 2020/9/24 21:21
      * @param [userId, planId] 
      * @return java.lang.Long 
      **/
