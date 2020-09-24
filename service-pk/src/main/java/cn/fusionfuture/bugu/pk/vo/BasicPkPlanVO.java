@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -19,7 +20,9 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="BasicPkPlanVO", description="BasicPkPlanVO")
-public class BasicPkPlanVO {
+public class BasicPkPlanVO implements Serializable {
+
+    private static final long serialVersionUID = 8502311760426262072L;
 
     @ApiModelProperty(value = "计划的id")
     private Long id;
