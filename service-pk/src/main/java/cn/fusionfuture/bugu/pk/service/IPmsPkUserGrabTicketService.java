@@ -13,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPmsPkUserGrabTicketService extends IService<PmsPkUserGrabTicket> {
 
+    /*
+     * 用户通过抢票方式获得对pk计划投票的机会
+     * @author zws
+     * @since 2020/9/23 14:26
+     * @param [userId, planId]
+     * @return java.lang.Long
+     **/
+    Long userGrabTicket(Long userId,Long planId);
+
 }

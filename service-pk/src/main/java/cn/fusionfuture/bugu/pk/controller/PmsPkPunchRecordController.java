@@ -32,10 +32,10 @@ public class PmsPkPunchRecordController {
     }
 
     @PostMapping("/punch")
-    public Long punch(@RequestParam Long planId,
-                      @RequestParam Long userId,
+    public Long punch(@RequestParam Long userId,
+                      @RequestParam Long planId,
                       @RequestParam String content,
                       @RequestParam List<String> imageUrls) {
-        return pkPunchRecordService.punch(planId, userId, content, imageUrls);
+        return pkPunchRecordService.punch(userId, planId, content, imageUrls);
     }
 }

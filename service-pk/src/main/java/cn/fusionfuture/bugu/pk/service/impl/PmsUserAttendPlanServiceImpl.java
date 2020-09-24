@@ -26,10 +26,39 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
     @Autowired
     PmsUserAttendPlanMapper userAttendPlanMapper;
 
+    @Autowired
+    PmsPkPlanMapper pkPlanMapper;
+
     @Override
     public PageInfo<BasicPkPlanVO> queryPkUserAttendPlanByUserId(Integer pn, Integer ps, Long uid){
         PageHelper.startPage(pn,ps);
         return new PageInfo<>(userAttendPlanMapper.queryPkUserAttendPlanByUserId(uid));
+    }
+
+    @Override
+    public Long userAttendPlan(Long userId,Long planId){
+
+        //用户参与pk计划记录
+        PmsUserAttendPlan userAttendPlanRecord=new PmsUserAttendPlan();
+        userAttendPlanRecord.setUserId(userId);
+        userAttendPlanRecord.setPkPlanId(planId);
+        userAttendPlanRecord.setPunchCount(0);
+        //如果已报名人数加1不超过pk人数，将计划的已报名人数加1，并保存至用户参加pk计划记录
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
+        if(pkPlan.getEnrolledQuantity()+1 <= pkPlan.getPkQuantity()){
+            //直接用selectbyid获得的对象在update时会失效
+            PmsPkPlan pkPlan1=new PmsPkPlan();
+            pkPlan1.setEnrolledQuantity(pkPlanMapper.selectById(planId).getEnrolledQuantity()).setId(planId);
+            pkPlanMapper.updateById(pkPlan1);
+            userAttendPlanMapper.insert(userAttendPlanRecord);
+            //返回用户参加pk计划记录id
+            return userAttendPlanRecord.getId();
+        }
+        //如果报名人数已满
+        else{
+            return null;
+        }
+
     }
 
 //    @Override

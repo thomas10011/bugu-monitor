@@ -1,10 +1,14 @@
 package cn.fusionfuture.bugu.pk.vo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
 
 /**
  * @author zws
@@ -24,4 +28,5 @@ public class UserCreatePlanRecordVO {
 
     @ApiModelProperty(value = "已打卡次数")
     private Integer punchCount;
+
 }

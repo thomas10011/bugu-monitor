@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -24,6 +26,12 @@ public class PmsUserAttendPlanController {
     @GetMapping(value = "/pk-plan/attend-plan/{uid}")
     PageInfo <BasicPkPlanVO> queryPkUserAttendPlanByUserId(@PathVariable Long uid, @RequestParam Integer pn, @RequestParam Integer ps) {
         return userAttendPlanService.queryPkUserAttendPlanByUserId(pn,ps,uid);
+    }
+
+    @PostMapping("/attend")
+    public Long punch(@RequestParam Long userId,
+                      @RequestParam Long planId) {
+        return userAttendPlanService.userAttendPlan(userId,planId);
     }
 
 //    @GetMapping(value = "/pk-plan/pk/{pid}")

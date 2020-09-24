@@ -17,7 +17,7 @@ import java.util.List;
 public interface PmsPkPlanMapper extends BaseMapper<PmsPkPlan> {
 
     /*
-     * 根据计划id查询pk计划
+     * 根据用户id查询pk计划
      * @author zws
      * @since 2020/9/12 16:44
      * @param [uid]

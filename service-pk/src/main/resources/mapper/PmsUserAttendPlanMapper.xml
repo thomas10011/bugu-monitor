@@ -27,14 +27,15 @@
 
     <select id="queryByUserIdAndPlanId" resultType= "cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO">
         SELECT
-            pms_user_attend_plan.id,
-            pms_user_attend_plan.punch_count
+            id,
+            punch_count
         FROM
             pms_user_attend_plan
         WHERE
             pms_user_attend_plan.user_id= #{userId}
             AND pms_user_attend_plan.user_id= #{planId}
     </select>
+
     <select id="queryPkUserAttendPlanByPlanId" resultType="cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO">
     SELECT
         pms_pk_plan.id,

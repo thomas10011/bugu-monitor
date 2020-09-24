@@ -31,5 +31,5 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
         * @param [planId, userId, content, imageUrls]
         * @return java.lang.Long
         **/
-        Long punch(Long planId, Long userId, String content, List<String> imageUrls);
+        Long punch(Long userId, Long planId, String content, List<String> imageUrls);
 }
