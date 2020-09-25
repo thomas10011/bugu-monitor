@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.user.vo;
 
+import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,15 +11,21 @@ import lombok.experimental.Accessors;
  * @author Aki
  * @version 1.0
  * @class WechatBindDetailsVO
- * @description 从微信服务器获取的用户ID
+ * @description 从后台服务器获取token
  * @date 2020/9/12 22:01
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="WechatBindDetails对象", description="")
-public class WechatBindDetailsVO {
+public class WechatBindDetailsVO{
 
-    @ApiModelProperty(value = "用户的唯一标识")
-    private String openid;
+    @ApiModelProperty(value = "uid")
+    private String uid;
+
+    @ApiModelProperty(value = "token")
+    private String token;
+
+    @ApiModelProperty(value = "refresh_token")
+    private String refreshToken;
 }
