@@ -1,10 +1,15 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
+import cn.fusionfuture.bugu.message.util.PageUtil;
+import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import cn.fusionfuture.bugu.message.mapper.MmsPunchRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +38,14 @@ public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper,
     }
 
     @Override
-    public List<PunchVO> getPunchRemind(Long id) {
+    public PageInfo<PunchVO> getPunchRemind(Integer pn, Integer ps, Long id) {
         Map<String, Object> columnMap = new HashMap<>();
         columnMap.put("receive_user_id", id);
-        List<MmsPunchRemind> mmsPunchRemindList = mmsPunchRemindMapper.selectByMap(columnMap);
+        PageHelper.startPage(pn, ps);
+        PageInfo<MmsPunchRemind> mmsPunchRemindList = new PageInfo<>(mmsPunchRemindMapper.selectByMap(columnMap));
         System.out.println("查询出数据");
         List<PunchVO> punchVOList = new ArrayList<>();
-        for (MmsPunchRemind mmsPunchRemind : mmsPunchRemindList) {
+        for (MmsPunchRemind mmsPunchRemind : mmsPunchRemindList.getList()) {
             PunchVO punchVO = new PunchVO();
             punchVO.setId(mmsPunchRemind.getId());
             punchVO.setSendTime(mmsPunchRemind.getCreateTime());
@@ -53,6 +59,9 @@ public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper,
 //          TODO:调用其他微服务获取完整数据
 
         }
-        return punchVOList;
+        PageUtil pageUtil = new PageUtil();
+        PageInfo<PunchVO> punchVOPageInfo = new PageInfo<>(punchVOList);
+        pageUtil.copyAtrr(mmsPunchRemindList,punchVOPageInfo);
+        return punchVOPageInfo;
     }
 }

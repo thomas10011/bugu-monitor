@@ -2,11 +2,15 @@ package cn.fusionfuture.bugu.message.service.impl;
 
 import cn.fusionfuture.bugu.message.mapper.MmsLikeRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsLikeRemindService;
+import cn.fusionfuture.bugu.message.util.PageUtil;
+import cn.fusionfuture.bugu.message.vo.EnrollVO;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,14 +46,15 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
     }
 
     @Override
-    public List<LikeVO> getLikeRemind(Long id) {
+    public PageInfo<LikeVO> getLikeRemind(Integer pn, Integer ps, Long id) {
 
         Map<String, Object> columnMap = new HashMap<>();
         columnMap.put("receive_user_id", id);
-        List<MmsLikeRemind> mmsLikeRemindList = mmsLikeRemindMapper.selectByMap(columnMap);
+        PageHelper.startPage(pn, ps);
+        PageInfo<MmsLikeRemind> mmsLikeRemindList = new PageInfo<>(mmsLikeRemindMapper.selectByMap(columnMap)) ;
         System.out.println("查询出数据");
         List<LikeVO> likeVOList = new ArrayList<>();
-        for (MmsLikeRemind mmsLikeRemind : mmsLikeRemindList) {
+        for (MmsLikeRemind mmsLikeRemind : mmsLikeRemindList.getList()) {
             LikeVO likeVO = new LikeVO();
             likeVO.setId(mmsLikeRemind.getId());
             likeVO.setSendTime(mmsLikeRemind.getCreateTime());
@@ -63,6 +68,9 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
 
             likeVOList.add(likeVO);
         }
-        return likeVOList;
+        PageUtil pageUtil = new PageUtil();
+        PageInfo<LikeVO> likeVOPageInfo = new PageInfo<>(likeVOList);
+        pageUtil.copyAtrr(mmsLikeRemindList,likeVOPageInfo);
+        return likeVOPageInfo;
     }
 }
