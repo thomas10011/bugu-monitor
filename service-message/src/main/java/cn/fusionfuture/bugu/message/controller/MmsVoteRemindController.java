@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.message.vo.VoteVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ public class MmsVoteRemindController {
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult<?>
      **/
     @PostMapping(value = "/vote-remind")
+    @ApiOperation(value = "发送投票提醒")
     public CommonResult<?> addVote (MmsVoteRemind mmsVoteRemind) {
         iMmsVoteRemindService.addVoteRemind(mmsVoteRemind);
         return CommonResult.success();
@@ -49,6 +51,7 @@ public class MmsVoteRemindController {
      * @return java.util.List<cn.fusionfuture.bugu.message.vo.VoteVO>
      **/
     @GetMapping(value = "/vote-remind")
+    @ApiOperation(value = "接收投票提醒")
     public PageInfo<?> getVote(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps,@RequestParam(name = "id") Long id){
         PageInfo<VoteVO> voteVOList = iMmsVoteRemindService.getVoteRemind(pn, ps, id);
         return voteVOList;

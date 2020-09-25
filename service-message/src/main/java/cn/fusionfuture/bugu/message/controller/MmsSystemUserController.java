@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.controller;
 import cn.fusionfuture.bugu.message.service.IMmsSystemUserService;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +33,7 @@ public class MmsSystemUserController {
      * @return com.github.pagehelper.PageInfo<?>
      **/
     @GetMapping(value = "/system-message")
+    @ApiOperation(value = "接收系统消息列表")
     public PageInfo<?> getMessageList(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps, @RequestParam(name = "id")Long id){
       PageInfo<MessageVO> messageVOList = iMmsSystemUserService.getAllSystem(pn, ps, id);
       return messageVOList;
@@ -48,6 +50,7 @@ public class MmsSystemUserController {
      * @return com.github.pagehelper.PageInfo<?>
      **/
     @GetMapping(value = "/system-detail")
+    @ApiOperation(value = "接收具体某个系统发送的消息")
     public PageInfo<?> getSystemMessage(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps,@RequestParam(name = "id")Long id,@RequestParam(name = "sid")Long sid){
         PageInfo<MessageVO> messageVOList = iMmsSystemUserService.getOneSystemAll(pn, ps,id,sid);
         return messageVOList;
