@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.transaction;
 
+import cn.fusionfuture.bugu.dispose.annotation.EnableGlobalDispose;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
+@EnableGlobalDispose
 @MapperScan("cn.fusionfuture.bugu.transaction.mapper")
 public class TransactionServiceApplication {
     public static void main(String[] args) {

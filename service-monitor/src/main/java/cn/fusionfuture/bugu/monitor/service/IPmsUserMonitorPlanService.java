@@ -1,7 +1,9 @@
 package cn.fusionfuture.bugu.monitor.service;
 
+import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserMonitorPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 /**
  * <p>
@@ -13,4 +15,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPmsUserMonitorPlanService extends IService<PmsUserMonitorPlan> {
 
+    /**
+     * 分页查询用户参与的监督计划
+     * @author thomas
+     * @since 2020/9/12 11:32 上午
+     * @param pn 页码编号
+     * @param ps 页面大小
+     * @param uid 用户id
+     * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO>
+     **/
+    PageInfo<BasicMonitorPlanVO> queryMonitorPlanByUserId(Integer pn, Integer ps, Long uid);
 }

@@ -2,12 +2,12 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 39.106.59.218:8848
-      username: nacos
-      password: Fusionfuture@365
-      server-addr: 39.106.59.218:8848
+        server-addr: localhost:8848
+      #      username: nacos
+      #      password: Fusionfuture@365
+      server-addr: localhost:8848
   redis:
     database: 0
     port: 6379
-    host: 47.101.158.49
-    password: Fusionfuture@3658:8848
+    host: localhost
+#    password: Fusionfuture@365

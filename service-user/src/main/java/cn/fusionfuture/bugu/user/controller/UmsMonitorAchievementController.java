@@ -24,21 +24,7 @@ import javax.validation.Valid;
  * @since 2020-08-17
  */
 @RestController
-@RequestMapping("/test")
 public class UmsMonitorAchievementController {
 
-    @Autowired
-    IUmsUserFollowService iUmsUserFollowService;
 
-    @GetMapping(value = "/swagger")
-    @Valid
-    PageInfo<?> testSwagger(@RequestParam Integer pn, @RequestParam Integer ps) {
-
-        return iUmsUserFollowService.queryUmsUserFollowByPage(pn, ps);
-    }
-
-    @GetMapping(value = "security")
-    String testSecurity() {
-        return "test seurity result";
-    }
 }

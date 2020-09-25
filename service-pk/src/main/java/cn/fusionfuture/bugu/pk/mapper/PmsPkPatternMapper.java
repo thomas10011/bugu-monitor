@@ -1,7 +1,10 @@
 package cn.fusionfuture.bugu.pk.mapper;
 
+import cn.fusionfuture.bugu.pk.vo.PkPlanPatternVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPattern;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-08-24
  */
 public interface PmsPkPatternMapper extends BaseMapper<PmsPkPattern> {
-
+    /*
+     * TODO
+     * @author zws
+     * @since 2020/9/12 11:41
+     * @param []
+     * @return java.util.List<cn.fusionfuture.bugu.pk.vo.PkPlanPatternVO>
+     **/
+    List<PkPlanPatternVO> queryPkPlanPattern();
 }

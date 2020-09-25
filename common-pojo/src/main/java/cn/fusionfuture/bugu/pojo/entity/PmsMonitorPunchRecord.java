@@ -8,9 +8,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 /**
  * <p>
@@ -23,6 +24,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@Builder
 @ApiModel(value="PmsMonitorPunchRecord对象", description="")
 public class PmsMonitorPunchRecord implements Serializable {
 
@@ -64,8 +66,8 @@ public class PmsMonitorPunchRecord implements Serializable {
     @ApiModelProperty(value = "打卡内容")
     private String content;
 
-    @ApiModelProperty(value = "打卡图片url")
-    private String imageUrl;
+//    @ApiModelProperty(value = "打卡图片url")
+//    private String imageUrl;
 
     @ApiModelProperty(value = "打卡时间")
     private LocalDateTime punchTime;

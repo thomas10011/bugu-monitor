@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: pk-service
+
+  jackson:
+    # 日期格式（可根据自己的需求修改格式）
+    date-format: yyyy-MM-dd HH:mm:ss
+    generator:
+      # 将数值类型转换为字符串，解决long型精度丢失
+      write_numbers_as_strings: true
   cloud:
     alicloud:
       oss:

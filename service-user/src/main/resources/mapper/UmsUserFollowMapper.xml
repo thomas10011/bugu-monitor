@@ -2,4 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.user.mapper.UmsUserFollowMapper">
 
+    <select id="queryUmsUserFollowByPage" resultType="cn.fusionfuture.bugu.user.vo.UserFollowVO">
+        SELECT
+        id, user_name,avatar_url, fans_quantity
+        FROM
+        ums_user
+        WHERE
+        id IN (
+            SELECT
+            followed_user_id
+            FROM
+            ums_user_follow
+            WHERE
+            user_id = #{uid}
+            ORDER BY ums_user_follow.id DESC
+        )
+    </select>
+
+    <select id="queryUmsUserFansByPage" resultType="cn.fusionfuture.bugu.user.vo.UserFollowVO">
+        SELECT
+        id, user_name,avatar_url, fans_quantity
+        FROM
+        ums_user
+        WHERE
+        id IN (
+            SELECT
+            user_id
+            FROM
+            ums_user_follow
+            WHERE
+            followed_user_id = #{uid}
+            ORDER BY ums_user_follow.id DESC
+        )
+    </select>
 </mapper>

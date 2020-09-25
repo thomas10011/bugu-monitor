@@ -34,7 +34,7 @@ public class UserDetailsVO {
     private Integer fansQuantity;
 
     @ApiModelProperty(value = "性别")
-    private Boolean gender;
+    private Integer gender;
 
     @ApiModelProperty(value = "羽毛数")
     private BigDecimal featherBalance;

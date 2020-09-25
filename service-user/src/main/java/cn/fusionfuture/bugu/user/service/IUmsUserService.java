@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.user.service;
 
 import cn.fusionfuture.bugu.pojo.entity.UmsUser;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
+import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -15,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IUmsUserService extends IService<UmsUser> {
 
     UserDetailsVO getPersonalDetails(Long id);
+
+
 }

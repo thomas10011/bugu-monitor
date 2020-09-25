@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanStatusMapper">
+    <select id="queryMonitorPlanStatus" resultType="cn.fusionfuture.bugu.monitor.vo.MonitorPlanStatusVO">
+        select id, description from pms_monitor_plan_status
+    </select>
+</mapper>

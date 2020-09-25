@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author thomas
@@ -48,7 +48,7 @@ public class UmsUser implements Serializable {
     private String email;
 
     @ApiModelProperty(value = "用户性别")
-    private Boolean gender;
+    private Integer gender;
 
     @ApiModelProperty(value = "用户生日")
     private LocalDate birthday;
@@ -82,6 +82,9 @@ public class UmsUser implements Serializable {
     @ApiModelProperty(value = "更新的时间，时区为东八区")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
+    @ApiModelProperty(value = "用户账户是否被禁用")
+    private Boolean isEnabled;
 
 
 }

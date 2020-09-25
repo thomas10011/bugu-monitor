@@ -40,7 +40,7 @@ public class PmsPkPlanStatus implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @ApiModelProperty(value = "pk模式描述")
+    @ApiModelProperty(value = "pk计划状态描述")
     private String description;
 
 

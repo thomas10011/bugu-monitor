@@ -1,9 +1,14 @@
 package cn.fusionfuture.bugu.monitor.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import cn.fusionfuture.bugu.monitor.service.IPmsUserMonitorPlanService;
+import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
+import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -14,7 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-08-24
  */
 @RestController
-@RequestMapping("/monitor/pms-user-monitor-plan")
+@Api(tags = "根据用户id查询用户参与的监督计划")
 public class PmsUserMonitorPlanController {
+
+    @Autowired
+    IPmsUserMonitorPlanService userMonitorPlanService;
+
+
+    @GetMapping(value = "/monitor-plan/monitor/{uid}")
+    @ApiOperation(value = "根据用户id查询用户参与的监督计划")
+    PageInfo<BasicMonitorPlanVO> queryMonitorPlanByUserId(@ApiParam(value = "用户的id") @PathVariable Long uid,
+                                                          @ApiParam(value = "查询的页码") @RequestParam Integer pn,
+                                                          @ApiParam(value = "查询的页面大小") @RequestParam Integer ps) {
+        return userMonitorPlanService.queryMonitorPlanByUserId(pn, ps, uid);
+    }
 
 }

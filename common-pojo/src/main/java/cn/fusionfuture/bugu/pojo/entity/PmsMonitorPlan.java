@@ -45,6 +45,9 @@ public class PmsMonitorPlan implements Serializable {
     @ApiModelProperty(value = "计划标题")
     private String name;
 
+    @ApiModelProperty(value = "创建者用户id")
+    private Long userId;
+
     @ApiModelProperty(value = "计划描述")
     private String description;
 
@@ -75,8 +78,11 @@ public class PmsMonitorPlan implements Serializable {
     @ApiModelProperty(value = "打卡周期")
     private Integer punchCycle;
 
+    @ApiModelProperty(value = "已打卡次数")
+    private Integer punchCount;
+
     @ApiModelProperty(value = "奖池奖金形式")
-    private String bonusType;
+    private Boolean bonusType;
 
     @ApiModelProperty(value = "监督者奖金总数")
     private BigDecimal monitorBonus;

@@ -1,19 +1,27 @@
 package cn.fusionfuture.bugu.user.service.impl;
 
+import cn.fusionfuture.bugu.pojo.constants.MiniProgramConstants;
 import cn.fusionfuture.bugu.pojo.entity.UmsUser;
+import cn.fusionfuture.bugu.pojo.entity.UmsUserAuthWechat;
+import cn.fusionfuture.bugu.user.mapper.UmsUserAuthWechatMapper;
 import cn.fusionfuture.bugu.user.mapper.UmsUserMapper;
 import cn.fusionfuture.bugu.user.service.IUmsUserService;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
+import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author thomas

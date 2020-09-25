@@ -6,6 +6,9 @@ import cn.fusionfuture.bugu.store.service.ISmsProductService;
 import cn.fusionfuture.bugu.store.vo.NewProductVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -28,6 +31,7 @@ import java.util.Objects;
  * @since 2020-08-17
  */
 @RestController
+@Api(tags = "商品的相关操作")
 public class SmsProductController {
 
     @Autowired
@@ -45,7 +49,8 @@ public class SmsProductController {
      * @since 2020/9/7 3:26 下午
      **/
     @PostMapping(value = "/product")
-    public Long createProduct(@Valid @RequestBody NewProductVO productVO) {
+    @ApiOperation(value = "上架一个新的商品")
+    public Long createProduct(@Valid @ApiParam(value = "商品的所有信息") @RequestBody NewProductVO productVO) {
         return productService.createProduct(productVO);
     }
 
@@ -56,6 +61,7 @@ public class SmsProductController {
      * @return java.util.Map<java.lang.String,java.lang.String>
      **/
     @GetMapping(value = "/product/policy")
+    @ApiOperation(value = "获取oss的policy用于上传图片")
     public Map<String, String> getPolicy() throws IOException, ServletException {
         System.out.println(request.getHeader("uid"));
         return OssUtil.getPolicy("testDir/");
@@ -70,12 +76,14 @@ public class SmsProductController {
      * @return com.github.pagehelper.PageInfo<?>
      **/
     @GetMapping(value = "/products")
+    @ApiOperation(value = "分页查询商品的简略信息")
     public PageInfo<?> getProducts(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps) {
         return productService.queryProductByPage(pn, ps);
     }
 
     @GetMapping(value = "/product/{id}")
-    public SmsProduct getProduct(@PathVariable(value = "id") Long id) {
+    @ApiOperation(value = "根据id查询商品的详细信息")
+    public SmsProduct getProduct(@ApiParam(value = "商品的id") @PathVariable(name = "id") Long id) {
         return productService.getById(id);
     }
 

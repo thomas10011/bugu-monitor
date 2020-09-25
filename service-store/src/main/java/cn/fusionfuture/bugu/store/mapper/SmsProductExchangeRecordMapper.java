@@ -20,6 +20,7 @@ public interface SmsProductExchangeRecordMapper extends BaseMapper<SmsProductExc
      * 分页查询兑换记录
      * @author thomas
      * @since 2020/9/9 9:32 上午
+     * @param uid 用户id
      * @return java.util.List<cn.fusionfuture.bugu.store.vo.ExchangeRecordVO>
      **/
     List<ExchangeRecordVO> queryExchangeRecordVO(Long uid);
