@@ -74,6 +74,8 @@ public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatM
             // 更新绑定表的sessionKey
             searchResult.get(0).setSessionKey(sessionKey);
             uid = searchResult.get(0).getUserId();
+            // 更新用户表的avatarUrl
+            umsUserMapper.selectById(uid).setAvatarUrl(avatarUrl);
         }
 
         HashMap<String,Object> loginParams = new HashMap<>();

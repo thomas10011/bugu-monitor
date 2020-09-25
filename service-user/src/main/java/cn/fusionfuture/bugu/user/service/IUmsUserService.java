@@ -5,6 +5,8 @@ import cn.fusionfuture.bugu.pojo.entity.UmsUser;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.HashMap;
+
 /**
  * <p>
  *  服务类
@@ -22,5 +24,7 @@ public interface IUmsUserService extends IService<UmsUser> {
      * @return  对应的用户信息
      */
     UserDetailsVO getPersonalDetails(Long id, Long uid);
+
+    HashMap<String,String> getDetailsForMessage(Long id);
 
 }

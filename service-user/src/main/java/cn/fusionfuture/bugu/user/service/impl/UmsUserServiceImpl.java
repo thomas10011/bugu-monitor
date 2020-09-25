@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  * <p>
@@ -37,7 +38,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 
         if (id.equals(uid)) {
             userDetailsVO.setName(umsUser.getUserName());
-            userDetailsVO.setAvator(umsUser.getAvatarUrl());
+            userDetailsVO.setAvatar(umsUser.getAvatarUrl());
             userDetailsVO.setFollowQuantity(umsUser.getFollowQuantity());
             userDetailsVO.setFansQuantity(umsUser.getFansQuantity());
             userDetailsVO.setGender(umsUser.getGender());
@@ -49,7 +50,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
             return userDetailsVO;
         } else {
             userDetailsVO.setName(umsUser.getUserName());
-            userDetailsVO.setAvator(umsUser.getAvatarUrl());
+            userDetailsVO.setAvatar(umsUser.getAvatarUrl());
             userDetailsVO.setFollowQuantity(umsUser.getFollowQuantity());
             userDetailsVO.setFansQuantity(umsUser.getFansQuantity());
             userDetailsVO.setGender(umsUser.getGender());
@@ -59,5 +60,14 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 
             return userDetailsVO;
         }
+    }
+
+    @Override
+    public HashMap<String, String> getDetailsForMessage(Long id) {
+        UmsUser umsUser = umsUserMapper.selectById(id);
+        HashMap<String, String> map = new HashMap<>(2);
+        map.put("userName",umsUser.getUserName());
+        map.put("avatarUrl",umsUser.getAvatarUrl());
+        return map;
     }
 }

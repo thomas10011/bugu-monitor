@@ -26,7 +26,7 @@ public class UserDetailsVO {
     private String name;
 
     @ApiModelProperty(value = "用户头像")
-    private String avator;
+    private String avatar;
 
     @ApiModelProperty(value = "关注数")
     private Integer followQuantity;
