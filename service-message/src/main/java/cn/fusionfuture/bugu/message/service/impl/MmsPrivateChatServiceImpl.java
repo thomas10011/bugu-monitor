@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.message.service.impl;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
+import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
 import cn.fusionfuture.bugu.message.mapper.MmsPrivateChatMapper;
 import cn.fusionfuture.bugu.message.service.IMmsPrivateChatService;
@@ -95,11 +96,18 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
 
     @Override
     public PageInfo<MessageVO> getOneUserAllChat(Integer pn, Integer ps, Long id, Long sendId) {
-        Map<String,Object> columnMap = new HashMap<>();
-        columnMap.put("receive_user_id",id);
-        columnMap.put("send_user_id",sendId);
+        QueryWrapper<MmsPrivateChat> queryWrapper = new QueryWrapper<MmsPrivateChat>();
+        queryWrapper.eq("receive_user_id", id);
+        queryWrapper.eq("is_hidden",false);
+        queryWrapper.eq("send_user_id",sendId);
+
         PageHelper.startPage(pn, ps);
-        PageInfo<MmsPrivateChat> mmsReceivePrivateChatList = new PageInfo<>(mmsPrivateChatMapper.selectByMap(columnMap)) ;
+        PageInfo<MmsPrivateChat> mmsReceivePrivateChatList = new PageInfo<>(mmsPrivateChatMapper.selectList(queryWrapper)) ;
+
+        MmsPrivateChat updateEntity = new MmsPrivateChat();
+        updateEntity.setIsChecked(true);
+        mmsPrivateChatMapper.update(updateEntity,queryWrapper);
+
         List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsPrivateChat mmsPrivateChat:mmsReceivePrivateChatList.getList()) {
             MessageVO messageVO = new MessageVO();

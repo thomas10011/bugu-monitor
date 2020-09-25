@@ -3,9 +3,11 @@ package cn.fusionfuture.bugu.message.service.impl;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
+import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import cn.fusionfuture.bugu.message.mapper.MmsPunchRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -39,11 +41,18 @@ public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper,
 
     @Override
     public PageInfo<PunchVO> getPunchRemind(Integer pn, Integer ps, Long id) {
-        Map<String, Object> columnMap = new HashMap<>();
-        columnMap.put("receive_user_id", id);
+        QueryWrapper<MmsPunchRemind> queryWrapper = new QueryWrapper<MmsPunchRemind>();
+        queryWrapper.eq("receive_user_id", id);
+        queryWrapper.eq("is_hidden",false);
+
         PageHelper.startPage(pn, ps);
-        PageInfo<MmsPunchRemind> mmsPunchRemindList = new PageInfo<>(mmsPunchRemindMapper.selectByMap(columnMap));
+        PageInfo<MmsPunchRemind> mmsPunchRemindList = new PageInfo<>(mmsPunchRemindMapper.selectList(queryWrapper));
         System.out.println("查询出数据");
+
+        MmsPunchRemind updateEntity = new MmsPunchRemind();
+        updateEntity.setIsChecked(true);
+        mmsPunchRemindMapper.update(updateEntity,queryWrapper);
+
         List<PunchVO> punchVOList = new ArrayList<>();
         for (MmsPunchRemind mmsPunchRemind : mmsPunchRemindList.getList()) {
             PunchVO punchVO = new PunchVO();

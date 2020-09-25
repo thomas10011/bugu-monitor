@@ -9,6 +9,7 @@ import cn.fusionfuture.bugu.pojo.entity.MmsSystemMessage;
 import cn.fusionfuture.bugu.pojo.entity.MmsSystemUser;
 import cn.fusionfuture.bugu.message.mapper.MmsSystemUserMapper;
 import cn.fusionfuture.bugu.message.service.IMmsSystemUserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,10 +82,17 @@ public class MmsSystemUserServiceImpl extends ServiceImpl<MmsSystemUserMapper, M
 
     @Override
     public PageInfo<MessageVO> getOneSystemAll(Integer pn, Integer ps,Long id, Long sendId) {
-        Map<String,Object> columnMap = new HashMap<>();
-        columnMap.put("receive_user_id",id);
-        columnMap.put("send_user_id",sendId);
-        PageInfo<MmsSystemUser> mmsSystemUserList =new PageInfo<>(mmsSystemUserMapper.selectByMap(columnMap)) ;
+        QueryWrapper<MmsSystemUser> queryWrapper = new QueryWrapper<MmsSystemUser>();
+        queryWrapper.eq("receive_user_id", id);
+        queryWrapper.eq("is_hidden",false);
+        queryWrapper.eq("send_user_id",sendId);
+
+        PageInfo<MmsSystemUser> mmsSystemUserList =new PageInfo<>(mmsSystemUserMapper.selectList(queryWrapper)) ;
+
+        MmsSystemUser updateEntity = new MmsSystemUser();
+        updateEntity.setIsChecked(true);
+        mmsSystemUserMapper.update(updateEntity,queryWrapper);
+
         List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsSystemUser mmsSystemUser:mmsSystemUserList.getList()) {
             MessageVO messageVO = new MessageVO();

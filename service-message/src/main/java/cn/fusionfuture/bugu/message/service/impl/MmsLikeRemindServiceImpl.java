@@ -6,8 +6,10 @@ import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.EnrollVO;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
+import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -48,10 +50,17 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
     @Override
     public PageInfo<LikeVO> getLikeRemind(Integer pn, Integer ps, Long id) {
 
-        Map<String, Object> columnMap = new HashMap<>();
-        columnMap.put("receive_user_id", id);
+        QueryWrapper<MmsLikeRemind> queryWrapper = new QueryWrapper<MmsLikeRemind>();
+        queryWrapper.eq("receive_user_id", id);
+        queryWrapper.eq("is_hidden",false);
+
         PageHelper.startPage(pn, ps);
-        PageInfo<MmsLikeRemind> mmsLikeRemindList = new PageInfo<>(mmsLikeRemindMapper.selectByMap(columnMap)) ;
+        PageInfo<MmsLikeRemind> mmsLikeRemindList = new PageInfo<>(mmsLikeRemindMapper.selectList(queryWrapper)) ;
+
+        MmsLikeRemind updateEntity = new MmsLikeRemind();
+        updateEntity.setIsChecked(true);
+        mmsLikeRemindMapper.update(updateEntity,queryWrapper);
+
         System.out.println("查询出数据");
         List<LikeVO> likeVOList = new ArrayList<>();
         for (MmsLikeRemind mmsLikeRemind : mmsLikeRemindList.getList()) {

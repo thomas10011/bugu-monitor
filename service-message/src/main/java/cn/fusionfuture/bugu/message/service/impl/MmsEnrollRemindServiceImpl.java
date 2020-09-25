@@ -8,6 +8,7 @@ import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import cn.fusionfuture.bugu.message.mapper.MmsEnrollRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsEnrollRemindService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -58,12 +59,16 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
     **/
     @Override
     public PageInfo<EnrollVO> getEnrollRemind(Integer pn, Integer ps, Long receiveUserId){
-
-      Map<String,Object> columnMap = new HashMap<>();
-      columnMap.put("receive_user_id",receiveUserId);
+      QueryWrapper<MmsEnrollRemind> queryWrapper = new QueryWrapper<MmsEnrollRemind>();
+      queryWrapper.eq("receive_user_id", receiveUserId);
+      queryWrapper.eq("is_hidden",false);
       PageHelper.startPage(pn, ps);
-      PageInfo<MmsEnrollRemind> mmsEnrollRemindList =new PageInfo<>(mmsEnrollRemindMapper.selectByMap(columnMap)) ;
-      System.out.println("查询出数据");
+      PageInfo<MmsEnrollRemind> mmsEnrollRemindList =new PageInfo<>(mmsEnrollRemindMapper.selectList(queryWrapper)) ;
+
+//      更新为已读
+      MmsEnrollRemind updateEntity = new MmsEnrollRemind();
+      updateEntity.setIsChecked(true);
+      mmsEnrollRemindMapper.update(updateEntity,queryWrapper);
       List<EnrollVO> enrollVOList = new ArrayList<>();
       for(MmsEnrollRemind mmsEnrollRemind:mmsEnrollRemindList.getList()){
           EnrollVO enrollVO = new EnrollVO();
