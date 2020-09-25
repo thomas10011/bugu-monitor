@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.service;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -16,6 +17,6 @@ import java.util.List;
 public interface IMmsLikeRemindService extends IService<MmsLikeRemind> {
 
     void addLikeRemind(MmsLikeRemind mmsLikeRemind);
-    List<LikeVO> getLikeRemind(Long id);
+    PageInfo<LikeVO> getLikeRemind(Integer pn, Integer ps, Long id);
 
 }
