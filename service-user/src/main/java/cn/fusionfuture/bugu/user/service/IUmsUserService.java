@@ -1,8 +1,8 @@
 package cn.fusionfuture.bugu.user.service;
 
+import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.UmsUser;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
-import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -15,7 +15,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUmsUserService extends IService<UmsUser> {
 
-    UserDetailsVO getPersonalDetails(Long id);
-
+    /**
+     *
+     * @param id    请求获取的目标用户
+     * @param uid   当前发送请求登录的用户
+     * @return  对应的用户信息
+     */
+    UserDetailsVO getPersonalDetails(Long id, Long uid);
 
 }
