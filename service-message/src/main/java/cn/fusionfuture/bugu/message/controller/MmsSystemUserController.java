@@ -3,7 +3,9 @@ package cn.fusionfuture.bugu.message.controller;
 import cn.fusionfuture.bugu.message.service.IMmsSystemUserService;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import java.util.List;
  * @date 2020/8/27 15:23
  */
 @RestController
+@Api(tags="系统消息提醒")
 public class MmsSystemUserController {
 
     @Autowired
@@ -34,7 +37,7 @@ public class MmsSystemUserController {
      **/
     @GetMapping(value = "/system-message")
     @ApiOperation(value = "接收系统消息列表")
-    public PageInfo<?> getMessageList(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps, @RequestParam(name = "id")Long id){
+    public PageInfo<?> getMessageList(@ApiParam(value = "当前所在页") @RequestParam(defaultValue = "1") Integer pn, @ApiParam(value = "页面size") @RequestParam(defaultValue = "5") Integer ps, @ApiParam(value = "接收者的id，即当前用户id") @RequestParam(name = "id") Long id){
       PageInfo<MessageVO> messageVOList = iMmsSystemUserService.getAllSystem(pn, ps, id);
       return messageVOList;
     }
@@ -51,7 +54,7 @@ public class MmsSystemUserController {
      **/
     @GetMapping(value = "/system-detail")
     @ApiOperation(value = "接收具体某个系统发送的消息")
-    public PageInfo<?> getSystemMessage(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps,@RequestParam(name = "id")Long id,@RequestParam(name = "sid")Long sid){
+    public PageInfo<?> getSystemMessage(@ApiParam(value = "当前所在页") @RequestParam(defaultValue = "1") Integer pn, @ApiParam(value = "页面size") @RequestParam(defaultValue = "5") Integer ps,@ApiParam(value = "当前用户id") @RequestParam(name = "id")Long id,@ApiParam(value = "系统id") @RequestParam(name = "sid")Long sid){
         PageInfo<MessageVO> messageVOList = iMmsSystemUserService.getOneSystemAll(pn, ps,id,sid);
         return messageVOList;
     }

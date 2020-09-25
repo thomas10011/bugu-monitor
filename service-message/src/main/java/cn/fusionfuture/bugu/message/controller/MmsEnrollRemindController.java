@@ -6,7 +6,9 @@ import cn.fusionfuture.bugu.message.vo.EnrollVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * @date 2020/8/22 14:39
  */
 @RestController
+@Api(tags="报名提示")
 public class MmsEnrollRemindController {
 
     @Autowired
@@ -50,7 +53,7 @@ public class MmsEnrollRemindController {
      **/
     @GetMapping(value="/enroll-remind")
     @ApiOperation(value = "获取所有报名提醒")
-    public PageInfo<?> getEnroll(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps,@RequestParam(value="id") Long id){
+    public PageInfo<?> getEnroll(@ApiParam(value = "当前所在页") @RequestParam(defaultValue = "1") Integer pn, @ApiParam(value = "页面size") @RequestParam(defaultValue = "5") Integer ps, @ApiParam(value = "接收者的id，即当前用户id") @RequestParam(name = "id") Long id){
        PageInfo<EnrollVO> enrollVOList = iMmsEnrollRemindService.getEnrollRemind(pn,ps,id);
        return enrollVOList;
     }

@@ -7,7 +7,9 @@ import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,7 @@ import java.util.List;
  * @date 2020/8/22 14:39
  */
 @RestController
+@Api(tags="评论提示")
 public class MmsCommentRemindController {
 
     @Autowired
@@ -51,7 +54,7 @@ public class MmsCommentRemindController {
      **/
     @GetMapping(value = "/comment-remind")
     @ApiOperation(value = "获取评论通知")
-    public PageInfo<?> getCommentRemind(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps,@RequestParam(name = "id") Long id){
+    public PageInfo<?> getCommentRemind(@ApiParam(value = "当前所在页") @RequestParam(defaultValue = "1") Integer pn,@ApiParam(value = "页面size") @RequestParam(defaultValue = "5") Integer ps,@ApiParam(value = "接收者的id，即当前用户id") @RequestParam(name = "id") Long id){
         PageInfo<CommentVO> commentVOList = iMmsCommentRemindService.getCommentRemind(pn,ps,id);
         return commentVOList;
     }
@@ -66,7 +69,7 @@ public class MmsCommentRemindController {
      **/
     @GetMapping(value = "/comment")
     @ApiOperation(value = "获取一个打卡下的全部评论")
-    public List<PunchCommentVO> getPunchComment(@RequestParam(name = "punch-id") Long id){
+    public List<PunchCommentVO> getPunchComment(@ApiParam(value = "打卡id") @RequestParam(name = "id") Long id){
         List<PunchCommentVO> punchCommentVOList = iMmsCommentRemindService.getPunchComment(id);
         return punchCommentVOList;
     }

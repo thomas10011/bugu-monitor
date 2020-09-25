@@ -7,7 +7,9 @@ import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,7 @@ import java.util.List;
  */
 
 @RestController
+@Api(tags="点赞提示")
 public class MmsLikeRemindController {
 
     @Autowired
@@ -55,7 +58,7 @@ public class MmsLikeRemindController {
      **/
     @GetMapping(value = "/like-remind")
     @ApiOperation(value = "获取点赞提醒")
-    public PageInfo<?> getLike(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps,@RequestParam(name = "id") Long id){
+    public PageInfo<?> getLike(@ApiParam(value = "当前所在页") @RequestParam(defaultValue = "1") Integer pn, @ApiParam(value = "页面size") @RequestParam(defaultValue = "5") Integer ps, @ApiParam(value = "接收者的id，即当前用户id") @RequestParam(name = "id") Long id){
         PageInfo<LikeVO> likeVOList = iMmsLikeRemindService.getLikeRemind(pn, ps, id);
         return likeVOList;
     }

@@ -4,7 +4,9 @@ import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import java.util.List;
  * @date 2020/8/22 12:04
  */
 @RestController
+@Api(tags="打卡提醒")
 public class MmsPunchRemindController {
     @Autowired
     IMmsPunchRemindService iMmsPunchRemindService;
@@ -49,7 +52,7 @@ public class MmsPunchRemindController {
      **/
     @GetMapping(value="/punch-remind")
     @ApiOperation(value = "接收打卡提醒")
-    public PageInfo<?> getPunch(@RequestParam(defaultValue = "1") Integer pn, @RequestParam(defaultValue = "5") Integer ps,@RequestParam(name="id") Long id){
+    public PageInfo<?> getPunch(@ApiParam(value = "当前所在页") @RequestParam(defaultValue = "1") Integer pn, @ApiParam(value = "页面size") @RequestParam(defaultValue = "5") Integer ps, @ApiParam(value = "接收者的id，即当前用户id") @RequestParam(name = "id") Long id){
         PageInfo<PunchVO> mmsPunchVOList = iMmsPunchRemindService.getPunchRemind(pn, ps, id);
         return mmsPunchVOList;
     }
