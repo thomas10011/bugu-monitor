@@ -51,7 +51,7 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!-- pojo层 -->
+        <!-- pojo类 -->
         <dependency>
             <groupId>cn.fusionfuture.bugu</groupId>
             <artifactId>common-pojo</artifactId>
@@ -62,6 +62,12 @@
                     <artifactId>mybatis-plus-boot-starter</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- hu tool工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
 
         <!--test-->
