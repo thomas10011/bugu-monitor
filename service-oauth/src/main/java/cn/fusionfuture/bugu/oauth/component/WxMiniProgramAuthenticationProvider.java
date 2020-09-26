@@ -17,7 +17,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
-import org.springframework.stereotype.Component;
 
 /**
  * @author thomas
@@ -26,14 +25,13 @@ import org.springframework.stereotype.Component;
  * @description 自定义小程序登陆流程
  * @date 2020/9/14 2:59 下午
  */
-@Component
 public class WxMiniProgramAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserFeignService userFeignService;
+    UserFeignService userFeignService;
 
     @Autowired
-    private WxMiniProgramUserDetailsService userDetailsService;
+    private UserNamePasswordUserDetailsService userNamePasswordUserDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -41,7 +39,7 @@ public class WxMiniProgramAuthenticationProvider implements AuthenticationProvid
         // 假设用户名的值是openId
         String openId = authentication.getName();
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.getUserDetailsByOpenId(openId);
+        UserDetailsImpl userDetails = (UserDetailsImpl) userNamePasswordUserDetailsService.loadUserByUsername(openId);
 
         if(userDetails == null) {
             throw new AuthenticationCredentialsNotFoundException("用户尚未注册！");

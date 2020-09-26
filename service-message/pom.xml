@@ -13,13 +13,6 @@
     <artifactId>service-message</artifactId>
 
     <dependencies>
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-<!--        </dependency>-->
-
-
         <!-- utils依赖 -->
         <dependency>
             <groupId>cn.fusionfuture.bugu</groupId>

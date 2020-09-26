@@ -9,12 +9,8 @@ import cn.fusionfuture.bugu.user.service.IUmsUserWxMiniProgramAuthService;
 import cn.fusionfuture.bugu.user.vo.UserOauthVO;
 import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
 import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.gson.JsonObject;
-import io.micrometer.core.instrument.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,16 +44,19 @@ public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatM
         // 调用微信后台接口获取openid和session_key
         String result = HttpUtil.get("https://api.weixin.qq.com/sns/jscode2session", paramMap);
         System.out.println(result);
-        JSONObject hashMap = JSONUtil.parseObj(result);
+        HashMap hashMap = JSON.parseObject(result, HashMap.class);
         String openid = hashMap.get("openid").toString();
         String sessionKey = hashMap.get("session_key").toString();
         // 查找表内是否已有该openid，若存在，则说明已经有该用户
         HashMap<String, Object> map = new HashMap<>();
         map.put("open_id", openid);
         List<UmsUserAuthWechat> searchResult = umsUserAuthWechatMapper.selectByMap(map);
+        // 处理id
         Long uid;
-        if (searchResult.isEmpty()) {
-            // 直接注册
+        if (!searchResult.isEmpty()) {
+            uid = searchResult.get(0).getUserId();
+        } else {
+            // 微信用户直接注册
             UmsUser umsUser = new UmsUser();
             umsUser.setUserName(userName)
                     .setAvatarUrl(avatarUrl)
@@ -70,27 +69,10 @@ public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatM
                     .setSessionKey(sessionKey)
                     .setUserId(uid);
             umsUserAuthWechatMapper.insert(umsUserAuthWechat);
-        } else {
-            // 更新绑定表的sessionKey
-            searchResult.get(0).setSessionKey(sessionKey);
-            uid = searchResult.get(0).getUserId();
-            // 更新用户表的avatarUrl
-            umsUserMapper.selectById(uid).setAvatarUrl(avatarUrl);
         }
 
-        HashMap<String,Object> loginParams = new HashMap<>();
-        loginParams.put("grant_type","password");
-        loginParams.put("client_id","client-app");
-        loginParams.put("client_secret","123456");
-        loginParams.put("username",openid);
-        // 调用oauth接口获取登录后的token等信息
-        result = HttpUtil.post("http://localhost:9527/oauth-service/oauth/token",loginParams);
-        JSONObject object = JSONUtil.parseObj(result);
-
         WechatBindDetailsVO wechatBindDetailsVO = new WechatBindDetailsVO();
-        wechatBindDetailsVO.setToken(object.getStr("access_token"));
-        wechatBindDetailsVO.setRefreshToken(object.getStr("refresh_token"));
-        wechatBindDetailsVO.setUid(uid.toString());
+        wechatBindDetailsVO.setOpenid(openid);
 
         return wechatBindDetailsVO;
     }

@@ -64,7 +64,6 @@ public class MmsSystemMessageServiceImpl extends ServiceImpl<MmsSystemMessageMap
 
     @Override
     public List<MessageVO> getOneSystemAll(Long id, Long systemId) {
-
         return null;
     }
 }

@@ -1,14 +1,9 @@
 package cn.fusionfuture.bugu.search.vo;
 
-import cn.hutool.json.JSONObject;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.List;
 
 /**
  * @author thomas
@@ -22,14 +17,5 @@ import java.util.List;
 @Accessors(chain = true)
 @ApiModel(value="PopularPlanVO", description="首页热门计划所需要的详细信息")
 public class PopularPlanVO {
-
-    @ApiModelProperty(name = "页面编号")
-    private Integer pageNum;
-
-    @ApiModelProperty(name = "页面大小")
-    private Integer pageSize;
-
-    @ApiModelProperty(name = "数据列表")
-    private List<JSONObject> list;
 
 }

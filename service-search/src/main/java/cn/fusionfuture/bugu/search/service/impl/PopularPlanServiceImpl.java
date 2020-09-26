@@ -1,9 +1,6 @@
 package cn.fusionfuture.bugu.search.service.impl;
 
 import cn.fusionfuture.bugu.search.service.IPopularPlanService;
-import cn.fusionfuture.bugu.search.vo.PopularPlanDetailVO;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -17,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 
 /**
@@ -35,7 +30,7 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
     RestHighLevelClient client;
 
     @Override
-    public List<JSONObject> queryPopularPlan(String keyWord, Integer pageNum, Integer pageSize, String monitorPlanType, String monitorPlanStatus, String pkPlanType, String pkPlanStatus) throws IOException {
+    public void queryPopularPlan(String keyWord, Integer pageNum, Integer pageSize, String monitorPlanType, String monitorPlanStatus, String pkPlanType, String pkPlanStatus) throws IOException {
         SearchRequest request = new SearchRequest("plan");
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
@@ -53,7 +48,6 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
             System.out.println(hit.getSourceAsString());
 
         }
-        return Arrays.stream(response.getHits().getHits()).map(SearchHit hit -> JSONUtil.parseObj(hit));
         System.out.println(response.toString());
 
     }

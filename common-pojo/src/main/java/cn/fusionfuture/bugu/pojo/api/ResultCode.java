@@ -30,9 +30,7 @@ public enum ResultCode {
 
 
 
-    USER_DEFAULT("A0001", "用户端错误"),
-
-    USER_NOT_EXISTED("A0201", "用户不存在");
+    USER_DEFAULT("A0001", "用户端错误");
 
 
 

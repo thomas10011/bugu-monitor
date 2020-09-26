@@ -37,12 +37,7 @@ public class UmsUserNamePasswordAuthServiceImpl implements IUmsUserNamePasswordA
             userInfo = userMapper.selectOne(new QueryWrapper<UmsUser>().eq("phone", userName));
         }
         else {
-            try {
-                userInfo = userMapper.selectById(Long.parseLong(userName));
-            }
-            catch (NumberFormatException e) {
-                return null;
-            }
+            userInfo = userMapper.selectById(Long.parseLong(userName));
         }
 
         if (userInfo == null) {

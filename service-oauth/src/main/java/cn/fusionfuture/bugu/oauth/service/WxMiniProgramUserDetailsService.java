@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @description TODO
  * @date 2020/9/14 10:51 上午
  */
-public interface WxMiniProgramUserDetailsService {
+public interface WxMiniProgramUserDetailsService extends UserDetailsService {
 
     /**
      * 根据openid远程调用user service查询用户信息

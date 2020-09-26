@@ -1,6 +1,5 @@
 package cn.fusionfuture.bugu.user.vo;
 
-import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,7 +25,7 @@ public class UserDetailsVO {
     private String name;
 
     @ApiModelProperty(value = "用户头像")
-    private String avatar;
+    private String avator;
 
     @ApiModelProperty(value = "关注数")
     private Integer followQuantity;

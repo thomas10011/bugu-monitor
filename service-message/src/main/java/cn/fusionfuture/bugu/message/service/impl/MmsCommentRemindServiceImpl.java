@@ -5,14 +5,10 @@ import cn.fusionfuture.bugu.message.service.IMmsCommentRemindService;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import cn.fusionfuture.bugu.message.util.PageUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,21 +33,13 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
     }
 
     @Override
-    public PageInfo<CommentVO> getCommentRemind(Integer pn, Integer ps,Long id) {
+    public List<CommentVO> getCommentRemind(Long id) {
         Map<String, Object> columnMap = new HashMap<>();
-        QueryWrapper<MmsCommentRemind> queryWrapper = new QueryWrapper<MmsCommentRemind>();
-        queryWrapper.eq("receive_user_id", id);
-        queryWrapper.eq("is_hidden",false);
-
-        PageHelper.startPage(pn, ps);
-        PageInfo<MmsCommentRemind> mmsCommentRemindList =new PageInfo<>(mmsCommentRemindMapper.selectList(queryWrapper)) ;
-        //        更新为已读
-        MmsCommentRemind updateEntity = new MmsCommentRemind();
-        updateEntity.setIsChecked(true);
-        mmsCommentRemindMapper.update(updateEntity,queryWrapper);
+        columnMap.put("receive_user_id", id);
+        List<MmsCommentRemind> mmsCommentRemindList = mmsCommentRemindMapper.selectByMap(columnMap);
         System.out.println("查询出数据");
         List<CommentVO> commentVOList = new ArrayList<>();
-        for (MmsCommentRemind mmsCommentRemind : mmsCommentRemindList.getList()) {
+        for (MmsCommentRemind mmsCommentRemind : mmsCommentRemindList) {
             CommentVO commentVO = new CommentVO();
             commentVO.setId(mmsCommentRemind.getId());
             commentVO.setSendTime(mmsCommentRemind.getCreateTime());
@@ -65,22 +53,16 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
             commentVO.setParentId(mmsCommentRemind.getParentId());
 
 //           通过parentId获取父评论相关内容
-
             Long parentId = mmsCommentRemind.getParentId();
-            if(parentId != null){
-                MmsCommentRemind mmsCommentRemindParent = mmsCommentRemindMapper.selectById(parentId);
-                commentVO.setParentConnent(mmsCommentRemindParent.getCommentContent());
 
-            }
-            //            commentVO.setParentUserId(mmsCommentRemindParent.getSendUserId());发出父评论的用户就是当前用户，即ReceiveUserId
+            MmsCommentRemind mmsCommentRemindParent = mmsCommentRemindMapper.selectById(parentId);
+            commentVO.setParentConnent(mmsCommentRemindParent.getCommentContent());
+//            commentVO.setParentUserId(mmsCommentRemindParent.getSendUserId());发出父评论的用户就是当前用户，即ReceiveUserId
             //          TODO:调用其他微服务获取完整数据
 
             commentVOList.add(commentVO);
         }
-        PageUtil pageUtil = new PageUtil();
-        PageInfo<CommentVO> commentVOPageInfo = new PageInfo<>(commentVOList);
-        pageUtil.copyAtrr(mmsCommentRemindList,commentVOPageInfo);
-        return commentVOPageInfo;
+        return commentVOList;
     }
 
     @Override
