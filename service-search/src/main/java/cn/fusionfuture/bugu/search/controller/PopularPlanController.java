@@ -1,8 +1,11 @@
 package cn.fusionfuture.bugu.search.controller;
 
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanType;
+import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanType;
 import cn.fusionfuture.bugu.search.service.IPopularPlanService;
+import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
+import cn.hutool.json.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author thomas
@@ -29,20 +34,15 @@ public class PopularPlanController {
 
     @GetMapping(value = "/popular")
     @ApiOperation(value = "按照查询条件查询首页热门")
-    public void queryPopularPlan(@ApiParam(value = "计划标题的关键字") @RequestParam(value = "kw", defaultValue = "") String keyWord,
-                                 @ApiParam(value = "查询的页码") @RequestParam(value = "pn", defaultValue = "1") Integer pageNum,
-                                 @ApiParam(value = "页面的大小") @RequestParam(value = "ps", defaultValue = "5") Integer pageSize,
-                                 @ApiParam(value = "监督计划的类型") @RequestParam(value = "mpt", defaultValue = "") String monitorPlanType,
-                                 @ApiParam(value = "监督计划的状态") @RequestParam(value = "mps", defaultValue = "") String monitorPlanStatus,
-                                 @ApiParam(value = "pk计划的类型") @RequestParam(value = "ppt", defaultValue = "") String pkPlanType,
-                                 @ApiParam(value = "pk计划的状态") @RequestParam(value = "pps", defaultValue = "") String pkPlanStatus) throws IOException {
+    public PopularPlanVO queryPopularPlan(@ApiParam(value = "计划标题的关键字") @RequestParam(value = "kw", defaultValue = "") String keyWord,
+                                          @ApiParam(value = "查询的页码") @RequestParam(value = "pn", defaultValue = "1") Integer pageNum,
+                                          @ApiParam(value = "页面的大小") @RequestParam(value = "ps", defaultValue = "5") Integer pageSize,
+                                          @ApiParam(value = "计划的类型") @RequestParam(value = "mpt", defaultValue = "") List<String> planType,
+                                          @ApiParam(value = "计划的状态") @RequestParam(value = "mps", defaultValue = "") List<String> planStatus) throws IOException {
+        planType = planType.contains(PkPlanType.ALL) || planType.isEmpty() ? null : planType;
+        planStatus = planStatus.contains(PkPlanStatus.ALL) || planStatus.isEmpty() ? null : planStatus;
+        return popularPlanService.queryPopularPlan(keyWord, pageNum, pageSize, planType, planStatus);
 
-        monitorPlanType = monitorPlanType.equals(MonitorPlanType.ALL) ? monitorPlanType : "";
-        pkPlanType = pkPlanType.equals(PkPlanType.ALL) ? pkPlanType : "";
-
-        popularPlanService.queryPopularPlan(keyWord, pageNum, pageSize, monitorPlanType, monitorPlanStatus, pkPlanType, pkPlanStatus);
-
-        return;
     }
 
 }

@@ -11,3 +11,23 @@ spring:
     port: 6379
     host: localhost
 #    password: Fusionfuture@365
+
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - /doc.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /swagger-ui.html
+#      - /user-service/wechat-bind
+#      - /oauth-service/rsa/publicKey
+#      - /oauth-service/oauth/token
+#      - /oauth-service/oauth/token_key
+#      - /oauth-service/oauth/check_token
+      - /**
