@@ -2,11 +2,15 @@ package cn.fusionfuture.bugu.pk.controller;
 
 
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
+import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
@@ -23,7 +27,6 @@ import java.util.Map;
  * @since 2020-08-24
  */
 @RestController
-@RequestMapping("/pk/pms-pk-punch-record")
 @Api(tags = "pk计划打卡")
 public class PmsPkPunchRecordController {
 
@@ -36,13 +39,26 @@ public class PmsPkPunchRecordController {
         return OssUtil.getPolicy("/punch");
     }
 
-
-    @ApiOperation(value = "对pk计划进行打卡")
     @PostMapping("/punch")
+    @ApiOperation(value = "对pk计划进行打卡")
     public Long punch(@ApiParam(value = "用户id") @RequestParam(name = "userId") Long userId,
-                      @ApiParam(value = "计划id")@RequestParam(name = "planId") Long planId,
-                      @ApiParam(value = "打卡内容")@RequestParam(name = "content") String content,
-                      @ApiParam(value = "图片url")@RequestParam(name = "imageUrls") List<String> imageUrls) {
+                      @ApiParam(value = "计划id") @RequestParam(name = "planId") Long planId,
+                      @ApiParam(value = "打卡内容") @RequestParam(name = "content") String content,
+                      @ApiParam(value = "图片url") @RequestParam(name = "imageUrls") List<String> imageUrls) {
         return pkPunchRecordService.punch(userId, planId, content, imageUrls);
     }
+
+    @PostMapping("/punch/like")
+    @ApiOperation(value = "对一条打卡记录进行点赞")
+    public void like(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId){
+        pkPunchRecordService.like(punchId);
+    }
+
+//    @ApiOperation(value = "根据打卡id查询打卡相关信息")
+//    @GetMapping(value = "/punch/detail/{punchId}")
+//    public BasicPunchVO queryBasicPunchVO(@Validated
+//                                                      @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
+//        return pkPunchRecordService.queryBasicPunchVO(punchId);
+//    }
+
 }

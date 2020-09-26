@@ -16,10 +16,23 @@
             pms_pk_pattern,
             pms_pk_plan_status
         WHERE
-            pms_pk_plan.user_id = #{uid} AND
+            pms_pk_plan.user_id = #{userId} AND
             pms_pk_plan.pk_pattern_id = pms_pk_pattern.id AND
             pms_pk_plan.plan_status_id = pms_pk_plan_status.id
         ORDER BY pms_pk_plan.id DESC
     </select>
 
+    <select id="querySimplePkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO">
+        SELECT
+            pms_pk_plan.name,
+            pms_pk_plan.punch_quantity,
+            pms_pk_plan.enrolled_quantity,
+            pms_pk_pattern.description AS plan_pattern
+        FROM
+            pms_pk_plan,
+            pms_pk_pattern
+        WHERE
+            pms_pk_plan.id = #{planId} AND
+            pms_pk_plan.pk_pattern_id = pms_pk_pattern.id
+    </select>
 </mapper>

@@ -22,7 +22,6 @@ import java.util.List;
  * @since 2020-08-24
  */
 @RestController
-@RequestMapping("/pk/pms-pk-plan-status")
 @Api(tags = "查询pk计划的状态")
 public class PmsPkPlanStatusController {
 

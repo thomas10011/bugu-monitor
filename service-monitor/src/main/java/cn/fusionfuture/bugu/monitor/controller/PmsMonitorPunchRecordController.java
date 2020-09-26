@@ -36,7 +36,7 @@ public class PmsMonitorPunchRecordController {
     }
 
     @ApiOperation(value = "用户打卡一个计划")
-    @PostMapping("/punch")
+    @PostMapping("monitor-plan/punch")
     public Long punch(@ApiParam(value = "计划的id") @RequestParam(name = "pid") Long planId,
                       @ApiParam(value = "用户的id") @RequestParam(name = "uid") Long userId,
                       @ApiParam(value = "打卡的内容") @RequestParam(name = "ct") String content,
