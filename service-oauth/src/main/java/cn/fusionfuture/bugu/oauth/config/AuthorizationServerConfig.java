@@ -70,7 +70,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("client-app")
                 .secret(passwordEncoder.encode("123456"))
                 // 配置访问token的有效期
-                .accessTokenValiditySeconds(60)
+                .accessTokenValiditySeconds(36000)
                 // 配置刷新token的有效期
                 .refreshTokenValiditySeconds(864000)
                 // 配置redirect_uri，用于授权成功后跳转

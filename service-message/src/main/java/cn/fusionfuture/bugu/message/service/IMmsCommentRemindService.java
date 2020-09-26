@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface IMmsCommentRemindService extends IService<MmsCommentRemind> {
 
     void addComment(MmsCommentRemind mmsCommentRemind);
 
-    List<CommentVO> getCommentRemind(Long id);
+    PageInfo<CommentVO> getCommentRemind(Integer pn, Integer ps, Long id);
 
     List<PunchCommentVO> getPunchComment(Long id);
 
