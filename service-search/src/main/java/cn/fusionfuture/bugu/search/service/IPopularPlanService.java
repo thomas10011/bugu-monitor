@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.search.service;
 
+import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
 import cn.hutool.json.JSONObject;
 
 import java.io.IOException;
@@ -21,11 +22,10 @@ public interface IPopularPlanService {
      * @param keyWord 查询的关键词
      * @param pageNum 分页的页码
      * @param pageSize 页面的大小
-     * @param monitorPlanType 选择的监督计划的类型
-     * @param monitorPlanStatus 选择的监督计划的状态
-     * @param pkPlanType 环责的pk计划的类型
-     * @param pkPlanStatus 选择的pk计划的状态
+     * @param planType 选择的计划的类型
+     * @param planStatus 选择的监督计划的状态
      * @return void
+     * @exception IOException IOException
      **/
-    List<JSONObject> queryPopularPlan(String keyWord, Integer pageNum, Integer pageSize, String monitorPlanType, String monitorPlanStatus, String pkPlanType, String pkPlanStatus) throws IOException;
+    PopularPlanVO queryPopularPlan(String keyWord, Integer pageNum, Integer pageSize, List<String> planType, List<String> planStatus) throws IOException;
 }

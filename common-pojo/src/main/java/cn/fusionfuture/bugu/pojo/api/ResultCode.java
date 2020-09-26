@@ -22,12 +22,11 @@ public enum ResultCode {
      * http错误
      */
     NOT_FOUND("H0404", "请求的页面不存在！"),
-    METHOD_NOT_ALLOWED("H0405", "方法不允许！"),
-    UNSUPPORTED_MEDIA_TYPE("H0415", "未受保护的媒体类型！"),
+    METHOD_NOT_ALLOWED("H0405", "没有权限访问该路径！"),
+    UNSUPPORTED_MEDIA_TYPE("H0415", "不支持的数据类型！"),
     INTERNAL_SERVER_ERROR("H0500", "内部服务器错误！"),
 
     OSS_SIGN_FAIL("O0000", "OSS签名出错！"),
-
 
 
     USER_DEFAULT("A0001", "用户端错误"),

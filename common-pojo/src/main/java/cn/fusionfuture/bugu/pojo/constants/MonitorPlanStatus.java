@@ -9,6 +9,8 @@ package cn.fusionfuture.bugu.pojo.constants;
  */
 public class MonitorPlanStatus {
 
+    public static final String ALL = "全部";
+
     public static final String REGISTERING = "报名中";
 
     public static final String UNDERWAY = "进行中";

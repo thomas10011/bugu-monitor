@@ -29,6 +29,9 @@ public class PopularPlanVO {
     @ApiModelProperty(name = "页面大小")
     private Integer pageSize;
 
+    @ApiModelProperty(name = "该条件下查询到的记录总数")
+    private Long total;
+
     @ApiModelProperty(name = "数据列表")
     private List<JSONObject> list;
 

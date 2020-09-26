@@ -1,6 +1,6 @@
 package cn.fusionfuture.bugu.dispose.annotation;
 
-import cn.fusionfuture.bugu.dispose.GlobalDefaultConfiguration;
+import cn.fusionfuture.bugu.dispose.GlobalDisposeConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
  **/
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(GlobalDefaultConfiguration.class)
+@Import(GlobalDisposeConfiguration.class)
 public @interface EnableGlobalDispose {
 }

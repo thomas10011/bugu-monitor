@@ -9,6 +9,8 @@ package cn.fusionfuture.bugu.pojo.constants;
  */
 public class PkPlanStatus {
 
+    public static final String ALL = "全部";
+
     public static final String REGISTERING = "加入pk";
 
     public static final String GRABBING = "抢单中";
