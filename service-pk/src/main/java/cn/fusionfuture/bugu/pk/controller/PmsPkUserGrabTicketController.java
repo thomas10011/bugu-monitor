@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-08-24
  */
 @RestController
+@RequestMapping("/pk/pms-pk-user-grab-ticket")
 @Api(tags = "用户对pk计划进行抢票操作" )
 public class PmsPkUserGrabTicketController {
 

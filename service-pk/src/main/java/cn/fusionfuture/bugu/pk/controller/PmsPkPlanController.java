@@ -33,13 +33,13 @@ public class PmsPkPlanController {
         return pkPlanService.createPkPlan(newPkPlanVO);
     }
 
-    @GetMapping(value = "/pk-plan/{userId}")
     @ApiOperation(value = "根据用户id查询pk计划")
+    @GetMapping(value = "/pk-plan/{uid}")
     public PageInfo<BasicPkPlanVO> queryBasicPkPlanVO(@Validated
-                                                      @ApiParam(value = "用户id") @PathVariable(value = "userId") Long userId,
+                                                      @ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
                                                       @ApiParam(value = "页面编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
                                                       @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
-        return pkPlanService.queryBasicPkPlanVO(pn, ps, userId);
+        return pkPlanService.queryBasicPkPlanVO(pn, ps, uid);
     }
 
 }

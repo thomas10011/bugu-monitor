@@ -66,10 +66,13 @@ public class PmsPkPunchRecord implements Serializable {
     @ApiModelProperty(value = "打卡内容")
     private String content;
 
+    @ApiModelProperty(value = "打卡图片url")
+    private String imageUrl;
+
     @ApiModelProperty(value = "打卡时间")
     private LocalDateTime punchTime;
 
-    @ApiModelProperty(value = "打卡状态Id")
+    @ApiModelProperty(value = "打卡状态")
     private Integer statusId;
 
 

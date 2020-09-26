@@ -28,7 +28,7 @@ public class PmsMonitorPlanStatusController {
     @Autowired
     IPmsMonitorPlanStatusService monitorPlanStatusService;
 
-    @GetMapping(value = "/monitor-plan/status")
+    @GetMapping(value = "/monitor-plan/staus")
     @ApiOperation(value = "查询当前打卡所有的状态")
     public List<MonitorPlanStatusVO> queryMonitorPlanStatus() {
         return monitorPlanStatusService.queryMonitorPlanStatus();

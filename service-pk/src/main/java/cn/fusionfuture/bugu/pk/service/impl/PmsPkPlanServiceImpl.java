@@ -4,7 +4,6 @@ import ch.qos.logback.classic.jmx.MBeanUtil;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserCreatePlanMapper;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.NewPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
@@ -55,8 +54,4 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         return new PageInfo<>(pkPlanMapper.queryBasicPkPlanVO(uid));
     }
 
-    @Override
-    public SimplePkPlanVO querySimplePkPlanVO(Long planId) {
-        return pkPlanMapper.querySimplePkPlanVO(planId);
-    }
 }

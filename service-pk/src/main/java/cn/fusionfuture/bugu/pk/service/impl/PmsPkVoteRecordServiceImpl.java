@@ -1,7 +1,5 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
-import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkVoteRecord;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkVoteRecordMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkVoteRecordService;
@@ -23,31 +21,15 @@ public class PmsPkVoteRecordServiceImpl extends ServiceImpl<PmsPkVoteRecordMappe
     @Autowired
     PmsPkVoteRecordMapper pkVoteRecordMapper;
 
-    @Autowired
-    PmsPkPunchRecordMapper pkPunchRecordMapper;
-
     @Override
     public void vote(Long userId, Long punchId, Boolean voteResult){
 
-        //保存用户投票记录至投票记录表
+        //保存用户投票记录
         PmsPkVoteRecord pkVoteRecord=new PmsPkVoteRecord();
         pkVoteRecord.setVoteUserId(userId);
         pkVoteRecord.setPunchId(punchId);
         pkVoteRecord.setVoteResult(voteResult);
         pkVoteRecordMapper.insert(pkVoteRecord);
-
-        //更新打卡记录表中的投票数（赞同数或否认数）
-        if(voteResult){
-            PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
-            pkPunchRecord.setAgreeCount(pkPunchRecord.getAgreeCount()+1);
-            pkPunchRecordMapper.updateById(pkPunchRecord);
-        }
-        else{
-            PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
-            pkPunchRecord.setDisagreeCount(pkPunchRecord.getDisagreeCount()+1);
-            pkPunchRecordMapper.updateById(pkPunchRecord);
-        }
-
 
     }
 }

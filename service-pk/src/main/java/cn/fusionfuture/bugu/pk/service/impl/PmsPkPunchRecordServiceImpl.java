@@ -1,7 +1,6 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.mapper.*;
-import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
@@ -75,18 +74,4 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
         // 返回打卡记录的id
         return pkPunchRecord.getId();
     }
-
-    @Override
-    public void like(Long punchId){
-        //点赞操作，将计划的点赞数+1
-        PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
-        pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()+1);
-        pkPunchRecordMapper.updateById(pkPunchRecord);
-    }
-
-//    @Override
-//    public BasicPunchVO queryBasicPunchVO(Long punchId){
-//        //根据打卡id查询打卡的一些基本信息
-//        return pkPunchRecordMapper.queryBasicPunchVO(punchId);
-//    }
 }
