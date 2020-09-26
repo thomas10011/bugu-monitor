@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="BasicPkPlanVO", description="BasicPkPlanVO")
+@ApiModel(value="BasicPkPlanVO", description="pk计划部分属性")
 public class BasicPkPlanVO implements Serializable {
 
     private static final long serialVersionUID = 8502311760426262072L;

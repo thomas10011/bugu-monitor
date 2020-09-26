@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-09-11
  */
 @RestController
-@RequestMapping("/monitor/pms-monitor-user-grab-ticket")
 @Api(tags = "用户对监督计划进行抢票操作" )
 public class PmsMonitorUserGrabTicketController {
 
@@ -30,7 +29,7 @@ public class PmsMonitorUserGrabTicketController {
     IPmsMonitorUserGrabTicketService monitorUserGrabTicketService;
 
     @ApiOperation(value = "用户进行抢票操作")
-    @PostMapping("/grab-ticket")
+    @PostMapping("/monitor-plan/grab-ticket")
     public long userGrabTicket(@ApiParam(value = "用户id") @RequestParam Long userId,
                                @ApiParam(value = "计划id") @RequestParam Long planId){
         return monitorUserGrabTicketService.userGrabTicket(userId, planId);
