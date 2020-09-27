@@ -4,6 +4,7 @@ package cn.fusionfuture.bugu.pk.controller;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -54,11 +55,11 @@ public class PmsPkPunchRecordController {
         pkPunchRecordService.like(punchId);
     }
 
-//    @ApiOperation(value = "根据打卡id查询打卡相关信息")
-//    @GetMapping(value = "/punch/detail/{punchId}")
-//    public BasicPunchVO queryBasicPunchVO(@Validated
-//                                                      @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
-//        return pkPunchRecordService.queryBasicPunchVO(punchId);
-//    }
+    @ApiOperation(value = "根据打卡id查询打卡相关信息")
+    @GetMapping(value = "/punch/detail/{punchId}")
+    public PunchWithImageVO queryPunchWithImageVO(@Validated
+                                                      @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
+        return pkPunchRecordService.queryPunchWithImageVO(punchId);
+    }
 
 }

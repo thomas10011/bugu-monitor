@@ -1,9 +1,14 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
+import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
+import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorVoteRecord;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorVoteRecordMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorVoteRecordService;
+import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
+import cn.fusionfuture.bugu.pojo.entity.PmsPkVoteRecord;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +22,34 @@ import org.springframework.stereotype.Service;
 @Service
 public class PmsMonitorVoteRecordServiceImpl extends ServiceImpl<PmsMonitorVoteRecordMapper, PmsMonitorVoteRecord> implements IPmsMonitorVoteRecordService {
 
+    @Autowired
+    PmsMonitorVoteRecordMapper monitorVoteRecordMapper;
+
+    @Autowired
+    PmsMonitorPunchRecordMapper monitorPunchRecordMapper;
+
+    @Override
+    public void vote(Long userId, Long punchId, Boolean voteResult){
+
+        //保存用户投票记录至投票记录表
+        PmsMonitorVoteRecord monitorVoteRecord=new PmsMonitorVoteRecord();
+        monitorVoteRecord.setVoteUserId(userId);
+        monitorVoteRecord.setPunchId(punchId);
+        monitorVoteRecord.setVoteResult(voteResult);
+        monitorVoteRecordMapper.insert(monitorVoteRecord);
+
+        //更新打卡记录表中的投票数（赞同数或否认数）
+        if(voteResult){
+            PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
+            monitorPunchRecord.setAgreeCount(monitorPunchRecord.getAgreeCount()+1);
+            monitorPunchRecordMapper.updateById(monitorPunchRecord);
+        }
+        else{
+            PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
+            monitorPunchRecord.setDisagreeCount(monitorPunchRecord.getDisagreeCount()+1);
+            monitorPunchRecordMapper.updateById(monitorPunchRecord);
+        }
+
+
+    }
 }

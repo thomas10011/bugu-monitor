@@ -4,6 +4,7 @@ package cn.fusionfuture.bugu.monitor.controller;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
 import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -45,5 +46,12 @@ public class PmsMonitorPlanController {
                                                                 @ApiParam(value = "页码编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
                                                                 @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
         return monitorPlanService.queryBasicMonitorPlanVO(pn, ps, uid);
+    }
+
+    @GetMapping(value = "/monitor-plan/simple-info/{planId}")
+    @ApiOperation(value= "查询计划简略信息")
+    public SimpleMonitorPlanVO querySimpleMonitorPlanVO(@Validated
+                                              @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
+        return monitorPlanService.querySimpleMonitorPlanVO(planId);
     }
 }

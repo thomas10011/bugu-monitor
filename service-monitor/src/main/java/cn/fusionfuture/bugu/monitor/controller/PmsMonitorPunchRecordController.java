@@ -2,11 +2,13 @@ package cn.fusionfuture.bugu.monitor.controller;
 
 
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
+import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
@@ -42,6 +44,19 @@ public class PmsMonitorPunchRecordController {
                       @ApiParam(value = "打卡的内容") @RequestParam(name = "ct") String content,
                       @ApiParam(value = "打卡图片url列表") @RequestParam(name = "iu") List<String> imageUrls) {
         return monitorPunchRecordService.punch(planId, userId, content, imageUrls);
+    }
+
+    @PostMapping("/punch/like")
+    @ApiOperation(value = "对一条打卡记录进行点赞")
+    public void like(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId){
+        monitorPunchRecordService.like(punchId);
+    }
+
+    @ApiOperation(value = "根据打卡id查询打卡相关信息")
+    @GetMapping(value = "/punch/detail/{punchId}")
+    public BasicPunchVO queryBasicPunchVO(@Validated
+                                                  @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
+        return monitorPunchRecordService.queryBasicPunchVO(punchId);
     }
 
 }

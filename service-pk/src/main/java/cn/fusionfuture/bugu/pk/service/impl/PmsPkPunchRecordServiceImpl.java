@@ -2,15 +2,20 @@ package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +40,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
 
     @Autowired
     PmsUserCreatePlanMapper userCreatePlanMapper;
+
 
     @Override
     public Long punch(Long userId, Long planId, String content, List<String> imageUrls) {
@@ -84,9 +90,14 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
         pkPunchRecordMapper.updateById(pkPunchRecord);
     }
 
-//    @Override
-//    public BasicPunchVO queryBasicPunchVO(Long punchId){
-//        //根据打卡id查询打卡的一些基本信息
-//        return pkPunchRecordMapper.queryBasicPunchVO(punchId);
-//    }
+    @Override
+    public PunchWithImageVO queryPunchWithImageVO(Long punchId){
+        //根据打卡id查询打卡的一些基本信息
+        PunchWithImageVO punchWithImageVO= new PunchWithImageVO();
+        BasicPunchVO basicPunchVO= pkPunchRecordMapper.queryBasicPunchVO(punchId);
+        BeanUtils.copyProperties(basicPunchVO,punchWithImageVO);
+        //获取图片
+        punchWithImageVO.setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(punchId));
+        return punchWithImageVO;
+    }
 }

@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.monitor.service;
 
+import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -26,4 +27,21 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      **/
     Long punch(Long planId, Long userId, String content, List<String> imageUrls);
 
+    /*
+     * TODO 根据打卡id对打卡进行点赞
+     * @author zws
+     * @since 2020/9/26 15:43
+     * @param [punchId]
+     * @return void
+     **/
+    void like(Long punchId);
+
+    /*
+     * TODO 通过打卡id查询打卡相关信息
+     * @author zws
+     * @since 2020/9/26 16:10
+     * @param [punchId] 
+     * @return cn.fusionfuture.bugu.monitor.vo.BasicPunchVO 
+     **/
+    BasicPunchVO queryBasicPunchVO(Long punchId);
 }

@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
@@ -43,5 +44,11 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
         PageHelper.startPage(pn, ps);
         return new PageInfo<>(monitorPlanMapper.queryBasicMonitorPlanVO(uid));
     }
+
+    @Override
+    public SimpleMonitorPlanVO querySimpleMonitorPlanVO(Long planId) {
+        return monitorPlanMapper.querySimpleMonitorPlanVO(planId);
+    }
+
 
 }
