@@ -32,16 +32,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserNamePasswordUserDetailsService userNamePasswordUserDetailsService;
 
+    @Autowired
+    WxMiniProgramAuthenticationProvider wxMiniProgramAuthenticationProvider;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WxMiniProgramAuthenticationProvider wxMiniProgramAuthenticationProvider () {
-        WxMiniProgramAuthenticationProvider wxMiniProgramUserDetailsService = new WxMiniProgramAuthenticationProvider();
-        return wxMiniProgramUserDetailsService;
-    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -83,8 +81,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      **/
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
-        auth.authenticationProvider(wxMiniProgramAuthenticationProvider())
+//        super.configure(auth);
+        auth.authenticationProvider(wxMiniProgramAuthenticationProvider)
             .authenticationProvider(daoAuthenticationProvider());
     }
 }

@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.service;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public interface IMmsPrivateChatService extends IService<MmsPrivateChat> {
     void sendPraivateChat(MmsPrivateChat mmsPrivateChat);
 
-    List<MessageVO> getAllUserChat(Long id);
+    PageInfo<MessageVO> getAllUserChat(Integer pn, Integer ps, Long id);
 
-    List<MessageVO> getOneUserAllChat(Long id, Long sendId);
+    PageInfo<MessageVO> getOneUserAllChat(Integer pn, Integer ps, Long id, Long sendId);
 }
