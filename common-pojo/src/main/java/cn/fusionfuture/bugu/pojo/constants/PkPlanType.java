@@ -26,7 +26,7 @@ public enum  PkPlanType {
     private final String value;
 
     public static String getValue(Integer index) {
-        for (MonitorPlanType type : MonitorPlanType.values()) {
+        for (PkPlanType type : PkPlanType.values()) {
             if (type.index.equals(index)) {
                 return type.value;
             }

@@ -23,6 +23,7 @@ public enum PkPlanStatus {
     COMPLETE(3, "已完成");
 
     private final Integer index;
+
     private final String value;
 
     public static String getValue(Integer index) {
