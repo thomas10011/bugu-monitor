@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.search.service;
 
+import cn.fusionfuture.bugu.search.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
 import cn.hutool.json.JSONObject;
 
@@ -28,4 +29,13 @@ public interface IPopularPlanService {
      * @exception IOException IOException
      **/
     PopularPlanVO queryPopularPlan(String keyWord, Integer pageNum, Integer pageSize, List<String> planType, List<String> planStatus) throws IOException;
+
+    /**
+     * 创建计划的首页数据
+     * @author thomas
+     * @since 2020/9/26 4:49 下午
+     * @param popularPlanDTO 要保存的信息
+     **/
+    void createPopularPlan(PopularPlanDTO popularPlanDTO);
+
 }

@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanType;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanType;
+import cn.fusionfuture.bugu.search.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.search.service.IPopularPlanService;
 import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
 import cn.hutool.core.util.StrUtil;
@@ -77,5 +78,10 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
                 .setPageSize(pageSize)
                 .setList(list)
                 .setTotal(response.getHits().getTotalHits().value);
+    }
+
+    @Override
+    public void createPopularPlan(PopularPlanDTO popularPlanDTO) {
+
     }
 }

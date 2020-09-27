@@ -1,5 +1,8 @@
 package cn.fusionfuture.bugu.pojo.constants;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author thomas
  * @version 1.0
@@ -7,13 +10,28 @@ package cn.fusionfuture.bugu.pojo.constants;
  * @description pk计划的类型
  * @date 2020/9/24 8:25 上午
  */
-public class PkPlanType {
+@Getter
+@AllArgsConstructor
+public enum  PkPlanType {
 
-    public static final String ALL = "全部";
+    /**
+     * 默认成功值
+     */
+    ALL(0, "全部"),
+    DOUBLE(1, "双人pk"),
+    MULTIPLE(2, "多人pk");
 
-    public static final String DOUBLE = "双人pk";
+    private final Integer index;
 
-    public static final String MULTIPLE = "多人pk";
+    private final String value;
 
+    public static String getValue(Integer index) {
+        for (MonitorPlanType type : MonitorPlanType.values()) {
+            if (type.index.equals(index)) {
+                return type.value;
+            }
+        }
+        return null;
+    }
 
 }

@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.search.vo;
+package cn.fusionfuture.bugu.monitor.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,8 +19,8 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PopularPlanVO", description="首页热门计划所需要的详细信息")
-public class PopularPlanDetailVO implements Serializable {
+@ApiModel(value="PopularPlanDTO", description="首页热门计划所需要的详细信息")
+public class PopularPlanDTO implements Serializable {
 
     private static final long serialVersionUID = 7833407387585455855L;
 
