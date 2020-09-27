@@ -25,7 +25,11 @@ spring:
     username: root_bugu
     password: Pengyuyan520!
     type: com.alibaba.druid.pool.DruidDataSource   #配置阿里巴巴的Druid数据源
-
+  redis:
+    database: 0
+    port: 6379
+    host: 47.101.158.49
+    password: Fusionfuture@365
 
 pagehelper:
   helper-dialect: mysql # 配置使用哪种数据库语言，不配置的话pageHelper也会自动检测

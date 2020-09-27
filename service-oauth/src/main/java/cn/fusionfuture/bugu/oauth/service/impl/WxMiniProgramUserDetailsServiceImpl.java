@@ -17,20 +17,17 @@ import org.springframework.stereotype.Service;
  * @description TODO
  * @date 2020/9/14 10:48 上午
  */
-@Service
 public class WxMiniProgramUserDetailsServiceImpl implements WxMiniProgramUserDetailsService {
 
-    @Autowired
-    UserFeignService userFeignService;
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return getUserDetailsByOpenId(s);
+    }
+
 
     @Override
     public UserDetails getUserDetailsByOpenId(String openId) {
-        CommonResult<UserOauthVO> result = userFeignService.getBindUid(openId);
-        UserOauthVO userVO = result.getData();
-        if (userVO == null) {
-//            throw new UsernameNotFoundException("用户名或密码错误！");
-            return null;
-        }
-        return new UserDetailsImpl(userVO);
+        return null;
     }
 }

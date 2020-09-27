@@ -17,14 +17,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IUmsUserWxMiniProgramAuthService extends IService<UmsUserAuthWechat> {
 
 
-    /**
-     *
-     * @param code  code
-     * @param userName  username
-     * @param avatarUrl avatarUrl
-     * @param gender    gender
-     * @return  token & refreshToken
-     */
     WechatBindDetailsVO getWechatBind(String code, String userName, String avatarUrl, Integer gender);
 
 

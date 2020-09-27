@@ -3,8 +3,6 @@ package cn.fusionfuture.bugu.message.service;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageInfo;
-import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -20,6 +18,6 @@ public interface IMmsVoteRemindService extends IService<MmsVoteRemind> {
 
     void addVoteRemind(MmsVoteRemind mmsVoteRemind);
 
-    PageInfo<VoteVO> getVoteRemind(Integer pn, Integer ps, Long id);
+    List<VoteVO> getVoteRemind(Long id);
 
 }
