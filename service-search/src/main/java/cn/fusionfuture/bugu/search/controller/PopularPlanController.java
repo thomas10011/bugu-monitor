@@ -1,8 +1,10 @@
 package cn.fusionfuture.bugu.search.controller;
 
+import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanType;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanType;
+import cn.fusionfuture.bugu.search.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.search.service.IPopularPlanService;
 import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
 import cn.hutool.json.JSONObject;
@@ -10,9 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,10 +39,16 @@ public class PopularPlanController {
                                           @ApiParam(value = "页面的大小") @RequestParam(value = "ps", defaultValue = "5") Integer pageSize,
                                           @ApiParam(value = "计划的类型") @RequestParam(value = "mpt", defaultValue = "") List<String> planType,
                                           @ApiParam(value = "计划的状态") @RequestParam(value = "mps", defaultValue = "") List<String> planStatus) throws IOException {
-        planType = planType.contains(PkPlanType.ALL) || planType.isEmpty() ? null : planType;
-        planStatus = planStatus.contains(PkPlanStatus.ALL) || planStatus.isEmpty() ? null : planStatus;
+        planType = planType.contains(PkPlanType.ALL.getValue()) || planType.isEmpty() ? null : planType;
+        planStatus = planStatus.contains(PkPlanStatus.ALL.getValue()) || planStatus.isEmpty() ? null : planStatus;
         return popularPlanService.queryPopularPlan(keyWord, pageNum, pageSize, planType, planStatus);
 
+    }
+
+    @PostMapping(value = "popular")
+    @ApiOperation(value = "供计划微服务远程调用，创建首页信息")
+    public void createPopularPlan(@ApiParam(value = "首页计划的dto") @RequestBody PopularPlanDTO popularPlanDTO) {
+        popularPlanService.createPopularPlan(popularPlanDTO);
     }
 
 }
