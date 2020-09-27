@@ -35,7 +35,7 @@ public class PmsUserAttendPlanController {
         return userAttendPlanService.queryPkUserAttendPlanByUserId(pn,ps,uid);
     }
 
-    @PostMapping("/attend")
+    @PostMapping(value = "/attend")
     @ApiOperation(value = "用户参与pk计划")
     public Long punch(@ApiParam(value = "用户id") @RequestParam Long userId,
                       @ApiParam(value = "计划id") @RequestParam Long planId) {

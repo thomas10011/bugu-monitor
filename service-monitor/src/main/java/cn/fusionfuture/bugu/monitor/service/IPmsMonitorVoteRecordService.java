@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPmsMonitorVoteRecordService extends IService<PmsMonitorVoteRecord> {
 
+    /*
+     * TODO 添加用户投票记录
+     * @author zws
+     * @since 2020/9/26 15:41
+     * @param [userId, punchId, voteResult] 
+     * @return void 
+     **/
+    public void vote(Long userId, Long punchId, Boolean voteResult);
 }

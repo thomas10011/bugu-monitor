@@ -4,6 +4,7 @@ package cn.fusionfuture.bugu.pk.controller;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.NewPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +41,13 @@ public class PmsPkPlanController {
                                                       @ApiParam(value = "页面编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
                                                       @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
         return pkPlanService.queryBasicPkPlanVO(pn, ps, userId);
+    }
+
+    @GetMapping(value = "/pk-plan/simple-info/{planId}")
+    @ApiOperation(value= "查询计划简略信息")
+    public SimplePkPlanVO querySimplePkPlanVO(@Validated
+                                                  @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
+        return pkPlanService.querySimplePkPlanVO(planId);
     }
 
 }

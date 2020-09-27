@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchImageUrlMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
 import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchImageUrl;
@@ -50,5 +51,5 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
          * @param [punchId]
          * @return cn.fusionfuture.bugu.pk.vo.BasicPunchVO
          **/
-//        BasicPunchVO queryBasicPunchVO(Long punchId);
+        PunchWithImageVO queryPunchWithImageVO(Long punchId);
 }

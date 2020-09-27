@@ -1,13 +1,16 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
+import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPatternMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchImageUrlMapper;
+import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchImageUrl;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
+import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,9 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
 
     @Autowired
     PmsMonitorPlanMapper monitorPlanMapper;
+
+    @Autowired
+    PmsMonitorPatternMapper monitorPatternMapper;
 
     @Override
     public Long punch(Long planId, Long userId, String content, List<String> imageUrls) {
@@ -68,4 +74,32 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
         // 返回打卡记录的id
         return monitorPunchRecord.getId();
     }
+
+    @Override
+    public void like(Long punchId){
+        //点赞操作，将计划的点赞数+1
+        PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
+        monitorPunchRecord.setLikeCount(monitorPunchRecord.getLikeCount()+1);
+        monitorPunchRecordMapper.updateById(monitorPunchRecord);
+    }
+
+    @Override
+    public BasicPunchVO queryBasicPunchVO(Long punchId){
+
+
+        BasicPunchVO basicPunchVO = new BasicPunchVO();
+        PmsMonitorPunchRecord monitorPunchRecord = monitorPunchRecordMapper.selectById(punchId);
+        //获取对应的计划id
+        Long planId=monitorPunchRecord.getMonitorPlanId();
+        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
+        basicPunchVO.setName(monitorPlan.getName())
+                .setPlanPattern(monitorPatternMapper.selectById(monitorPlan.getMonitorPatternId()).getDescription())
+                .setAgreeCount(monitorPunchRecord.getAgreeCount())
+                .setDisagreeCount(monitorPunchRecord.getDisagreeCount())
+                .setContent(monitorPunchRecord.getContent())
+                .setLikeCount(monitorPunchRecord.getLikeCount())
+                .setImageUrls(monitorPunchImageUrlMapper.queryImageByPunchId(punchId));
+        return basicPunchVO;
+    }
+
 }

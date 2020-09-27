@@ -47,9 +47,11 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
         PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
         if(pkPlan.getEnrolledQuantity()+1 <= pkPlan.getPkQuantity()){
             //直接用selectbyid获得的对象在update时会失效
-            PmsPkPlan pkPlan1=new PmsPkPlan();
-            pkPlan1.setEnrolledQuantity(pkPlanMapper.selectById(planId).getEnrolledQuantity()).setId(planId);
-            pkPlanMapper.updateById(pkPlan1);
+//            PmsPkPlan pkPlan1=new PmsPkPlan();
+//            pkPlan1.setEnrolledQuantity(pkPlanMapper.selectById(planId).getEnrolledQuantity()).setId(planId);
+//            pkPlanMapper.updateById(pkPlan1);
+            pkPlan.setEnrolledQuantity(pkPlan.getEnrolledQuantity()+1);
+            pkPlanMapper.updateById(pkPlan);
             userAttendPlanMapper.insert(userAttendPlanRecord);
             //返回用户参加pk计划记录id
             return userAttendPlanRecord.getId();

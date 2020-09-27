@@ -17,12 +17,12 @@ import java.util.List;
 public interface PmsPkPunchRecordMapper extends BaseMapper<PmsPkPunchRecord> {
 
     /*
-     * TODO 根据打卡Id查询打卡一条打卡记录的基本信息
+     * TODO 根据打卡Id查询打卡一条打卡记录的基本信息(不包括图片）
      * @author zws
      * @since 2020/9/25 20:05
      * @param [punchId] 
      * @return java.util.List<cn.fusionfuture.bugu.pk.vo.BasicPunchVO> 
      **/
-    //BasicPunchVO queryBasicPunchVO(Long punchId);
+    BasicPunchVO queryBasicPunchVO(Long punchId);
     
 }

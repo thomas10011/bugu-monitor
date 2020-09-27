@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.monitor.service;
 
 import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
@@ -38,4 +39,12 @@ public interface IPmsMonitorPlanService extends IService<PmsMonitorPlan> {
      **/
     PageInfo<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Integer pn, Integer ps, Long uid);
 
+    /*
+     * TODO 根据计划id查询计划简单信息
+     * @author zws
+     * @since 2020/9/26 15:54
+     * @param [planId]
+     * @return cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO
+     **/
+    SimpleMonitorPlanVO querySimpleMonitorPlanVO(Long planId);
 }

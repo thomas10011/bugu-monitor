@@ -19,6 +19,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableGlobalDispose
 @MapperScan("cn.fusionfuture.bugu.monitor.mapper")
+
 public class MonitorServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(MonitorServiceApplication.class, args);
