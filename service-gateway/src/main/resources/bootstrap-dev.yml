@@ -4,7 +4,7 @@ spring:
       discovery:
         server-addr: localhost:8848
           # username: nacos
-          # password: nacos
+        # password: nacos
       server-addr: localhost:8848
   redis:
     database: 0
@@ -25,9 +25,9 @@ secure:
       - /**/*.ico
       - /webjars/springfox-swagger-ui/**
       - /swagger-ui.html
-#      - /user-service/wechat-bind
-#      - /oauth-service/rsa/publicKey
-#      - /oauth-service/oauth/token
-#      - /oauth-service/oauth/token_key
-#      - /oauth-service/oauth/check_token
-      - /**
+      - /user-service/wechat-bind
+      - /oauth-service/rsa/publicKey
+      - /oauth-service/oauth/token
+      - /oauth-service/oauth/token_key
+      - /oauth-service/oauth/check_token
+#      - /**
