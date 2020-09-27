@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.message.vo.EnrollVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -17,6 +18,6 @@ import java.util.List;
  */
 public interface IMmsEnrollRemindService extends IService<MmsEnrollRemind> {
     void addEnrollRemind(MmsEnrollRemind mmsEnrollRemind);
-    List<EnrollVO> getEnrollRemind(Long id);
+    PageInfo<EnrollVO> getEnrollRemind(Integer pn, Integer ps, Long id);
 
 }
