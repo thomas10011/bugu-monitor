@@ -1,12 +1,18 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
+import cn.fusionfuture.bugu.message.util.PageUtil;
+import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
+import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
 import cn.fusionfuture.bugu.message.mapper.MmsVoteRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsVoteRemindService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +40,21 @@ public class MmsVoteRemindServiceImpl extends ServiceImpl<MmsVoteRemindMapper, M
     }
 
     @Override
-    public List<VoteVO> getVoteRemind(Long id) {
-        Map<String, Object> columnMap = new HashMap<>();
-        columnMap.put("receive_user_id", id);
-        List<MmsVoteRemind> mmsVoteRemindList = mmsVoteRemindMapper.selectByMap(columnMap);
+    public PageInfo<VoteVO> getVoteRemind(Integer pn, Integer ps, Long id) {
+        QueryWrapper<MmsVoteRemind> queryWrapper = new QueryWrapper<MmsVoteRemind>();
+        queryWrapper.eq("receive_user_id", id);
+        queryWrapper.eq("is_hidden",false);
+
+        PageHelper.startPage(pn, ps);
+        PageInfo<MmsVoteRemind> mmsVoteRemindList =new PageInfo<>(mmsVoteRemindMapper.selectList(queryWrapper)) ;
         System.out.println("查询出数据");
+
+        MmsVoteRemind updateEntity = new MmsVoteRemind();
+        updateEntity.setIsChecked(true);
+        mmsVoteRemindMapper.update(updateEntity,queryWrapper);
+
         List<VoteVO> voteVOList = new ArrayList<>();
-        for (MmsVoteRemind mmsVoteRemind : mmsVoteRemindList) {
+        for (MmsVoteRemind mmsVoteRemind : mmsVoteRemindList.getList()) {
             VoteVO voteVO = new VoteVO();
             voteVO.setId(mmsVoteRemind.getId());
             voteVO.setSendTime(mmsVoteRemind.getCreateTime());
@@ -55,6 +69,9 @@ public class MmsVoteRemindServiceImpl extends ServiceImpl<MmsVoteRemindMapper, M
 
             voteVOList.add(voteVO);
         }
-        return voteVOList;
+        PageUtil pageUtil = new PageUtil();
+        PageInfo<VoteVO> voteVOPageInfo = new PageInfo<>(voteVOList);
+        pageUtil.copyAtrr(mmsVoteRemindList,voteVOPageInfo);
+        return voteVOPageInfo;
     }
 }
