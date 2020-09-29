@@ -2,9 +2,12 @@ package cn.fusionfuture.bugu.message.controller;
 
 
 import cn.fusionfuture.bugu.message.service.IMmsEnrollRemindService;
+import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.EnrollVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +31,9 @@ public class MmsEnrollRemindController {
     @Autowired
     IMmsEnrollRemindService iMmsEnrollRemindService;
 
+    @Autowired
+    private IMmsRabbitMQGatewayService iMmsRabbitMQGatewayService;
+
     /**
      * 发送报名信息
      * @author LiLan
@@ -37,8 +43,13 @@ public class MmsEnrollRemindController {
      **/
     @PostMapping(value = "/enroll-remind")
     @ApiOperation(value = "发送报名信息")
-    public CommonResult<?> addEnroll ( MmsEnrollRemind mmsEnrollRemind) {
+    public CommonResult<?> addEnroll ( MmsEnrollRemind mmsEnrollRemind) throws JsonProcessingException {
         iMmsEnrollRemindService.addEnrollRemind(mmsEnrollRemind);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String messaged = mapper.writeValueAsString(mmsEnrollRemind);
+        iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsEnrollRemind.getReceiveUserId()+"");
+
         return CommonResult.success();
     }
 

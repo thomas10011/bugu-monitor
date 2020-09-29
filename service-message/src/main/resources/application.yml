@@ -28,3 +28,17 @@ spring:
     # 不要为工程中的资源文件建立映射
   resources:
     add-mappings: false
+
+iot:
+
+  mqtt:
+
+    clientId: client-1
+
+    defaultTopic: push_message_topic
+
+    serverClientId: server-1
+
+    servers: tcp://127.0.0.1:1883
+
+#    servers: tcp://47.93.6.5:1883

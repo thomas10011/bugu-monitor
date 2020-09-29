@@ -1,8 +1,12 @@
 package cn.fusionfuture.bugu.message.controller;
 
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
+import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
+import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +32,9 @@ public class MmsPunchRemindController {
     @Autowired
     IMmsPunchRemindService iMmsPunchRemindService;
 
+    @Autowired
+    private IMmsRabbitMQGatewayService iMmsRabbitMQGatewayService;
+
     /**
      * 发送打卡提醒
      * @author LiLan
@@ -37,8 +44,15 @@ public class MmsPunchRemindController {
      **/
     @PostMapping(value="/punch-remind")
     @ApiOperation(value = "发送打卡提醒")
-    public void addPunch(MmsPunchRemind mmsPunchRemind){
+    public CommonResult<?> addPunch(MmsPunchRemind mmsPunchRemind) throws JsonProcessingException {
+
         iMmsPunchRemindService.addPunchRemind(mmsPunchRemind);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String messaged = mapper.writeValueAsString(mmsPunchRemind);
+        iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsPunchRemind.getReceiveUserId()+"");
+
+        return CommonResult.success();
     }
 
     /**

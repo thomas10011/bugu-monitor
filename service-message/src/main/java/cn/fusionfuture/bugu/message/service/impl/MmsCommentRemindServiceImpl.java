@@ -38,6 +38,7 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
 
     @Override
     public void addComment(MmsCommentRemind mmsCommentRemind) {
+
         mmsCommentRemindMapper.insert(mmsCommentRemind);
     }
 

@@ -2,10 +2,13 @@ package cn.fusionfuture.bugu.message.controller;
 
 import cn.fusionfuture.bugu.message.service.IMmsLikeRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
+import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +36,9 @@ public class MmsLikeRemindController {
     @Autowired
     IMmsLikeRemindService iMmsLikeRemindService;
 
+    @Autowired
+    private IMmsRabbitMQGatewayService iMmsRabbitMQGatewayService;
+
     /**
      * 发送点赞消息
      * @author LiLan
@@ -42,8 +48,13 @@ public class MmsLikeRemindController {
      **/
     @PostMapping(value = "/like-remind")
     @ApiOperation(value = "发送点赞消息")
-    public CommonResult<?> addLike (MmsLikeRemind mmsLikeRemind) {
+    public CommonResult<?> addLike (MmsLikeRemind mmsLikeRemind) throws JsonProcessingException {
         iMmsLikeRemindService.addLikeRemind(mmsLikeRemind);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String messaged = mapper.writeValueAsString(mmsLikeRemind);
+        iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsLikeRemind.getReceiveUserId()+"");
+
         return CommonResult.success();
     }
 

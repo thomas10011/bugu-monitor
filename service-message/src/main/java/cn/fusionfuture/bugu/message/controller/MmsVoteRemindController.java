@@ -1,9 +1,12 @@
 package cn.fusionfuture.bugu.message.controller;
 
+import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.service.IMmsVoteRemindService;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +33,8 @@ public class MmsVoteRemindController {
     @Autowired
     IMmsVoteRemindService iMmsVoteRemindService;
 
+    @Autowired
+    private IMmsRabbitMQGatewayService iMmsRabbitMQGatewayService;
     /**
      * 发送投票提醒
      * @author LiLan
@@ -39,8 +44,13 @@ public class MmsVoteRemindController {
      **/
     @PostMapping(value = "/vote-remind")
     @ApiOperation(value = "发送投票提醒")
-    public CommonResult<?> addVote (MmsVoteRemind mmsVoteRemind) {
+    public CommonResult<?> addVote (MmsVoteRemind mmsVoteRemind) throws JsonProcessingException {
         iMmsVoteRemindService.addVoteRemind(mmsVoteRemind);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String messaged = mapper.writeValueAsString(mmsVoteRemind);
+        iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsVoteRemind.getReceiveUserId()+"");
+
         return CommonResult.success();
     }
 

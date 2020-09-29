@@ -56,9 +56,11 @@ public class MmsPrivateChatController {
     @ApiOperation(value = "发送私信")
     public CommonResult<?> sendChat(MmsPrivateChat mmsPrivateChat) throws JsonProcessingException {
         iMmsPrivateChatService.sendPraivateChat(mmsPrivateChat);
+
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsPrivateChat);
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged,mmsPrivateChat.getReceiveUserId()+"");
+
         return CommonResult.success();
     }
     /**
