@@ -16,5 +16,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MmsPlanTypeServiceImpl extends ServiceImpl<MmsPlanTypeMapper, MmsPlanType> implements IMmsPlanTypeService {
+    public static final int PK_PLANE = 1;
 
+    public static final int MONITOR_PLANE = 2;
 }

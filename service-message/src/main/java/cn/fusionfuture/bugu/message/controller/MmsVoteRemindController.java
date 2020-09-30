@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.controller;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.service.IMmsVoteRemindService;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
+import cn.fusionfuture.bugu.message.vo.input.IVoteVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,12 +41,14 @@ public class MmsVoteRemindController {
      * 发送投票提醒
      * @author LiLan
      * @since 2020/8/22 15:03
-     * @param mmsVoteRemind
+     * @param iVoteVO
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult<?>
      **/
     @PostMapping(value = "/vote-remind")
     @ApiOperation(value = "发送投票提醒")
-    public CommonResult<?> addVote (MmsVoteRemind mmsVoteRemind) throws JsonProcessingException {
+    public CommonResult<?> addVote (IVoteVO iVoteVO) throws JsonProcessingException {
+        MmsVoteRemind mmsVoteRemind = new MmsVoteRemind();
+        BeanUtils.copyProperties(iVoteVO,mmsVoteRemind);
         iMmsVoteRemindService.addVoteRemind(mmsVoteRemind);
 
         ObjectMapper mapper = new ObjectMapper();

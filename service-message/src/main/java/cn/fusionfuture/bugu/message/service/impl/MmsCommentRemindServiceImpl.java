@@ -1,12 +1,15 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
+import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.mapper.MmsCommentRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsCommentRemindService;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
+import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
+import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
@@ -34,7 +37,10 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
     private MmsCommentRemindMapper mmsCommentRemindMapper;
 
 //    @Autowired
-//    private UserFeignService userFeignService;
+//    private MonitorFeignService monitorFeignService;
+
+    @Autowired
+    private UserFeignService userFeignService;
 
     @Override
     public void addComment(MmsCommentRemind mmsCommentRemind) {
@@ -71,7 +77,6 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
             commentVO.setParentId(mmsCommentRemind.getParentId());
 
 //           通过parentId获取父评论相关内容
-
             Long parentId = mmsCommentRemind.getParentId();
             if(parentId != null){
                 MmsCommentRemind mmsCommentRemindParent = mmsCommentRemindMapper.selectById(parentId);
@@ -81,8 +86,18 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
             //            commentVO.setParentUserId(mmsCommentRemindParent.getSendUserId());发出父评论的用户就是当前用户，即ReceiveUserId
             //          TODO:调用其他微服务获取完整数据
 //            调用用户微服务获取用户头像和名称
-//            CommonResult<?> sendUser = userFeignService.getPersonalDetails(commentVO.getSendUserId());
-//            commentVO.setSendUserName(sendUser.getData());
+//            System.out.println(mmsCommentRemind.getSendUserId());
+//            Long sendId = 1305182747930718209L;
+//            UserDetailsVO sendUser = userFeignService.getPersonalDetails(sendId);
+//            commentVO.setSendUserName(sendUser.getName());
+//            System.out.println(sendUser);
+//            System.out.println(userFeignService.test());
+//            获取打卡相关信息
+//            int planType=mmsCommentRemind.getPlanTypeId();
+//            监督计划信息
+//            Long punchId = mmsCommentRemind.getPunchId();
+//            BasicPunchVO punchVO = monitorFeignService.queryBasicPunchVO(punchId);
+//            System.out.println(punchVO);
             commentVOList.add(commentVO);
         }
         PageUtil pageUtil = new PageUtil();
