@@ -12,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -45,9 +46,15 @@ public class PopularPlanController {
 
     }
 
+    @GetMapping(value = "/popular/rate")
+    @ApiOperation(value = "供消息微服务调用，给一个计划点赞")
+    public void ratePopularPlan(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid){
+
+    }
+
     @PostMapping(value = "popular")
     @ApiOperation(value = "供计划微服务远程调用，创建首页信息")
-    public void createPopularPlan(@ApiParam(value = "首页计划的dto") @RequestBody PopularPlanDTO popularPlanDTO) {
+    public void createPopularPlan(@ApiParam(value = "首页计划的dto") @RequestBody PopularPlanDTO popularPlanDTO) throws IOException {
         popularPlanService.createPopularPlan(popularPlanDTO);
     }
 

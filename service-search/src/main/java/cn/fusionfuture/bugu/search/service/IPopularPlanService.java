@@ -31,11 +31,18 @@ public interface IPopularPlanService {
     PopularPlanVO queryPopularPlan(String keyWord, Integer pageNum, Integer pageSize, List<String> planType, List<String> planStatus) throws IOException;
 
     /**
+     * 给计划点赞
+     * @author thomas
+     * @since 2020/9/30 7:27 下午
+     * @param pid 计划的id
+     **/
+    void ratePopularPlan(Long pid) throws IOException;
+    /**
      * 创建计划的首页数据
      * @author thomas
      * @since 2020/9/26 4:49 下午
      * @param popularPlanDTO 要保存的信息
      **/
-    void createPopularPlan(PopularPlanDTO popularPlanDTO);
+    void createPopularPlan(PopularPlanDTO popularPlanDTO) throws IOException;
 
 }

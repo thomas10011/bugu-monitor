@@ -10,11 +10,16 @@ import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import io.micrometer.core.instrument.search.Search;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -22,9 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -81,7 +84,18 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
     }
 
     @Override
-    public void createPopularPlan(PopularPlanDTO popularPlanDTO) {
+    public void ratePopularPlan(Long pid) throws IOException {
+        GetRequest getRequest = new GetRequest("plan", pid.toString());
+    }
+
+    @Override
+    public void createPopularPlan(PopularPlanDTO popularPlanDTO) throws IOException {
+
+        IndexRequest request = new IndexRequest("plan")
+                .id(popularPlanDTO.getId().toString())
+                .source(JSONUtil.parseObj(popularPlanDTO, false, true).toStringPretty(), XContentType.JSON);
+        System.out.println(JSONUtil.parseObj(popularPlanDTO, false, true).toStringPretty());
+        IndexResponse response = client.index(request, RequestOptions.DEFAULT);
 
     }
 }

@@ -57,5 +57,4 @@ spring:
         jwt:
           #          public-key-location: http://localhost:10007/rsa/publicKey
           jwk-set-uri: http://localhost:9527/oauth-service/rsa/publicKey #配置RSA的公钥访问地址
-          public-key-location: jwt.jks
 

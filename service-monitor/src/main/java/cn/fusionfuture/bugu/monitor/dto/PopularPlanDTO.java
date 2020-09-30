@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -49,7 +50,7 @@ public class PopularPlanDTO implements Serializable {
     private Integer hc;
 
     @ApiModelProperty(name = "award,奖金总金额")
-    private String aw;
+    private BigDecimal aw;
 
     @ApiModelProperty(name = "rates,点赞数")
     private Integer rt;

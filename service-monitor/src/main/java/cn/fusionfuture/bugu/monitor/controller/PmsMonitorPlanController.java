@@ -53,7 +53,7 @@ public class PmsMonitorPlanController {
                 .setHc(0)
                 .setRt(0)
                 .setSt(MonitorPlanStatus.REGISTERING.getValue())
-                .setAw(newMonitorPlanVO.getTotalBonus().toString());
+                .setAw(newMonitorPlanVO.getTotalBonus());
         searchFeignService.createPopularPlan(popularPlanDTO);
         return id;
     }
