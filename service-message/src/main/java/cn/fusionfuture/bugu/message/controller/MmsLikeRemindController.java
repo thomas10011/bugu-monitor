@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.message.service.IMmsLikeRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
+import cn.fusionfuture.bugu.message.vo.input.ILikeVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
@@ -13,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +45,14 @@ public class MmsLikeRemindController {
      * 发送点赞消息
      * @author LiLan
      * @since 2020/8/22 15:01
-     * @param mmsLikeRemind
+     * @param iLikeVO
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult<?>
      **/
     @PostMapping(value = "/like-remind")
     @ApiOperation(value = "发送点赞消息")
-    public CommonResult<?> addLike (MmsLikeRemind mmsLikeRemind) throws JsonProcessingException {
+    public CommonResult<?> addLike (ILikeVO iLikeVO) throws JsonProcessingException {
+        MmsLikeRemind mmsLikeRemind = new MmsLikeRemind();
+        BeanUtils.copyProperties(iLikeVO,mmsLikeRemind);
         iMmsLikeRemindService.addLikeRemind(mmsLikeRemind);
 
         ObjectMapper mapper = new ObjectMapper();

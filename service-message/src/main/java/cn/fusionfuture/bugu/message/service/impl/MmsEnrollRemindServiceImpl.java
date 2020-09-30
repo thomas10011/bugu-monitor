@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,14 +74,15 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
         List<EnrollVO> enrollVOList = new ArrayList<>();
         for(MmsEnrollRemind mmsEnrollRemind:mmsEnrollRemindList.getList()){
             EnrollVO enrollVO = new EnrollVO();
-            enrollVO.setId(mmsEnrollRemind.getId());
-            enrollVO.setSendTime(mmsEnrollRemind.getCreateTime());
-            enrollVO.setSendUserId(mmsEnrollRemind.getSendUserId());
-            enrollVO.setReceiveUserId(mmsEnrollRemind.getReceiveUserId());
-            enrollVO.setPlanId(mmsEnrollRemind.getPlanId());
-            enrollVO.setPlanTypeId(mmsEnrollRemind.getPlanTypeId());
-            enrollVO.setIsChecked(mmsEnrollRemind.getIsChecked());
-            enrollVO.setIsHidden(mmsEnrollRemind.getIsHidden());
+            BeanUtils.copyProperties(mmsEnrollRemind,enrollVO);
+//            enrollVO.setId(mmsEnrollRemind.getId());
+//            enrollVO.setSendTime(mmsEnrollRemind.getCreateTime());
+//            enrollVO.setSendUserId(mmsEnrollRemind.getSendUserId());
+//            enrollVO.setReceiveUserId(mmsEnrollRemind.getReceiveUserId());
+//            enrollVO.setPlanId(mmsEnrollRemind.getPlanId());
+//            enrollVO.setPlanTypeId(mmsEnrollRemind.getPlanTypeId());
+//            enrollVO.setIsChecked(mmsEnrollRemind.getIsChecked());
+//            enrollVO.setIsHidden(mmsEnrollRemind.getIsHidden());
             enrollVOList.add(enrollVO);
 //          TODO:调用其他微服务获取完整数据
 

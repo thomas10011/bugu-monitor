@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.controller;
 import cn.fusionfuture.bugu.message.service.IMmsPrivateChatService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
+import cn.fusionfuture.bugu.message.vo.input.IPrivateChatVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
@@ -12,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,12 +51,14 @@ public class MmsPrivateChatController {
      * 发送私信
      * @author LiLan
      * @since 2020/9/25 13:18
-     * @param mmsPrivateChat 发送的私信
+     * @param iPrivateChatVO 发送的私信
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult<?>
      **/
     @PostMapping(value="/private-chat")
     @ApiOperation(value = "发送私信")
-    public CommonResult<?> sendChat(MmsPrivateChat mmsPrivateChat) throws JsonProcessingException {
+    public CommonResult<?> sendChat(IPrivateChatVO iPrivateChatVO) throws JsonProcessingException {
+        MmsPrivateChat mmsPrivateChat = new MmsPrivateChat();
+        BeanUtils.copyProperties(iPrivateChatVO,mmsPrivateChat);
         iMmsPrivateChatService.sendPraivateChat(mmsPrivateChat);
 
         ObjectMapper mapper = new ObjectMapper();

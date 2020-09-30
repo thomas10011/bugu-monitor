@@ -4,6 +4,7 @@ package cn.fusionfuture.bugu.message.controller;
 import cn.fusionfuture.bugu.message.service.IMmsEnrollRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.EnrollVO;
+import cn.fusionfuture.bugu.message.vo.input.IEnrollVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,12 +40,15 @@ public class MmsEnrollRemindController {
      * 发送报名信息
      * @author LiLan
      * @since 2020/8/21 17:45
-     * @param mmsEnrollRemind 报名提醒对象
+     * @param iEnrollVO 报名提醒对象
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult<java.lang.Object>
      **/
     @PostMapping(value = "/enroll-remind")
     @ApiOperation(value = "发送报名信息")
-    public CommonResult<?> addEnroll ( MmsEnrollRemind mmsEnrollRemind) throws JsonProcessingException {
+    public CommonResult<?> addEnroll ( IEnrollVO iEnrollVO) throws JsonProcessingException {
+        MmsEnrollRemind mmsEnrollRemind = new MmsEnrollRemind();
+        BeanUtils.copyProperties(iEnrollVO,mmsEnrollRemind);
+
         iMmsEnrollRemindService.addEnrollRemind(mmsEnrollRemind);
 
         ObjectMapper mapper = new ObjectMapper();

@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.message.service.IMmsCommentRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
+import cn.fusionfuture.bugu.message.vo.input.ICommentVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,14 +41,16 @@ public class MmsCommentRemindController {
      *
      * @author LiLan
      * @since 2020/8/22 17:02
-     * @param mmsCommentRemind 评论对象
+     * @param iCommentVO 评论对象
      * @return cn.fusionfuture.bugu.pojo.api.CommonResult<?>
      **/
     @PostMapping(value = "/comment-remind")
     @ApiOperation(value = "发送评论")
-    public CommonResult<?> addComment(MmsCommentRemind mmsCommentRemind) throws JsonProcessingException {
+    public CommonResult<?> addComment(ICommentVO iCommentVO) throws JsonProcessingException {
+        MmsCommentRemind mmsCommentRemind = new MmsCommentRemind();
+        BeanUtils.copyProperties(iCommentVO,mmsCommentRemind);
         iMmsCommentRemindService.addComment(mmsCommentRemind);
-
+//      实时消息
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsCommentRemind);
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsCommentRemind.getReceiveUserId()+"");

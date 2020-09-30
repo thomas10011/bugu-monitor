@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,14 +66,15 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
         List<LikeVO> likeVOList = new ArrayList<>();
         for (MmsLikeRemind mmsLikeRemind : mmsLikeRemindList.getList()) {
             LikeVO likeVO = new LikeVO();
-            likeVO.setId(mmsLikeRemind.getId());
-            likeVO.setSendTime(mmsLikeRemind.getCreateTime());
-            likeVO.setSendUserId(mmsLikeRemind.getSendUserId());
-            likeVO.setReceiveUserId(mmsLikeRemind.getReceiveUserId());
-            likeVO.setPunchId(mmsLikeRemind.getPunchId());
-            likeVO.setPlanTypeId(mmsLikeRemind.getPlanTypeId());
-            likeVO.setIsChecked(mmsLikeRemind.getIsChecked());
-            likeVO.setIsHidden(mmsLikeRemind.getIsHidden());
+            BeanUtils.copyProperties(mmsLikeRemind,likeVO);
+//            likeVO.setId(mmsLikeRemind.getId());
+//            likeVO.setSendTime(mmsLikeRemind.getCreateTime());
+//            likeVO.setSendUserId(mmsLikeRemind.getSendUserId());
+//            likeVO.setReceiveUserId(mmsLikeRemind.getReceiveUserId());
+//            likeVO.setPunchId(mmsLikeRemind.getPunchId());
+//            likeVO.setPlanTypeId(mmsLikeRemind.getPlanTypeId());
+//            likeVO.setIsChecked(mmsLikeRemind.getIsChecked());
+//            likeVO.setIsHidden(mmsLikeRemind.getIsHidden());
             //          TODO:调用其他微服务获取完整数据
 
             likeVOList.add(likeVO);

@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.controller;
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
+import cn.fusionfuture.bugu.message.vo.input.IPunchVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,13 +41,15 @@ public class MmsPunchRemindController {
      * 发送打卡提醒
      * @author LiLan
      * @since 2020/8/22 12:10
-     * @param mmsPunchRemind 打卡提醒对象
+     * @param iPunchVO 打卡提醒对象
      * @return void
      **/
     @PostMapping(value="/punch-remind")
     @ApiOperation(value = "发送打卡提醒")
-    public CommonResult<?> addPunch(MmsPunchRemind mmsPunchRemind) throws JsonProcessingException {
+    public CommonResult<?> addPunch(IPunchVO iPunchVO) throws JsonProcessingException {
 
+        MmsPunchRemind mmsPunchRemind = new MmsPunchRemind();
+        BeanUtils.copyProperties(iPunchVO,mmsPunchRemind);
         iMmsPunchRemindService.addPunchRemind(mmsPunchRemind);
 
         ObjectMapper mapper = new ObjectMapper();
