@@ -39,7 +39,7 @@ public class ParentCommonVO implements Serializable {
     private Long receiveUserId;
 
     @ApiModelProperty(value = "消息发送时间")
-    private LocalDateTime SendTime;
+    private LocalDateTime createTime;
 
     @ApiModelProperty(value = "表明是否被查看")
     private Boolean isChecked;

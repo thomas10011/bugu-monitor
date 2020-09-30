@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.models.auth.In;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,14 +57,15 @@ public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper,
         List<PunchVO> punchVOList = new ArrayList<>();
         for (MmsPunchRemind mmsPunchRemind : mmsPunchRemindList.getList()) {
             PunchVO punchVO = new PunchVO();
-            punchVO.setId(mmsPunchRemind.getId());
-            punchVO.setSendTime(mmsPunchRemind.getCreateTime());
-            punchVO.setSendUserId(mmsPunchRemind.getSendUserId());
-            punchVO.setReceiveUserId(mmsPunchRemind.getReceiveUserId());
-            punchVO.setPlanId(mmsPunchRemind.getPlanId());
-            punchVO.setPlanTypeId(mmsPunchRemind.getPlanTypeId());
-            punchVO.setIsChecked(mmsPunchRemind.getIsChecked());
-            punchVO.setIsHidden(mmsPunchRemind.getIsHidden());
+            BeanUtils.copyProperties(mmsPunchRemind,punchVO);
+//            punchVO.setId(mmsPunchRemind.getId());
+//            punchVO.setSendTime(mmsPunchRemind.getCreateTime());
+//            punchVO.setSendUserId(mmsPunchRemind.getSendUserId());
+//            punchVO.setReceiveUserId(mmsPunchRemind.getReceiveUserId());
+//            punchVO.setPlanId(mmsPunchRemind.getPlanId());
+//            punchVO.setPlanTypeId(mmsPunchRemind.getPlanTypeId());
+//            punchVO.setIsChecked(mmsPunchRemind.getIsChecked());
+//            punchVO.setIsHidden(mmsPunchRemind.getIsHidden());
             punchVOList.add(punchVO);
 //          TODO:调用其他微服务获取完整数据
 

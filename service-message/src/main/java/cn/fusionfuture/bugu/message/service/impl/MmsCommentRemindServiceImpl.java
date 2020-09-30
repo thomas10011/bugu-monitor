@@ -13,6 +13,7 @@ import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
@@ -65,16 +66,7 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
         List<CommentVO> commentVOList = new ArrayList<>();
         for (MmsCommentRemind mmsCommentRemind : mmsCommentRemindList.getList()) {
             CommentVO commentVO = new CommentVO();
-            commentVO.setId(mmsCommentRemind.getId());
-            commentVO.setSendTime(mmsCommentRemind.getCreateTime());
-            commentVO.setSendUserId(mmsCommentRemind.getSendUserId());
-            commentVO.setReceiveUserId(mmsCommentRemind.getReceiveUserId());
-            commentVO.setPunchId(mmsCommentRemind.getPunchId());
-            commentVO.setPlanTypeId(mmsCommentRemind.getPlanTypeId());
-            commentVO.setIsChecked(mmsCommentRemind.getIsChecked());
-            commentVO.setIsHidden(mmsCommentRemind.getIsHidden());
-            commentVO.setCommentContent(mmsCommentRemind.getCommentContent());
-            commentVO.setParentId(mmsCommentRemind.getParentId());
+            BeanUtils.copyProperties(mmsCommentRemind,commentVO);
 
 //           通过parentId获取父评论相关内容
             Long parentId = mmsCommentRemind.getParentId();
@@ -115,16 +107,17 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
         List<PunchCommentVO> commentVOList = new ArrayList<>();
         for (MmsCommentRemind mmsCommentRemind : mmsCommentRemindList) {
             PunchCommentVO commentVO = new PunchCommentVO();
-            commentVO.setId(mmsCommentRemind.getId());
-            commentVO.setSendTime(mmsCommentRemind.getCreateTime());
-            commentVO.setSendUserId(mmsCommentRemind.getSendUserId());
-            commentVO.setReceiveUserId(mmsCommentRemind.getReceiveUserId());
-            commentVO.setPunchId(mmsCommentRemind.getPunchId());
-            commentVO.setPlanTypeId(mmsCommentRemind.getPlanTypeId());
-            commentVO.setIsChecked(mmsCommentRemind.getIsChecked());
-            commentVO.setIsHidden(mmsCommentRemind.getIsHidden());
-            commentVO.setCommentContent(mmsCommentRemind.getCommentContent());
-            commentVO.setParentId(mmsCommentRemind.getParentId());
+            BeanUtils.copyProperties(mmsCommentRemind,commentVO);
+//            commentVO.setId(mmsCommentRemind.getId());
+//            commentVO.setSendTime(mmsCommentRemind.getCreateTime());
+//            commentVO.setSendUserId(mmsCommentRemind.getSendUserId());
+//            commentVO.setReceiveUserId(mmsCommentRemind.getReceiveUserId());
+//            commentVO.setPunchId(mmsCommentRemind.getPunchId());
+//            commentVO.setPlanTypeId(mmsCommentRemind.getPlanTypeId());
+//            commentVO.setIsChecked(mmsCommentRemind.getIsChecked());
+//            commentVO.setIsHidden(mmsCommentRemind.getIsHidden());
+//            commentVO.setCommentContent(mmsCommentRemind.getCommentContent());
+//            commentVO.setParentId(mmsCommentRemind.getParentId());
 
             //          TODO:调用其他微服务获取完整数据
 

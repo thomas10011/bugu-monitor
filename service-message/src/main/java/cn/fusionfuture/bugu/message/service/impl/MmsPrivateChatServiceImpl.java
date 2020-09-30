@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.models.auth.In;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,15 +77,16 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsPrivateChat mmsPrivateChat:pairedChatMap.values()) {
             MessageVO messageVO = new MessageVO();
-            messageVO.setId(mmsPrivateChat.getId());
-            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
-            messageVO.setSendUserId(mmsPrivateChat.getSendUserId());
-            messageVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
-            messageVO.setIsChecked(mmsPrivateChat.getIsChecked());
-            messageVO.setIsHidden(mmsPrivateChat.getIsHidden());
-            messageVO.setMessageContent((mmsPrivateChat.getMessageContent()));
-            messageVO.setImageUrl((mmsPrivateChat.getImageUrl()));
-            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
+            BeanUtils.copyProperties(mmsPrivateChat,messageVO);
+//            messageVO.setId(mmsPrivateChat.getId());
+//            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
+//            messageVO.setSendUserId(mmsPrivateChat.getSendUserId());
+//            messageVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
+//            messageVO.setIsChecked(mmsPrivateChat.getIsChecked());
+//            messageVO.setIsHidden(mmsPrivateChat.getIsHidden());
+//            messageVO.setMessageContent((mmsPrivateChat.getMessageContent()));
+//            messageVO.setImageUrl((mmsPrivateChat.getImageUrl()));
+//            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
             //          TODO:调用其他微服务获取完整数据
             messageVOList.add(messageVO);
 
@@ -111,15 +113,16 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsPrivateChat mmsPrivateChat:mmsReceivePrivateChatList.getList()) {
             MessageVO messageVO = new MessageVO();
-            messageVO.setId(mmsPrivateChat.getId());
-            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
-            messageVO.setSendUserId(mmsPrivateChat.getSendUserId());
-            messageVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
-            messageVO.setIsChecked(mmsPrivateChat.getIsChecked());
-            messageVO.setIsHidden(mmsPrivateChat.getIsHidden());
-            messageVO.setMessageContent((mmsPrivateChat.getMessageContent()));
-            messageVO.setImageUrl((mmsPrivateChat.getImageUrl()));
-            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
+            BeanUtils.copyProperties(mmsPrivateChat,messageVO);
+//            messageVO.setId(mmsPrivateChat.getId());
+//            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
+//            messageVO.setSendUserId(mmsPrivateChat.getSendUserId());
+//            messageVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
+//            messageVO.setIsChecked(mmsPrivateChat.getIsChecked());
+//            messageVO.setIsHidden(mmsPrivateChat.getIsHidden());
+//            messageVO.setMessageContent((mmsPrivateChat.getMessageContent()));
+//            messageVO.setImageUrl((mmsPrivateChat.getImageUrl()));
+//            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
             //          TODO:调用其他微服务获取完整数据
             messageVOList.add(messageVO);
 

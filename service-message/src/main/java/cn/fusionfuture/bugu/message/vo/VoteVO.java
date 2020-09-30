@@ -26,7 +26,7 @@ public class VoteVO extends ParentPunchVO implements Serializable {
     private Integer voteCount;
 
     @ApiModelProperty(value="认可/啄一下")
-    private Boolean voteType;
+    private Boolean isApproved;
 
     @ApiModelProperty(value="当前类型的投票数目")
     private Integer currentVoteCount;

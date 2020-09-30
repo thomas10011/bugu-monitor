@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,15 +57,16 @@ public class MmsVoteRemindServiceImpl extends ServiceImpl<MmsVoteRemindMapper, M
         List<VoteVO> voteVOList = new ArrayList<>();
         for (MmsVoteRemind mmsVoteRemind : mmsVoteRemindList.getList()) {
             VoteVO voteVO = new VoteVO();
-            voteVO.setId(mmsVoteRemind.getId());
-            voteVO.setSendTime(mmsVoteRemind.getCreateTime());
-            voteVO.setSendUserId(mmsVoteRemind.getSendUserId());
-            voteVO.setReceiveUserId(mmsVoteRemind.getReceiveUserId());
-            voteVO.setPunchId(mmsVoteRemind.getPunchId());
-            voteVO.setPlanTypeId(mmsVoteRemind.getPlanTypeId());
-            voteVO.setVoteType(mmsVoteRemind.getIsApproved());
-            voteVO.setIsChecked(mmsVoteRemind.getIsChecked());
-            voteVO.setIsHidden(mmsVoteRemind.getIsHidden());
+            BeanUtils.copyProperties(mmsVoteRemind,voteVO);
+//            voteVO.setId(mmsVoteRemind.getId());
+//            voteVO.setSendTime(mmsVoteRemind.getCreateTime());
+//            voteVO.setSendUserId(mmsVoteRemind.getSendUserId());
+//            voteVO.setReceiveUserId(mmsVoteRemind.getReceiveUserId());
+//            voteVO.setPunchId(mmsVoteRemind.getPunchId());
+//            voteVO.setPlanTypeId(mmsVoteRemind.getPlanTypeId());
+//            voteVO.setVoteType(mmsVoteRemind.getIsApproved());
+//            voteVO.setIsChecked(mmsVoteRemind.getIsChecked());
+//            voteVO.setIsHidden(mmsVoteRemind.getIsHidden());
             //          TODO:调用其他微服务获取完整数据
 
             voteVOList.add(voteVO);

@@ -12,6 +12,7 @@ import cn.fusionfuture.bugu.message.service.IMmsSystemUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,12 +64,13 @@ public class MmsSystemUserServiceImpl extends ServiceImpl<MmsSystemUserMapper, M
         }
         for(MmsSystemUser mmsSystemUser:pairedMessageMap.values()){
             MessageVO messageVO = new MessageVO();
-            messageVO.setId(mmsSystemUser.getId());
-            messageVO.setSendTime(mmsSystemUser.getCreateTime());
-            messageVO.setReceiveUserId(mmsSystemUser.getReceiveUserId());
-            messageVO.setSendUserId(mmsSystemUser.getSendUserId());
-            messageVO.setIsChecked(mmsSystemUser.getIsChecked());
-            messageVO.setIsHidden(mmsSystemUser.getIsHidden());
+            BeanUtils.copyProperties(mmsSystemUser,messageVO);
+//            messageVO.setId(mmsSystemUser.getId());
+//            messageVO.setSendTime(mmsSystemUser.getCreateTime());
+//            messageVO.setReceiveUserId(mmsSystemUser.getReceiveUserId());
+//            messageVO.setSendUserId(mmsSystemUser.getSendUserId());
+//            messageVO.setIsChecked(mmsSystemUser.getIsChecked());
+//            messageVO.setIsHidden(mmsSystemUser.getIsHidden());
             Long systemMessageId = mmsSystemUser.getSystemMessageId();
             MmsSystemMessage mmsSystemMessage = mmsSystemMessageMapper.selectById(systemMessageId);
             messageVO.setMessageContent((mmsSystemMessage.getMessageContent()));
@@ -96,12 +98,13 @@ public class MmsSystemUserServiceImpl extends ServiceImpl<MmsSystemUserMapper, M
         List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsSystemUser mmsSystemUser:mmsSystemUserList.getList()) {
             MessageVO messageVO = new MessageVO();
-            messageVO.setId(mmsSystemUser.getId());
-            messageVO.setSendTime(mmsSystemUser.getCreateTime());
-            messageVO.setSendUserId(mmsSystemUser.getSendUserId());
-            messageVO.setReceiveUserId(mmsSystemUser.getReceiveUserId());
-            messageVO.setIsChecked(mmsSystemUser.getIsChecked());
-            messageVO.setIsHidden(mmsSystemUser.getIsHidden());
+            BeanUtils.copyProperties(mmsSystemUser,messageVO);
+//            messageVO.setId(mmsSystemUser.getId());
+//            messageVO.setSendTime(mmsSystemUser.getCreateTime());
+//            messageVO.setSendUserId(mmsSystemUser.getSendUserId());
+//            messageVO.setReceiveUserId(mmsSystemUser.getReceiveUserId());
+//            messageVO.setIsChecked(mmsSystemUser.getIsChecked());
+//            messageVO.setIsHidden(mmsSystemUser.getIsHidden());
 
             MmsSystemMessage mmsSystemMessage = mmsSystemMessageMapper.selectById(mmsSystemUser.getSystemMessageId());
             messageVO.setMessageContent((mmsSystemMessage.getMessageContent()));
