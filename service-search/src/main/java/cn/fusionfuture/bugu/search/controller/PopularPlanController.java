@@ -48,8 +48,8 @@ public class PopularPlanController {
 
     @GetMapping(value = "/popular/rate")
     @ApiOperation(value = "供消息微服务调用，给一个计划点赞")
-    public void ratePopularPlan(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid){
-
+    public void ratePopularPlan(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid) throws IOException {
+        popularPlanService.ratePopularPlan(pid);
     }
 
     @PostMapping(value = "popular")

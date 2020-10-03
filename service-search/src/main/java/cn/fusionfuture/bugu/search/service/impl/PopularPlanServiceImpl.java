@@ -16,11 +16,14 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.*;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +88,11 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
 
     @Override
     public void ratePopularPlan(Long pid) throws IOException {
-        GetRequest getRequest = new GetRequest("plan", pid.toString());
+        UpdateRequest updateRequest = new UpdateRequest("plan", pid.toString());
+        Map<String, Object> parameters = Collections.singletonMap("count", 4);
+        Script script = new Script("ctx._source.rt += 1");
+        updateRequest.script(script);
+        client.update(updateRequest, RequestOptions.DEFAULT);
     }
 
     @Override
