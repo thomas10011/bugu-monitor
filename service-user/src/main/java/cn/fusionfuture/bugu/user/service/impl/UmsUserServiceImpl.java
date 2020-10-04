@@ -1,15 +1,11 @@
 package cn.fusionfuture.bugu.user.service.impl;
 
-import cn.fusionfuture.bugu.pojo.constants.MiniProgramConstants;
+import cn.fusionfuture.bugu.pojo.api.CommonResult;
+import cn.fusionfuture.bugu.pojo.api.ResultCode;
 import cn.fusionfuture.bugu.pojo.entity.UmsUser;
-import cn.fusionfuture.bugu.pojo.entity.UmsUserAuthWechat;
-import cn.fusionfuture.bugu.user.mapper.UmsUserAuthWechatMapper;
 import cn.fusionfuture.bugu.user.mapper.UmsUserMapper;
 import cn.fusionfuture.bugu.user.service.IUmsUserService;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
-import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
-import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * <p>
@@ -34,22 +29,45 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     private UmsUserMapper umsUserMapper;
 
     @Override
-    public UserDetailsVO getPersonalDetails(Long id) {
+    public UserDetailsVO getPersonalDetails(Long id, Long uid) {
         UmsUser umsUser = umsUserMapper.selectById(id);
-
         UserDetailsVO userDetailsVO = new UserDetailsVO();
-        userDetailsVO.setName(umsUser.getUserName());
-        userDetailsVO.setAvator(umsUser.getAvatarUrl());
-        userDetailsVO.setFollowQuantity(umsUser.getFollowQuantity());
-        userDetailsVO.setFansQuantity(umsUser.getFansQuantity());
-        userDetailsVO.setGender(umsUser.getGender());
-        userDetailsVO.setFeatherBalance(umsUser.getFeatherBalance());
-        userDetailsVO.setCashBalance(umsUser.getCashBalance());
-        // TODO: 远程调用获取今日羽毛数变化
-        userDetailsVO.setFeatherChange(new BigDecimal(0));
+        if (umsUser == null) {
+            return null;
+        }
 
-        BeanUtils.copyProperties(userDetailsVO, umsUser);
+        if (id.equals(uid)) {
+            userDetailsVO.setName(umsUser.getUserName());
+            userDetailsVO.setAvatar(umsUser.getAvatarUrl());
+            userDetailsVO.setFollowQuantity(umsUser.getFollowQuantity());
+            userDetailsVO.setFansQuantity(umsUser.getFansQuantity());
+            userDetailsVO.setGender(umsUser.getGender());
+            userDetailsVO.setFeatherBalance(umsUser.getFeatherBalance());
+            userDetailsVO.setCashBalance(umsUser.getCashBalance());
+            // TODO: 远程调用获取今日羽毛数变化
+            userDetailsVO.setFeatherChange(new BigDecimal(0));
 
-        return userDetailsVO;
+            return userDetailsVO;
+        } else {
+            userDetailsVO.setName(umsUser.getUserName());
+            userDetailsVO.setAvatar(umsUser.getAvatarUrl());
+            userDetailsVO.setFollowQuantity(umsUser.getFollowQuantity());
+            userDetailsVO.setFansQuantity(umsUser.getFansQuantity());
+            userDetailsVO.setGender(umsUser.getGender());
+
+            userDetailsVO.setFeatherBalance(new BigDecimal(1));
+            userDetailsVO.setCashBalance(new BigDecimal(1));
+
+            return userDetailsVO;
+        }
+    }
+
+    @Override
+    public HashMap<String, String> getDetailsForMessage(Long id) {
+        UmsUser umsUser = umsUserMapper.selectById(id);
+        HashMap<String, String> map = new HashMap<>(2);
+        map.put("userName",umsUser.getUserName());
+        map.put("avatarUrl",umsUser.getAvatarUrl());
+        return map;
     }
 }

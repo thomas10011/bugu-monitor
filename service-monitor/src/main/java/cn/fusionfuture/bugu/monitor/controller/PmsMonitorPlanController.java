@@ -47,6 +47,7 @@ public class PmsMonitorPlanController {
         PopularPlanDTO popularPlanDTO = new PopularPlanDTO();
         popularPlanDTO
                 .setId(id)
+                .setUid(newMonitorPlanVO.getUserId())
                 .setTt(newMonitorPlanVO.getName())
                 .setTp(MonitorPlanType.getValue(newMonitorPlanVO.getMonitorPatternId()))
                 .setCv(newMonitorPlanVO.getImageUrl())

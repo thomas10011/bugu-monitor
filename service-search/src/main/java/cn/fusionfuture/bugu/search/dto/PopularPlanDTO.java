@@ -28,6 +28,9 @@ public class PopularPlanDTO implements Serializable {
     @ApiModelProperty(name = "计划的id")
     private Long id;
 
+    @ApiModelProperty(name = "用户的id")
+    private Long uid;
+
     @ApiModelProperty(name = "type,计划的类型", notes = "计划的类型。包括：自我监督、单人监督、多人监督、pk计划")
     private String tp;
 
