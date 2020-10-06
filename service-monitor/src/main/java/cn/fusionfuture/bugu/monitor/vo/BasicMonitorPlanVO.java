@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -35,6 +36,9 @@ public class BasicMonitorPlanVO {
 
     @ApiModelProperty(value = "计划类型描述")
     private String planPattern;
+
+    @ApiModelProperty(value = "监督计划单人金额")
+    private BigDecimal totalBonus;
 
     @ApiModelProperty(value = "已打卡次数")
     private Integer punchCount;

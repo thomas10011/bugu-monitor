@@ -7,6 +7,7 @@
             pms_pk_plan.name,
             pms_pk_plan.description,
             pms_pk_plan.punch_quantity,
+            pms_pk_plan.total_bonus,
             pms_pk_plan.start_time,
             pms_pk_plan.end_time,
             pms_pk_pattern.description AS plan_pattern,

@@ -23,6 +23,7 @@
             pms_monitor_plan.description,
             pms_monitor_plan.punch_count,
             pms_monitor_plan.punch_quantity,
+            pms_monitor_plan.total_bonus,
             pms_monitor_plan.start_time,
             pms_monitor_plan.end_time,
             pms_monitor_pattern.description AS plan_pattern,

@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -41,6 +42,9 @@ public class BasicPkPlanVO implements Serializable {
 
     @ApiModelProperty(value = "打卡总次数")
     private Integer punchQuantity;
+
+    @ApiModelProperty(value = "pk计划单人金额")
+    private BigDecimal totalBonus;
 
     @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
