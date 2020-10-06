@@ -23,7 +23,7 @@ public class SimpleMonitorPlanVO {
     private String name;
 
     @ApiModelProperty(value = "监督模式")
-    private String monitorPatternId;
+    private String planPattern;
 
     @ApiModelProperty(value = "监督人数")
     private Integer monitorQuantity;

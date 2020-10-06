@@ -16,14 +16,14 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="SimplePkPlanVO对象", description="计划报名进度VO")
+@ApiModel(value="SimplePkPlanVO对象", description="计划简略信息")
 public class SimplePkPlanVO {
 
     @ApiModelProperty(value = "计划标题")
     private String name;
 
     @ApiModelProperty(value = "监督模式")
-    private String pkPatternId;
+    private String pkPattern;
 
     @ApiModelProperty(value = "pk人数")
     private Integer pkQuantity;
