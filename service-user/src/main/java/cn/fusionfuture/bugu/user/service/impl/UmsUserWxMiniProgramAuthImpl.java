@@ -1,10 +1,8 @@
 package cn.fusionfuture.bugu.user.service.impl;
 
 import cn.fusionfuture.bugu.pojo.constants.MiniProgramConstants;
-import cn.fusionfuture.bugu.pojo.entity.UmsUser;
-import cn.fusionfuture.bugu.pojo.entity.UmsUserAuthWechat;
-import cn.fusionfuture.bugu.user.mapper.UmsUserAuthWechatMapper;
-import cn.fusionfuture.bugu.user.mapper.UmsUserMapper;
+import cn.fusionfuture.bugu.pojo.entity.*;
+import cn.fusionfuture.bugu.user.mapper.*;
 import cn.fusionfuture.bugu.user.service.IUmsUserWxMiniProgramAuthService;
 import cn.fusionfuture.bugu.user.vo.UserOauthVO;
 import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
@@ -38,6 +36,15 @@ public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatM
     @Autowired
     UmsUserMapper umsUserMapper;
 
+    @Autowired
+    UmsMonitorAchievementMapper umsMonitorAchievementMapper;
+
+    @Autowired
+    UmsMonitorPlanAchievementMapper umsMonitorPlanAchievementMapper;
+
+    @Autowired
+    UmsPkPlanAchievementMapper umsPkPlanAchievementMapper;
+
     @Override
     public WechatBindDetailsVO getWechatBind(String code, String userName, String avatarUrl, Integer gender) {
         HashMap<String, Object> paramMap = new HashMap<>();
@@ -70,6 +77,30 @@ public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatM
                     .setSessionKey(sessionKey)
                     .setUserId(uid);
             umsUserAuthWechatMapper.insert(umsUserAuthWechat);
+            //
+            UmsMonitorAchievement umsMonitorAchievement = new UmsMonitorAchievement();
+            umsMonitorAchievement.setUserId(uid)
+                    .setAssistCount(0)
+                    .setPlanCount(0)
+                    .setSuccessCount(0)
+                    .setVoteCount(0);
+            umsMonitorAchievementMapper.insert(umsMonitorAchievement);
+            //
+            UmsMonitorPlanAchievement umsMonitorPlanAchievement = new UmsMonitorPlanAchievement();
+            umsMonitorPlanAchievement.setUserId(uid)
+                    .setParticipateCount(0)
+                    .setPlanCount(0)
+                    .setSuccessCount(0);
+            umsMonitorPlanAchievementMapper.insert(umsMonitorPlanAchievement);
+            //
+            UmsPkPlanAchievement umsPkPlanAchievement = new UmsPkPlanAchievement();
+            umsPkPlanAchievement.setUserId(uid)
+                    .setDefeatCount(0)
+                    .setPlanCount(0)
+                    .setSuccessCount(0)
+                    .setVictoryCount(0);
+            umsPkPlanAchievementMapper.insert(umsPkPlanAchievement);
+
         } else {
             // 更新绑定表的sessionKey
             searchResult.get(0).setSessionKey(sessionKey);
