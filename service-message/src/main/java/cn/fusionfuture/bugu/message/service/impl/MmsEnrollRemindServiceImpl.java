@@ -1,9 +1,13 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
+import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
 import cn.fusionfuture.bugu.message.feign.PkFeignService;
+import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.EnrollVO;
+import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
+import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import cn.fusionfuture.bugu.message.mapper.MmsEnrollRemindMapper;
@@ -31,12 +35,20 @@ import java.util.Map;
  */
 @Service
 public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMapper, MmsEnrollRemind> implements IMmsEnrollRemindService {
+    final Integer MONITOR_PLAN = 1;
+    final Integer PK_PLAN = 2;
 
     @Autowired
     MmsEnrollRemindMapper mmsEnrollRemindMapper;
 
     @Autowired
-    PkFeignService pkFeignService;
+    private MonitorFeignService monitorFeignService;
+
+    @Autowired
+    private PkFeignService pkFeignService;
+
+    @Autowired
+    private UserFeignService userFeignService;
 
     /**
      * TODO
@@ -75,14 +87,29 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
         for(MmsEnrollRemind mmsEnrollRemind:mmsEnrollRemindList.getList()){
             EnrollVO enrollVO = new EnrollVO();
             BeanUtils.copyProperties(mmsEnrollRemind,enrollVO);
-//            enrollVO.setId(mmsEnrollRemind.getId());
-//            enrollVO.setSendTime(mmsEnrollRemind.getCreateTime());
-//            enrollVO.setSendUserId(mmsEnrollRemind.getSendUserId());
-//            enrollVO.setReceiveUserId(mmsEnrollRemind.getReceiveUserId());
-//            enrollVO.setPlanId(mmsEnrollRemind.getPlanId());
-//            enrollVO.setPlanTypeId(mmsEnrollRemind.getPlanTypeId());
-//            enrollVO.setIsChecked(mmsEnrollRemind.getIsChecked());
-//            enrollVO.setIsHidden(mmsEnrollRemind.getIsHidden());
+
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(enrollVO.getSendUserId()).getData();
+            enrollVO.setSendUserName(sender.get("userName"));
+            enrollVO.setSendAvatarUrl(sender.get("avatarUrl"));
+
+            int planType=mmsEnrollRemind.getPlanTypeId();
+            Long planId = mmsEnrollRemind.getPlanId();
+
+//            pk计划
+            if(planType==PK_PLAN){
+                SimplePkPlanVO simplePkPlanVO = pkFeignService.querySimplePkPlanVO(planId).getData();
+                enrollVO.setCurrentEnrollCount(simplePkPlanVO.getEnrolledQuantity());
+                enrollVO.setMaxEnrollQuantity(simplePkPlanVO.getPkQuantity());
+                enrollVO.setPlanPattern(simplePkPlanVO.getPkPattern());
+                enrollVO.setPlanName(simplePkPlanVO.getName());
+            }else{
+                SimpleMonitorPlanVO simpleMonitorPlanVO = monitorFeignService.querySimpleMonitorPlanVO(planId).getData();
+//                enrollVO.setCurrentEnrollCount(simpleMonitorPlanVO.getEnrolledQuantity());
+                enrollVO.setMaxEnrollQuantity(simpleMonitorPlanVO.getMonitorQuantity());
+                enrollVO.setPlanPattern(simpleMonitorPlanVO.getPlanPattern());
+                enrollVO.setPlanName(simpleMonitorPlanVO.getName());
+            }
+
             enrollVOList.add(enrollVO);
 //          TODO:调用其他微服务获取完整数据
 

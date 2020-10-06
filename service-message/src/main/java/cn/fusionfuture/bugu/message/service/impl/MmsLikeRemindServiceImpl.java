@@ -1,11 +1,16 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
+import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
+import cn.fusionfuture.bugu.message.feign.PkFeignService;
+import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.mapper.MmsLikeRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsLikeRemindService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.EnrollVO;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
+import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
@@ -36,6 +41,15 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
     @Autowired
     MmsLikeRemindMapper mmsLikeRemindMapper;
 
+    @Autowired
+    private MonitorFeignService monitorFeignService;
+
+    @Autowired
+    private PkFeignService pkFeignService;
+
+    @Autowired
+    private UserFeignService userFeignService;
+
     /**
      * TODO
      * @author LiLan
@@ -50,6 +64,8 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
 
     @Override
     public PageInfo<LikeVO> getLikeRemind(Integer pn, Integer ps, Long id) {
+        final Integer MONITOR_PLAN = 1;
+        final Integer PK_PLAN = 2;
 
         QueryWrapper<MmsLikeRemind> queryWrapper = new QueryWrapper<MmsLikeRemind>();
         queryWrapper.eq("receive_user_id", id);
@@ -67,15 +83,34 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
         for (MmsLikeRemind mmsLikeRemind : mmsLikeRemindList.getList()) {
             LikeVO likeVO = new LikeVO();
             BeanUtils.copyProperties(mmsLikeRemind,likeVO);
-//            likeVO.setId(mmsLikeRemind.getId());
-//            likeVO.setSendTime(mmsLikeRemind.getCreateTime());
-//            likeVO.setSendUserId(mmsLikeRemind.getSendUserId());
-//            likeVO.setReceiveUserId(mmsLikeRemind.getReceiveUserId());
-//            likeVO.setPunchId(mmsLikeRemind.getPunchId());
-//            likeVO.setPlanTypeId(mmsLikeRemind.getPlanTypeId());
-//            likeVO.setIsChecked(mmsLikeRemind.getIsChecked());
-//            likeVO.setIsHidden(mmsLikeRemind.getIsHidden());
-            //          TODO:调用其他微服务获取完整数据
+
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(likeVO.getSendUserId()).getData();
+            likeVO.setSendUserName(sender.get("userName"));
+            likeVO.setSendAvatarUrl(sender.get("avatarUrl"));
+
+            int planType=mmsLikeRemind.getPlanTypeId();
+//            pk计划信息
+            Long punchId = mmsLikeRemind.getPunchId();
+            if(planType==PK_PLAN){
+                PunchWithImageVO punchWithImageVO = pkFeignService.queryPunchWithImageVO(punchId).getData();
+                likeVO.setPlanPattern(punchWithImageVO.getPlanPattern());
+                likeVO.setPlanName(punchWithImageVO.getName());
+                likeVO.setPunchContent(punchWithImageVO.getContent());
+                if(punchWithImageVO.getImageUrls().size()>0){
+                    likeVO.setPunchImageUrl(punchWithImageVO.getImageUrls().get(0));
+                }
+                likeVO.setLikeCount(punchWithImageVO.getLikeCount());
+            }else{
+//                监督计划
+                BasicPunchVO basicPunchVO = monitorFeignService.queryBasicPunchVO(punchId).getData();
+                likeVO.setPlanPattern(basicPunchVO.getPlanPattern());
+                likeVO.setPlanName(basicPunchVO.getName());
+                likeVO.setPunchContent(basicPunchVO.getContent());
+                if(basicPunchVO.getImageUrls().size()>0){
+                    likeVO.setPunchImageUrl(basicPunchVO.getImageUrls().get(0));
+                }
+                likeVO.setLikeCount(basicPunchVO.getLikeCount());
+            }
 
             likeVOList.add(likeVO);
         }

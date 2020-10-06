@@ -1,12 +1,14 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
 import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
+import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.mapper.MmsCommentRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsCommentRemindService;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
@@ -34,11 +36,17 @@ import java.util.Map;
  */
 @Service
 public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMapper, MmsCommentRemind> implements IMmsCommentRemindService {
+    final Integer MONITOR_PLAN = 1;
+    final Integer PK_PLAN = 2;
+
     @Autowired
     private MmsCommentRemindMapper mmsCommentRemindMapper;
 
-//    @Autowired
-//    private MonitorFeignService monitorFeignService;
+    @Autowired
+    private MonitorFeignService monitorFeignService;
+
+    @Autowired
+    private PkFeignService pkFeignService;
 
     @Autowired
     private UserFeignService userFeignService;
@@ -68,12 +76,19 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
             CommentVO commentVO = new CommentVO();
             BeanUtils.copyProperties(mmsCommentRemind,commentVO);
 
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(commentVO.getSendUserId()).getData();
+            commentVO.setSendUserName(sender.get("userName"));
+            commentVO.setSendAvatarUrl(sender.get("avatarUrl"));
+//            System.out.println(sender);
+
 //           通过parentId获取父评论相关内容
             Long parentId = mmsCommentRemind.getParentId();
             if(parentId != null){
                 MmsCommentRemind mmsCommentRemindParent = mmsCommentRemindMapper.selectById(parentId);
                 commentVO.setParentConnent(mmsCommentRemindParent.getCommentContent());
-
+                commentVO.setParentUserId(mmsCommentRemindParent.getSendUserId());
+                HashMap<String,String> parentUser = userFeignService.getDetailsForMessage(mmsCommentRemindParent.getSendUserId()).getData();
+                commentVO.setParentUserName(parentUser.get("userName"));
             }
             //            commentVO.setParentUserId(mmsCommentRemindParent.getSendUserId());发出父评论的用户就是当前用户，即ReceiveUserId
             //          TODO:调用其他微服务获取完整数据
@@ -85,11 +100,27 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
 //            System.out.println(sendUser);
 //            System.out.println(userFeignService.test());
 //            获取打卡相关信息
-//            int planType=mmsCommentRemind.getPlanTypeId();
-//            监督计划信息
-//            Long punchId = mmsCommentRemind.getPunchId();
-//            BasicPunchVO punchVO = monitorFeignService.queryBasicPunchVO(punchId);
-//            System.out.println(punchVO);
+            int planType=mmsCommentRemind.getPlanTypeId();
+//            pk计划信息
+            Long punchId = mmsCommentRemind.getPunchId();
+            if(planType==PK_PLAN){
+                PunchWithImageVO punchWithImageVO = pkFeignService.queryPunchWithImageVO(punchId).getData();
+                commentVO.setPlanPattern(punchWithImageVO.getPlanPattern());
+                commentVO.setPlanName(punchWithImageVO.getName());
+                commentVO.setPunchContent(punchWithImageVO.getContent());
+                if(punchWithImageVO.getImageUrls().size()>0){
+                    commentVO.setPunchImageUrl(punchWithImageVO.getImageUrls().get(0));
+                }
+            }else{
+//                监督计划
+                BasicPunchVO basicPunchVO = monitorFeignService.queryBasicPunchVO(punchId).getData();
+                commentVO.setPlanPattern(basicPunchVO.getPlanPattern());
+                commentVO.setPlanName(basicPunchVO.getName());
+                commentVO.setPunchContent(basicPunchVO.getContent());
+                if(basicPunchVO.getImageUrls().size()>0){
+                    commentVO.setPunchImageUrl(basicPunchVO.getImageUrls().get(0));
+                }
+            }
             commentVOList.add(commentVO);
         }
         PageUtil pageUtil = new PageUtil();

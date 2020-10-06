@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
+import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.mapper.MmsSystemMessageMapper;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
@@ -38,6 +39,9 @@ public class MmsSystemUserServiceImpl extends ServiceImpl<MmsSystemUserMapper, M
     @Autowired
     MmsSystemMessageMapper mmsSystemMessageMapper;
 
+    @Autowired
+    UserFeignService userFeignService;
+
     @Override
     public MmsSystemUser getSystemUser(Long id){
         MmsSystemUser mmsSystemUser= mmsSystemUserMapper.selectById(id);
@@ -46,36 +50,34 @@ public class MmsSystemUserServiceImpl extends ServiceImpl<MmsSystemUserMapper, M
 
     @Override
     public PageInfo<MessageVO> getAllSystem(Integer pn, Integer ps, Long id) {
-        Map<String,Object> columnMap = new HashMap<>();
-        columnMap.put("receive_user_id",id);
-        List<MmsSystemUser> mmsSystemUserList = mmsSystemUserMapper.selectByMap(columnMap);
+        QueryWrapper<MmsSystemUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("receive_user_id",id);
+        queryWrapper.orderByDesc("create_time");
+//        Map<String,Object> columnMap = new HashMap<>();
+//        columnMap.put("receive_user_id",id);
+        List<MmsSystemUser> mmsSystemUserList = mmsSystemUserMapper.selectList(queryWrapper);
         Map<Long,MmsSystemUser> pairedMessageMap = new HashMap<>();
         List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsSystemUser mmsSystemUser:mmsSystemUserList){
             if(!pairedMessageMap.containsKey(mmsSystemUser.getSendUserId())) {
-                LocalDateTime theTime = mmsSystemUser.getCreateTime();
-                LocalDateTime mapTime = pairedMessageMap.get(mmsSystemUser.getSendUserId()).getCreateTime();
-                if(theTime.isAfter(mapTime)){
-                    pairedMessageMap.put(mmsSystemUser.getSendUserId(),mmsSystemUser);
-                }
-            }else{
                 pairedMessageMap.put(mmsSystemUser.getSendUserId(),mmsSystemUser);
             }
         }
         for(MmsSystemUser mmsSystemUser:pairedMessageMap.values()){
             MessageVO messageVO = new MessageVO();
             BeanUtils.copyProperties(mmsSystemUser,messageVO);
-//            messageVO.setId(mmsSystemUser.getId());
-//            messageVO.setSendTime(mmsSystemUser.getCreateTime());
-//            messageVO.setReceiveUserId(mmsSystemUser.getReceiveUserId());
-//            messageVO.setSendUserId(mmsSystemUser.getSendUserId());
-//            messageVO.setIsChecked(mmsSystemUser.getIsChecked());
-//            messageVO.setIsHidden(mmsSystemUser.getIsHidden());
             Long systemMessageId = mmsSystemUser.getSystemMessageId();
             MmsSystemMessage mmsSystemMessage = mmsSystemMessageMapper.selectById(systemMessageId);
             messageVO.setMessageContent((mmsSystemMessage.getMessageContent()));
             messageVO.setImageUrl((mmsSystemMessage.getImageUrl()));
-            //          TODO:调用其他微服务获取完整数据
+            //  调用其他微服务获取完整数据
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(messageVO.getSendUserId()).getData();
+            messageVO.setSendUserName(sender.get("userName"));
+            messageVO.setSendAvatarUrl(sender.get("avatarUrl"));
+
+            HashMap<String,String> reciever = userFeignService.getDetailsForMessage(messageVO.getReceiveUserId()).getData();
+            messageVO.setReceiveUserName(reciever.get("userName"));
+            messageVO.setReceiveAvatarUrl(reciever.get("avatarUrl"));
             messageVOList.add(messageVO);
         }
 //        TODO:合理分页
@@ -99,17 +101,20 @@ public class MmsSystemUserServiceImpl extends ServiceImpl<MmsSystemUserMapper, M
         for(MmsSystemUser mmsSystemUser:mmsSystemUserList.getList()) {
             MessageVO messageVO = new MessageVO();
             BeanUtils.copyProperties(mmsSystemUser,messageVO);
-//            messageVO.setId(mmsSystemUser.getId());
-//            messageVO.setSendTime(mmsSystemUser.getCreateTime());
-//            messageVO.setSendUserId(mmsSystemUser.getSendUserId());
-//            messageVO.setReceiveUserId(mmsSystemUser.getReceiveUserId());
-//            messageVO.setIsChecked(mmsSystemUser.getIsChecked());
-//            messageVO.setIsHidden(mmsSystemUser.getIsHidden());
+
 
             MmsSystemMessage mmsSystemMessage = mmsSystemMessageMapper.selectById(mmsSystemUser.getSystemMessageId());
             messageVO.setMessageContent((mmsSystemMessage.getMessageContent()));
             messageVO.setImageUrl((mmsSystemMessage.getImageUrl()));
-            //          TODO:调用其他微服务获取完整数据
+            //  调用其他微服务获取完整数据
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(messageVO.getSendUserId()).getData();
+            messageVO.setSendUserName(sender.get("userName"));
+            messageVO.setSendAvatarUrl(sender.get("avatarUrl"));
+
+            HashMap<String,String> reciever = userFeignService.getDetailsForMessage(messageVO.getReceiveUserId()).getData();
+            messageVO.setReceiveUserName(reciever.get("userName"));
+            messageVO.setReceiveAvatarUrl(reciever.get("avatarUrl"));
+
             messageVOList.add(messageVO);
 
         }
