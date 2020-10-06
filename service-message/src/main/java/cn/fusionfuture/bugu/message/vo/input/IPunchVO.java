@@ -26,4 +26,6 @@ public class IPunchVO extends ICommonVO implements Serializable  {
 
     @ApiModelProperty(value = "与计划类型表相关联")
     private Integer planTypeId;
+
+
 }

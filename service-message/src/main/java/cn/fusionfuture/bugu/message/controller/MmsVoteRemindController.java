@@ -53,6 +53,7 @@ public class MmsVoteRemindController {
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsVoteRemind);
+        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iVoteVO.getMessageType()+"\"}";
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsVoteRemind.getReceiveUserId()+"");
 
         return CommonResult.success();

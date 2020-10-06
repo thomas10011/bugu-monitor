@@ -57,6 +57,7 @@ public class MmsLikeRemindController {
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsLikeRemind);
+        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iLikeVO.getMessageType()+"\"}";
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsLikeRemind.getReceiveUserId()+"");
 
         return CommonResult.success();

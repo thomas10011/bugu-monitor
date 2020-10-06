@@ -54,6 +54,7 @@ public class MmsPunchRemindController {
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsPunchRemind);
+        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iPunchVO.getMessageType()+"\"}";
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsPunchRemind.getReceiveUserId()+"");
 
         return CommonResult.success();
