@@ -46,11 +46,8 @@ public class UmsUserFollowServiceImpl extends ServiceImpl<UmsUserFollowMapper, U
 
     @Override
     public Boolean followUser(Long uid, @RequestParam Long fuid) {
-        UmsUserFollow obj = userFollowMapper.selectOne(
-                new QueryWrapper<UmsUserFollow>()
-                    .eq("user_id", uid)
-                    .eq("followed_user_id", fuid)
-        );
+        // 首先查询关注信息
+        UmsUserFollow obj = userFollowMapper.queryUmsUserFollow(uid, fuid);
         if (obj == null) {
             userFollowMapper.insert(
                     new UmsUserFollow()
@@ -66,19 +63,54 @@ public class UmsUserFollowServiceImpl extends ServiceImpl<UmsUserFollowMapper, U
 
             return true;
         }
+        else if (obj.getFollowedEachOther()) {
+            // 已经互相关注了 返回false
+            return false;
+        }
+        else if (obj.getUserId().equals(fuid)) {
+            // 要关注的用户已经是他的粉丝了 那么就是变成相互关注
+            obj.setFollowedEachOther(true);
+
+            // 被关注的用户粉丝数+1 关注的用户关注数+1
+            UmsUser user = userMapper.selectById(uid);
+            UmsUser followedUser = userMapper.selectById(fuid);
+
+            userMapper.updateById(user.setFollowQuantity(user.getFollowQuantity() + 1));
+            userMapper.updateById(followedUser.setFansQuantity(followedUser.getFansQuantity() + 1));
+            userFollowMapper.updateById(obj);
+            return true;
+        }
+        // 最后的情况就是已经关注过该用户了
         return false;
     }
 
     @Override
     public Boolean unFollowUser(Long uid, @RequestParam Long fuid) {
-        userFollowMapper.delete(new QueryWrapper<UmsUserFollow>()
-                .eq("user_id", uid)
-                .eq("followed_user_id", fuid));
+        // 首先查询关注信息
+        UmsUserFollow obj = userFollowMapper.queryUmsUserFollow(uid, fuid);
+        if (obj == null) {
+            // 查询不到任何关注信息 直接返回false
+            return false;
+        }
+        else if (obj.getFollowedEachOther()) {
+            // 如果是互相关注 改变关注状态
+            obj.setUserId(fuid).setFollowedUserId(uid).setFollowedEachOther(false);
+            userFollowMapper.updateById(obj);
+
+
+        }
+        else if (obj.getUserId().equals(uid)) {
+            // 之前关注过 则删除关注记录
+            userFollowMapper.deleteById(obj);
+        }
+        else {
+            // 否则就是之前没有关注过该用户 返回false
+            return false;
+        }
 
         // 被关注的用户粉丝数-1 关注的用户关注数-1
         UmsUser user = userMapper.selectById(uid);
         UmsUser followedUser = userMapper.selectById(fuid);
-
         // TODO: 如果用户关注数和粉丝数小于1 那么应该抛出异常
 
         userMapper.updateById(user.setFollowQuantity(user.getFollowQuantity() - 1));

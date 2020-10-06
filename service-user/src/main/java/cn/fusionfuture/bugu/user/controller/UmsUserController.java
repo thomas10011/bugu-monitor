@@ -33,7 +33,7 @@ import java.util.HashMap;
 public class UmsUserController {
 
     @Autowired
-    IUmsUserService iumsUserService;
+    IUmsUserService iUmsUserService;
 
     @Autowired
     HttpServletRequest request;
@@ -44,7 +44,7 @@ public class UmsUserController {
     @ApiOperation(value = "获取个人信息")
     CommonResult<?> getPersonalDetails(@ApiParam(value = "用户id") @RequestParam Long id) {
         Long uid = Long.parseLong(request.getHeader("uid"));
-        UserDetailsVO userDetailsVO = iumsUserService.getPersonalDetails(id, uid);
+        UserDetailsVO userDetailsVO = iUmsUserService.getPersonalDetails(id, uid);
         if (userDetailsVO == null) {
             return CommonResult.fail(ResultCode.USER_NOT_EXISTED);
         } else {
@@ -56,6 +56,6 @@ public class UmsUserController {
     @Valid
     @ApiOperation(value = "远程调用获取用户名和头像")
     HashMap<String,String> getDetailsForMessage(@ApiParam(value = "用户id") @RequestParam Long id){
-        return iumsUserService.getDetailsForMessage(id);
+        return iUmsUserService.getDetailsForMessage(id);
     }
 }

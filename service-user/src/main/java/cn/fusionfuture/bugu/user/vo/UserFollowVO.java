@@ -35,4 +35,7 @@ public class UserFollowVO implements Serializable {
     @ApiModelProperty(value = "粉丝数量")
     private Integer fansQuantity;
 
+    @ApiModelProperty(value = "粉丝数量")
+    private Boolean followedEachOther;
+
 }
