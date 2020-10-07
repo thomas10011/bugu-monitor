@@ -1,4 +1,5 @@
 package cn.fusionfuture.bugu.message.service.impl;
+import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
@@ -35,6 +36,9 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
     @Autowired
     MmsPrivateChatMapper mmsPrivateChatMapper;
 
+    @Autowired
+    UserFeignService userFeignService;
+
     @Override
     public void sendPraivateChat(MmsPrivateChat mmsPrivateChat) {
         mmsPrivateChatMapper.insert(mmsPrivateChat);
@@ -42,33 +46,24 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
 
     @Override
     public PageInfo<MessageVO> getAllUserChat(Integer pn, Integer ps, Long id) {
+        QueryWrapper<MmsPrivateChat> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("receive_user_id",id);
+        queryWrapper.orderByDesc("create_time");
         Map<Long,MmsPrivateChat> pairedChatMap = new HashMap<>();
-        Map<String,Object> columnMap = new HashMap<>();
-        columnMap.put("receive_user_id",id);
 
-        List<MmsPrivateChat> mmsReceivePrivateChatList = mmsPrivateChatMapper.selectByMap(columnMap);
-        Map<String,Object> columnMap1 = new HashMap<>();
-        columnMap1.put("send_user_id",id);
-        List<MmsPrivateChat> mmsSendPrivateChatList = mmsPrivateChatMapper.selectByMap(columnMap1);
+
+        List<MmsPrivateChat> mmsReceivePrivateChatList = mmsPrivateChatMapper.selectList(queryWrapper);
+        QueryWrapper<MmsPrivateChat> queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq("send_user_id",id);
+        queryWrapper1.orderByDesc("create_time");
+        List<MmsPrivateChat> mmsSendPrivateChatList = mmsPrivateChatMapper.selectList(queryWrapper1);
         for(MmsPrivateChat mmsPrivateChat: mmsReceivePrivateChatList){
-            if(pairedChatMap.containsKey(mmsPrivateChat.getSendUserId())){
-                LocalDateTime theTime = mmsPrivateChat.getCreateTime();
-                LocalDateTime mapTime = pairedChatMap.get(mmsPrivateChat.getSendUserId()).getCreateTime();
-                if(theTime.isAfter(mapTime)){
-                    pairedChatMap.put(mmsPrivateChat.getSendUserId(),mmsPrivateChat);
-                }
-            }else{
+            if(!pairedChatMap.containsKey(mmsPrivateChat.getSendUserId())){
                 pairedChatMap.put(mmsPrivateChat.getSendUserId(),mmsPrivateChat);
             }
         }
         for(MmsPrivateChat mmsPrivateChat: mmsSendPrivateChatList){
-            if(pairedChatMap.containsKey(mmsPrivateChat.getReceiveUserId())){
-                LocalDateTime theTime = mmsPrivateChat.getCreateTime();
-                LocalDateTime mapTime = pairedChatMap.get(mmsPrivateChat.getReceiveUserId()).getCreateTime();
-                if(theTime.isAfter(mapTime)){
-                    pairedChatMap.put(mmsPrivateChat.getReceiveUserId(),mmsPrivateChat);
-                }
-            }else{
+            if(!pairedChatMap.containsKey(mmsPrivateChat.getReceiveUserId())){
                 pairedChatMap.put(mmsPrivateChat.getReceiveUserId(),mmsPrivateChat);
             }
         }
@@ -78,16 +73,14 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         for(MmsPrivateChat mmsPrivateChat:pairedChatMap.values()) {
             MessageVO messageVO = new MessageVO();
             BeanUtils.copyProperties(mmsPrivateChat,messageVO);
-//            messageVO.setId(mmsPrivateChat.getId());
-//            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
-//            messageVO.setSendUserId(mmsPrivateChat.getSendUserId());
-//            messageVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
-//            messageVO.setIsChecked(mmsPrivateChat.getIsChecked());
-//            messageVO.setIsHidden(mmsPrivateChat.getIsHidden());
-//            messageVO.setMessageContent((mmsPrivateChat.getMessageContent()));
-//            messageVO.setImageUrl((mmsPrivateChat.getImageUrl()));
-//            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
-            //          TODO:调用其他微服务获取完整数据
+            //  调用其他微服务获取完整数据
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(messageVO.getSendUserId()).getData();
+            messageVO.setSendUserName(sender.get("userName"));
+            messageVO.setSendAvatarUrl(sender.get("avatarUrl"));
+
+            HashMap<String,String> reciever = userFeignService.getDetailsForMessage(messageVO.getReceiveUserId()).getData();
+            messageVO.setReceiveUserName(reciever.get("userName"));
+            messageVO.setReceiveAvatarUrl(reciever.get("avatarUrl"));
             messageVOList.add(messageVO);
 
         }
@@ -114,16 +107,14 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         for(MmsPrivateChat mmsPrivateChat:mmsReceivePrivateChatList.getList()) {
             MessageVO messageVO = new MessageVO();
             BeanUtils.copyProperties(mmsPrivateChat,messageVO);
-//            messageVO.setId(mmsPrivateChat.getId());
-//            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
-//            messageVO.setSendUserId(mmsPrivateChat.getSendUserId());
-//            messageVO.setReceiveUserId(mmsPrivateChat.getReceiveUserId());
-//            messageVO.setIsChecked(mmsPrivateChat.getIsChecked());
-//            messageVO.setIsHidden(mmsPrivateChat.getIsHidden());
-//            messageVO.setMessageContent((mmsPrivateChat.getMessageContent()));
-//            messageVO.setImageUrl((mmsPrivateChat.getImageUrl()));
-//            messageVO.setSendTime(mmsPrivateChat.getCreateTime());
-            //          TODO:调用其他微服务获取完整数据
+            //调用其他微服务获取完整数据
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(messageVO.getSendUserId()).getData();
+            messageVO.setSendUserName(sender.get("userName"));
+            messageVO.setSendAvatarUrl(sender.get("avatarUrl"));
+
+            HashMap<String,String> reciever = userFeignService.getDetailsForMessage(messageVO.getReceiveUserId()).getData();
+            messageVO.setReceiveUserName(reciever.get("userName"));
+            messageVO.setReceiveAvatarUrl(reciever.get("avatarUrl"));
             messageVOList.add(messageVO);
 
         }

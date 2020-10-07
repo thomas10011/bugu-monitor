@@ -53,6 +53,7 @@ public class MmsEnrollRemindController {
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsEnrollRemind);
+        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iEnrollVO.getMessageType()+"\"}";
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsEnrollRemind.getReceiveUserId()+"");
 
         return CommonResult.success();

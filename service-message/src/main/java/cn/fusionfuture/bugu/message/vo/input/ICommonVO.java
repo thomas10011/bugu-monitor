@@ -30,4 +30,7 @@ public class ICommonVO implements Serializable {
     @ApiModelProperty(value = "外键，与用户表相关联")
     private Long receiveUserId;
 
+    @ApiModelProperty(value = "消息类型，如打卡提醒")
+    private String messageType;
+
 }
