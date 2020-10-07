@@ -6,14 +6,8 @@ import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.mapper.MmsLikeRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsLikeRemindService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
-import cn.fusionfuture.bugu.message.vo.EnrollVO;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
-import cn.fusionfuture.bugu.message.vo.PunchVO;
-import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
-import cn.fusionfuture.bugu.pojo.entity.MmsEnrollRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
-import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -21,6 +15,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import cn.fusionfuture.bugu.message.vo.feignvo.BasicPunchVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.PunchWithImageVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;

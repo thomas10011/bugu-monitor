@@ -5,8 +5,6 @@ import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
-import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
@@ -19,6 +17,10 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
+import cn.fusionfuture.bugu.message.vo.feignvo.BasicPunchVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.PunchWithImageVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;

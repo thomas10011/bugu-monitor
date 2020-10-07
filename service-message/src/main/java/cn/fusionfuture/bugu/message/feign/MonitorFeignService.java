@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.message.feign;
 
-import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.BasicPunchVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -8,7 +9,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

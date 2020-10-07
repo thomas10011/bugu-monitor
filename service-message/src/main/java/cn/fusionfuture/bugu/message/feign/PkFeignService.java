@@ -1,13 +1,13 @@
 package cn.fusionfuture.bugu.message.feign;
 
-import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.PunchWithImageVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 
 /**
  * @author thomas
