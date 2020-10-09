@@ -92,10 +92,11 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
     @Override
     public PageInfo<MessageVO> getOneUserAllChat(Integer pn, Integer ps, Long id, Long sendId) {
         QueryWrapper<MmsPrivateChat> queryWrapper = new QueryWrapper<MmsPrivateChat>();
-        queryWrapper.eq("receive_user_id", id);
-        queryWrapper.eq("is_hidden",false);
-        queryWrapper.eq("send_user_id",sendId);
-
+        queryWrapper.eq("receive_user_id", id)
+                .eq("is_hidden",false)
+                .eq("send_user_id",sendId);
+        queryWrapper.or(wrapper -> wrapper.eq("receive_user_id", sendId).eq("send_user_id",id).eq("is_hidden",false));
+        queryWrapper.orderByDesc("create_time");
         PageHelper.startPage(pn, ps);
         PageInfo<MmsPrivateChat> mmsReceivePrivateChatList = new PageInfo<>(mmsPrivateChatMapper.selectList(queryWrapper)) ;
 
@@ -116,7 +117,6 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
             messageVO.setReceiveUserName(reciever.get("userName"));
             messageVO.setReceiveAvatarUrl(reciever.get("avatarUrl"));
             messageVOList.add(messageVO);
-
         }
         PageUtil pageUtil = new PageUtil();
         PageInfo<MessageVO> messageVOPageInfo = new PageInfo<>(messageVOList);
