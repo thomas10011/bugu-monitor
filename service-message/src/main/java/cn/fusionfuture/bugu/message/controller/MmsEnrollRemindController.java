@@ -1,6 +1,8 @@
 package cn.fusionfuture.bugu.message.controller;
 
 
+import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
+import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.service.IMmsEnrollRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.EnrollVO;
@@ -17,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.PKCS12Attribute;
 import java.util.List;
 
 /**
@@ -29,12 +32,20 @@ import java.util.List;
 @RestController
 @Api(tags="报名提示")
 public class MmsEnrollRemindController {
+    final Integer MONITOR_PLAN = 1;
+    final Integer PK_PLAN = 2;
 
     @Autowired
     IMmsEnrollRemindService iMmsEnrollRemindService;
 
     @Autowired
     private IMmsRabbitMQGatewayService iMmsRabbitMQGatewayService;
+
+    @Autowired
+    private MonitorFeignService monitorFeignService;
+
+    @Autowired
+    private PkFeignService pkFeignService;
 
     /**
      * 发送报名信息
@@ -50,6 +61,10 @@ public class MmsEnrollRemindController {
         BeanUtils.copyProperties(iEnrollVO,mmsEnrollRemind);
 
         iMmsEnrollRemindService.addEnrollRemind(mmsEnrollRemind);
+        Integer planType = iEnrollVO.getPlanTypeId();
+        if(planType==PK_PLAN){
+            pkFeignService.punch(iEnrollVO.getSendUserId(),iEnrollVO.getPlanId());
+        }
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsEnrollRemind);

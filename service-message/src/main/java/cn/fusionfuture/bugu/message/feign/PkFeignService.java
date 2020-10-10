@@ -36,17 +36,19 @@ public interface PkFeignService {
 
     @PostMapping("/punch/like")
     @ApiOperation(value = "对一条打卡记录进行点赞")
-    void like(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId);
+    void like(@ApiParam(value = "打卡id") @RequestParam(value = "punchId") Long punchId);
 
-//    @PostMapping("/vote")
-//    @ApiOperation(value = "投票")
-//    public void vote(@ApiParam(value = "用户id") @RequestParam Long userId,
-//                     @ApiParam(value = "打卡id") @RequestParam Long punchId,
-//                     @ApiParam(value = "投票结果") @RequestParam Boolean voteResult);
-//
-//    @PostMapping(value = "/attend")
-//    @ApiOperation(value = "用户参与pk计划")
-//    public Long punch(@ApiParam(value = "用户id") @RequestParam Long userId,
-//                      @ApiParam(value = "计划id") @RequestParam Long planId);
+    @PostMapping("/vote")
+    @ApiOperation(value = "投票")
+    void vote(@ApiParam(value = "用户id") @RequestParam(value = "userId") Long userId,
+                     @ApiParam(value = "打卡id") @RequestParam(value = "punchId") Long punchId,
+                     @ApiParam(value = "投票结果") @RequestParam(value = "voteResult") Boolean voteResult);
+
+//    报名
+    @PostMapping(value = "/attend")
+    @ApiOperation(value = "用户参与pk计划")
+    CommonResult<Long> punch(@ApiParam(value = "用户id") @RequestParam(value = "userId") Long userId,
+                      @ApiParam(value = "计划id") @RequestParam(value = "planId") Long planId);
+
 
 }

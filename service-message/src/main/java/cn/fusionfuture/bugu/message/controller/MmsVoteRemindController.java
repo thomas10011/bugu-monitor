@@ -1,5 +1,7 @@
 package cn.fusionfuture.bugu.message.controller;
 
+import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
+import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.service.IMmsVoteRemindService;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
@@ -31,6 +33,13 @@ import java.util.List;
 @RestController
 @Api(tags="投票提示")
 public class MmsVoteRemindController {
+    final Integer MONITOR_PLAN = 1;
+    final Integer PK_PLAN = 2;
+    @Autowired
+    private MonitorFeignService monitorFeignService;
+
+    @Autowired
+    private PkFeignService pkFeignService;
 
     @Autowired
     IMmsVoteRemindService iMmsVoteRemindService;
@@ -50,6 +59,15 @@ public class MmsVoteRemindController {
         MmsVoteRemind mmsVoteRemind = new MmsVoteRemind();
         BeanUtils.copyProperties(iVoteVO,mmsVoteRemind);
         iMmsVoteRemindService.addVoteRemind(mmsVoteRemind);
+
+        //        同步pk服务和监督服务数据
+        Integer planType = iVoteVO.getPlanTypeId();
+        if(planType==PK_PLAN){
+            pkFeignService.vote(iVoteVO.getSendUserId(),iVoteVO.getPunchId(),iVoteVO.getIsApproved());
+        }
+        else if(planType==MONITOR_PLAN){
+            monitorFeignService.vote(iVoteVO.getSendUserId(),iVoteVO.getPunchId(),iVoteVO.getIsApproved());
+        }
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsVoteRemind);

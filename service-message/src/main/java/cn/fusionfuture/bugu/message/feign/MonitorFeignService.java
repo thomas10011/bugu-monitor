@@ -35,18 +35,18 @@ public interface MonitorFeignService {
 //    点赞数+1
     @PostMapping("/punch/like")
     @ApiOperation(value = "对一条打卡记录进行点赞")
-    void like(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId);
+    void like(@ApiParam(value = "打卡id") @RequestParam(value = "punchId") Long punchId);
 
 //    投票数+1
-//    @PostMapping("/vote")
-//    @ApiOperation(value = "投票")
-//    public void vote(@ApiParam(value = "用户id") @RequestParam Long userId,
-//                     @ApiParam(value = "打卡id") @RequestParam Long punchId,
-//                     @ApiParam(value = "投票结果") @RequestParam Boolean voteResult);
+    @PostMapping("/monitor/pms-monitor-vote-record/vote")
+    @ApiOperation(value = "投票")
+    public void vote(@ApiParam(value = "用户id") @RequestParam(value = "userId") Long userId,
+                     @ApiParam(value = "打卡id") @RequestParam(value = "punchId") Long punchId,
+                     @ApiParam(value = "投票结果") @RequestParam(value = "voteResult") Boolean voteResult);
 
-//    报名人数+1
+//    TODO:报名人数+1 没有抢票了？
 //    @ApiOperation(value = "用户进行抢票操作")
 //    @PostMapping("/monitor-plan/grab-ticket")
-//    public long userGrabTicket(@ApiParam(value = "用户id") @RequestParam Long userId,
-//                               @ApiParam(value = "计划id") @RequestParam Long planId);
+//    public long userGrabTicket(@ApiParam(value = "用户id") @RequestParam(value = "userId") Long userId,
+//                               @ApiParam(value = "计划id") @RequestParam(value = "planId") Long planId);
 }
