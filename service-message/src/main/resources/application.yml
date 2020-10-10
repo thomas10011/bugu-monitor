@@ -29,16 +29,29 @@ spring:
   resources:
     add-mappings: false
 
-iot:
 
-  mqtt:
 
-    clientId: client-1
+mqtt:
 
-    defaultTopic: push_message_topic
+  clientId: client-1
 
-    serverClientId: server-1
-#     本地地址
+  defaultTopic: push_message_topic
+
+  serverClientId: server-1
+#     本地地址 10.128.146.236
 #    servers: tcp://127.0.0.1:1883
+#  servers: tcp://10.133.128.198:1883
 #    线上地址
-    servers: tcp://39.106.59.218:1883
+  servers: tcp://39.106.59.218:1883
+
+  username: admin
+
+  password: admin
+
+#心跳时间
+  KeepAliveInterval: 300
+
+#  是否自动重连
+  AutomaticReconnect: true
+
+  CleanSession: false
