@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author LiLan
@@ -47,30 +44,25 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
     @Override
     public PageInfo<MessageVO> getAllUserChat(Integer pn, Integer ps, Long id) {
         QueryWrapper<MmsPrivateChat> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("receive_user_id",id);
-        queryWrapper.orderByDesc("create_time");
-        Map<Long,MmsPrivateChat> pairedChatMap = new HashMap<>();
+        queryWrapper.eq("receive_user_id",id).
+                or().eq("send_user_id",id)
+                .orderByDesc("create_time");
+        Set<Long> pairedChatSet = new HashSet<>();
+        List<MmsPrivateChat> mmsPrivateChatArray = new ArrayList<>();
 
 
         List<MmsPrivateChat> mmsReceivePrivateChatList = mmsPrivateChatMapper.selectList(queryWrapper);
-        QueryWrapper<MmsPrivateChat> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper1.eq("send_user_id",id);
-        queryWrapper1.orderByDesc("create_time");
-        List<MmsPrivateChat> mmsSendPrivateChatList = mmsPrivateChatMapper.selectList(queryWrapper1);
         for(MmsPrivateChat mmsPrivateChat: mmsReceivePrivateChatList){
-            if(!pairedChatMap.containsKey(mmsPrivateChat.getSendUserId())){
-                pairedChatMap.put(mmsPrivateChat.getSendUserId(),mmsPrivateChat);
-            }
-        }
-        for(MmsPrivateChat mmsPrivateChat: mmsSendPrivateChatList){
-            if(!pairedChatMap.containsKey(mmsPrivateChat.getReceiveUserId())){
-                pairedChatMap.put(mmsPrivateChat.getReceiveUserId(),mmsPrivateChat);
-            }
-        }
+            Long sendId = mmsPrivateChat.getSendUserId();
+            Long receiveId = mmsPrivateChat.getReceiveUserId();
 
-        System.out.println("查询出数据");
+            if(!pairedChatSet.contains(sendId+receiveId)&&!pairedChatSet.contains(receiveId+sendId)){
+                pairedChatSet.add(sendId+receiveId);
+                mmsPrivateChatArray.add(mmsPrivateChat);
+            }
+        }
         List<MessageVO> messageVOList = new ArrayList<>();
-        for(MmsPrivateChat mmsPrivateChat:pairedChatMap.values()) {
+        for(MmsPrivateChat mmsPrivateChat:mmsPrivateChatArray) {
             MessageVO messageVO = new MessageVO();
             BeanUtils.copyProperties(mmsPrivateChat,messageVO);
             //  调用其他微服务获取完整数据
@@ -96,7 +88,7 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
                 .eq("is_hidden",false)
                 .eq("send_user_id",sendId);
         queryWrapper.or(wrapper -> wrapper.eq("receive_user_id", sendId).eq("send_user_id",id).eq("is_hidden",false));
-        queryWrapper.orderByDesc("create_time");
+        queryWrapper.orderByAsc("create_time");
         PageHelper.startPage(pn, ps);
         PageInfo<MmsPrivateChat> mmsReceivePrivateChatList = new PageInfo<>(mmsPrivateChatMapper.selectList(queryWrapper)) ;
 
@@ -118,9 +110,8 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
             messageVO.setReceiveAvatarUrl(reciever.get("avatarUrl"));
             messageVOList.add(messageVO);
         }
-        PageUtil pageUtil = new PageUtil();
         PageInfo<MessageVO> messageVOPageInfo = new PageInfo<>(messageVOList);
-        pageUtil.copyAtrr(mmsReceivePrivateChatList,messageVOPageInfo);
+        BeanUtils.copyProperties(mmsReceivePrivateChatList,messageVOPageInfo);
         return messageVOPageInfo;
     }
 }
