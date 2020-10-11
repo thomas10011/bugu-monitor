@@ -42,7 +42,7 @@ public class PmsPkPunchRecordController {
 
     @PostMapping("/punch")
     @ApiOperation(value = "对pk计划进行打卡")
-    public Long punch(@ApiParam(value = "用户id") @RequestParam(name = "userId") Long userId,
+    public String punch(@ApiParam(value = "用户id") @RequestParam(name = "userId") Long userId,
                       @ApiParam(value = "计划id") @RequestParam(name = "planId") Long planId,
                       @ApiParam(value = "打卡内容") @RequestParam(name = "content") String content,
                       @ApiParam(value = "图片url") @RequestParam(name = "imageUrls") List<String> imageUrls) {

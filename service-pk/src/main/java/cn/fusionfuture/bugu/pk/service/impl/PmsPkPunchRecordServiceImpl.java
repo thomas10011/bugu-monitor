@@ -6,6 +6,7 @@ import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
+import cn.fusionfuture.bugu.pojo.constants.*;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -41,45 +42,48 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     @Autowired
     PmsUserCreatePlanMapper userCreatePlanMapper;
 
-
     @Override
-    public Long punch(Long userId, Long planId, String content, List<String> imageUrls) {
-        // 保存打卡记录
-        PmsPkPunchRecord pkPunchRecord = PmsPkPunchRecord.builder()
-                .userId(userId)
-                .pkPlanId(planId)
-                .likeCount(0)
-                .commentQuantity(0)
-                .agreeCount(0)
-                .disagreeCount(0)
-                .content(content)
-                .punchTime(LocalDateTime.now())
-                .statusId(PunchStatus.PUNCHED)
-                .build();
-        pkPunchRecordMapper.insert(pkPunchRecord);
+    public String punch(Long userId, Long planId, String content, List<String> imageUrls) {
+        //获取当前时间
+        LocalDateTime currentTime = LocalDateTime.now();
+        QueryWrapper<PmsPkPunchRecord> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("pk_plan_id", planId).eq("user_id", userId);
+        List<PmsPkPunchRecord> punchRecords = pkPunchRecordMapper.selectList(queryWrapper);
+        for (PmsPkPunchRecord pkPunchRecord : punchRecords
+        ) {
+            //更新打卡内容
+            if (currentTime.isAfter(pkPunchRecord.getStartTime()) && currentTime.isBefore(pkPunchRecord.getExpiredTime())) {
+                if (pkPunchRecord.getContent() != null) {
+                    return "当前周期已打卡";
+                }
+                pkPunchRecord.setContent(content).setStatusId(PunchStatus.PUNCHED).setPunchTime(currentTime);
+                pkPunchRecordMapper.updateById(pkPunchRecord);
 
-        // 保存图片路径
-        for (String imageUrl : imageUrls) {
-            pkPunchImageUrlMapper.insert(
-                    new PmsPkPunchImageUrl()
-                            .setPunchId(pkPunchRecord.getId())
-                            .setImageUrl(imageUrl));
-        }
+                // 保存图片路径
+                for (String imageUrl : imageUrls) {
+                    pkPunchImageUrlMapper.insert(
+                            new PmsPkPunchImageUrl()
+                                    .setPunchId(pkPunchRecord.getId())
+                                    .setImageUrl(imageUrl));
+                }
 
-        // 对应的计划打卡次数加一(用户参加计划）
-        if(userAttendPlanMapper.queryByUserIdAndPlanId(userId,planId)!=null) {
-            PmsUserAttendPlan userAttendPlan = new PmsUserAttendPlan();
-            userAttendPlan.setPunchCount(userAttendPlanMapper.queryByUserIdAndPlanId(userId, planId).getPunchCount() + 1).setId(userAttendPlanMapper.queryByUserIdAndPlanId(userId, planId).getId());
-            userAttendPlanMapper.updateById(userAttendPlan);
+                // 对应的计划打卡次数加一(用户参加计划）
+                if (userAttendPlanMapper.queryByUserIdAndPlanId(userId, planId) != null) {
+                    PmsUserAttendPlan userAttendPlan = new PmsUserAttendPlan();
+                    userAttendPlan.setPunchCount(userAttendPlanMapper.queryByUserIdAndPlanId(userId, planId).getPunchCount() + 1).setId(userAttendPlanMapper.queryByUserIdAndPlanId(userId, planId).getId());
+                    userAttendPlanMapper.updateById(userAttendPlan);
+                }
+                //对应的计划打卡次数加一（用户创建计划）
+                if (userCreatePlanMapper.queryByUserIdAndPlanId(userId, planId) != null) {
+                    PmsUserCreatePlan userCreatePlan = new PmsUserCreatePlan();
+                    userCreatePlan.setPunchCount(userCreatePlanMapper.queryByUserIdAndPlanId(userId, planId).getPunchCount() + 1).setId(userCreatePlanMapper.queryByUserIdAndPlanId(userId, planId).getId());
+                    userCreatePlanMapper.updateById(userCreatePlan);
+                }
+                return "打卡成功";
+            }
+
         }
-        //对应的计划打卡次数加一（用户创建计划）
-        if(userCreatePlanMapper.queryByUserIdAndPlanId(userId,planId)!=null) {
-            PmsUserCreatePlan userCreatePlan = new PmsUserCreatePlan();
-            userCreatePlan.setPunchCount(userCreatePlanMapper.queryByUserIdAndPlanId(userId, planId).getPunchCount() + 1).setId(userCreatePlanMapper.queryByUserIdAndPlanId(userId, planId).getId());
-            userCreatePlanMapper.updateById(userCreatePlan);
-        }
-        // 返回打卡记录的id
-        return pkPunchRecord.getId();
+        return "当前时间无法打卡";
     }
 
     @Override

@@ -24,7 +24,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@Builder
+@NoArgsConstructor
 @ApiModel(value="PmsMonitorPunchRecord对象", description="")
 public class PmsMonitorPunchRecord implements Serializable {
 
@@ -75,5 +75,10 @@ public class PmsMonitorPunchRecord implements Serializable {
     @ApiModelProperty(value = "打卡状态")
     private Integer statusId;
 
+    @ApiModelProperty(value = "打卡开始时间")
+    private LocalDateTime startTime;
+
+    @ApiModelProperty(value = "打卡截止时间")
+    private LocalDateTime expiredTime;
 
 }
