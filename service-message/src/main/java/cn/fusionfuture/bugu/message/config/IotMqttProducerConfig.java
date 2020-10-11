@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.message.config;
 
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +28,19 @@ public class IotMqttProducerConfig {
     @Bean
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
-        factory.setServerURIs(mqttConfig.getServers());
+        MqttConnectOptions options = new MqttConnectOptions();//连接参数
+        options.setServerURIs(mqttConfig.getServers());//连接地址
+        if(null!=mqttConfig.getUsername()) {
+            options.setUserName(mqttConfig.getUsername());//用户名
+        }
+        if(null!=mqttConfig.getPassword()) {
+            options.setPassword(mqttConfig.getPassword().toCharArray());//密码
+        }
+        options.setKeepAliveInterval(mqttConfig.getKeepAliveInterval());//心跳时间
+        options.setAutomaticReconnect(mqttConfig.getAutomaticReconnect());//断开是否自动重联
+        options.setCleanSession(mqttConfig.getCleanSession());//保持session
+        factory.setConnectionOptions(options);
+//        factory.setServerURIs(mqttConfig.getServers());
         return factory;
     }
 

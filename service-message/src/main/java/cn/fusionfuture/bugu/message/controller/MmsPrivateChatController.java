@@ -63,6 +63,7 @@ public class MmsPrivateChatController {
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsPrivateChat);
+        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iPrivateChatVO.getMessageType()+"\"}";
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged,mmsPrivateChat.getReceiveUserId()+"");
 
         return CommonResult.success();

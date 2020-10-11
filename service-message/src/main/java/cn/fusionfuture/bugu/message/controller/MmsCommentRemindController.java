@@ -53,8 +53,9 @@ public class MmsCommentRemindController {
 //      实时消息
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsCommentRemind);
+        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iCommentVO.getMessageType()+"\"}";
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsCommentRemind.getReceiveUserId()+"");
-
+        System.out.println("message: "+messaged);
         return CommonResult.success();
     }
 

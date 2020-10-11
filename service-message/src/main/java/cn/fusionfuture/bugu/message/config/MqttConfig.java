@@ -9,6 +9,7 @@ package cn.fusionfuture.bugu.message.config;
  */
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.stereotype.Component;
@@ -22,13 +23,14 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 @IntegrationComponentScan
-@ConfigurationProperties(prefix = "iot.mqtt")
+@ConfigurationProperties(prefix = "mqtt")
 public class MqttConfig {
 
     /**
      * 服务地址
      */
-    private String servers;
+    @Value("${mqtt.servers:#{null}}")
+    private String[] servers;
 
     /**
      * 客户端id
@@ -44,4 +46,18 @@ public class MqttConfig {
      * 默认主题
      */
     private String defaultTopic;
+
+//    用户名
+
+    private  String username;
+
+//    密码
+    private  String password;
+
+//    心跳时间
+    private Integer KeepAliveInterval;
+//    是否自动重连
+    private Boolean AutomaticReconnect;
+//    是否保持session
+    private Boolean CleanSession;
 }

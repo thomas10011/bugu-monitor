@@ -1,9 +1,12 @@
 package cn.fusionfuture.bugu.message.service.impl;
 
+import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
+import cn.fusionfuture.bugu.message.feign.PkFeignService;
+import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
-import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
-import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
+import cn.fusionfuture.bugu.message.vo.feignvo.SimpleMonitorPlanVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import cn.fusionfuture.bugu.message.mapper.MmsPunchRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
@@ -30,9 +33,19 @@ import java.util.Map;
  */
 @Service
 public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper, MmsPunchRemind> implements IMmsPunchRemindService {
-
+    final Integer MONITOR_PLAN = 1;
+    final Integer PK_PLAN = 2;
     @Autowired
     MmsPunchRemindMapper mmsPunchRemindMapper;
+
+    @Autowired
+    private MonitorFeignService monitorFeignService;
+
+    @Autowired
+    private PkFeignService pkFeignService;
+
+    @Autowired
+    private UserFeignService userFeignService;
 
     @Override
     public void addPunchRemind(MmsPunchRemind mmsPunchRemind) {
@@ -42,7 +55,7 @@ public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper,
 
     @Override
     public PageInfo<PunchVO> getPunchRemind(Integer pn, Integer ps, Long id) {
-        QueryWrapper<MmsPunchRemind> queryWrapper = new QueryWrapper<MmsPunchRemind>();
+        QueryWrapper<MmsPunchRemind> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("receive_user_id", id);
         queryWrapper.eq("is_hidden",false);
 
@@ -58,14 +71,25 @@ public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper,
         for (MmsPunchRemind mmsPunchRemind : mmsPunchRemindList.getList()) {
             PunchVO punchVO = new PunchVO();
             BeanUtils.copyProperties(mmsPunchRemind,punchVO);
-//            punchVO.setId(mmsPunchRemind.getId());
-//            punchVO.setSendTime(mmsPunchRemind.getCreateTime());
-//            punchVO.setSendUserId(mmsPunchRemind.getSendUserId());
-//            punchVO.setReceiveUserId(mmsPunchRemind.getReceiveUserId());
-//            punchVO.setPlanId(mmsPunchRemind.getPlanId());
-//            punchVO.setPlanTypeId(mmsPunchRemind.getPlanTypeId());
-//            punchVO.setIsChecked(mmsPunchRemind.getIsChecked());
-//            punchVO.setIsHidden(mmsPunchRemind.getIsHidden());
+            
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(punchVO.getSendUserId()).getData();
+            punchVO.setSendUserName(sender.get("userName"));
+            punchVO.setSendAvatarUrl(sender.get("avatarUrl"));
+
+            int planType=mmsPunchRemind.getPlanTypeId();
+            Long planId = mmsPunchRemind.getPlanId();
+
+//            pk计划
+            if(planType==PK_PLAN){
+                SimplePkPlanVO simplePkPlanVO = pkFeignService.querySimplePkPlanVO(planId).getData();
+                punchVO.setPlanPattern(simplePkPlanVO.getPkPattern());
+                punchVO.setPlanName(simplePkPlanVO.getName());
+            }else{
+                SimpleMonitorPlanVO simpleMonitorPlanVO = monitorFeignService.querySimpleMonitorPlanVO(planId).getData();
+                punchVO.setPlanPattern(simpleMonitorPlanVO.getPlanPattern());
+                punchVO.setPlanName(simpleMonitorPlanVO.getName());
+            }
+
             punchVOList.add(punchVO);
 //          TODO:调用其他微服务获取完整数据
 
