@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import cn.fusionfuture.bugu.message.util.PageUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,9 +120,10 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
             }
             commentVOList.add(commentVO);
         }
-        PageUtil pageUtil = new PageUtil();
+//        PageUtil pageUtil = new PageUtil();
         PageInfo<CommentVO> commentVOPageInfo = new PageInfo<>(commentVOList);
-        pageUtil.copyAtrr(mmsCommentRemindList,commentVOPageInfo);
+        BeanUtils.copyProperties(mmsCommentRemindList,commentVOPageInfo);
+//        pageUtil.copyAtrr(mmsCommentRemindList,commentVOPageInfo);
         return commentVOPageInfo;
     }
 

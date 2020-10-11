@@ -1,6 +1,5 @@
 package cn.fusionfuture.bugu.message.service.impl;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
-import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
