@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.controller;
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
+import cn.fusionfuture.bugu.message.vo.input.IPlanVO;
 import cn.fusionfuture.bugu.message.vo.input.IPunchVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
@@ -41,20 +42,20 @@ public class MmsPunchRemindController {
      * 发送打卡提醒
      * @author LiLan
      * @since 2020/8/22 12:10
-     * @param iPunchVO 打卡提醒对象
+     * @param iPlanVO 打卡提醒对象
      * @return void
      **/
     @PostMapping(value="/punch-remind")
     @ApiOperation(value = "发送打卡提醒")
-    public CommonResult<?> addPunch(IPunchVO iPunchVO) throws JsonProcessingException {
+    public CommonResult<?> addPunch(IPlanVO iPlanVO) throws JsonProcessingException {
 
         MmsPunchRemind mmsPunchRemind = new MmsPunchRemind();
-        BeanUtils.copyProperties(iPunchVO,mmsPunchRemind);
+        BeanUtils.copyProperties(iPlanVO,mmsPunchRemind);
         iMmsPunchRemindService.addPunchRemind(mmsPunchRemind);
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsPunchRemind);
-        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iPunchVO.getMessageType()+"\"}";
+        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iPlanVO.getMessageType()+"\"}";
         iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsPunchRemind.getReceiveUserId()+"");
 
         return CommonResult.success();
