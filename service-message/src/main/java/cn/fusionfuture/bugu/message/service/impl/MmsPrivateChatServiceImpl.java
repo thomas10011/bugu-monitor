@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.message.service.impl;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
+import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
@@ -109,8 +110,10 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
             messageVO.setReceiveAvatarUrl(reciever.get("avatarUrl"));
             messageVOList.add(messageVO);
         }
+        PageUtil pageUtil = new PageUtil();
         PageInfo<MessageVO> messageVOPageInfo = new PageInfo<>(messageVOList);
-        BeanUtils.copyProperties(mmsReceivePrivateChatList,messageVOPageInfo);
+        pageUtil.copyAtrr(mmsReceivePrivateChatList,messageVOPageInfo);
+//        BeanUtils.copyProperties(mmsReceivePrivateChatList,messageVOPageInfo);
         return messageVOPageInfo;
     }
 }

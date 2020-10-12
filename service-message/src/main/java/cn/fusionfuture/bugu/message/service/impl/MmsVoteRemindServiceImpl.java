@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.service.impl;
 import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
 import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
+import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
@@ -116,10 +117,10 @@ public class MmsVoteRemindServiceImpl extends ServiceImpl<MmsVoteRemindMapper, M
 
             voteVOList.add(voteVO);
         }
-//        PageUtil pageUtil = new PageUtil();
+        PageUtil pageUtil = new PageUtil();
         PageInfo<VoteVO> voteVOPageInfo = new PageInfo<>(voteVOList);
-//        pageUtil.copyAtrr(mmsVoteRemindList,voteVOPageInfo);
-        BeanUtils.copyProperties(mmsVoteRemindList,voteVOPageInfo);
+        pageUtil.copyAtrr(mmsVoteRemindList,voteVOPageInfo);
+//        BeanUtils.copyProperties(mmsVoteRemindList,voteVOPageInfo);
         return voteVOPageInfo;
     }
 }

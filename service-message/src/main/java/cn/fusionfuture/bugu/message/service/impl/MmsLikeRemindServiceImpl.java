@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.mapper.MmsLikeRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsLikeRemindService;
+import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -110,10 +111,10 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
 
             likeVOList.add(likeVO);
         }
-//        PageUtil pageUtil = new PageUtil();
+        PageUtil pageUtil = new PageUtil();
         PageInfo<LikeVO> likeVOPageInfo = new PageInfo<>(likeVOList);
-//        pageUtil.copyAtrr(mmsLikeRemindList,likeVOPageInfo);
-        BeanUtils.copyProperties(mmsLikeRemindList,likeVOPageInfo);
+        pageUtil.copyAtrr(mmsLikeRemindList,likeVOPageInfo);
+//        BeanUtils.copyProperties(mmsLikeRemindList,likeVOPageInfo);
         return likeVOPageInfo;
     }
 }

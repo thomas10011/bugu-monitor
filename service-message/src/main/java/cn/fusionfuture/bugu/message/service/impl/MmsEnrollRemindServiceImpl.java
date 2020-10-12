@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.service.impl;
 import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
 import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
+import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.EnrollVO;
 import cn.fusionfuture.bugu.message.vo.feignvo.SimpleMonitorPlanVO;
@@ -113,10 +114,10 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
 //          TODO:调用其他微服务获取完整数据
 
         }
-//        PageUtil pageUtil = new PageUtil();
+        PageUtil pageUtil = new PageUtil();
         PageInfo<EnrollVO> enrollVOPageInfo = new PageInfo<>(enrollVOList);
-        BeanUtils.copyProperties(mmsEnrollRemindList,enrollVOPageInfo);
-//        pageUtil.copyAtrr(mmsEnrollRemindList,enrollVOPageInfo);
+//        BeanUtils.copyProperties(mmsEnrollRemindList,enrollVOPageInfo);
+        pageUtil.copyAtrr(mmsEnrollRemindList,enrollVOPageInfo);
         return enrollVOPageInfo;
     }
 }

@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.mapper.MmsCommentRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsCommentRemindService;
+import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
 import cn.fusionfuture.bugu.message.vo.feignvo.BasicPunchVO;
@@ -120,10 +121,9 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
             }
             commentVOList.add(commentVO);
         }
-//        PageUtil pageUtil = new PageUtil();
+        PageUtil pageUtil = new PageUtil();
         PageInfo<CommentVO> commentVOPageInfo = new PageInfo<>(commentVOList);
-        BeanUtils.copyProperties(mmsCommentRemindList,commentVOPageInfo);
-//        pageUtil.copyAtrr(mmsCommentRemindList,commentVOPageInfo);
+        pageUtil.copyAtrr(mmsCommentRemindList,commentVOPageInfo);
         return commentVOPageInfo;
     }
 

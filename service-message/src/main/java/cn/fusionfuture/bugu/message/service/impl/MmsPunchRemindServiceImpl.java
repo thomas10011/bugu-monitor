@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.message.service.impl;
 import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
 import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
+import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.PunchVO;
 import cn.fusionfuture.bugu.message.vo.feignvo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.message.vo.feignvo.SimplePkPlanVO;
@@ -93,10 +94,10 @@ public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper,
 //          TODO:调用其他微服务获取完整数据
 
         }
-//        PageUtil pageUtil = new PageUtil();
+        PageUtil pageUtil = new PageUtil();
         PageInfo<PunchVO> punchVOPageInfo = new PageInfo<>(punchVOList);
-//        pageUtil.copyAtrr(mmsPunchRemindList,punchVOPageInfo);
-        BeanUtils.copyProperties(mmsPunchRemindList,punchVOPageInfo);
+        pageUtil.copyAtrr(mmsPunchRemindList,punchVOPageInfo);
+//        BeanUtils.copyProperties(mmsPunchRemindList,punchVOPageInfo);
         return punchVOPageInfo;
     }
 }
