@@ -87,9 +87,10 @@ public class MmsSystemUserServiceImpl extends ServiceImpl<MmsSystemUserMapper, M
     @Override
     public PageInfo<MessageVO> getOneSystemAll(Integer pn, Integer ps,Long id, Long sendId) {
         QueryWrapper<MmsSystemUser> queryWrapper = new QueryWrapper<MmsSystemUser>();
-        queryWrapper.eq("receive_user_id", id);
-        queryWrapper.eq("is_hidden",false);
-        queryWrapper.eq("send_user_id",sendId);
+        queryWrapper.eq("receive_user_id", id)
+                .eq("is_hidden",false)
+                .eq("send_user_id",sendId)
+                .orderByDesc("create_time");
 
         PageInfo<MmsSystemUser> mmsSystemUserList =new PageInfo<>(mmsSystemUserMapper.selectList(queryWrapper)) ;
 

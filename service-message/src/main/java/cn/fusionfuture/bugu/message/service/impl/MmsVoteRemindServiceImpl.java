@@ -60,8 +60,9 @@ public class MmsVoteRemindServiceImpl extends ServiceImpl<MmsVoteRemindMapper, M
         final Integer PK_PLAN = 2;
 
         QueryWrapper<MmsVoteRemind> queryWrapper = new QueryWrapper<MmsVoteRemind>();
-        queryWrapper.eq("receive_user_id", id);
-        queryWrapper.eq("is_hidden",false);
+        queryWrapper.eq("receive_user_id", id)
+                .eq("is_hidden",false)
+                .orderByDesc("create_time");
 
         PageHelper.startPage(pn, ps);
         PageInfo<MmsVoteRemind> mmsVoteRemindList =new PageInfo<>(mmsVoteRemindMapper.selectList(queryWrapper)) ;

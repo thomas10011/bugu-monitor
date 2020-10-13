@@ -53,11 +53,14 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
 
         List<MmsPrivateChat> mmsReceivePrivateChatList = mmsPrivateChatMapper.selectList(queryWrapper);
         for(MmsPrivateChat mmsPrivateChat: mmsReceivePrivateChatList){
+            System.out.println(mmsPrivateChat);
             String sendIdStr = mmsPrivateChat.getSendUserId().toString();
             String receiveIdStr = mmsPrivateChat.getReceiveUserId().toString();
             System.out.println(sendIdStr+receiveIdStr);
             if(!pairedChatSet.contains(sendIdStr+receiveIdStr)&&!pairedChatSet.contains(receiveIdStr+sendIdStr)){
                 pairedChatSet.add(sendIdStr+receiveIdStr);
+                System.out.println("choiced");
+                System.out.println(mmsPrivateChat);
                 mmsPrivateChatArray.add(mmsPrivateChat);
             }
         }

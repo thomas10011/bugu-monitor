@@ -56,8 +56,9 @@ public class MmsPunchRemindServiceImpl extends ServiceImpl<MmsPunchRemindMapper,
     @Override
     public PageInfo<PunchVO> getPunchRemind(Integer pn, Integer ps, Long id) {
         QueryWrapper<MmsPunchRemind> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("receive_user_id", id);
-        queryWrapper.eq("is_hidden",false);
+        queryWrapper.eq("receive_user_id", id)
+                .eq("is_hidden",false)
+                .orderByDesc("create_time");
 
         PageHelper.startPage(pn, ps);
         PageInfo<MmsPunchRemind> mmsPunchRemindList = new PageInfo<>(mmsPunchRemindMapper.selectList(queryWrapper));

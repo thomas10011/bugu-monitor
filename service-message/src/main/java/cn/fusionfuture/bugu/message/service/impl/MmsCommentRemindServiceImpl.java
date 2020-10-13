@@ -59,8 +59,10 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
     public PageInfo<CommentVO> getCommentRemind(Integer pn, Integer ps,Long id) {
         Map<String, Object> columnMap = new HashMap<>();
         QueryWrapper<MmsCommentRemind> queryWrapper = new QueryWrapper<MmsCommentRemind>();
-        queryWrapper.eq("receive_user_id", id);
-        queryWrapper.eq("is_hidden",false);
+        queryWrapper.eq("receive_user_id", id)
+                .eq("is_hidden",false)
+                .orderByDesc("create_time");
+
 
         PageHelper.startPage(pn, ps);
         PageInfo<MmsCommentRemind> mmsCommentRemindList =new PageInfo<>(mmsCommentRemindMapper.selectList(queryWrapper)) ;

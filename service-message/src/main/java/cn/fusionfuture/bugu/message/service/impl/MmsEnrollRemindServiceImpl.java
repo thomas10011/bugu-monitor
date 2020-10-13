@@ -73,8 +73,9 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
     @Override
     public PageInfo<EnrollVO> getEnrollRemind(Integer pn, Integer ps, Long receiveUserId){
         QueryWrapper<MmsEnrollRemind> queryWrapper = new QueryWrapper<MmsEnrollRemind>();
-        queryWrapper.eq("receive_user_id", receiveUserId);
-        queryWrapper.eq("is_hidden",false);
+        queryWrapper.eq("receive_user_id", receiveUserId)
+                .eq("is_hidden",false)
+                .orderByDesc("create_time");
 
         PageHelper.startPage(pn, ps);
         PageInfo<MmsEnrollRemind> mmsEnrollRemindList =new PageInfo<>(mmsEnrollRemindMapper.selectList(queryWrapper)) ;
