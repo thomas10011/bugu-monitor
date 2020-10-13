@@ -92,7 +92,7 @@ public class PmsPkPlan implements Serializable {
     private BigDecimal voteBonus;
 
     @ApiModelProperty(value = "奖金总数")
-    private BigDecimal tatalBonus;
+    private BigDecimal totalBonus;
 
     @ApiModelProperty(value = "是否上传至布谷金巢")
     private Boolean isUploadBugu;

@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -24,7 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@Builder
+@NoArgsConstructor
 @ApiModel(value="PmsPkPunchRecord对象", description="")
 public class PmsPkPunchRecord implements Serializable {
 
@@ -68,6 +69,12 @@ public class PmsPkPunchRecord implements Serializable {
 
     @ApiModelProperty(value = "打卡时间")
     private LocalDateTime punchTime;
+
+    @ApiModelProperty(value = "打卡开始时间")
+    private LocalDateTime startTime;
+
+    @ApiModelProperty(value = "打卡截止时间")
+    private LocalDateTime expiredTime;
 
     @ApiModelProperty(value = "打卡状态Id")
     private Integer statusId;

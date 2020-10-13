@@ -50,4 +50,11 @@ public class PmsPkPlanController {
         return pkPlanService.querySimplePkPlanVO(planId);
     }
 
+    @PostMapping(value = "/pk-plan/check-isPunched")
+    @ApiOperation(value= "查询当前时间计划打卡状态")
+    public String checkIsPunched(@ApiParam(value = "用户id") @RequestParam(name = "userId") Long userId,
+                                 @ApiParam(value = "计划id") @RequestParam(name = "planId") Long planId){
+        return pkPlanService.checkIsPunched(userId,planId);
+    }
+
 }

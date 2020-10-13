@@ -65,8 +65,9 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
         final Integer PK_PLAN = 2;
 
         QueryWrapper<MmsLikeRemind> queryWrapper = new QueryWrapper<MmsLikeRemind>();
-        queryWrapper.eq("receive_user_id", id);
-        queryWrapper.eq("is_hidden",false);
+        queryWrapper.eq("receive_user_id", id)
+                .eq("is_hidden",false)
+                .orderByDesc("create_time");
 
         PageHelper.startPage(pn, ps);
         PageInfo<MmsLikeRemind> mmsLikeRemindList = new PageInfo<>(mmsLikeRemindMapper.selectList(queryWrapper)) ;
@@ -114,6 +115,7 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
         PageUtil pageUtil = new PageUtil();
         PageInfo<LikeVO> likeVOPageInfo = new PageInfo<>(likeVOList);
         pageUtil.copyAtrr(mmsLikeRemindList,likeVOPageInfo);
+//        BeanUtils.copyProperties(mmsLikeRemindList,likeVOPageInfo);
         return likeVOPageInfo;
     }
 }

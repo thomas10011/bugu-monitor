@@ -11,6 +11,7 @@ import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,37 +43,37 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     PmsMonitorPatternMapper monitorPatternMapper;
 
     @Override
-    public Long punch(Long planId, Long userId, String content, List<String> imageUrls) {
+    public String punch(Long planId, String content, List<String> imageUrls) {
+        //获取当前时间
+        LocalDateTime currentTime=LocalDateTime.now();
+        QueryWrapper<PmsMonitorPunchRecord> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("monitor_plan_id",planId);
+        List<PmsMonitorPunchRecord> punchRecords=monitorPunchRecordMapper.selectList(queryWrapper);
+        for (PmsMonitorPunchRecord monitorPunchRecord:punchRecords
+        ) {
+            //更新打卡内容
+            if(currentTime.isAfter(monitorPunchRecord.getStartTime())&&currentTime.isBefore(monitorPunchRecord.getExpiredTime())){
+                if(monitorPunchRecord.getContent()!=null){
+                    return "当前周期已打卡";
+                }
+                monitorPunchRecord.setContent(content).setStatusId(PunchStatus.PUNCHED).setPunchTime(currentTime);
+                monitorPunchRecordMapper.updateById(monitorPunchRecord);
+                // 保存图片路径
+                for (String imageUrl : imageUrls) {
+                    monitorPunchImageUrlMapper.insert(
+                            new PmsMonitorPunchImageUrl()
+                                    .setPunchId(monitorPunchRecord.getId())
+                                    .setImageUrl(imageUrl));
+                }
 
-        // 保存打卡记录
-        PmsMonitorPunchRecord monitorPunchRecord = PmsMonitorPunchRecord.builder()
-                .userId(userId)
-                .monitorPlanId(planId)
-                .likeCount(0)
-                .commentQuantity(0)
-                .agreeCount(0)
-                .disagreeCount(0)
-                .content(content)
-                .punchTime(LocalDateTime.now())
-                .statusId(PunchStatus.PUNCHED)
-                .build();
-        monitorPunchRecordMapper.insert(monitorPunchRecord);
-
-        // 保存图片路径
-        for (String imageUrl : imageUrls) {
-            monitorPunchImageUrlMapper.insert(
-                    new PmsMonitorPunchImageUrl()
-                            .setPunchId(monitorPunchRecord.getId())
-                            .setImageUrl(imageUrl));
+                // 对应的计划打卡次数加一，对应打卡记录的打卡状态设置为已打卡
+                PmsMonitorPlan plan = monitorPlanMapper.selectById(planId);
+                plan.setPunchCount(plan.getPunchCount() + 1);
+                monitorPlanMapper.updateById(plan);
+                return "打卡成功";
+            }
         }
-
-        // 对应的计划打卡次数加一
-        PmsMonitorPlan plan = monitorPlanMapper.selectById(planId);
-        plan.setPunchCount(plan.getPunchCount() + 1);
-        monitorPlanMapper.updateById(plan);
-
-        // 返回打卡记录的id
-        return monitorPunchRecord.getId();
+        return "当前时间无法打卡";
     }
 
     @Override

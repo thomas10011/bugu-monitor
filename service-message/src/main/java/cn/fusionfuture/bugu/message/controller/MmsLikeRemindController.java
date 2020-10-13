@@ -1,5 +1,7 @@
 package cn.fusionfuture.bugu.message.controller;
 
+import cn.fusionfuture.bugu.message.feign.MonitorFeignService;
+import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.service.IMmsLikeRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsPunchRemindService;
 import cn.fusionfuture.bugu.message.service.IMmsRabbitMQGatewayService;
@@ -34,7 +36,13 @@ import java.util.List;
 @RestController
 @Api(tags="点赞提示")
 public class MmsLikeRemindController {
+    final Integer MONITOR_PLAN = 1;
+    final Integer PK_PLAN = 2;
+    @Autowired
+    private MonitorFeignService monitorFeignService;
 
+    @Autowired
+    private PkFeignService pkFeignService;
     @Autowired
     IMmsLikeRemindService iMmsLikeRemindService;
 
@@ -54,6 +62,15 @@ public class MmsLikeRemindController {
         MmsLikeRemind mmsLikeRemind = new MmsLikeRemind();
         BeanUtils.copyProperties(iLikeVO,mmsLikeRemind);
         iMmsLikeRemindService.addLikeRemind(mmsLikeRemind);
+
+//        同步pk服务和监督服务数据
+        Integer planType = iLikeVO.getPlanTypeId();
+        if(planType==PK_PLAN){
+            pkFeignService.like(iLikeVO.getPunchId());
+        }
+        else if(planType==MONITOR_PLAN){
+            monitorFeignService.like(iLikeVO.getPunchId());
+        }
 
         ObjectMapper mapper = new ObjectMapper();
         String messaged = mapper.writeValueAsString(mmsLikeRemind);

@@ -27,16 +27,16 @@ import java.util.List;
 public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
 
        /*
-        * TODO 打卡
+        * 打卡
         * @author zws
         * @since 2020/9/21 17:12
         * @param [planId, userId, content, imageUrls]
         * @return java.lang.Long
         **/
-        Long punch(Long userId, Long planId, String content, List<String> imageUrls);
+        String punch(Long userId, Long planId, String content, List<String> imageUrls);
 
         /*
-         * TODO 根据打卡id对该次打卡进行点赞操作
+         * 根据打卡id对该次打卡进行点赞操作
          * @author zws
          * @since 2020/9/25 19:33
          * @param [punchId] 
@@ -45,7 +45,7 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
         void like(Long punchId);
 
         /*
-         * TODO 根据打卡id查询打卡的相关信息
+         * 根据打卡id查询打卡的相关信息
          * @author zws
          * @since 2020/9/25 20:28
          * @param [punchId]

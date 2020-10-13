@@ -20,15 +20,14 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @author thomas
      * @since 2020/9/12 2:39 下午
      * @param planId 监督计划id
-     * @param userId 用户id
      * @param content 打卡内容
      * @param imageUrls 打卡图片url链接
      * @return 返回打卡的id
      **/
-    Long punch(Long planId, Long userId, String content, List<String> imageUrls);
+    String punch(Long planId, String content, List<String> imageUrls);
 
     /*
-     * TODO 根据打卡id对打卡进行点赞
+     * 根据打卡id对打卡进行点赞
      * @author zws
      * @since 2020/9/26 15:43
      * @param [punchId]
@@ -37,7 +36,7 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
     void like(Long punchId);
 
     /*
-     * TODO 通过打卡id查询打卡相关信息
+     *  通过打卡id查询打卡相关信息
      * @author zws
      * @since 2020/9/26 16:10
      * @param [punchId] 

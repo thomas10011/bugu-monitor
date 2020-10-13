@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.mapper.MmsCommentRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsCommentRemindService;
+import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
 import cn.fusionfuture.bugu.message.vo.feignvo.BasicPunchVO;
@@ -18,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import cn.fusionfuture.bugu.message.util.PageUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,8 +59,10 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
     public PageInfo<CommentVO> getCommentRemind(Integer pn, Integer ps,Long id) {
         Map<String, Object> columnMap = new HashMap<>();
         QueryWrapper<MmsCommentRemind> queryWrapper = new QueryWrapper<MmsCommentRemind>();
-        queryWrapper.eq("receive_user_id", id);
-        queryWrapper.eq("is_hidden",false);
+        queryWrapper.eq("receive_user_id", id)
+                .eq("is_hidden",false)
+                .orderByDesc("create_time");
+
 
         PageHelper.startPage(pn, ps);
         PageInfo<MmsCommentRemind> mmsCommentRemindList =new PageInfo<>(mmsCommentRemindMapper.selectList(queryWrapper)) ;

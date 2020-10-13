@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @author thomas
  * @since 2020-08-24
  */
+@Repository
 public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
 
     /**
@@ -33,4 +35,6 @@ public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
      * @return cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO
      **/
     SimpleMonitorPlanVO querySimpleMonitorPlanVO(Long planId);
+
+
 }

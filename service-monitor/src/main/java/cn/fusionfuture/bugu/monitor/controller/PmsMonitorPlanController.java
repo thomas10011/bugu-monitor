@@ -74,4 +74,11 @@ public class PmsMonitorPlanController {
                                               @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return monitorPlanService.querySimpleMonitorPlanVO(planId);
     }
+
+    @GetMapping(value = "/monitor-plan/check-isPunched/{planId}")
+    @ApiOperation(value= "查询当前时间计划打卡状态")
+    public String checkIsPunched(@Validated
+                                                        @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
+        return monitorPlanService.checkIsPunched(planId);
+    }
 }

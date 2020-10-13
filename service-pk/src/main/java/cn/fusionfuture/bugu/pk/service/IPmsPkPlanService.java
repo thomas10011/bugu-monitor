@@ -36,11 +36,20 @@ public interface IPmsPkPlanService extends IService<PmsPkPlan> {
     PageInfo<BasicPkPlanVO> queryBasicPkPlanVO(Integer pn,Integer ps,Long userId);
 
     /*
-     * TODO 根据计划id查询计划报名进度的基本信息，供消息侧调用
+     * 根据计划id查询计划报名进度的基本信息，供消息侧调用
      * @author zws
      * @since 2020/9/25 19:51
      * @param [planId] 
      * @return cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO 
      **/
     SimplePkPlanVO querySimplePkPlanVO(Long planId);
+
+    /*
+     * 根据计划id定时刷新计划在当前所属周期的打卡情况
+     * @author zws
+     * @since 2020/10/8 21:52
+     * @param [planId]
+     * @return void
+     **/
+    String checkIsPunched(Long userId,Long planId);
 }

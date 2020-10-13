@@ -9,13 +9,16 @@ package cn.fusionfuture.bugu.pojo.constants;
  */
 public class PunchStatus {
 
+    //未打卡
+    public static final Integer NotPunched=1;
+
     // 已打卡
-    public static final Integer PUNCHED = 1;
+    public static final Integer PUNCHED = 2;
 
     // 打卡成功
-    public static final Integer SUCCESS = 2;
+    public static final Integer SUCCESS = 3;
 
     // 打卡失败
-    public static final Integer FAILED = 3;
+    public static final Integer FAILED = 4;
 
 }

@@ -39,11 +39,10 @@ public class PmsMonitorPunchRecordController {
 
     @ApiOperation(value = "用户打卡一个计划")
     @PostMapping("monitor-plan/punch")
-    public Long punch(@ApiParam(value = "计划的id") @RequestParam(name = "pid") Long planId,
-                      @ApiParam(value = "用户的id") @RequestParam(name = "uid") Long userId,
+    public String punch(@ApiParam(value = "计划的id") @RequestParam(name = "pid") Long planId,
                       @ApiParam(value = "打卡的内容") @RequestParam(name = "ct") String content,
                       @ApiParam(value = "打卡图片url列表") @RequestParam(name = "iu") List<String> imageUrls) {
-        return monitorPunchRecordService.punch(planId, userId, content, imageUrls);
+        return monitorPunchRecordService.punch(planId, content, imageUrls);
     }
 
     @PostMapping("/punch/like")
