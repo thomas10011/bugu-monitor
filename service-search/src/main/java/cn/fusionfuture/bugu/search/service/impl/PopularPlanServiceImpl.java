@@ -72,9 +72,10 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
         System.out.println(boolQueryBuilder.toString());
 
         SearchResponse response = client.search(request, RequestOptions.DEFAULT);
-        List<JSONObject> list = new LinkedList<>();
+        List<PopularPlanDTO> list = new LinkedList<>();
         for (SearchHit hit : response.getHits().getHits()) {
-            list.add(JSONUtil.parseObj(hit.getSourceAsString()));
+            // 要转化为dto传输，否则有可能因为Jackson无法将hutool中的JSONObject的null值序列化而报错
+            list.add(JSONUtil.parseObj(hit.getSourceAsString()).toBean(PopularPlanDTO.class));
             System.out.println(hit.getSourceAsString());
         }
 

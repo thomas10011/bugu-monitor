@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.search.vo;
 
+import cn.fusionfuture.bugu.search.dto.PopularPlanDTO;
 import cn.hutool.json.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
@@ -33,6 +34,6 @@ public class PopularPlanVO {
     private Long total;
 
     @ApiModelProperty(name = "数据列表")
-    private List<JSONObject> list;
+    private List<PopularPlanDTO> list;
 
 }

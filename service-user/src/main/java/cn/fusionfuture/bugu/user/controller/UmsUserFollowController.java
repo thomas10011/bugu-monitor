@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.user.service.IUmsUserFollowService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class UmsUserFollowController {
 
     @ApiOperation(value = "关注用户")
     @GetMapping(value = "/follow/{uid}")
-    String followUser(@PathVariable Long uid, @RequestParam Long fuid) {
+    String followUser(@ApiParam(value = "用户的id") @RequestParam Long uid, @ApiParam(value = "要关注的用户的id") @RequestParam Long fuid) {
         if (userFollowService.followUser(uid, fuid)) {
             return "关注成功！";
         }
@@ -47,7 +48,14 @@ public class UmsUserFollowController {
 
     @ApiOperation(value = "取消关注用户")
     @DeleteMapping(value = "/follow/{uid}")
-    void unFollowUser(@PathVariable Long uid, @RequestParam Long fuid) {
+    void unFollowUser(@ApiParam(value = "用户的id") @RequestParam Long uid, @ApiParam(value = "要关注的用户的id") @RequestParam Long fuid) {
         userFollowService.unFollowUser(uid, fuid);
     }
+
+    @ApiOperation(value = "查询两个用户之间的关系")
+    @GetMapping(value = "/relationship")
+    Integer queryRelationship(@ApiParam(value = "用户的id") @RequestParam Long id1, @ApiParam(value = "要关注的用户的id") @RequestParam Long id2) {
+        return userFollowService.queryRelationship(id1, id2);
+    }
+
 }

@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.user.service.impl;
 
+import cn.fusionfuture.bugu.pojo.constants.UserRelationship;
 import cn.fusionfuture.bugu.pojo.entity.UmsUser;
 import cn.fusionfuture.bugu.pojo.entity.UmsUserFollow;
 import cn.fusionfuture.bugu.user.mapper.UmsUserFollowMapper;
@@ -7,6 +8,7 @@ import cn.fusionfuture.bugu.user.mapper.UmsUserMapper;
 import cn.fusionfuture.bugu.user.service.IUmsUserFollowService;
 import cn.fusionfuture.bugu.user.vo.UserFollowVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -14,6 +16,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -77,7 +81,7 @@ public class UmsUserFollowServiceImpl extends ServiceImpl<UmsUserFollowMapper, U
 
             userMapper.updateById(user.setFollowQuantity(user.getFollowQuantity() + 1));
             userMapper.updateById(followedUser.setFansQuantity(followedUser.getFansQuantity() + 1));
-            userFollowMapper.updateById(obj);
+            userFollowMapper.updateById(obj.setUpdateTime(LocalDateTime.now()));
             return true;
         }
         // 最后的情况就是已经关注过该用户了
@@ -117,5 +121,25 @@ public class UmsUserFollowServiceImpl extends ServiceImpl<UmsUserFollowMapper, U
         userMapper.updateById(followedUser.setFansQuantity(followedUser.getFansQuantity() - 1));
 
         return true;
+    }
+
+    @Override
+    public Integer queryRelationship(Long id1, Long id2) {
+        UmsUserFollow obj = userFollowMapper.queryUmsUserFollow(id1, id2);
+
+        if (obj == null) {
+            // 为空表示没两个人互相没有关注
+            return UserRelationship.NON.getIndex();
+        }
+        else if (obj.getFollowedEachOther()) {
+            // 互相关注
+            return UserRelationship.FRIENDS.getIndex();
+        }
+        else if (obj.getUserId().equals(id1)) {
+            return UserRelationship.FOLLOWED.getIndex();
+        }
+        else {
+            return UserRelationship.FANS.getIndex();
+        }
     }
 }
