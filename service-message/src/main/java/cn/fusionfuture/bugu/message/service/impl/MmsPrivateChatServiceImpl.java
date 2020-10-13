@@ -47,17 +47,17 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         queryWrapper.eq("receive_user_id",id).
                 or().eq("send_user_id",id)
                 .orderByDesc("create_time");
-        Set<Long> pairedChatSet = new HashSet<>();
+        Set<String> pairedChatSet = new HashSet<>();
         List<MmsPrivateChat> mmsPrivateChatArray = new ArrayList<>();
 
 
         List<MmsPrivateChat> mmsReceivePrivateChatList = mmsPrivateChatMapper.selectList(queryWrapper);
         for(MmsPrivateChat mmsPrivateChat: mmsReceivePrivateChatList){
-            Long sendId = mmsPrivateChat.getSendUserId();
-            Long receiveId = mmsPrivateChat.getReceiveUserId();
-
-            if(!pairedChatSet.contains(sendId+receiveId)&&!pairedChatSet.contains(receiveId+sendId)){
-                pairedChatSet.add(sendId+receiveId);
+            String sendIdStr = mmsPrivateChat.getSendUserId().toString();
+            String receiveIdStr = mmsPrivateChat.getReceiveUserId().toString();
+            System.out.println(sendIdStr+receiveIdStr);
+            if(!pairedChatSet.contains(sendIdStr+receiveIdStr)&&!pairedChatSet.contains(receiveIdStr+sendIdStr)){
+                pairedChatSet.add(sendIdStr+receiveIdStr);
                 mmsPrivateChatArray.add(mmsPrivateChat);
             }
         }
@@ -88,7 +88,7 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
                 .eq("is_hidden",false)
                 .eq("send_user_id",sendId);
         queryWrapper.or(wrapper -> wrapper.eq("receive_user_id", sendId).eq("send_user_id",id).eq("is_hidden",false));
-        queryWrapper.orderByAsc("create_time");
+        queryWrapper.orderByDesc("create_time");
         PageHelper.startPage(pn, ps);
         PageInfo<MmsPrivateChat> mmsReceivePrivateChatList = new PageInfo<>(mmsPrivateChatMapper.selectList(queryWrapper)) ;
 
