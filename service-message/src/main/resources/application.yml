@@ -39,10 +39,10 @@ mqtt:
 
   serverClientId: server-1
 #     本地地址 10.128.146.236
-#    servers: tcp://127.0.0.1:1883
-#  servers: tcp://10.133.128.198:1883
+  servers: tcp://0.0.0.0:1883
+#  servers: tcp://10.133.137.49:1883
 #    线上地址
-  servers: tcp://39.106.59.218:1883
+#  servers: tcp://39.106.59.218:1883
 
   username: admin
 

@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author LiLan
@@ -47,30 +44,28 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
     @Override
     public PageInfo<MessageVO> getAllUserChat(Integer pn, Integer ps, Long id) {
         QueryWrapper<MmsPrivateChat> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("receive_user_id",id);
-        queryWrapper.orderByDesc("create_time");
-        Map<Long,MmsPrivateChat> pairedChatMap = new HashMap<>();
+        queryWrapper.eq("receive_user_id",id).
+                or().eq("send_user_id",id)
+                .orderByDesc("create_time");
+        Set<String> pairedChatSet = new HashSet<>();
+        List<MmsPrivateChat> mmsPrivateChatArray = new ArrayList<>();
 
 
         List<MmsPrivateChat> mmsReceivePrivateChatList = mmsPrivateChatMapper.selectList(queryWrapper);
-        QueryWrapper<MmsPrivateChat> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper1.eq("send_user_id",id);
-        queryWrapper1.orderByDesc("create_time");
-        List<MmsPrivateChat> mmsSendPrivateChatList = mmsPrivateChatMapper.selectList(queryWrapper1);
         for(MmsPrivateChat mmsPrivateChat: mmsReceivePrivateChatList){
-            if(!pairedChatMap.containsKey(mmsPrivateChat.getSendUserId())){
-                pairedChatMap.put(mmsPrivateChat.getSendUserId(),mmsPrivateChat);
+            System.out.println(mmsPrivateChat);
+            String sendIdStr = mmsPrivateChat.getSendUserId().toString();
+            String receiveIdStr = mmsPrivateChat.getReceiveUserId().toString();
+            System.out.println(sendIdStr+receiveIdStr);
+            if(!pairedChatSet.contains(sendIdStr+receiveIdStr)&&!pairedChatSet.contains(receiveIdStr+sendIdStr)){
+                pairedChatSet.add(sendIdStr+receiveIdStr);
+                System.out.println("choiced");
+                System.out.println(mmsPrivateChat);
+                mmsPrivateChatArray.add(mmsPrivateChat);
             }
         }
-        for(MmsPrivateChat mmsPrivateChat: mmsSendPrivateChatList){
-            if(!pairedChatMap.containsKey(mmsPrivateChat.getReceiveUserId())){
-                pairedChatMap.put(mmsPrivateChat.getReceiveUserId(),mmsPrivateChat);
-            }
-        }
-
-        System.out.println("查询出数据");
         List<MessageVO> messageVOList = new ArrayList<>();
-        for(MmsPrivateChat mmsPrivateChat:pairedChatMap.values()) {
+        for(MmsPrivateChat mmsPrivateChat:mmsPrivateChatArray) {
             MessageVO messageVO = new MessageVO();
             BeanUtils.copyProperties(mmsPrivateChat,messageVO);
             //  调用其他微服务获取完整数据
@@ -121,6 +116,7 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         PageUtil pageUtil = new PageUtil();
         PageInfo<MessageVO> messageVOPageInfo = new PageInfo<>(messageVOList);
         pageUtil.copyAtrr(mmsReceivePrivateChatList,messageVOPageInfo);
+//        BeanUtils.copyProperties(mmsReceivePrivateChatList,messageVOPageInfo);
         return messageVOPageInfo;
     }
 }

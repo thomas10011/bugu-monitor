@@ -1,4 +1,12 @@
 package cn.fusionfuture.bugu.message.util;
+/**
+ * @author DELL
+ * @version 1.0
+ * @class PageUtil
+ * @description TODO
+ * @date 2020/10/11 22:53
+ */
+
 
 import com.github.pagehelper.PageInfo;
 
@@ -39,3 +47,4 @@ public class PageUtil<T> extends PageInfo<T>{
         des.setNavigatepageNums(source.getNavigatepageNums());
     }
 }
+
