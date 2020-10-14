@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.monitor.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
 import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
@@ -68,6 +69,13 @@ public class PmsMonitorPlanController {
         return monitorPlanService.queryBasicMonitorPlanVO(pn, ps, uid);
     }
 
+    @GetMapping(value = "/monitor-plan/detailed-info/{pid}")
+    @ApiOperation(value= "查询计划详细信息")
+    public DetailedMonitorPlanVO queryDetailedMonitorPlanVO(@Validated
+                                                        @ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid){
+        return monitorPlanService.queryDetailedMonitorPlanVO(pid);
+    }
+
     @GetMapping(value = "/monitor-plan/simple-info/{planId}")
     @ApiOperation(value= "查询计划简略信息")
     public SimpleMonitorPlanVO querySimpleMonitorPlanVO(@Validated
@@ -78,7 +86,7 @@ public class PmsMonitorPlanController {
     @GetMapping(value = "/monitor-plan/check-isPunched/{planId}")
     @ApiOperation(value= "查询当前时间计划打卡状态")
     public String checkIsPunched(@Validated
-                                                        @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
+                                     @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return monitorPlanService.checkIsPunched(planId);
     }
 }

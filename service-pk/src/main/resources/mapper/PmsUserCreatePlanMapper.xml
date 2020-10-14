@@ -26,6 +26,37 @@
         pms_pk_plan.id DESC
     </select>
 
+    <select id="queryDetailedPkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO">
+        SELECT
+            pms_pk_plan.name,
+            pms_pk_plan.image_url,
+            pms_pk_plan.description,
+            pms_pk_plan.pk_quantity,
+            pms_pk_plan.enrolled_quantity,
+            pms_pk_plan.punch_cycle,
+            pms_pk_plan.punch_quantity,
+            pms_pk_plan.total_bonus,
+            pms_pk_plan.pk_bonus,
+            pms_pk_plan.start_time,
+            pms_pk_plan.end_time,
+            pms_user_create_plan.punch_count AS punch_count,
+            pms_pk_plan_status.description AS plan_status,
+            pms_pk_pattern.description AS plan_pattern,
+
+        FROM
+            pms_pk_plan,
+            pms_pk_pattern,
+            pms_pk_plan_status,
+            pms_user_create_plan
+        WHERE
+            pms_pk_plan.id = #{pid} AND
+            pms_pk_plan.pk_pattern_id = pms_pk_pattern.id AND
+            pms_pk_plan.plan_status_id = pms_pk_plan_status.id AND
+            pms_user_create_plan.user_id= #{uid} AND
+            pms_user_create_plan.pk_plan_id= #{pid}
+        ORDER BY pms_pk_plan.id DESC
+    </select>
+
     <select id="queryByUserIdAndPlanId" resultType= "cn.fusionfuture.bugu.pk.vo.UserCreatePlanRecordVO">
         SELECT
             id,

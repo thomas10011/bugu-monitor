@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.pk.mapper;
 
 
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.UserCreatePlanRecordVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserCreatePlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -37,6 +38,15 @@ public interface PmsUserCreatePlanMapper extends BaseMapper<PmsUserCreatePlan> {
      * @return cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan
      **/
     UserCreatePlanRecordVO queryByUserIdAndPlanId(@Param("userId") Long userId, @Param("planId") Long planId);
+
+    /*
+     * 根据用户id和计划id查询计划详细信息
+     * @author zws
+     * @since 2020/10/14 22:30
+     * @param [uid, pid]
+     * @return cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO
+     **/
+    DetailedPkPlanVO queryDetailedPkPlanVO(Long uid, Long pid);
 }
 
 

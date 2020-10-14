@@ -1,16 +1,14 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import ch.qos.logback.classic.jmx.MBeanUtil;
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchStatusMapper;
-import cn.fusionfuture.bugu.pk.mapper.PmsUserCreatePlanMapper;
+import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.NewPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserCreatePlan;
@@ -47,6 +45,9 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
 
     @Autowired
     PmsPkPunchStatusMapper pkPunchStatusMapper;
+
+    @Autowired
+    PmsUserAttendPlanMapper userAttendPlanMapper;
 
     @Override
     public Long createPkPlan(NewPkPlanVO newPkPlanVO) {
@@ -107,5 +108,16 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
             }
         }
         return "访问异常";
+    }
+
+    @Override
+    public DetailedPkPlanVO queryDetailedPkPlanVO(Long uid, Long pid) {
+        if(userAttendPlanMapper.queryByUserIdAndPlanId(uid,pid) != null){
+            return userAttendPlanMapper.queryDetailedPkPlanVO(uid,pid);
+        }
+        else if(userCreatePlanMapper.queryByUserIdAndPlanId(uid,pid) != null){
+            return userCreatePlanMapper.queryDetailedPkPlanVO(uid,pid);
+        }
+        return null;
     }
 }

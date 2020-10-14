@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.monitor.service;
 
 import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
@@ -38,6 +39,15 @@ public interface IPmsMonitorPlanService extends IService<PmsMonitorPlan> {
      * @return List<BasicMonitorPlanVO>
      **/
     PageInfo<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Integer pn, Integer ps, Long uid);
+
+    /*
+     * 根据计划id查询计划的详细信息（打卡信息界面）
+     * @author zws
+     * @since 2020/10/14 18:48
+     * @param [pid]
+     * @return cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO
+     **/
+    DetailedMonitorPlanVO queryDetailedMonitorPlanVO(Long pid);
 
     /*
      * 根据计划id查询计划简单信息
