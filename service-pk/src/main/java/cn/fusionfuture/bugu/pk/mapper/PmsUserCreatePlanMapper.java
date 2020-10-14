@@ -46,7 +46,7 @@ public interface PmsUserCreatePlanMapper extends BaseMapper<PmsUserCreatePlan> {
      * @param [uid, pid]
      * @return cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO
      **/
-    DetailedPkPlanVO queryDetailedPkPlanVO(Long uid, Long pid);
+    DetailedPkPlanVO queryDetailedPkPlanVO(@Param("uid") Long uid, @Param("pid") Long pid);
 }
 
 
