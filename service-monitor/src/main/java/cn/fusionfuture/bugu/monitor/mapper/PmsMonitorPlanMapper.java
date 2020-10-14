@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.monitor.mapper;
 
 import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -28,6 +29,15 @@ public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
     List<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Long uid);
 
     /*
+     * 依据计划id查询监督计划
+     * @author zws
+     * @since 2020/10/14 18:32
+     * @param [pid]
+     * @return cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO
+     **/
+    DetailedMonitorPlanVO queryDetailedMonitorPlanVO(Long pid);
+
+    /*
      * TODO 根据计划id获取计划简略信息
      * @author zws
      * @since 2020/9/26 15:57
@@ -35,6 +45,7 @@ public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
      * @return cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO
      **/
     SimpleMonitorPlanVO querySimpleMonitorPlanVO(Long planId);
+
 
 
 }

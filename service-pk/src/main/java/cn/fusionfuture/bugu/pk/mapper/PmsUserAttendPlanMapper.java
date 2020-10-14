@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.pk.mapper;
 
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -28,7 +29,7 @@ public interface PmsUserAttendPlanMapper extends BaseMapper<PmsUserAttendPlan> {
     List<BasicPkPlanVO> queryPkUserAttendPlanByUserId(Long uid);
 
     /*
-     * TODO 根据用户id和计划id选中用户参与计划表中的一条记录
+     * 根据用户id和计划id选中用户参与计划表中的一条记录
      * @author zws
      * @since 2020/9/23 10:00
      * @param [planId, userId] 
@@ -37,11 +38,11 @@ public interface PmsUserAttendPlanMapper extends BaseMapper<PmsUserAttendPlan> {
     UserAttendPlanRecordVO queryByUserIdAndPlanId(@Param("userId") Long userId, @Param("planId") Long planId);
 
     /*
-     * 根据计划id查询一个pk计划
+     * 根据用户id和计划id查询计划详细信息
      * @author zws
-     * @since 2020/9/21 11:35
-     * @param [uid, Pid]
-     * @return cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO
+     * @since 2020/10/14 22:30
+     * @param [uid, pid]
+     * @return cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO
      **/
-    //BasicPkPlanVO queryPkUserAttendPlanByPlanId(Long pid);
+    DetailedPkPlanVO queryDetailedPkPlanVO(Long uid, Long pid);
 }

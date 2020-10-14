@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.pk.service;
 
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.NewPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
@@ -43,6 +44,15 @@ public interface IPmsPkPlanService extends IService<PmsPkPlan> {
      * @return cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO 
      **/
     SimplePkPlanVO querySimplePkPlanVO(Long planId);
+
+    /*
+     * 根据用户id和计划id查询计划详细信息
+     * @author zws
+     * @since 2020/10/14 22:33
+     * @param [uid, pid]
+     * @return cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO
+     **/
+    DetailedPkPlanVO queryDetailedPkPlanVO(Long uid,Long pid);
 
     /*
      * 根据计划id定时刷新计划在当前所属周期的打卡情况

@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.pk.mapper;
 
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -28,11 +29,13 @@ public interface PmsPkPlanMapper extends BaseMapper<PmsPkPlan> {
     List<BasicPkPlanVO> queryBasicPkPlanVO(Long userId);
     
     /*
-     * TODO 根据计划id拆寻计划报名的基本进度
+     * 根据计划id拆寻计划报名的基本进度
      * @author zws
      * @since 2020/9/25 19:44
      * @param [planId] 
      * @return cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO 
      **/
     SimplePkPlanVO querySimplePkPlanVO(Long planId);
+
+
 }

@@ -2,10 +2,7 @@ package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchStatusMapper;
-import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.*;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
@@ -82,6 +79,11 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
     public PageInfo<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Integer pn, Integer ps, Long uid) {
         PageHelper.startPage(pn, ps);
         return new PageInfo<>(monitorPlanMapper.queryBasicMonitorPlanVO(uid));
+    }
+
+    @Override
+    public DetailedMonitorPlanVO queryDetailedMonitorPlanVO(Long pid) {
+        return monitorPlanMapper.queryDetailedMonitorPlanVO(pid);
     }
 
     @Override
