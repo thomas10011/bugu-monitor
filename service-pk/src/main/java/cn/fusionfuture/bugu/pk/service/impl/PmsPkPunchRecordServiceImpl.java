@@ -1,8 +1,10 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.dto.SimplePunchDTO;
 import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
+import cn.fusionfuture.bugu.pk.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
@@ -103,5 +105,24 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
         //获取图片
         punchWithImageVO.setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(punchId));
         return punchWithImageVO;
+    }
+
+    @Override
+    public List<SimplePunchVO> querySimplePunchVO(Long userId,Long planId) {
+        List<SimplePunchDTO> simplePunchDTOS=pkPunchRecordMapper.querySimplePunchDTO(userId,planId);
+        List<SimplePunchVO> simplePunchVOS=new ArrayList<SimplePunchVO>() ;
+        for (SimplePunchDTO simplePunchDTO:
+                simplePunchDTOS) {
+            SimplePunchVO simplePunchVO=new SimplePunchVO();
+            simplePunchVO.setId(simplePunchDTO.getId()).setPunchStatus(simplePunchDTO.getStatus());
+            if(simplePunchDTO.getStatus().equals("未打卡")){
+                simplePunchVO.setPunchTime(simplePunchDTO.getExpiredTime());
+            }
+            else{
+                simplePunchVO.setPunchTime(simplePunchDTO.getPunchTime());
+            }
+            simplePunchVOS.add(simplePunchVO);
+        }
+        return simplePunchVOS;
     }
 }

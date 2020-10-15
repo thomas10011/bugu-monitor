@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper">
 
+    <select id="querySimplePunchDTO" resultType="cn.fusionfuture.bugu.monitor.dto.SimplePunchDTO">
+        SELECT
+            pms_monitor_punch_record.id,
+            pms_monitor_punch_record.punch_time,
+            pms_monitor_punch_record.expired_time,
+            pms_monitor_punch_status.description AS status
+        FROM
+            pms_monitor_punch_record,
+            pms_monitor_punch_status
+        WHERE
+            pms_monitor_punch_record.monitor_plan_id = #{planId} AND
+            pms_monitor_punch_record.status_id = pms_monitor_punch_status.id
+    </select>
+
 </mapper>

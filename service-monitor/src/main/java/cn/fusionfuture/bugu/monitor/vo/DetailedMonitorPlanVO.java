@@ -22,39 +22,39 @@ import java.time.LocalDateTime;
 @ApiModel(value="DetailedMonitorPlanVO", description="用于显示打卡中的计划详情")
 public class DetailedMonitorPlanVO {
 
-    @ApiModelProperty(value = "计划标题")
+    @ApiModelProperty(value = "计划标题",example = "1")
     private String name;
 
-    @ApiModelProperty(value = "计划图片")
+    @ApiModelProperty(value = "计划图片",example = "1")
     private String imageUrl;
 
-    @ApiModelProperty(value = "计划描述")
+    @ApiModelProperty(value = "计划描述",example = "1")
     private String description;
 
-    @ApiModelProperty(value = "计划状态描述")
+    @ApiModelProperty(value = "计划状态描述",example = "1")
     private String planStatus;
 
-    @ApiModelProperty(value = "计划类型描述")
+    @ApiModelProperty(value = "计划类型描述",example = "1")
     private String planPattern;
 
-    @ApiModelProperty(value = "已打卡次数")
+    @ApiModelProperty(value = "已打卡次数",example = "1")
     private Integer punchCount;
 
-    @ApiModelProperty(value = "打卡总次数")
+    @ApiModelProperty(value = "打卡总次数",example = "1")
     private Integer punchQuantity;
 
-    @ApiModelProperty(value = "打卡周期")
+    @ApiModelProperty(value = "打卡周期",example = "1")
     private Integer punchCycle;
 
-    @ApiModelProperty(value = "监督计划总金额")
+    @ApiModelProperty(value = "监督计划总金额",example = "1")
     private BigDecimal totalBonus;
 
-    @ApiModelProperty(value = "受监督者金额")
+    @ApiModelProperty(value = "受监督者金额",example = "1")
     private BigDecimal monitorBonus;
 
-    @ApiModelProperty(value = "计划开始时间")
+    @ApiModelProperty(value = "计划开始时间",example = "1")
     private LocalDateTime startTime;
 
-    @ApiModelProperty(value = "计划结束时间")
+    @ApiModelProperty(value = "计划结束时间",example = "1")
     private LocalDateTime endTime;
 }

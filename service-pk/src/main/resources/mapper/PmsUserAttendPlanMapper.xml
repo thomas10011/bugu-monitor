@@ -33,7 +33,7 @@
             pms_user_attend_plan
         WHERE
             pms_user_attend_plan.user_id= #{userId}
-            AND pms_user_attend_plan.user_id= #{planId}
+            AND pms_user_attend_plan.pk_plan_id= #{planId}
     </select>
 
     <select id="queryDetailedPkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO">
@@ -51,8 +51,7 @@
             pms_pk_plan.end_time,
             pms_user_attend_plan.punch_count AS punch_count,
             pms_pk_plan_status.description AS plan_status,
-            pms_pk_pattern.description AS plan_pattern,
-
+            pms_pk_pattern.description AS plan_pattern
         FROM
             pms_pk_plan,
             pms_pk_pattern,

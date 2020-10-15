@@ -23,10 +23,10 @@ public class MonitorPlanStatusVO implements Serializable {
 
     private static final long serialVersionUID = -7186178054085819876L;
 
-    @ApiModelProperty(value = "监督状态id")
+    @ApiModelProperty(value = "监督状态id",example = "1")
     private Integer id;
 
-    @ApiModelProperty(value = "监督状态描述")
+    @ApiModelProperty(value = "监督状态描述",example = "1")
     private String description;
 
 }

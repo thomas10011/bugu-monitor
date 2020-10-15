@@ -41,8 +41,7 @@
             pms_pk_plan.end_time,
             pms_user_create_plan.punch_count AS punch_count,
             pms_pk_plan_status.description AS plan_status,
-            pms_pk_pattern.description AS plan_pattern,
-
+            pms_pk_pattern.description AS plan_pattern
         FROM
             pms_pk_plan,
             pms_pk_pattern,

@@ -75,7 +75,8 @@ public class PmsPkPlanController {
 
     @PostMapping(value = "/pk-plan/detailed-info")
     @ApiOperation(value= "查询计划详细信息")
-    public DetailedPkPlanVO queryDetailedPkPlanVO(@ApiParam(value = "用户id") @RequestParam(name = "uid") Long uid,
+    public DetailedPkPlanVO queryDetailedPkPlanVO(@Validated
+                                                  @ApiParam(value = "用户id") @RequestParam(name = "uid") Long uid,
                                                   @ApiParam(value = "计划id") @RequestParam(name = "pid") Long pid){
         return pkPlanService.queryDetailedPkPlanVO(uid,pid);
     }

@@ -112,6 +112,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
 
     @Override
     public DetailedPkPlanVO queryDetailedPkPlanVO(Long uid, Long pid) {
+
         if(userAttendPlanMapper.queryByUserIdAndPlanId(uid,pid) != null){
             return userAttendPlanMapper.queryDetailedPkPlanVO(uid,pid);
         }

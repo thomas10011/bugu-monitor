@@ -1,9 +1,11 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
+import cn.fusionfuture.bugu.monitor.dto.SimplePunchDTO;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPatternMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchImageUrlMapper;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchImageUrl;
@@ -16,7 +18,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,4 +107,22 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
         return basicPunchVO;
     }
 
+    @Override
+    public List<SimplePunchVO> querySimplePunchVO(Long planId) {
+        List<SimplePunchDTO> simplePunchDTOS=monitorPunchRecordMapper.querySimplePunchDTO(planId);
+        List<SimplePunchVO> simplePunchVOS=new ArrayList<SimplePunchVO>() ;
+        for (SimplePunchDTO simplePunchDTO:
+             simplePunchDTOS) {
+            SimplePunchVO simplePunchVO=new SimplePunchVO();
+            simplePunchVO.setId(simplePunchDTO.getId()).setPunchStatus(simplePunchDTO.getStatus());
+            if(simplePunchDTO.getStatus().equals("未打卡")){
+                simplePunchVO.setPunchTime(simplePunchDTO.getExpiredTime());
+            }
+            else{
+                simplePunchVO.setPunchTime(simplePunchDTO.getPunchTime());
+            }
+            simplePunchVOS.add(simplePunchVO);
+        }
+        return simplePunchVOS;
+    }
 }

@@ -23,33 +23,33 @@ import java.time.LocalDateTime;
 @ApiModel(value="MonitorPlanRecordVO对象", description="查询监督计划record")
 public class MonitorPlanRecordVO {
 
-    @ApiModelProperty(value = "监督模式id")
+    @ApiModelProperty(value = "监督模式id",example = "1")
     private Integer monitorPatternId;
 
-    @ApiModelProperty(value = "计划开始时间")
+    @ApiModelProperty(value = "计划开始时间",example = "1")
     private LocalDateTime startTime;
 
-    @ApiModelProperty(value = "计划持续时间")
+    @ApiModelProperty(value = "计划持续时间",example = "1")
     private LocalDateTime lastTime;
 
-    @ApiModelProperty(value = "计划结束时间")
+    @ApiModelProperty(value = "计划结束时间",example = "1")
     private LocalDateTime endTime;
 
-    @ApiModelProperty(value = "计划名称")
+    @ApiModelProperty(value = "计划名称",example = "1")
     private String monitorName;
 
-    @ApiModelProperty(value = "每人奖池数额")
+    @ApiModelProperty(value = "每人奖池数额",example = "1")
     private BigDecimal monitorBonus;
 
-    @ApiModelProperty(value = "计划详情")
+    @ApiModelProperty(value = "计划详情",example = "1")
     private String description;
 
-    @ApiModelProperty(value = "打卡Id")
+    @ApiModelProperty(value = "打卡Id",example = "1")
     private Integer punchId;
 
-    @ApiModelProperty(value = "打卡次数")
+    @ApiModelProperty(value = "打卡次数",example = "1")
     private Integer punchCount;
 
-    @ApiModelProperty(value = "打卡状态Id")
+    @ApiModelProperty(value = "打卡状态Id",example = "1")
     private Integer punchStatusId;
 }

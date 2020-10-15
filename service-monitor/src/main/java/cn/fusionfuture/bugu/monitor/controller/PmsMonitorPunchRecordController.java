@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.monitor.controller;
 
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,4 +59,10 @@ public class PmsMonitorPunchRecordController {
         return monitorPunchRecordService.queryBasicPunchVO(punchId);
     }
 
+    @ApiOperation(value = "根据计划id查询打卡相关信息")
+    @GetMapping(value = "plan/punch/detail/{pid}")
+    public List<SimplePunchVO> querySimplePunchVO(@Validated
+                                          @ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
+        return monitorPunchRecordService.querySimplePunchVO(pid);
+    }
 }
