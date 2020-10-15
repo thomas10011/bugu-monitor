@@ -23,10 +23,10 @@ public class MonitorPlanPatternVO implements Serializable {
 
     private static final long serialVersionUID = 5176299205110529712L;
 
-    @ApiModelProperty(value = "监督模式id")
+    @ApiModelProperty(value = "监督模式id",example = "1")
     private Integer id;
 
-    @ApiModelProperty(value = "监督模式描述")
+    @ApiModelProperty(value = "监督模式描述",example = "1")
     private String description;
 
 }

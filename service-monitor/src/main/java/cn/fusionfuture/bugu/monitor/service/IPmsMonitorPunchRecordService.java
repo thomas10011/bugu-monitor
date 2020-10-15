@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.monitor.service;
 
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -43,4 +44,12 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @return cn.fusionfuture.bugu.monitor.vo.BasicPunchVO 
      **/
     BasicPunchVO queryBasicPunchVO(Long punchId);
+    /*
+     * 根据计划id查询监督计划对应的打卡信息
+     * @author zws
+     * @since 2020/10/15 19:33
+     * @param [planId]
+     * @return cn.fusionfuture.bugu.monitor.vo.SimplePunchVO
+     **/
+    List<SimplePunchVO> querySimplePunchVO(Long planId);
 }
