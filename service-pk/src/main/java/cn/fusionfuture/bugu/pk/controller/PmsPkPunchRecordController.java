@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
 import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
+import cn.fusionfuture.bugu.pk.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -60,6 +61,14 @@ public class PmsPkPunchRecordController {
     public PunchWithImageVO queryPunchWithImageVO(@Validated
                                                       @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
         return pkPunchRecordService.queryPunchWithImageVO(punchId);
+    }
+
+    @ApiOperation(value = "根据用户id和计划id查询打卡相关信息")
+    @GetMapping(value = "plan/punch/detail/{uid}&{pid}")
+    public List<SimplePunchVO> querySimplePunchVO(@Validated
+                                                      @ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                                                      @ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
+        return pkPunchRecordService.querySimplePunchVO(uid,pid);
     }
 
 }

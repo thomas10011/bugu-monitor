@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.monitor.dto;
+package cn.fusionfuture.bugu.pk.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @class SimplePunchDTO
  * @description TODO
- * @date 2020/10/15 19:35
+ * @date 2020/10/15 20:49
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -32,5 +32,4 @@ public class SimplePunchDTO {
 
     @ApiModelProperty(value = "打卡状态",example = "1")
     private String status;
-
 }

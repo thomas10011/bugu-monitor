@@ -19,4 +19,19 @@
             pms_pk_plan.pk_pattern_id = pms_pk_pattern.id AND
             pms_pk_punch_record.pk_plan_id = pms_pk_plan.id
     </select>
+
+    <select id="querySimplePunchDTO" resultType="cn.fusionfuture.bugu.pk.dto.SimplePunchDTO">
+        SELECT
+            pms_pk_punch_record.id,
+            pms_pk_punch_record.punch_time,
+            pms_pk_punch_record.expired_time,
+            pms_pk_punch_status.description AS status
+        FROM
+            pms_pk_punch_record,
+            pms_pk_punch_status
+        WHERE
+            pms_pk_punch_record.pk_plan_id = #{pid} AND
+            pms_pk_punch_record.user_id=#{uid} AND
+            pms_pk_punch_record.status_id = pms_pk_punch_status.id
+    </select>
 </mapper>

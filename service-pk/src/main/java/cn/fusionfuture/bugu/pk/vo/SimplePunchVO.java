@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.monitor.dto;
+package cn.fusionfuture.bugu.pk.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 /**
  * @author zws
  * @version 1.0
- * @class SimplePunchDTO
+ * @class SimplePunchVO
  * @description TODO
- * @date 2020/10/15 19:35
+ * @date 2020/10/15 20:58
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="SimplePunchDTO", description="打卡日历界面的简略打卡信息DTO")
-public class SimplePunchDTO {
+@ApiModel(value="SimplePunchVO", description="打卡日历界面的简略打卡信息")
+public class SimplePunchVO {
 
     @ApiModelProperty(value = "打卡的id",example = "1")
     private Long id;
@@ -27,10 +27,6 @@ public class SimplePunchDTO {
     @ApiModelProperty(value = "打卡时间",example = "1")
     private LocalDateTime punchTime;
 
-    @ApiModelProperty(value = "打卡截止时间",example = "1")
-    private LocalDateTime expiredTime;
-
     @ApiModelProperty(value = "打卡状态",example = "1")
-    private String status;
-
+    private String punchStatus;
 }

@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchImageUrlMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
 import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
 import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
+import cn.fusionfuture.bugu.pk.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchImageUrl;
@@ -52,4 +53,14 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
          * @return cn.fusionfuture.bugu.pk.vo.BasicPunchVO
          **/
         PunchWithImageVO queryPunchWithImageVO(Long punchId);
+
+        /*
+         * @author zws
+         * @description 根据用户id和计划id查询打卡日历
+         * @create 2020/10/15 21:01
+         * @update 2020/10/15 21:01
+         * @param [userId, planId]
+         * @return java.util.List<cn.fusionfuture.bugu.pk.vo.SimplePunchVO>
+         **/
+        List<SimplePunchVO> querySimplePunchVO(Long userId,Long planId);
 }
