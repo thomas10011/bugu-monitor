@@ -29,7 +29,7 @@ public class PmsMonitorPatternController {
     IPmsMonitorPatternService monitorPatternService;
 
     @GetMapping(value = "/monitor-plan/pattern")
-    @ApiOperation(value = "查询所有打卡的类型")
+    @ApiOperation(value = "查询监督计划的所有类型")
     public List<MonitorPlanPatternVO> queryMonitorPlanPatter() {
         return monitorPatternService.queryMonitorPlanPatter();
     }
