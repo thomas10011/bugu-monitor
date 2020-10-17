@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -19,7 +20,9 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="SimplePunchDTO", description="打卡日历界面的简略打卡信息DTO")
-public class SimplePunchDTO {
+public class SimplePunchDTO implements Serializable {
+
+    private static final long serialVersionUID = 7833407387585455855L;
 
     @ApiModelProperty(value = "打卡的id",example = "1")
     private Long id;

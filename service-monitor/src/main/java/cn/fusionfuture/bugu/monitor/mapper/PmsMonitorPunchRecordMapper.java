@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.monitor.mapper;
 
+import cn.fusionfuture.bugu.monitor.dto.MonitorPlanTrendDTO;
 import cn.fusionfuture.bugu.monitor.dto.SimplePunchDTO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -25,4 +26,5 @@ public interface PmsMonitorPunchRecordMapper extends BaseMapper<PmsMonitorPunchR
      * @return java.util.List<cn.fusionfuture.bugu.monitor.dto.SimplePunchDTO>
      **/
     List<SimplePunchDTO> querySimplePunchDTO(Long planId);
+
 }

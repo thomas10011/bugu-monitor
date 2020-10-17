@@ -6,30 +6,36 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * @author zws
  * @version 1.0
- * @class BasicPunchVO
- * @description TODO
- * @date 2020/9/26 16:05
+ * @class MonitorPlanTrendVO
+ * @description 监督计划首页动态界面信息
+ * @date 2020/10/16 18:56
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="BasicPunchVO", description="打卡相关信息")
-public class BasicPunchVO {
+@ApiModel(value="MonitorPlanTrendVO", description="监督计划首页动态界面信息")
+public class MonitorPlanTrendVO {
 
+    @ApiModelProperty(name = "用户名",example = "小小")
+    private String userName;
 
-    @ApiModelProperty(name = "打卡id",example = "123")
-    private Long id;
+    @ApiModelProperty(value = "用户头像url",example = "1")
+    private String userImage;
 
     @ApiModelProperty(value = "计划模式",example = "1")
     private String planPattern;
 
-    @ApiModelProperty(value = "计划名称",example = "1")
+    @ApiModelProperty(name = "name,计划的标题",example = "每日单词")
     private String name;
+
+    @ApiModelProperty(name = "打卡id",example = "123")
+    private Long punchId;
 
     @ApiModelProperty(value = "打卡内容",example = "1")
     private String content;
@@ -43,9 +49,16 @@ public class BasicPunchVO {
     @ApiModelProperty(value = "打卡被否认次数",example = "1")
     private Integer disagreeCount;
 
-    @ApiModelProperty(value = "打卡受评论次数",example = "1")
+    @ApiModelProperty(value = "受评论次数",example = "1")
     private Integer commentQuantity;
 
     @ApiModelProperty(value = "打卡图片",example = "1")
     private List<String> imageUrls;
+
+    @ApiModelProperty(value = "打卡时间",example = "1")
+    private LocalDateTime punchTime;
+
+    @ApiModelProperty(value = "当前打卡周期",example = "1")
+    private Integer currentPunchCycle;
+
 }

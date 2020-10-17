@@ -1,10 +1,13 @@
 package cn.fusionfuture.bugu.monitor.service;
 
+import cn.fusionfuture.bugu.monitor.dto.MonitorPlanTrendDTO;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.MonitorPlanTrendVO;
 import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -52,4 +55,24 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @return cn.fusionfuture.bugu.monitor.vo.SimplePunchVO
      **/
     List<SimplePunchVO> querySimplePunchVO(Long planId);
+    
+    /*
+     * @author zws
+     * @description 根据用户id获取用户所监督计划的打卡情况
+     * @create 2020/10/16 18:41
+     * @update 2020/10/16 18:41
+     * @param [userId] 
+     * @return java.util.List<cn.fusionfuture.bugu.monitor.dto.MonitorPlanTrendDTO> 
+     **/
+    List<MonitorPlanTrendVO> queryMonitorPlanTrendVO (Long userId);
+
+    /*
+     * @author zws
+     * @description 根据当前时间及计划id获取当前所处打卡周期
+     * @create 2020/10/16 20:08
+     * @update 2020/10/16 20:08
+     * @param [currentTime, planId]
+     * @return java.lang.Integer
+     **/
+    Integer getCurrentPunchCycle(LocalDateTime currentTime,Long planId);
 }

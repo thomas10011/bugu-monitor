@@ -67,7 +67,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
                     .setLikeCount(0).setCommentQuantity(0).setPkPlanId(pkPlan.getId())
                     .setUserId(pkPlan.getUserId()).setStatusId(PunchStatus.NotPunched)
                     .setStartTime(pkPlan.getStartTime().plusDays(i*pkPlan.getPunchCycle()));
-            if(pkPlan.getStartTime().plusDays(pkPlan.getPunchQuantity()*pkPlan.getPunchCycle()).isAfter(pkPlan.getEndTime())){
+            if(pkPlan.getStartTime().plusDays((i+1)*pkPlan.getPunchCycle()).isAfter(pkPlan.getEndTime())){
                 pkPunchRecord.setExpiredTime(pkPlan.getEndTime());
             }
             else{

@@ -14,7 +14,7 @@ import java.util.List;
  * @author thomas
  * @version 1.0
  * @class PopularPlanVO
- * @description TODO
+ * @description 首页热门计划所需要的详细信息
  * @date 2020/9/24 7:47 下午
  */
 @Data
