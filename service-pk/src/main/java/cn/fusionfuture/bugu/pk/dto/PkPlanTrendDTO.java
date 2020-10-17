@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.monitor.dto;
+package cn.fusionfuture.bugu.pk.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,22 +7,21 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * @author zws
  * @version 1.0
- * @class MonitorPlanTrendDTO
- * @description 获取监督计划动态界面信息
- * @date 2020/10/16 16:58
+ * @class PkPlanTrendDTO
+ * @description Pk计划首页动态界面信息
+ * @date 2020/10/17 21:26
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="MonitorPlanTrendDTO", description="监督计划首页动态界面信息")
-public class MonitorPlanTrendDTO implements Serializable {
+@ApiModel(value="PkPlanTrendDTO", description="Pk计划首页动态界面信息")
+public class PkPlanTrendDTO implements Serializable {
 
     private static final long serialVersionUID = 7833407387585455855L;
 
@@ -61,7 +60,5 @@ public class MonitorPlanTrendDTO implements Serializable {
 
     @ApiModelProperty(value = "当前打卡周期",example = "1")
     private Integer currentPunchCycle;
-
-
 
 }

@@ -1,11 +1,10 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.dto.PkPlanTrendDTO;
 import cn.fusionfuture.bugu.pk.dto.SimplePunchDTO;
+import cn.fusionfuture.bugu.pk.feign.UserFeignService;
 import cn.fusionfuture.bugu.pk.mapper.*;
-import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
-import cn.fusionfuture.bugu.pk.vo.SimplePunchVO;
-import cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO;
+import cn.fusionfuture.bugu.pk.vo.*;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
 import cn.fusionfuture.bugu.pojo.constants.*;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,6 +43,18 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
 
     @Autowired
     PmsUserCreatePlanMapper userCreatePlanMapper;
+
+    @Autowired
+    PmsPkUserGrabTicketMapper pkUserGrabTicketMapper;
+
+    @Autowired
+    PmsPkPlanMapper pkPlanMapper;
+
+    @Autowired
+    PmsPkPatternMapper pkPatternMapper;
+
+    @Autowired
+    UserFeignService userFeignService;
 
     @Override
     public String punch(Long userId, Long planId, String content, List<String> imageUrls) {
@@ -124,5 +136,113 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
             simplePunchVOS.add(simplePunchVO);
         }
         return simplePunchVOS;
+    }
+
+    @Override
+    public List<PkPlanTrendVO> queryPkPlanTrendVO(Long userId){
+        //将返回的值
+//        QueryWrapper<PmsMonitorPunchRecord> queryWrapper2=new QueryWrapper<>();
+//        queryWrapper2.eq("monitor_plan_id","1314865708340912129");
+//        List<PmsMonitorPunchRecord> monitorPunchRecordDemos=monitorPunchRecordMapper.selectList(queryWrapper2);
+        List<PkPlanTrendDTO> pkPlanTrendDTOS=new ArrayList<>();
+        //目标计划的id
+        List<Long> planIds=new ArrayList<>();
+        //查询获取用户相关计划id
+        QueryWrapper<PmsPkUserGrabTicket> queryWrapper1=new QueryWrapper<>();
+        queryWrapper1.eq("user_id",userId);
+        //用户有权参与投票的计划
+        List<PmsPkUserGrabTicket> pkUserGrabTickets=pkUserGrabTicketMapper.selectList(queryWrapper1);
+        //获取目标计划id
+        for (PmsPkUserGrabTicket pkUserGrabTicket:
+                pkUserGrabTickets
+        ) {
+            planIds.add(pkUserGrabTicket.getPkPlanId());
+        }
+        //需要返回的打卡记录
+        List<PmsPkPunchRecord> pkPunchRecords=new ArrayList<>();
+
+        for (Long planId:planIds
+        ) {
+            PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
+            //如果计划正在进行中
+            Integer planStatusId=pkPlan.getPlanStatusId();
+            //Integer i=MonitorPlanStatus.UNDERWAY.getIndex();
+            if(planStatusId.equals(2)) {
+                //查询获取用户相关计划id
+                QueryWrapper<PmsPkPunchRecord> queryWrapper2=new QueryWrapper<>();
+                queryWrapper2.eq("pk_plan_id",planId);
+                List<PmsPkPunchRecord> pkPunchRecordDemos=pkPunchRecordMapper.selectList(queryWrapper2);
+                LocalDateTime currentTime=LocalDateTime.now();
+                for (PmsPkPunchRecord pkPunchRecord:pkPunchRecordDemos
+                ) {
+                    //如果当前时间处于一个打卡周期内则将该打卡记录返回
+                    if(currentTime.isAfter(pkPunchRecord.getStartTime())&&currentTime.isBefore(pkPunchRecord.getExpiredTime())){
+                        pkPunchRecords.add(pkPunchRecord);
+                    }
+                }
+            }
+        }
+
+        for (PmsPkPunchRecord pkPunchRecord:pkPunchRecords
+        ) {
+            PkPlanTrendDTO pkPlanTrendDTO=new PkPlanTrendDTO();
+            //当前时间
+            LocalDateTime currentTime=LocalDateTime.now();
+            Long planId=pkPunchRecord.getPkPlanId();
+            PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
+            pkPlanTrendDTO.setUid(pkPunchRecord.getUserId())
+                    .setName(pkPlan.getName())
+                    .setPlanPattern(pkPatternMapper.selectById(pkPlan.getPkPatternId()).getDescription())
+                    .setPunchId(pkPunchRecord.getId())
+                    .setContent(pkPunchRecord.getContent())
+                    .setLikeCount(pkPunchRecord.getLikeCount())
+                    .setAgreeCount(pkPunchRecord.getAgreeCount())
+                    .setDisagreeCount(pkPunchRecord.getDisagreeCount())
+                    .setCommentQuantity(pkPunchRecord.getCommentQuantity())
+                    .setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(pkPunchRecord.getId()))
+                    .setPunchTime(pkPunchRecord.getPunchTime())
+                    .setCurrentPunchCycle(getCurrentPunchCycle(currentTime,planId));
+            pkPlanTrendDTOS.add(pkPlanTrendDTO);
+        }
+
+        List<PkPlanTrendVO> pkPlanTrendVOS=new ArrayList<>();
+
+        for (PkPlanTrendDTO pkPlanTrendDemoDTO:pkPlanTrendDTOS
+        ) {
+            //打卡者
+            HashMap<String,String> puncher = userFeignService.getDetailsForMessage(pkPlanTrendDemoDTO.getUid()).getData();
+
+            PkPlanTrendVO pkPlanTrendVO=new PkPlanTrendVO();
+            pkPlanTrendVO.setUserName(puncher.get("userName"))
+                    .setUserImage(puncher.get("avatarUrl"))
+                    .setPlanPattern(pkPlanTrendDemoDTO.getPlanPattern())
+                    .setName(pkPlanTrendDemoDTO.getName())
+                    .setPunchId(pkPlanTrendDemoDTO.getPunchId())
+                    .setContent(pkPlanTrendDemoDTO.getContent())
+                    .setLikeCount(pkPlanTrendDemoDTO.getLikeCount())
+                    .setAgreeCount(pkPlanTrendDemoDTO.getAgreeCount())
+                    .setDisagreeCount(pkPlanTrendDemoDTO.getDisagreeCount())
+                    .setCommentQuantity(pkPlanTrendDemoDTO.getCommentQuantity())
+                    .setImageUrls(pkPlanTrendDemoDTO.getImageUrls())
+                    .setPunchTime(pkPlanTrendDemoDTO.getPunchTime())
+                    .setCurrentPunchCycle(pkPlanTrendDemoDTO.getCurrentPunchCycle());
+            pkPlanTrendVOS.add(pkPlanTrendVO);
+        }
+        return pkPlanTrendVOS;
+    }
+
+    @Override
+    public Integer getCurrentPunchCycle(LocalDateTime currentTime,Long planId){
+        QueryWrapper<PmsPkPunchRecord> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("pk_plan_id",planId);
+        List<PmsPkPunchRecord> pkPunchRecords=pkPunchRecordMapper.selectList(queryWrapper);
+        for (PmsPkPunchRecord pkPunchRecord:pkPunchRecords
+        ) {
+            if(currentTime.isAfter(pkPunchRecord.getStartTime())&&currentTime.isBefore(pkPunchRecord.getExpiredTime())){
+                Integer currentPunchCycle=pkPunchRecords.indexOf(pkPunchRecord)+1;
+                return currentPunchCycle;
+            }
+        }
+        return 0;
     }
 }

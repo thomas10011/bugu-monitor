@@ -175,9 +175,10 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
                 }
             }
         }
-        MonitorPlanTrendDTO monitorPlanTrendDTO=new MonitorPlanTrendDTO();
+
         for (PmsMonitorPunchRecord monitorPunchRecord:monitorPunchRecords
              ) {
+            MonitorPlanTrendDTO monitorPlanTrendDTO=new MonitorPlanTrendDTO();
             //当前时间
             LocalDateTime currentTime=LocalDateTime.now();
             Long planId=monitorPunchRecord.getMonitorPlanId();
@@ -202,7 +203,7 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
         for (MonitorPlanTrendDTO monitorPlanTrendDemoDTO:monitorPlanTrendDTOS
         ) {
             //打卡者
-            HashMap<String,String> puncher = userFeignService.getDetailsForMessage(monitorPlanTrendDTO.getUid()).getData();
+            HashMap<String,String> puncher = userFeignService.getDetailsForMessage(monitorPlanTrendDemoDTO.getUid()).getData();
 
             MonitorPlanTrendVO monitorPlanTrendVO=new MonitorPlanTrendVO();
             monitorPlanTrendVO.setUserName(puncher.get("userName"))

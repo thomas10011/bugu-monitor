@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchImageUrlMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
 import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.pk.vo.PkPlanTrendVO;
 import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.pk.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
@@ -63,4 +64,24 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
          * @return java.util.List<cn.fusionfuture.bugu.pk.vo.SimplePunchVO>
          **/
         List<SimplePunchVO> querySimplePunchVO(Long userId,Long planId);
+
+ /*
+  * @author zws
+  * @description 根据用户id获取用户所监督计划的打卡情况
+  * @create 2020/10/16 18:41
+  * @update 2020/10/16 18:41
+  * @param [userId]
+  * @return java.util.List<cn.fusionfuture.bugu.pk.dto.PkPlanTrendDTO>
+  **/
+ List<PkPlanTrendVO> queryPkPlanTrendVO (Long userId);
+
+ /*
+  * @author zws
+  * @description 根据当前时间及计划id获取当前所处打卡周期
+  * @create 2020/10/16 20:08
+  * @update 2020/10/16 20:08
+  * @param [currentTime, planId]
+  * @return java.lang.Integer
+  **/
+ Integer getCurrentPunchCycle(LocalDateTime currentTime,Long planId);
 }

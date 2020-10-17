@@ -2,10 +2,7 @@ package cn.fusionfuture.bugu.pk.controller;
 
 
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
-import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
-import cn.fusionfuture.bugu.pk.vo.SimplePunchVO;
+import cn.fusionfuture.bugu.pk.vo.*;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -69,6 +66,14 @@ public class PmsPkPunchRecordController {
                                                       @ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
                                                       @ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
         return pkPunchRecordService.querySimplePunchVO(uid,pid);
+    }
+
+    @ApiOperation(value = "根据用户id查询打卡相关信息")
+    @GetMapping(value = "/plan/trend/{uid}")
+    public List<PkPlanTrendVO> querypkPlanTrendVO(@Validated
+                                                            @ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid){
+
+        return pkPunchRecordService.queryPkPlanTrendVO(uid);
     }
 
 }
