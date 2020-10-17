@@ -64,7 +64,7 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
                     .setLikeCount(0).setCommentQuantity(0).setMonitorPlanId(monitorPlan.getId())
                     .setUserId(monitorPlan.getUserId()).setStatusId(PunchStatus.NotPunched)
                     .setStartTime(monitorPlan.getStartTime().plusDays(i*monitorPlan.getPunchCycle()));
-            if(monitorPlan.getStartTime().plusDays(monitorPlan.getPunchQuantity()*monitorPlan.getPunchCycle()).isAfter(monitorPlan.getEndTime())){
+            if(monitorPlan.getStartTime().plusDays((i+1)*monitorPlan.getPunchCycle()).isAfter(monitorPlan.getEndTime())){
                 monitorPunchRecord.setExpiredTime(monitorPlan.getEndTime());
             }
             else{
