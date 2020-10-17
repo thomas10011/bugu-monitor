@@ -38,8 +38,8 @@ public class PopularPlanController {
     public PopularPlanVO queryPopularPlan(@ApiParam(value = "计划标题的关键字") @RequestParam(value = "kw", defaultValue = "") String keyWord,
                                           @ApiParam(value = "查询的页码") @RequestParam(value = "pn", defaultValue = "1") Integer pageNum,
                                           @ApiParam(value = "页面的大小") @RequestParam(value = "ps", defaultValue = "5") Integer pageSize,
-                                          @ApiParam(value = "计划的类型") @RequestParam(value = "tp", defaultValue = "") List<String> planType,
-                                          @ApiParam(value = "计划的状态") @RequestParam(value = "st", defaultValue = "") List<String> planStatus) throws IOException {
+                                          @ApiParam(value = "计划的类型") @RequestParam(value = "tp") List<String> planType,
+                                          @ApiParam(value = "计划的状态") @RequestParam(value = "st") List<String> planStatus) throws IOException {
         planType = planType.contains(PkPlanType.ALL.getValue()) || planType.isEmpty() ? null : planType;
         planStatus = planStatus.contains(PkPlanStatus.ALL.getValue()) || planStatus.isEmpty() ? null : planStatus;
         return popularPlanService.queryPopularPlan(keyWord, pageNum, pageSize, planType, planStatus);

@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 /**
  * <p>
- *  前端控制器
+ *  查询用户的个人成就
  * </p>
  *
  * @author thomas

@@ -52,7 +52,8 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        if (keyWord != null) {
+        // 关键词不为空则添加关键词查询
+        if (!StrUtil.isEmpty(keyWord)) {
             boolQueryBuilder.must(QueryBuilders.matchQuery("tt", keyWord).fuzziness(Fuzziness.AUTO));
         }
         if (planType != null) {
