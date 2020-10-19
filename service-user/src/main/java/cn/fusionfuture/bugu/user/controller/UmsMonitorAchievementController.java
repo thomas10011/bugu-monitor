@@ -3,9 +3,11 @@ package cn.fusionfuture.bugu.user.controller;
 
 import cn.fusionfuture.bugu.pojo.entity.UmsUserFollow;
 import cn.fusionfuture.bugu.user.service.IUmsUserFollowService;
+import cn.fusionfuture.bugu.user.vo.UserAchievementVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

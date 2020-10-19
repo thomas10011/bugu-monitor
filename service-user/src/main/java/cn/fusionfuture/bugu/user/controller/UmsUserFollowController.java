@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-08-17
  */
 @RestController
-@RequestMapping("/user/ums-user-follow")
+@RequestMapping("/user")
 @Api(tags = "查询用户之间的关注信息")
 public class UmsUserFollowController {
 
