@@ -5,8 +5,6 @@ import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorVoteRecord;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorVoteRecordMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorVoteRecordService;
-import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
-import cn.fusionfuture.bugu.pojo.entity.PmsPkVoteRecord;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,14 +38,20 @@ public class PmsMonitorVoteRecordServiceImpl extends ServiceImpl<PmsMonitorVoteR
 
         //更新打卡记录表中的投票数（赞同数或否认数）
         if(voteResult){
-            PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
-            monitorPunchRecord.setAgreeCount(monitorPunchRecord.getAgreeCount()+1);
-            monitorPunchRecordMapper.updateById(monitorPunchRecord);
+            PmsMonitorPunchRecord monitorPunchRecord = monitorPunchRecordMapper.selectById(punchId);
+            monitorPunchRecordMapper.updateById(
+                    new PmsMonitorPunchRecord()
+                            .setId(monitorPunchRecord.getId())
+                            .setAgreeCount(monitorPunchRecord.getAgreeCount() + 1)
+            );
         }
         else{
             PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
-            monitorPunchRecord.setDisagreeCount(monitorPunchRecord.getDisagreeCount()+1);
-            monitorPunchRecordMapper.updateById(monitorPunchRecord);
+            monitorPunchRecordMapper.updateById(
+                    new PmsMonitorPunchRecord()
+                            .setId(monitorPunchRecord.getId())
+                            .setDisagreeCount(monitorPunchRecord.getDisagreeCount() + 1)
+            );
         }
 
 
