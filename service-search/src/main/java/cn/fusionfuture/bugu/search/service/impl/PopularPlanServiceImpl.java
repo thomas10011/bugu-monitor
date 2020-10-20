@@ -1,17 +1,10 @@
 package cn.fusionfuture.bugu.search.service.impl;
 
-import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
-import cn.fusionfuture.bugu.pojo.constants.MonitorPlanType;
-import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
-import cn.fusionfuture.bugu.pojo.constants.PkPlanType;
 import cn.fusionfuture.bugu.search.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.search.service.IPopularPlanService;
 import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import io.micrometer.core.instrument.search.Search;
-import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -23,7 +16,6 @@ import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.script.Script;
-import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;

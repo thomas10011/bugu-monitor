@@ -22,10 +22,10 @@ import java.time.LocalDateTime;
 @ApiModel(value="BasicMonitorPlanVO", description="按照用户id查询相关监督计划")
 public class BasicMonitorPlanVO {
 
-    @ApiModelProperty(value = "计划的id",example = "1")
+    @ApiModelProperty(value = "计划的id")
     private Long id;
 
-    @ApiModelProperty(value = "计划标题",example = "1")
+    @ApiModelProperty(value = "计划标题")
     private String name;
 
     @ApiModelProperty(value = "计划描述",example = "1")
@@ -46,10 +46,10 @@ public class BasicMonitorPlanVO {
     @ApiModelProperty(value = "打卡总次数",example = "1")
     private Integer punchQuantity;
 
-    @ApiModelProperty(value = "计划开始时间",example = "1")
+    @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
 
-    @ApiModelProperty(value = "结束时间",example = "1")
+    @ApiModelProperty(value = "结束时间")
     private LocalDateTime endTime;
 
 }

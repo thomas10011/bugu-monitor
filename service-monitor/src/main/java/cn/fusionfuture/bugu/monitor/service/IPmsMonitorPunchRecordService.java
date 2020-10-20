@@ -1,8 +1,7 @@
 package cn.fusionfuture.bugu.monitor.service;
 
-import cn.fusionfuture.bugu.monitor.dto.MonitorPlanTrendDTO;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.monitor.vo.MonitorPlanTrendVO;
+import cn.fusionfuture.bugu.monitor.vo.PlanTrendVO;
 import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -64,7 +63,7 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @param [userId] 
      * @return java.util.List<cn.fusionfuture.bugu.monitor.dto.MonitorPlanTrendDTO> 
      **/
-    List<MonitorPlanTrendVO> queryMonitorPlanTrendVO (Long userId);
+    List<PlanTrendVO> queryMonitorPlanTrendVO (Long userId);
 
     /*
      * @author zws

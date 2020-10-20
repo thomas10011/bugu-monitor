@@ -7,11 +7,9 @@ import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.vo.*;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
-import cn.fusionfuture.bugu.pojo.constants.*;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -139,7 +137,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     }
 
     @Override
-    public List<PkPlanTrendVO> queryPkPlanTrendVO(Long userId){
+    public List<PlanTrendVO> queryPkPlanTrendVO(Long userId){
         //将返回的值
 //        QueryWrapper<PmsMonitorPunchRecord> queryWrapper2=new QueryWrapper<>();
 //        queryWrapper2.eq("monitor_plan_id","1314865708340912129");
@@ -205,15 +203,15 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
             pkPlanTrendDTOS.add(pkPlanTrendDTO);
         }
 
-        List<PkPlanTrendVO> pkPlanTrendVOS=new ArrayList<>();
+        List<PlanTrendVO> planTrendVOS =new ArrayList<>();
 
         for (PkPlanTrendDTO pkPlanTrendDemoDTO:pkPlanTrendDTOS
         ) {
             //打卡者
             HashMap<String,String> puncher = userFeignService.getDetailsForMessage(pkPlanTrendDemoDTO.getUid()).getData();
 
-            PkPlanTrendVO pkPlanTrendVO=new PkPlanTrendVO();
-            pkPlanTrendVO.setUserName(puncher.get("userName"))
+            PlanTrendVO planTrendVO =new PlanTrendVO();
+            planTrendVO.setUserName(puncher.get("userName"))
                     .setUserImage(puncher.get("avatarUrl"))
                     .setPlanPattern(pkPlanTrendDemoDTO.getPlanPattern())
                     .setName(pkPlanTrendDemoDTO.getName())
@@ -226,9 +224,9 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
                     .setImageUrls(pkPlanTrendDemoDTO.getImageUrls())
                     .setPunchTime(pkPlanTrendDemoDTO.getPunchTime())
                     .setCurrentPunchCycle(pkPlanTrendDemoDTO.getCurrentPunchCycle());
-            pkPlanTrendVOS.add(pkPlanTrendVO);
+            planTrendVOS.add(planTrendVO);
         }
-        return pkPlanTrendVOS;
+        return planTrendVOS;
     }
 
     @Override

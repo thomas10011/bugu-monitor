@@ -5,9 +5,8 @@ import cn.fusionfuture.bugu.monitor.dto.SimplePunchDTO;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.*;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.monitor.vo.MonitorPlanTrendVO;
+import cn.fusionfuture.bugu.monitor.vo.PlanTrendVO;
 import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
-import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
@@ -16,7 +15,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -132,7 +130,7 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     }
 
     @Override
-    public List<MonitorPlanTrendVO> queryMonitorPlanTrendVO(Long userId){
+    public List<PlanTrendVO> queryMonitorPlanTrendVO(Long userId){
         //将返回的值
 //        QueryWrapper<PmsMonitorPunchRecord> queryWrapper2=new QueryWrapper<>();
 //        queryWrapper2.eq("monitor_plan_id","1314865708340912129");
@@ -198,15 +196,15 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
             monitorPlanTrendDTOS.add(monitorPlanTrendDTO);
         }
 
-        List<MonitorPlanTrendVO> monitorPlanTrendVOS=new ArrayList<>();
+        List<PlanTrendVO> planTrendVOS =new ArrayList<>();
 
         for (MonitorPlanTrendDTO monitorPlanTrendDemoDTO:monitorPlanTrendDTOS
         ) {
             //打卡者
             HashMap<String,String> puncher = userFeignService.getDetailsForMessage(monitorPlanTrendDemoDTO.getUid()).getData();
 
-            MonitorPlanTrendVO monitorPlanTrendVO=new MonitorPlanTrendVO();
-            monitorPlanTrendVO.setUserName(puncher.get("userName"))
+            PlanTrendVO planTrendVO =new PlanTrendVO();
+            planTrendVO.setUserName(puncher.get("userName"))
                     .setUserImage(puncher.get("avatarUrl"))
                     .setPlanPattern(monitorPlanTrendDemoDTO.getPlanPattern())
                     .setName(monitorPlanTrendDemoDTO.getName())
@@ -219,9 +217,9 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
                     .setImageUrls(monitorPlanTrendDemoDTO.getImageUrls())
                     .setPunchTime(monitorPlanTrendDemoDTO.getPunchTime())
                     .setCurrentPunchCycle(monitorPlanTrendDemoDTO.getCurrentPunchCycle());
-            monitorPlanTrendVOS.add(monitorPlanTrendVO);
+            planTrendVOS.add(planTrendVO);
         }
-        return monitorPlanTrendVOS;
+        return planTrendVOS;
     }
 
     @Override

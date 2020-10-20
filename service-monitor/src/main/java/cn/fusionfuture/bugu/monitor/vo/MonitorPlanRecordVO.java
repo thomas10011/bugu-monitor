@@ -26,13 +26,13 @@ public class MonitorPlanRecordVO {
     @ApiModelProperty(value = "监督模式id",example = "1")
     private Integer monitorPatternId;
 
-    @ApiModelProperty(value = "计划开始时间",example = "1")
+    @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
 
-    @ApiModelProperty(value = "计划持续时间",example = "1")
+    @ApiModelProperty(value = "计划持续时间")
     private LocalDateTime lastTime;
 
-    @ApiModelProperty(value = "计划结束时间",example = "1")
+    @ApiModelProperty(value = "计划结束时间")
     private LocalDateTime endTime;
 
     @ApiModelProperty(value = "计划名称",example = "1")

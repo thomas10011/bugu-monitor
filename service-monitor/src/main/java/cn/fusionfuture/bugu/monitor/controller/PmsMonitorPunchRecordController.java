@@ -1,12 +1,10 @@
 package cn.fusionfuture.bugu.monitor.controller;
 
 
-import cn.fusionfuture.bugu.monitor.dto.MonitorPlanTrendDTO;
-import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.monitor.vo.MonitorPlanTrendVO;
+import cn.fusionfuture.bugu.monitor.vo.PlanTrendVO;
 import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import io.swagger.annotations.Api;
@@ -18,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +73,7 @@ public class PmsMonitorPunchRecordController {
 
     @ApiOperation(value = "根据用户id查询打卡相关信息")
     @GetMapping(value = "/plan/trend/{uid}")
-    public List<MonitorPlanTrendVO> queryMonitorPlanTrendVO(@Validated
+    public List<PlanTrendVO> queryMonitorPlanTrendVO(@Validated
                                                             @ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid){
 
         return monitorPunchRecordService.queryMonitorPlanTrendVO(uid);

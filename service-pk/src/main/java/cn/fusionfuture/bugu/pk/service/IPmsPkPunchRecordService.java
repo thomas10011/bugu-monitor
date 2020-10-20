@@ -1,19 +1,10 @@
 package cn.fusionfuture.bugu.pk.service;
 
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchImageUrlMapper;
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
-import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.pk.vo.PkPlanTrendVO;
+import cn.fusionfuture.bugu.pk.vo.PlanTrendVO;
 import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
 import cn.fusionfuture.bugu.pk.vo.SimplePunchVO;
-import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
-import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
-import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchImageUrl;
-import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -73,7 +64,7 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
   * @param [userId]
   * @return java.util.List<cn.fusionfuture.bugu.pk.dto.PkPlanTrendDTO>
   **/
- List<PkPlanTrendVO> queryPkPlanTrendVO (Long userId);
+ List<PlanTrendVO> queryPkPlanTrendVO (Long userId);
 
  /*
   * @author zws

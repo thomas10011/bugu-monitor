@@ -12,15 +12,15 @@ import java.util.List;
 /**
  * @author zws
  * @version 1.0
- * @class MonitorPlanTrendVO
+ * @class PlanTrendVO
  * @description 监督计划首页动态界面信息
  * @date 2020/10/16 18:56
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="MonitorPlanTrendVO", description="监督计划首页动态界面信息")
-public class MonitorPlanTrendVO {
+@ApiModel(value="PlanTrendVO", description="监督计划首页动态界面信息")
+public class PlanTrendVO {
 
     @ApiModelProperty(name = "用户名",example = "小小")
     private String userName;
@@ -52,10 +52,10 @@ public class MonitorPlanTrendVO {
     @ApiModelProperty(value = "受评论次数",example = "1")
     private Integer commentQuantity;
 
-    @ApiModelProperty(value = "打卡图片",example = "1")
+    @ApiModelProperty(value = "打卡图片")
     private List<String> imageUrls;
 
-    @ApiModelProperty(value = "打卡时间",example = "1")
+    @ApiModelProperty(value = "打卡时间")
     private LocalDateTime punchTime;
 
     @ApiModelProperty(value = "当前打卡周期",example = "1")

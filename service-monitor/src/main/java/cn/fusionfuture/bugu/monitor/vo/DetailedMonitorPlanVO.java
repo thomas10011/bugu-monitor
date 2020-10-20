@@ -52,9 +52,9 @@ public class DetailedMonitorPlanVO {
     @ApiModelProperty(value = "受监督者金额",example = "1")
     private BigDecimal monitorBonus;
 
-    @ApiModelProperty(value = "计划开始时间",example = "1")
+    @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
 
-    @ApiModelProperty(value = "计划结束时间",example = "1")
+    @ApiModelProperty(value = "计划结束时间")
     private LocalDateTime endTime;
 }
