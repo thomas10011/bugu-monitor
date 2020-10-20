@@ -73,8 +73,10 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
 
                 // 对应的计划打卡次数加一，对应打卡记录的打卡状态设置为已打卡
                 PmsMonitorPlan plan = monitorPlanMapper.selectById(planId);
-                plan.setPunchCount(plan.getPunchCount() + 1);
-                monitorPlanMapper.updateById(plan);
+                monitorPlanMapper.updateById(
+                        new PmsMonitorPlan()
+                                .setId(plan.getId())
+                                .setPunchCount(plan.getPunchCount() + 1));
                 return "打卡成功";
             }
         }
@@ -85,8 +87,11 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     public void like(Long punchId){
         //点赞操作，将计划的点赞数+1
         PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
-        monitorPunchRecord.setLikeCount(monitorPunchRecord.getLikeCount()+1);
-        monitorPunchRecordMapper.updateById(monitorPunchRecord);
+        monitorPunchRecordMapper.updateById(
+                new PmsMonitorPunchRecord()
+                    .setId(monitorPunchRecord.getId())
+                    .setLikeCount(monitorPunchRecord.getLikeCount() + 1)
+        );
     }
 
     @Override

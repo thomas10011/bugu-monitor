@@ -29,7 +29,7 @@ public class PmsMonitorPlanStatusController {
     IPmsMonitorPlanStatusService monitorPlanStatusService;
 
     @GetMapping(value = "/monitor-plan/status")
-    @ApiOperation(value = "查询当前打卡所有的状态")
+    @ApiOperation(value = "查询监督计划所有的状态")
     public List<MonitorPlanStatusVO> queryMonitorPlanStatus() {
         return monitorPlanStatusService.queryMonitorPlanStatus();
     }

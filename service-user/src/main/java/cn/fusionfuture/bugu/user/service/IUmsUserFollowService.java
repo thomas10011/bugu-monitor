@@ -58,5 +58,7 @@ public interface IUmsUserFollowService extends IService<UmsUserFollow> {
      **/
     Boolean unFollowUser(Long uid, Long fuid);
 
+    Integer queryRelationship(Long id1, Long id2);
+
 
 }

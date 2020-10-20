@@ -4,35 +4,36 @@
 
     <select id="queryUmsUserFollowByPage" resultType="cn.fusionfuture.bugu.user.vo.UserFollowVO">
         SELECT
-        id, user_name,avatar_url, fans_quantity
+        ums_user.id, ums_user.user_name, ums_user.avatar_url, ums_user.fans_quantity, ums_user_follow.followed_each_other
         FROM
-        ums_user
+        ums_user, ums_user_follow
         WHERE
-        id IN (
-            SELECT
-            followed_user_id
-            FROM
-            ums_user_follow
-            WHERE
-            user_id = #{uid}
-            ORDER BY ums_user_follow.id DESC
-        )
+        (ums_user_follow.user_id = #{uid} AND ums_user.id = ums_user_follow.followed_user_id)
+        OR
+        (ums_user_follow.followed_user_id = #{uid} AND ums_user_follow.followed_each_other = 1 AND ums_user.id = ums_user_follow.user_id)
+        ORDER BY ums_user_follow.update_time DESC
     </select>
 
     <select id="queryUmsUserFansByPage" resultType="cn.fusionfuture.bugu.user.vo.UserFollowVO">
         SELECT
-        id, user_name,avatar_url, fans_quantity
+        ums_user.id, ums_user.user_name, ums_user.avatar_url, ums_user.fans_quantity, ums_user_follow.followed_each_other
         FROM
-        ums_user
+        ums_user, ums_user_follow
         WHERE
-        id IN (
-            SELECT
-            user_id
-            FROM
-            ums_user_follow
-            WHERE
-            followed_user_id = #{uid}
-            ORDER BY ums_user_follow.id DESC
-        )
+        (ums_user_follow.followed_user_id = #{uid} AND ums_user.id = ums_user_follow.user_id)
+        OR
+        (ums_user_follow.user_id = #{uid} AND ums_user_follow.followed_each_other = 1 AND ums_user.id = ums_user_follow.followed_user_id)
+        ORDER BY ums_user_follow.update_time DESC
+    </select>
+
+    <select id="queryUmsUserFollow" resultType="cn.fusionfuture.bugu.pojo.entity.UmsUserFollow">
+        SELECT
+        *
+        FROM
+        ums_user_follow
+        WHERE
+        (user_id = #{uid} AND followed_user_id = #{fuid})
+        OR
+        (followed_user_id = #{uid} AND user_id = #{fuid})
     </select>
 </mapper>
