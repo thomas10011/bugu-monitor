@@ -23,10 +23,10 @@ public class PkPlanPatternVO implements Serializable {
 
     private static final long serialVersionUID = 5176299205110529712L;
 
-    @ApiModelProperty(value = "pk模式id")
+    @ApiModelProperty(value = "pk模式id",example = "1")
     private Integer id;
 
-    @ApiModelProperty(value = "pk模式描述")
+    @ApiModelProperty(value = "pk模式描述",example = "双人pk")
     private String description;
 
 }

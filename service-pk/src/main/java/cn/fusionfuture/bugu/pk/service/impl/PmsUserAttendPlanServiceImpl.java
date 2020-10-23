@@ -81,8 +81,5 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
 
     }
 
-//    @Override
-//    public BasicPkPlanVO queryPkUserAttendPlanByPlanId(Long pid){
-//        return new userPkPlanMapper.queryPkUserAttendPlanByPlanId(pid);
-//    }
+
 }

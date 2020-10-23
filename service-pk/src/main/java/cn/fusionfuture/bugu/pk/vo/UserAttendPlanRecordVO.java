@@ -23,10 +23,10 @@ import java.time.LocalDateTime;
 @ApiModel(value="UserAttendPlanRecordVO", description="用户参加pk计划的记录")
 public class UserAttendPlanRecordVO {
 
-    @ApiModelProperty(value = "记录的id")
+    @ApiModelProperty(value = "记录的id",example = "1315187541535731714")
     private Long id;
 
-    @ApiModelProperty(value = "已打卡次数")
+    @ApiModelProperty(value = "已打卡次数",example = "1")
     private Integer punchCount;
 
 }

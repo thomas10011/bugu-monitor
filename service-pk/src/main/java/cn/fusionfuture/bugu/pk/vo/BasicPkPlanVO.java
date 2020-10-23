@@ -25,31 +25,31 @@ public class BasicPkPlanVO implements Serializable {
 
     private static final long serialVersionUID = 8502311760426262072L;
 
-    @ApiModelProperty(value = "计划的id")
+    @ApiModelProperty(value = "计划的id", example = "1318520212345098242")
     private Long id;
 
-    @ApiModelProperty(value = "计划标题")
+    @ApiModelProperty(value = "计划标题",example = "每天背至少40个新单词")
     private String name;
 
-    @ApiModelProperty(value = "计划描述")
+    @ApiModelProperty(value = "计划描述",example = "每天背至少40个新单词")
     private String description;
 
-    @ApiModelProperty(value = "计划状态描述")
+    @ApiModelProperty(value = "计划状态描述",example = "报名中")
     private String planStatus;
 
-    @ApiModelProperty(value = "计划类型描述")
+    @ApiModelProperty(value = "计划类型描述",example = "多人pk")
     private String planPattern;
 
-    @ApiModelProperty(value = "打卡总次数")
+    @ApiModelProperty(value = "打卡总次数",example = "10")
     private Integer punchQuantity;
 
-    @ApiModelProperty(value = "pk计划单人金额")
+    @ApiModelProperty(value = "pk计划单人金额",example = "90")
     private BigDecimal totalBonus;
 
     @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
 
-    @ApiModelProperty(value = "结束时间")
+    @ApiModelProperty(value = "计划结束时间")
     private LocalDateTime endTime;
 
 }

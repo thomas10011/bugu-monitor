@@ -35,21 +35,21 @@ public class MonitorPlanRecordVO {
     @ApiModelProperty(value = "计划结束时间")
     private LocalDateTime endTime;
 
-    @ApiModelProperty(value = "计划名称",example = "1")
+    @ApiModelProperty(value = "计划名称",example = "每日背单词")
     private String monitorName;
 
-    @ApiModelProperty(value = "每人奖池数额",example = "1")
+    @ApiModelProperty(value = "每人奖池数额",example = "90")
     private BigDecimal monitorBonus;
 
-    @ApiModelProperty(value = "计划详情",example = "1")
+    @ApiModelProperty(value = "计划详情",example = "每天背至少30个单词")
     private String description;
 
-    @ApiModelProperty(value = "打卡Id",example = "1")
+    @ApiModelProperty(value = "打卡Id",example = "1318520214740045826")
     private Integer punchId;
 
-    @ApiModelProperty(value = "打卡次数",example = "1")
+    @ApiModelProperty(value = "已打卡次数",example = "2")
     private Integer punchCount;
 
-    @ApiModelProperty(value = "打卡状态Id",example = "1")
+    @ApiModelProperty(value = "打卡状态Id",example = "已打卡")
     private Integer punchStatusId;
 }

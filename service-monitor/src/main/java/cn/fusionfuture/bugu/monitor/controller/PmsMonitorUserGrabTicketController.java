@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-09-11
  */
 @RestController
-@Api(tags = "用户对监督计划进行抢票操作" )
+@Api(tags = "抢票" )
 public class PmsMonitorUserGrabTicketController {
 
     @Autowired

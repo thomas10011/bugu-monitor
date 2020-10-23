@@ -21,7 +21,7 @@ import java.util.List;
  * @since 2020-08-24
  */
 @RestController
-@Api(tags = "用户参与计划记录" )
+@Api(tags = "参与计划的记录" )
 public class PmsUserAttendPlanController {
 
     @Autowired

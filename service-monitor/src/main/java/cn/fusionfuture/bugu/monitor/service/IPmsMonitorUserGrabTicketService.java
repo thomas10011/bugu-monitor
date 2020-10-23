@@ -16,7 +16,7 @@ import java.util.List;
 public interface IPmsMonitorUserGrabTicketService extends IService<PmsMonitorUserGrabTicket> {
 
     /*
-     * TODO 用户通过抢票方式获得对监督计划进行监督和投票的机会
+     * 用户通过抢票方式获得对监督计划进行监督和投票的机会
      * @author zws
      * @since 2020/9/24 21:21
      * @param [userId, planId] 

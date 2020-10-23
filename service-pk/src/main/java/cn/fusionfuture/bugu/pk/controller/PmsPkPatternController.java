@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2020-08-24
  */
 @RestController
-@Api(tags = "查询pk计划的计划模式")
+@Api(tags = "查询pk计划的模式")
 public class PmsPkPatternController {
 
     @Autowired

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-09-15
  */
 @RestController
-@Api(tags = "用户创建计划记录" )
+@Api(tags = "创建计划的记录" )
 public class PmsUserCreatePlanController {
 
     @Autowired

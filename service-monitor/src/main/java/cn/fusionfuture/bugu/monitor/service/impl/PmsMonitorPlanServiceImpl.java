@@ -92,37 +92,8 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
     }
 
     @Override
-    //@Scheduled(cron = "0 0 0 * * ?")
     public String checkIsPunched(Long planId){
-//        PmsMonitorPlan monitorPlan = monitorPlanMapper.selectById(planId);
-//        //设置定时任务，在用户未打卡时，提醒用户打卡（在上一次打卡结束当天24：00点修改打卡状态为未打卡）
-//        //打卡开始时间
-//        LocalDate startDate = monitorPlan.getStartTime().toLocalDate();
-//        //打卡结束时间
-//        LocalDate endDate = monitorPlan.getEndTime().toLocalDate();
-//        //打卡周期
-//        Integer punchCycle = monitorPlan.getPunchCycle();
-//        //当前所处的打卡周期
-//        Integer currentPunchCycle=monitorPlan.getCurrentPunchCycle();
-//        //获取当前时间
-//        LocalDate currentDate = LocalDate.now();
-//        Integer i;
-//        for(i=1 ;i<=monitorPlan.getPunchQuantity();i++){
-//            //打卡周期开始时间
-//            LocalDate punchCycleStartDate = startDate.plusDays(punchCycle*(i-1));
-//            //打卡周期结束时间
-//            LocalDate punchCycleEndDate;
-//            if(startDate.plusDays(monitorPlan.getPunchQuantity()*punchCycle)==endDate||i<=monitorPlan.getPunchQuantity()-1){
-//                punchCycleEndDate = punchCycleStartDate.plusDays(punchCycle*i);
-//            }
-//            else{
-//                punchCycleEndDate = endDate;
-//            }
-//            //当前时间处在一个打卡周期内
-//            if (currentDate.isAfter(punchCycleStartDate) && currentDate.isBefore(punchCycleEndDate)) {
-//                currentPunchCycle=i;
-//            }
-//        }
+
         //获取当前时间
         LocalDateTime currentTime=LocalDateTime.now();
         QueryWrapper<PmsMonitorPunchRecord> queryWrapper=new QueryWrapper<>();

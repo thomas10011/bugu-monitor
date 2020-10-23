@@ -17,7 +17,7 @@ import java.util.List;
 public interface PmsPkPlanStatusMapper extends BaseMapper<PmsPkPlanStatus> {
 
     /*
-     * TODO 
+     * 查询所有pk计划状态（example：报名中）
      * @author zws
      * @since 2020/9/12 14:59
      * @param [] 

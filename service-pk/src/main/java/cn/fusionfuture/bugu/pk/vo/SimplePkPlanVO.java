@@ -19,16 +19,16 @@ import lombok.experimental.Accessors;
 @ApiModel(value="SimplePkPlanVO对象", description="计划简略信息")
 public class SimplePkPlanVO {
 
-    @ApiModelProperty(value = "计划标题")
+    @ApiModelProperty(value = "计划标题",example = "打败抑郁症")
     private String name;
 
-    @ApiModelProperty(value = "监督模式")
+    @ApiModelProperty(value = "pk模式",example = "多人pk")
     private String pkPattern;
 
-    @ApiModelProperty(value = "pk人数")
+    @ApiModelProperty(value = "pk人数",example = "5")
     private Integer pkQuantity;
 
-    @ApiModelProperty(value = "已报名人数")
+    @ApiModelProperty(value = "已报名人数",example = "3")
     private Integer enrolledQuantity;
 
 }

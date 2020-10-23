@@ -17,7 +17,7 @@ import java.util.List;
 public interface IPmsPkPlanStatusService extends IService<PmsPkPlanStatus> {
 
     /*
-     * TODO
+     * 查询所有计划状态
      * @author zws
      * @since 2020/9/12 14:54
      * @param []

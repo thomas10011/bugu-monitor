@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface IPmsPkPatternService extends IService<PmsPkPattern> {
     /*
-     * TODO
+     * 查询所有计划模式
      * @author zws
      * @since 2020/9/12 11:47
      * @param []

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface PmsPkPatternMapper extends BaseMapper<PmsPkPattern> {
     /*
-     * TODO
+     * 查询所有pk计划模式
      * @author zws
      * @since 2020/9/12 11:41
      * @param []

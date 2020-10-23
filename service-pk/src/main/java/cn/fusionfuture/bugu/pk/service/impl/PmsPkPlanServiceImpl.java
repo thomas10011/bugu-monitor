@@ -93,7 +93,6 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
     }
 
     @Override
-    //@Scheduled(cron = "0 0 0 * * ?")
     public String checkIsPunched(Long userId,Long planId){
 
         //获取当前时间

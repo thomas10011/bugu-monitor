@@ -28,7 +28,7 @@ import java.util.Map;
  * @since 2020-08-24
  */
 @RestController
-@Api(tags = "用户进行打卡操作")
+@Api(tags = "打卡")
 public class PmsMonitorPunchRecordController {
 
     @Autowired

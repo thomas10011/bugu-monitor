@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-08-24
  */
 @RestController
-@Api(tags = "对打卡记录投票")
+@Api(tags = "投票")
 public class PmsPkVoteRecordController {
 
     @Autowired

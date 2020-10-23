@@ -139,9 +139,6 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     @Override
     public List<PlanTrendVO> queryPkPlanTrendVO(Long userId){
         //将返回的值
-//        QueryWrapper<PmsMonitorPunchRecord> queryWrapper2=new QueryWrapper<>();
-//        queryWrapper2.eq("monitor_plan_id","1314865708340912129");
-//        List<PmsMonitorPunchRecord> monitorPunchRecordDemos=monitorPunchRecordMapper.selectList(queryWrapper2);
         List<PkPlanTrendDTO> pkPlanTrendDTOS=new ArrayList<>();
         //目标计划的id
         List<Long> planIds=new ArrayList<>();
@@ -164,7 +161,6 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
             PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
             //如果计划正在进行中
             Integer planStatusId=pkPlan.getPlanStatusId();
-            //Integer i=MonitorPlanStatus.UNDERWAY.getIndex();
             if(planStatusId.equals(2)) {
                 //查询获取用户相关计划id
                 QueryWrapper<PmsPkPunchRecord> queryWrapper2=new QueryWrapper<>();

@@ -41,7 +41,7 @@ public class PmsMonitorPlanController {
     @Autowired
     SearchFeignService searchFeignService;
 
-    @ApiOperation(value = "创建新的监督计划")
+    @ApiOperation(value = "创建监督计划")
     @PostMapping(value = "/monitor-plan")
     public Long createMonitorPlan(@RequestBody NewMonitorPlanVO newMonitorPlanVO) {
         Long id = monitorPlanService.createMonitorPlan(newMonitorPlanVO);
@@ -77,7 +77,7 @@ public class PmsMonitorPlanController {
     }
 
     @GetMapping(value = "/monitor-plan/simple-info/{planId}")
-    @ApiOperation(value= "查询计划简略信息")
+    @ApiOperation(value= "查询计划简略信息（供message_service调用）")
     public SimpleMonitorPlanVO querySimpleMonitorPlanVO(@Validated
                                               @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return monitorPlanService.querySimpleMonitorPlanVO(planId);

@@ -24,16 +24,16 @@ public class SimplePunchDTO implements Serializable {
 
     private static final long serialVersionUID = 7833407387585455855L;
 
-    @ApiModelProperty(value = "打卡的id",example = "1")
+    @ApiModelProperty(value = "打卡的id",example = "1318520214740045826")
     private Long id;
 
-    @ApiModelProperty(value = "打卡时间",example = "1")
+    @ApiModelProperty(value = "打卡时间")
     private LocalDateTime punchTime;
 
-    @ApiModelProperty(value = "打卡截止时间",example = "1")
+    @ApiModelProperty(value = "打卡截止时间")
     private LocalDateTime expiredTime;
 
-    @ApiModelProperty(value = "打卡状态",example = "1")
+    @ApiModelProperty(value = "打卡状态",example = "已完成")
     private String status;
 
 }

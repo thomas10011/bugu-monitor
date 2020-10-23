@@ -38,7 +38,7 @@ public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
     DetailedMonitorPlanVO queryDetailedMonitorPlanVO(Long pid);
 
     /*
-     * TODO 根据计划id获取计划简略信息
+     * 根据计划id获取计划简略信息
      * @author zws
      * @since 2020/9/26 15:57
      * @param [planId]

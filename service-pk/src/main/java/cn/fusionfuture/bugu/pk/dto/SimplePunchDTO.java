@@ -21,15 +21,15 @@ import java.time.LocalDateTime;
 @ApiModel(value="SimplePunchDTO", description="打卡日历界面的简略打卡信息DTO")
 public class SimplePunchDTO {
 
-    @ApiModelProperty(value = "打卡的id",example = "1")
+    @ApiModelProperty(value = "打卡的id",example = "1318520214740045826")
     private Long id;
 
-    @ApiModelProperty(value = "打卡时间",example = "1")
+    @ApiModelProperty(value = "打卡时间")
     private LocalDateTime punchTime;
 
-    @ApiModelProperty(value = "打卡截止时间",example = "1")
+    @ApiModelProperty(value = "打卡截止时间")
     private LocalDateTime expiredTime;
 
-    @ApiModelProperty(value = "打卡状态",example = "1")
+    @ApiModelProperty(value = "打卡状态",example = "已打卡")
     private String status;
 }

@@ -137,9 +137,6 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     @Override
     public List<PlanTrendVO> queryMonitorPlanTrendVO(Long userId){
         //将返回的值
-//        QueryWrapper<PmsMonitorPunchRecord> queryWrapper2=new QueryWrapper<>();
-//        queryWrapper2.eq("monitor_plan_id","1314865708340912129");
-//        List<PmsMonitorPunchRecord> monitorPunchRecordDemos=monitorPunchRecordMapper.selectList(queryWrapper2);
         List<MonitorPlanTrendDTO> monitorPlanTrendDTOS=new ArrayList<>();
         //目标计划的id
         List<Long> planIds=new ArrayList<>();

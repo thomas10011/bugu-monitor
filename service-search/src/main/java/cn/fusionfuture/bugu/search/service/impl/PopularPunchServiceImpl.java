@@ -59,10 +59,6 @@ public class PopularPunchServiceImpl implements IPopularPunchService {
             return 0;
         }
     });
-
     return new PageInfo<>(planTrendVOS);
 }
-
-
-
 }

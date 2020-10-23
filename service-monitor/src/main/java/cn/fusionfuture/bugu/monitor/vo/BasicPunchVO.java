@@ -22,16 +22,16 @@ import java.util.List;
 public class BasicPunchVO {
 
 
-    @ApiModelProperty(name = "打卡id",example = "123")
+    @ApiModelProperty(name = "打卡id",example = "1318520214740045826")
     private Long id;
 
-    @ApiModelProperty(value = "计划模式",example = "1")
+    @ApiModelProperty(value = "计划模式",example = "单人监督")
     private String planPattern;
 
-    @ApiModelProperty(value = "计划名称",example = "1")
+    @ApiModelProperty(value = "计划名称",example = "每日背单词")
     private String name;
 
-    @ApiModelProperty(value = "打卡内容",example = "1")
+    @ApiModelProperty(value = "打卡内容",example = "今天忘记了！")
     private String content;
 
     @ApiModelProperty(value = "打卡被点赞次数",example = "1")
@@ -46,6 +46,6 @@ public class BasicPunchVO {
     @ApiModelProperty(value = "打卡受评论次数",example = "1")
     private Integer commentQuantity;
 
-    @ApiModelProperty(value = "打卡图片",example = "1")
+    @ApiModelProperty(value = "打卡图片")
     private List<String> imageUrls;
 }

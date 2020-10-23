@@ -33,12 +33,4 @@ public interface IPmsUserAttendPlanService extends IService<PmsUserAttendPlan> {
      **/
     Long userAttendPlan(Long userId,Long planId);
 
-    /*
-     * 根据用户id和计划id查询用户参与的一个pk计划
-     * @author zws
-     * @since 2020/9/21 11:42
-     * @param [uid, pid]
-     * @return cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO
-     **/
-    //BasicPkPlanVO queryPkUserAttendPlanByPlanId(Long pid);
 }

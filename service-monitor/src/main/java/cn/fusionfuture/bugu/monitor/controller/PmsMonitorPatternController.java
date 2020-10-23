@@ -22,14 +22,14 @@ import java.util.List;
  * @since 2020-08-24
  */
 @RestController
-@Api(tags = "查询所有打卡的类型")
+@Api(tags = "查询计划类型")
 public class PmsMonitorPatternController {
 
     @Autowired
     IPmsMonitorPatternService monitorPatternService;
 
     @GetMapping(value = "/monitor-plan/pattern")
-    @ApiOperation(value = "查询监督计划的所有类型")
+    @ApiOperation(value = "查询计划类型（example：单人监督）")
     public List<MonitorPlanPatternVO> queryMonitorPlanPatter() {
         return monitorPatternService.queryMonitorPlanPatter();
     }

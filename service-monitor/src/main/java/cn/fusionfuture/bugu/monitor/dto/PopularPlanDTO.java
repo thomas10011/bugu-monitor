@@ -25,34 +25,34 @@ public class PopularPlanDTO implements Serializable {
 
     private static final long serialVersionUID = 7833407387585455855L;
 
-    @ApiModelProperty(name = "计划的id",example = "1")
+    @ApiModelProperty(name = "计划的id",example = "1318520212345098242")
     private Long id;
 
-    @ApiModelProperty(name = "用户的id",example = "1")
+    @ApiModelProperty(name = "用户的id",example = "1309123491764805634")
     private Long uid;
 
-    @ApiModelProperty(name = "type,计划的类型", notes = "计划的类型。包括：自我监督、单人监督、多人监督、pk计划",example = "1")
+    @ApiModelProperty(name = "type,计划的类型", notes = "计划的类型。包括：自我监督、单人监督、多人监督、pk计划",example = "自我监督")
     private String tp;
 
-    @ApiModelProperty(name = "title,计划的标题",example = "1")
+    @ApiModelProperty(name = "title,计划的标题",example = "每日背单词")
     private String tt;
 
-    @ApiModelProperty(name = "status,计划的状态", notes = "计划的状态，对于监督加护，包含三种状态：报名中、进行中、已完成。对于pk计划，包含三种状态：加入pk、抢单中、已完成。",example = "1")
+    @ApiModelProperty(name = "status,计划的状态", notes = "计划的状态，对于监督加护，包含三种状态：报名中、进行中、已完成。对于pk计划，包含三种状态：加入pk、抢单中、已完成。",example = "已完成")
     private String st;
 
-    @ApiModelProperty(name = "cover,计划封面图片存储的url", notes = "计划封面图片的相对路径",example = "1")
+    @ApiModelProperty(name = "cover,计划封面图片存储的url", notes = "计划封面图片的相对路径")
     private String cv;
 
-    @ApiModelProperty(name = "avatar,用户头像的url", notes = "用户头像的相对路径",example = "1")
+    @ApiModelProperty(name = "avatar,用户头像的url", notes = "用户头像的相对路径")
     private String at;
 
-    @ApiModelProperty(name = "avatars,用户头像列表", notes = "对于pk计划，存储的是参与到pk计划中的用户的头像。对于监督计划，存储的是点赞用户的头像。",example = "1")
+    @ApiModelProperty(name = "avatars,用户头像列表", notes = "对于pk计划，存储的是参与到pk计划中的用户的头像。对于监督计划，存储的是点赞用户的头像。")
     private List<String> ats;
 
-    @ApiModelProperty(name = "headcount,参与计划的人数",example = "1")
+    @ApiModelProperty(name = "headcount,参与计划的人数",example = "3")
     private Integer hc;
 
-    @ApiModelProperty(name = "award,奖金总金额",example = "1")
+    @ApiModelProperty(name = "award,奖金总金额",example = "100")
     private BigDecimal aw;
 
     @ApiModelProperty(name = "rates,点赞数",example = "1")

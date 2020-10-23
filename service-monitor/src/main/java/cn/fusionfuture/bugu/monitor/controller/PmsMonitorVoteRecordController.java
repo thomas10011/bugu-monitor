@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/monitor/pms-monitor-vote-record")
-@Api(tags = "对打卡进行投票")
+@Api(tags = "投票")
 public class PmsMonitorVoteRecordController {
 
     @Autowired

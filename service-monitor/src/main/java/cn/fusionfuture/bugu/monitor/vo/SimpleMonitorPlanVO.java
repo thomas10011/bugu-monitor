@@ -19,10 +19,10 @@ import lombok.experimental.Accessors;
 @ApiModel(value="SimpleMonitorPlanVO对象", description="供消息微服务调用的计划简略信息")
 public class SimpleMonitorPlanVO {
 
-    @ApiModelProperty(value = "计划标题",example = "1")
+    @ApiModelProperty(value = "计划标题",example = "每日背单词")
     private String name;
 
-    @ApiModelProperty(value = "监督模式",example = "1")
+    @ApiModelProperty(value = "监督计划模式",example = "单人监督")
     private String planPattern;
 
     @ApiModelProperty(value = "监督人数",example = "1")

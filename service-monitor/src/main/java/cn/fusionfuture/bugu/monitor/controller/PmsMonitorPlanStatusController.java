@@ -22,14 +22,14 @@ import java.util.List;
  * @since 2020-09-11
  */
 @RestController
-@Api(tags = "查询打卡的状态列表")
+@Api(tags = "查询打卡状态")
 public class PmsMonitorPlanStatusController {
 
     @Autowired
     IPmsMonitorPlanStatusService monitorPlanStatusService;
 
     @GetMapping(value = "/monitor-plan/status")
-    @ApiOperation(value = "查询监督计划所有的状态")
+    @ApiOperation(value = "查询监督计划所有状态")
     public List<MonitorPlanStatusVO> queryMonitorPlanStatus() {
         return monitorPlanStatusService.queryMonitorPlanStatus();
     }

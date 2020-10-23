@@ -16,7 +16,7 @@ import java.util.List;
 public interface PmsPkPunchImageUrlMapper extends BaseMapper<PmsPkPunchImageUrl> {
 
     /*
-     * TODO 根据打卡id查询打卡图片
+     * 根据打卡id查询打卡图片
      * @author zws
      * @since 2020/9/27 21:49
      * @param [punchId] 
