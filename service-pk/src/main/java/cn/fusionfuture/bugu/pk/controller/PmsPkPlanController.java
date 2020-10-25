@@ -73,7 +73,7 @@ public class PmsPkPlanController {
         return pkPlanService.querySimplePkPlanVO(planId);
     }
 
-    @PostMapping(value = "/pk-plan/detailed-info")
+    @GetMapping(value = "/pk-plan/detailed-info/{uid}&{pid}")
     @ApiOperation(value= "查询计划详细信息")
     public DetailedPkPlanVO queryDetailedPkPlanVO(@Validated
                                                   @ApiParam(value = "用户id") @RequestParam(name = "uid") Long uid,

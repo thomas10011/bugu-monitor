@@ -19,7 +19,8 @@ public enum MonitorPlanStatus {
     ALL(0, "全部"),
     REGISTERING(1, "报名中"),
     UNDERWAY(2, "进行中"),
-    COMPLETE(3, "已完成");
+    COMPLETE(3, "已完成"),
+    Failure(4,"未成功");
 
     private final Integer index;
     private final String value;

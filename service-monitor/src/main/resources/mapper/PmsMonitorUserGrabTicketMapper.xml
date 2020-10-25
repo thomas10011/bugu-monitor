@@ -2,4 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.monitor.mapper.PmsMonitorUserGrabTicketMapper">
 
+    <select id="queryUserVotePlanByUserId" resultType="cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO">
+    SELECT
+        distinct pms_monitor_plan.id,
+        pms_monitor_plan.name,
+        pms_monitor_plan.description,
+        pms_monitor_plan.punch_quantity,
+        pms_monitor_plan.start_time,
+        pms_monitor_plan.end_time,
+        pms_monitor_pattern.description AS plan_pattern,
+        pms_monitor_plan_status.description AS plan_status
+    FROM
+        pms_monitor_plan,
+        pms_monitor_pattern,
+        pms_monitor_plan_status,
+        pms_monitor_user_grab_ticket
+    WHERE
+        pms_monitor_plan.id IN ( SELECT monitor_plan_id FROM pms_monitor_user_grab_ticket WHERE pms_monitor_user_grab_ticket.user_id = #{uid} )
+        AND pms_monitor_plan.monitor_pattern_id = pms_monitor_pattern.id
+        AND pms_monitor_plan.plan_status_id = pms_monitor_plan_status.id
+    ORDER BY
+        pms_monitor_plan.id DESC
+    </select>
 </mapper>

@@ -20,7 +20,8 @@ public enum PkPlanStatus {
     ALL(0, "全部"),
     REGISTERING(1, "加入pk"),
     GRABBING(2, "抢单中"),
-    COMPLETE(3, "已完成");
+    COMPLETE(3, "已完成"),
+    Failure(4,"未成功");
 
     private final Integer index;
 

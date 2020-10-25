@@ -1,9 +1,12 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkUserGrabTicket;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkUserGrabTicketMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkUserGrabTicketService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +35,12 @@ public class PmsPkUserGrabTicketServiceImpl extends ServiceImpl<PmsPkUserGrabTic
         //返回用户抢票记录id
         return pkUserGrabTicketRecord.getId();
 
+    }
+
+    @Override
+    public PageInfo<BasicPkPlanVO> queryUserVotePlanByUserId(Integer pn, Integer ps, Long uid){
+
+        PageHelper.startPage(pn,ps);
+        return new PageInfo<>(pkUserGrabTicketMapper.queryUserVotePlanByUserId(uid));
     }
 }

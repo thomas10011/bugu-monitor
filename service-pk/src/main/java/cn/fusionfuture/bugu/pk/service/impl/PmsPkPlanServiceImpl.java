@@ -75,7 +75,6 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
             }
             pkPunchRecordMapper.insert(pkPunchRecord);
         }
-
         pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPkPlanId(pkPlan.getId());
         userCreatePlanMapper.insert(pmsUserCreatePlan);
         return pkPlan.getId();

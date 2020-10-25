@@ -1,7 +1,9 @@
 package cn.fusionfuture.bugu.monitor.service;
 
+import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorUserGrabTicket;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -23,4 +25,14 @@ public interface IPmsMonitorUserGrabTicketService extends IService<PmsMonitorUse
      * @return java.lang.Long 
      **/
     Long userGrabTicket(Long userId,Long planId);
+
+    /*
+     * @author zws
+     * @description 根据用户id查询monitor计划(用户参与投票的monitor计划）
+     * @create 2020/10/25 14:10
+     * @update 2020/10/25 14:10
+     * @param [pn, ps, uid]
+     * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO>
+     **/
+    PageInfo<BasicMonitorPlanVO> queryUserVotePlanByUserId(Integer pn, Integer ps, Long uid);
 }
