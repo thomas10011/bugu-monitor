@@ -52,10 +52,28 @@ public class PopularPlanController {
         popularPlanService.ratePopularPlan(pid);
     }
 
+    @GetMapping(value = "/popular/status")
+    @ApiOperation(value = "供计划相关微服务调用，更新计划的状态")
+    public void updatePlanStatus(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
+                                 @ApiParam(value = "计划状态的index") @NonNull String status) throws IOException {
+
+        popularPlanService.updatePlanStatus(pid, status);
+
+    }
+
+    @GetMapping(value = "/popular/headcount")
+    @ApiOperation(value = "供计划相关微服务调用，更新计划的参与人数")
+    public void updatePlanHeadcount(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
+                                    @ApiParam(value = "计划参与的人数") @NonNull @RequestParam(value = "hc") Integer hc) throws IOException {
+        popularPlanService.updatePlanHeadcount(pid, hc);
+
+    }
+
     @PostMapping(value = "popular")
     @ApiOperation(value = "供计划微服务远程调用，创建首页信息")
     public void createPopularPlan(@ApiParam(value = "首页计划的dto") @RequestBody PopularPlanDTO popularPlanDTO) throws IOException {
         popularPlanService.createPopularPlan(popularPlanDTO);
     }
+
 
 }

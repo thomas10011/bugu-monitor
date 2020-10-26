@@ -19,7 +19,7 @@
     <module>service-transaction</module>
     <module>service-gateway</module>
     <module>service-oauth</module>
-      <module>service-search</module>
+    <module>service-search</module>
   </modules>
   <packaging>pom</packaging>
   <description>聚合工程</description>

@@ -2,6 +2,6 @@
 
 #idea通用#
 .idea/
-target/
-*.iml
-/out
+/**/target/
+/**/*.iml
+/**/out

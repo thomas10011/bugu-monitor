@@ -3,6 +3,9 @@ package cn.fusionfuture.bugu.search.service;
 import cn.fusionfuture.bugu.search.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
 import cn.hutool.json.JSONObject;
+import io.swagger.annotations.ApiParam;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,5 +47,10 @@ public interface IPopularPlanService {
      * @param popularPlanDTO 要保存的信息
      **/
     void createPopularPlan(PopularPlanDTO popularPlanDTO) throws IOException;
+
+    
+    void updatePlanStatus(Long planId, String status) throws IOException;
+
+    void updatePlanHeadcount(Long planId, Integer headcount) throws IOException;
 
 }

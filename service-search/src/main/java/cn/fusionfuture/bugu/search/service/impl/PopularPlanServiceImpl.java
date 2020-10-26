@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.search.service.impl;
 import cn.fusionfuture.bugu.search.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.search.service.IPopularPlanService;
 import cn.fusionfuture.bugu.search.vo.PopularPlanVO;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import org.elasticsearch.action.index.IndexRequest;
@@ -16,6 +17,7 @@ import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +99,25 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
                 .source(JSONUtil.parseObj(popularPlanDTO, false, true).toStringPretty(), XContentType.JSON);
         System.out.println(JSONUtil.parseObj(popularPlanDTO, false, true).toStringPretty());
         IndexResponse response = client.index(request, RequestOptions.DEFAULT);
+
+    }
+
+    @Override
+    public void updatePlanStatus(Long planId, String status) throws IOException {
+        UpdateRequest updateRequest = new UpdateRequest("plan", planId.toString());
+        Map<String, Object> parameters = Collections.singletonMap("status", status);
+        Script script = new Script(ScriptType.INLINE, "painless", "ctx._source.rt = parameters.status", parameters);
+        updateRequest.script(script);
+        client.update(updateRequest, RequestOptions.DEFAULT);
+    }
+
+    @Override
+    public void updatePlanHeadcount(Long planId, Integer headcount) throws IOException {
+        UpdateRequest updateRequest = new UpdateRequest("plan", planId.toString());
+        Map<String, Object> parameters = Collections.singletonMap("headcount", headcount);
+        Script script = new Script(ScriptType.INLINE, "painless", "ctx._source.rt = parameters.headcount", parameters);
+        updateRequest.script(script);
+        client.update(updateRequest, RequestOptions.DEFAULT);
 
     }
 }
