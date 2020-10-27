@@ -8,7 +8,7 @@
         FROM
         tms_plan_transaction
         WHERE
-        id = #{uid} AND transaction_amount > 0
+        id = #{uid} AND transaction_amount &gt; 0
         ORDER BY
         create_time
         DESC
@@ -20,7 +20,7 @@
         FROM
         tms_plan_transaction
         WHERE
-        id = #{uid} AND transaction_amount < 0
+        id = #{uid} AND transaction_amount &lt; 0
         ORDER BY
         create_time
         DESC

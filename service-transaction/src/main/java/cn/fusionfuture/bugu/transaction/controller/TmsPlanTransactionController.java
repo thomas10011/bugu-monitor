@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
  * @since 2020-08-17
  */
 @RestController
-@RequestMapping("/pojo/tms-plan-transaction")
 @Api(tags = "计划相关交易记录查询")
 public class TmsPlanTransactionController {
 
@@ -25,7 +24,7 @@ public class TmsPlanTransactionController {
     ITmsPlanTransactionService planTransactionService;
 
     @ApiOperation(value = "分页查询羽毛支出")
-    @GetMapping(value = "/feather/expense")
+    @GetMapping(value = "/feather/expense/{uid}")
     public Object queryFeatherExpenseByPage(@ApiParam(value = "用户id") @NonNull @PathVariable(value = "uid") Long uid,
                                             @ApiParam(value = "页码编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
                                             @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
@@ -33,7 +32,7 @@ public class TmsPlanTransactionController {
     }
 
     @ApiOperation(value = "分页查询羽毛收入")
-    @GetMapping(value = "/feather/income")
+    @GetMapping(value = "/feather/income/{uid}")
     public Object queryFeatherIncomeByPage(@ApiParam(value = "用户id") @NonNull @PathVariable(value = "uid") Long uid,
                                             @ApiParam(value = "页码编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
                                             @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
