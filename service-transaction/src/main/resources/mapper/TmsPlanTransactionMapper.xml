@@ -4,7 +4,7 @@
 
     <select id="queryPlanIncome" resultType="cn.fusionfuture.bugu.transaction.vo.PlanTransactionVO">
         SELECT
-        id, plan_type AS ptp, transaction_type AS ttp, plan_title AS tt, create_time AS t
+        id, plan_type AS ptp, transaction_type AS ttp, plan_title AS tt, transaction_amount AS tm, create_time AS t
         FROM
         tms_plan_transaction
         WHERE
@@ -16,7 +16,7 @@
 
     <select id="queryPlanExpense" resultType="cn.fusionfuture.bugu.transaction.vo.PlanTransactionVO">
         SELECT
-        id, plan_type AS ptp, transaction_type AS ttp, plan_title AS tt, create_time AS t
+        id, plan_type AS ptp, transaction_type AS ttp, plan_title AS tt, transaction_amount AS tm, create_time AS t
         FROM
         tms_plan_transaction
         WHERE
