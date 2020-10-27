@@ -52,6 +52,12 @@ public class PmsPkPunchRecordController {
         pkPunchRecordService.like(punchId);
     }
 
+    @PostMapping("/punch/cancelLike")
+    @ApiOperation(value = "对一条打卡记录取消点赞")
+    public void cancleLike(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId){
+        pkPunchRecordService.cancelLike(punchId);
+    }
+
     @ApiOperation(value = "根据打卡id查询打卡相关信息")
     @GetMapping(value = "/punch/detail/{punchId}")
     public PunchWithImageVO queryPunchWithImageVO(@Validated

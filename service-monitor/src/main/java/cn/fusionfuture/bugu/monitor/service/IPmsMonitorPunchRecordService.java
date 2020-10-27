@@ -39,6 +39,16 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
     void like(Long punchId);
 
     /*
+     * @author zws
+     * @description 根据打卡id取消对打卡的点赞
+     * @create 2020/10/27 13:14
+     * @update 2020/10/27 13:14
+     * @param [punchId]
+     * @return void
+     **/
+    void cancelLike(Long punchId);
+
+    /*
      *  通过打卡id查询打卡相关信息
      * @author zws
      * @since 2020/9/26 16:10

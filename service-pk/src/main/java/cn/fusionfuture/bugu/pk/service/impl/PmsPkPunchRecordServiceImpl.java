@@ -107,6 +107,14 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     }
 
     @Override
+    public void cancelLike(Long punchId){
+        //取消点赞，将计划的点赞数-1
+        PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
+        pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()-1);
+        pkPunchRecordMapper.updateById(pkPunchRecord);
+    }
+
+    @Override
     public PunchWithImageVO queryPunchWithImageVO(Long punchId){
         //根据打卡id查询打卡的一些基本信息
         PunchWithImageVO punchWithImageVO= new PunchWithImageVO();

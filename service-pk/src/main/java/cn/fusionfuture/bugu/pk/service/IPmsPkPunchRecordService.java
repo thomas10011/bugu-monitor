@@ -40,6 +40,16 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
 
      /*
       * @author zws
+      * @description 对一条打卡记录取消点赞
+      * @create 2020/10/27 13:25
+      * @update 2020/10/27 13:25
+      * @param [punchId]
+      * @return void
+      **/
+     void cancelLike(Long punchId);
+
+     /*
+      * @author zws
       * @description 根据打卡id查询打卡的相关信息
       * @create 2020/10/23 20:42
       * @update 2020/10/23 20:42

@@ -95,6 +95,16 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     }
 
     @Override
+    public void cancelLike(Long punchId){
+        //取消点赞操作，将计划的点赞数-1
+        PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
+        monitorPunchRecordMapper.updateById(
+                new PmsMonitorPunchRecord()
+                        .setId(monitorPunchRecord.getId())
+                        .setLikeCount(monitorPunchRecord.getLikeCount() - 1)
+        );
+    }
+    @Override
     public BasicPunchVO queryBasicPunchVO(Long punchId){
 
 
