@@ -1,8 +1,6 @@
 package cn.fusionfuture.bugu.pk.service;
 
-import cn.fusionfuture.bugu.pk.vo.PlanTrendVO;
-import cn.fusionfuture.bugu.pk.vo.PunchWithImageVO;
-import cn.fusionfuture.bugu.pk.vo.SimplePunchVO;
+import cn.fusionfuture.bugu.pk.vo.*;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -40,13 +38,33 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
 
      /*
       * @author zws
-      * @description 根据打卡id查询打卡的相关信息
+      * @description 对一条打卡记录取消点赞
+      * @create 2020/10/27 13:25
+      * @update 2020/10/27 13:25
+      * @param [punchId]
+      * @return void
+      **/
+     void cancelLike(Long punchId);
+
+     /*
+      * @author zws
+      * @description 根据打卡id查询打卡的相关信息(打卡日历下的打卡信息）
       * @create 2020/10/23 20:42
       * @update 2020/10/23 20:42
       * @param [punchId]
       * @return cn.fusionfuture.bugu.pk.vo.PunchWithImageVO
       **/
      PunchWithImageVO queryPunchWithImageVO(Long punchId);
+
+     /*
+      * @author zws
+      * @description 根据打卡id查询打卡的相关信息(打卡详情页面的打卡信息）
+      * @create 2020/10/27 15:35
+      * @update 2020/10/27 15:35
+      * @param [punchId]
+      * @return cn.fusionfuture.bugu.pk.vo.DetailedPunchVO
+      **/
+     DetailedPunchVO queryDetailedPunchVO(Long punchId);
 
      /*
       * @author zws

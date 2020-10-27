@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.monitor.vo;
+package cn.fusionfuture.bugu.pk.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,15 +12,15 @@ import java.util.List;
 /**
  * @author zws
  * @version 1.0
- * @class PlanTrendVO
- * @description 监督计划首页动态界面信息
- * @date 2020/10/16 18:56
+ * @class DetailedPunchVO
+ * @description TODO
+ * @date 2020/10/27 15:33
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="PlanTrendVO", description="监督计划首页动态页面打卡信息")
-public class PlanTrendVO {
+@ApiModel(value="DetailedPunchVO", description="打卡详情页面的打卡信息")
+public class DetailedPunchVO {
 
     @ApiModelProperty(name = "用户名",example = "小小")
     private String userName;
@@ -60,5 +60,4 @@ public class PlanTrendVO {
 
     @ApiModelProperty(value = "当前打卡周期",example = "2")
     private Integer currentPunchCycle;
-
 }

@@ -64,7 +64,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         for(int i=0;i<punchQuantity;i++){
             PmsPkPunchRecord pkPunchRecord=new PmsPkPunchRecord();
             pkPunchRecord.setAgreeCount(0).setDisagreeCount(0)
-                    .setLikeCount(0).setCommentQuantity(0).setPkPlanId(pkPlan.getId())
+                    .setLikeCount(0).setCommentQuantity(0).setPkPlanId(pkPlan.getId()).setCurrentPunchCycle(i+1)
                     .setUserId(pkPlan.getUserId()).setStatusId(PunchStatus.NotPunched)
                     .setStartTime(pkPlan.getStartTime().plusDays(i*pkPlan.getPunchCycle()));
             if(pkPlan.getStartTime().plusDays((i+1)*pkPlan.getPunchCycle()).isAfter(pkPlan.getEndTime())){

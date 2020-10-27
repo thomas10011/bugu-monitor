@@ -20,6 +20,6 @@ public interface IPmsPkVoteRecordService extends IService<PmsPkVoteRecord> {
      * @param [userId, planId, punchId, voteResult]
      * @return void
      **/
-    public void vote(Long userId, Long punchId, Boolean voteResult);
+    public String vote(Long userId, Long punchId, Boolean voteResult);
 
 }

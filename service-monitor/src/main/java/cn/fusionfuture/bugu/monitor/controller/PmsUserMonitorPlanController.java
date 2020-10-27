@@ -27,7 +27,7 @@ public class PmsUserMonitorPlanController {
 
 
     @GetMapping(value = "/monitor-plan/monitor/{uid}")
-    @ApiOperation(value = "根据用户id查询用户参与的监督计划")
+    @ApiOperation(value = "根据用户id查询用户创建监督计划")
     PageInfo<BasicMonitorPlanVO> queryMonitorPlanByUserId(@ApiParam(value = "用户的id") @PathVariable Long uid,
                                                           @ApiParam(value = "查询的页码") @RequestParam Integer pn,
                                                           @ApiParam(value = "查询的页面大小") @RequestParam Integer ps) {

@@ -5,18 +5,15 @@
     <select id="queryBasicPunchVO" resultType="cn.fusionfuture.bugu.pk.vo.BasicPunchVO">
         SELECT
             pms_pk_plan.name,
-            pms_pk_pattern.description AS plan_pattern,
             pms_pk_punch_record.content,
-            pms_pk_punch_record.like_count,
-            pms_pk_punch_record.agree_count,
-            pms_pk_punch_record.disagree_count
+            pms_pk_punch_record.id,
+            pms_pk_punch_record.punch_time,
+            pms_pk_punch_record.current_punch_cycle
         FROM
             pms_pk_plan,
-            pms_pk_pattern,
             pms_pk_punch_record
         WHERE
             pms_pk_punch_record.id = #{punchId} AND
-            pms_pk_plan.pk_pattern_id = pms_pk_pattern.id AND
             pms_pk_punch_record.pk_plan_id = pms_pk_plan.id
     </select>
 

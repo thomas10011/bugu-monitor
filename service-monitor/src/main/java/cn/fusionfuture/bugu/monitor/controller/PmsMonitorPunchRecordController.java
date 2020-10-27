@@ -4,6 +4,7 @@ package cn.fusionfuture.bugu.monitor.controller;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.DetailedPunchVO;
 import cn.fusionfuture.bugu.monitor.vo.PlanTrendVO;
 import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
@@ -57,11 +58,24 @@ public class PmsMonitorPunchRecordController {
         monitorPunchRecordService.like(punchId);
     }
 
-    @ApiOperation(value = "根据打卡id查询打卡相关信息")
-    @GetMapping(value = "/punch/detail/{punchId}")
+    @PostMapping("/punch/cancelLike")
+    @ApiOperation(value = "对一条打卡记录取消点赞")
+    public void cancelLike(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId){
+        monitorPunchRecordService.cancelLike(punchId);
+    }
+
+    @ApiOperation(value = "根据打卡id查询打卡部分信息（打卡日历下的打卡数据）")
+    @GetMapping(value = "/punch/basic/{punchId}")
     public BasicPunchVO queryBasicPunchVO(@Validated
                                                   @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
         return monitorPunchRecordService.queryBasicPunchVO(punchId);
+    }
+
+    @ApiOperation(value = "根据打卡id查询打卡详情（打卡详情界面）")
+    @GetMapping(value = "/punch/detailed/{punchId}")
+    public DetailedPunchVO queryDetailedPunchVO(@Validated
+                                          @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
+        return monitorPunchRecordService.queryDetailedPunchVO(punchId);
     }
 
     @ApiOperation(value = "根据计划id查询打卡相关信息")

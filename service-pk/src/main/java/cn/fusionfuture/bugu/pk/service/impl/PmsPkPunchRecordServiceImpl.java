@@ -107,6 +107,14 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     }
 
     @Override
+    public void cancelLike(Long punchId){
+        //取消点赞，将计划的点赞数-1
+        PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
+        pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()-1);
+        pkPunchRecordMapper.updateById(pkPunchRecord);
+    }
+
+    @Override
     public PunchWithImageVO queryPunchWithImageVO(Long punchId){
         //根据打卡id查询打卡的一些基本信息
         PunchWithImageVO punchWithImageVO= new PunchWithImageVO();
@@ -115,6 +123,29 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
         //获取图片
         punchWithImageVO.setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(punchId));
         return punchWithImageVO;
+    }
+
+    @Override
+    public DetailedPunchVO queryDetailedPunchVO(Long punchId){
+        PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(pkPunchRecord.getPkPlanId());
+        HashMap<String,String> puncher = userFeignService.getDetailsForMessage(pkPunchRecord.getUserId()).getData();
+
+        DetailedPunchVO detailedPunchVO=new DetailedPunchVO();
+        detailedPunchVO.setUserName(puncher.get("userName"))
+                .setUserImage(puncher.get("avatarUrl"))
+                .setPlanPattern(pkPatternMapper.selectById(pkPlan.getPkPatternId()).getDescription())
+                .setName(pkPlan.getName())
+                .setPunchId(punchId)
+                .setContent(pkPunchRecord.getContent())
+                .setLikeCount(pkPunchRecord.getLikeCount())
+                .setAgreeCount(pkPunchRecord.getAgreeCount())
+                .setDisagreeCount(pkPunchRecord.getDisagreeCount())
+                .setCommentQuantity(pkPunchRecord.getCommentQuantity())
+                .setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(pkPunchRecord.getId()))
+                .setPunchTime(pkPunchRecord.getPunchTime())
+                .setCurrentPunchCycle(pkPunchRecord.getCurrentPunchCycle());
+        return detailedPunchVO;
     }
 
     @Override
@@ -195,7 +226,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
                     .setCommentQuantity(pkPunchRecord.getCommentQuantity())
                     .setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(pkPunchRecord.getId()))
                     .setPunchTime(pkPunchRecord.getPunchTime())
-                    .setCurrentPunchCycle(getCurrentPunchCycle(currentTime,planId));
+                    .setCurrentPunchCycle(pkPunchRecord.getCurrentPunchCycle());
             pkPlanTrendDTOS.add(pkPlanTrendDTO);
         }
 

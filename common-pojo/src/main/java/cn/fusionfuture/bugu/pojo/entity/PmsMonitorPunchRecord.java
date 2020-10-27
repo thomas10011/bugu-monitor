@@ -66,8 +66,8 @@ public class PmsMonitorPunchRecord implements Serializable {
     @ApiModelProperty(value = "打卡内容")
     private String content;
 
-//    @ApiModelProperty(value = "打卡图片url")
-//    private String imageUrl;
+    @ApiModelProperty(value = "该条打卡所处的打卡周期")
+    private Integer currentPunchCycle;
 
     @ApiModelProperty(value = "打卡时间")
     private LocalDateTime punchTime;
