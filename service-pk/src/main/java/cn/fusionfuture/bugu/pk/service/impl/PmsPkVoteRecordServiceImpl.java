@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkVoteRecord;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkVoteRecordMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkVoteRecordService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,14 @@ public class PmsPkVoteRecordServiceImpl extends ServiceImpl<PmsPkVoteRecordMappe
     PmsPkPunchRecordMapper pkPunchRecordMapper;
 
     @Override
-    public void vote(Long userId, Long punchId, Boolean voteResult){
+    public String vote(Long userId, Long punchId, Boolean voteResult){
 
+        QueryWrapper<PmsPkVoteRecord> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("vote_user_id",userId).eq("punch_id",punchId);
+        PmsPkVoteRecord pkVoteRecordDemo=pkVoteRecordMapper.selectOne(queryWrapper);
+        if(pkVoteRecordDemo!=null){
+            return "您已对此打卡进行过一次投票";
+        }
         //保存用户投票记录至投票记录表
         PmsPkVoteRecord pkVoteRecord=new PmsPkVoteRecord();
         pkVoteRecord.setVoteUserId(userId);
@@ -47,7 +54,6 @@ public class PmsPkVoteRecordServiceImpl extends ServiceImpl<PmsPkVoteRecordMappe
             pkPunchRecord.setDisagreeCount(pkPunchRecord.getDisagreeCount()+1);
             pkPunchRecordMapper.updateById(pkPunchRecord);
         }
-
-
+        return "投票成功";
     }
 }

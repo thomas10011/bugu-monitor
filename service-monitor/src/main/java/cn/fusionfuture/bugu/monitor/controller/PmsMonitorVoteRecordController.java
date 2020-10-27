@@ -30,9 +30,9 @@ public class PmsMonitorVoteRecordController {
 
     @PostMapping("/vote")
     @ApiOperation(value = "投票")
-    public void vote(@ApiParam(value = "用户id") @RequestParam Long userId,
+    public String vote(@ApiParam(value = "用户id") @RequestParam Long userId,
                      @ApiParam(value = "打卡id") @RequestParam Long punchId,
                      @ApiParam(value = "投票结果") @RequestParam Boolean voteResult){
-        monitorVoteRecordService.vote(userId, punchId, voteResult);
+        return monitorVoteRecordService.vote(userId, punchId, voteResult);
     }
 }
