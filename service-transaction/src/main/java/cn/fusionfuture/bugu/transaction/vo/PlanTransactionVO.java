@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
+
 /**
  * @author thomas
  * @version 1.0
@@ -30,6 +32,9 @@ public class PlanTransactionVO {
 
     @ApiModelProperty(value = "title 计划的标题", example = "#活着，然后打败抑郁症#")
     private String tt;
+
+    @ApiModelProperty(value = "transaction_amount 交易金额", example = "6.66")
+    private BigDecimal tm;
 
     @ApiModelProperty(value = "time，交易时间", example = "1970-1-1T00:00:00:000")
     private String t;

@@ -2,6 +2,8 @@ package cn.fusionfuture.bugu.transaction.controller;
 
 
 import cn.fusionfuture.bugu.transaction.service.ITmsPlanTransactionService;
+import cn.fusionfuture.bugu.transaction.vo.PlanTransactionVO;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -25,15 +27,15 @@ public class TmsPlanTransactionController {
 
     @ApiOperation(value = "分页查询羽毛支出")
     @GetMapping(value = "/feather/expense/{uid}")
-    public Object queryFeatherExpenseByPage(@ApiParam(value = "用户id") @NonNull @PathVariable(value = "uid") Long uid,
-                                            @ApiParam(value = "页码编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
-                                            @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
+    public PageInfo<PlanTransactionVO> queryFeatherExpenseByPage(@ApiParam(value = "用户id") @NonNull @PathVariable(value = "uid") Long uid,
+                                                                 @ApiParam(value = "页码编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
+                                                                 @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
         return planTransactionService.queryFeatherExpenseByPage(uid, pn, ps);
     }
 
     @ApiOperation(value = "分页查询羽毛收入")
     @GetMapping(value = "/feather/income/{uid}")
-    public Object queryFeatherIncomeByPage(@ApiParam(value = "用户id") @NonNull @PathVariable(value = "uid") Long uid,
+    public PageInfo<PlanTransactionVO>  queryFeatherIncomeByPage(@ApiParam(value = "用户id") @NonNull @PathVariable(value = "uid") Long uid,
                                             @ApiParam(value = "页码编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
                                             @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
         return planTransactionService.queryFeatherIncomeByPage(uid, pn, ps);
