@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorUserGrabTicketMapper;
+import cn.fusionfuture.bugu.pojo.constants.VoteJudge;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorUserGrabTicket;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorVoteRecord;
@@ -34,7 +35,7 @@ public class PmsMonitorVoteRecordServiceImpl extends ServiceImpl<PmsMonitorVoteR
     PmsMonitorUserGrabTicketMapper monitorUserGrabTicketMapper;
 
     @Override
-    public String vote(Long userId, Long punchId, Boolean voteResult){
+    public Integer vote(Long userId, Long punchId, Boolean voteResult){
 
 
         //在打卡之前先需要先判断用户是否已经对该打卡对应的计划抢票
@@ -42,14 +43,14 @@ public class PmsMonitorVoteRecordServiceImpl extends ServiceImpl<PmsMonitorVoteR
         queryWrapper1.eq("user_id",userId).eq("monitor_plan_id",monitorPunchRecordMapper.selectById(punchId).getMonitorPlanId());
         PmsMonitorUserGrabTicket monitorUserGrabTicketDemo=monitorUserGrabTicketMapper.selectOne(queryWrapper1);
         if(monitorUserGrabTicketDemo==null){
-            return "您不能对该计划进行打卡";
+            return VoteJudge.NotEnrolled;
         }
         //判断用户对该计划是否已打卡
         QueryWrapper<PmsMonitorVoteRecord> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("vote_user_id",userId).eq("punch_id",punchId);
         PmsMonitorVoteRecord monitorVoteRecordDemo=monitorVoteRecordMapper.selectOne(queryWrapper);
         if(monitorVoteRecordDemo!=null){
-            return "您已对此打卡进行过一次投票";
+            return VoteJudge.IsVoted;
         }
 
         //保存用户投票记录至投票记录表
@@ -76,6 +77,6 @@ public class PmsMonitorVoteRecordServiceImpl extends ServiceImpl<PmsMonitorVoteR
                             .setDisagreeCount(monitorPunchRecord.getDisagreeCount() + 1)
             );
         }
-        return "投票成功";
+        return VoteJudge.VoteSUCCESS;
     }
 }

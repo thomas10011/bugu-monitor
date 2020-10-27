@@ -20,5 +20,5 @@ public interface IPmsMonitorVoteRecordService extends IService<PmsMonitorVoteRec
      * @param [userId, punchId, voteResult] 
      * @return void 
      **/
-    public String vote(Long userId, Long punchId, Boolean voteResult);
+    public Integer vote(Long userId, Long punchId, Boolean voteResult);
 }
