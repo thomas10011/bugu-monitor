@@ -1,10 +1,13 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
+import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorUserGrabTicketMapper;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
+import cn.fusionfuture.bugu.pojo.entity.PmsMonitorUserGrabTicket;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorVoteRecord;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorVoteRecordMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorVoteRecordService;
+import cn.fusionfuture.bugu.pojo.entity.PmsPkUserGrabTicket;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +30,21 @@ public class PmsMonitorVoteRecordServiceImpl extends ServiceImpl<PmsMonitorVoteR
     @Autowired
     PmsMonitorPunchRecordMapper monitorPunchRecordMapper;
 
+    @Autowired
+    PmsMonitorUserGrabTicketMapper monitorUserGrabTicketMapper;
+
     @Override
     public String vote(Long userId, Long punchId, Boolean voteResult){
 
+
+        //在打卡之前先需要先判断用户是否已经对该打卡对应的计划抢票
+        QueryWrapper<PmsMonitorUserGrabTicket> queryWrapper1=new QueryWrapper<>();
+        queryWrapper1.eq("user_id",userId).eq("monitor_plan_id",monitorPunchRecordMapper.selectById(punchId).getMonitorPlanId());
+        PmsMonitorUserGrabTicket monitorUserGrabTicketDemo=monitorUserGrabTicketMapper.selectOne(queryWrapper1);
+        if(monitorUserGrabTicketDemo==null){
+            return "您不能对该计划进行打卡";
+        }
+        //判断用户对该计划是否已打卡
         QueryWrapper<PmsMonitorVoteRecord> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("vote_user_id",userId).eq("punch_id",punchId);
         PmsMonitorVoteRecord monitorVoteRecordDemo=monitorVoteRecordMapper.selectOne(queryWrapper);

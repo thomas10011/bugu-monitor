@@ -1,7 +1,9 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
+import cn.fusionfuture.bugu.pk.mapper.PmsPkUserGrabTicketMapper;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
+import cn.fusionfuture.bugu.pojo.entity.PmsPkUserGrabTicket;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkVoteRecord;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkVoteRecordMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkVoteRecordService;
@@ -27,12 +29,22 @@ public class PmsPkVoteRecordServiceImpl extends ServiceImpl<PmsPkVoteRecordMappe
     @Autowired
     PmsPkPunchRecordMapper pkPunchRecordMapper;
 
+    @Autowired
+    PmsPkUserGrabTicketMapper pkUserGrabTicketMapper;
+
     @Override
     public String vote(Long userId, Long punchId, Boolean voteResult){
 
-        QueryWrapper<PmsPkVoteRecord> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("vote_user_id",userId).eq("punch_id",punchId);
-        PmsPkVoteRecord pkVoteRecordDemo=pkVoteRecordMapper.selectOne(queryWrapper);
+        //在打卡之前先需要先判断用户是否已经对该打卡对应的计划抢票
+        QueryWrapper<PmsPkUserGrabTicket> queryWrapper1=new QueryWrapper<>();
+        queryWrapper1.eq("user_id",userId).eq("pk_plan_id",pkPunchRecordMapper.selectById(punchId).getPkPlanId());
+        PmsPkUserGrabTicket pkUserGrabTicketDemo=pkUserGrabTicketMapper.selectOne(queryWrapper1);
+        if(pkUserGrabTicketDemo==null){
+            return "您不能对该计划进行打卡";
+        }
+        QueryWrapper<PmsPkVoteRecord> queryWrapper2=new QueryWrapper<>();
+        queryWrapper2.eq("vote_user_id",userId).eq("punch_id",punchId);
+        PmsPkVoteRecord pkVoteRecordDemo=pkVoteRecordMapper.selectOne(queryWrapper2);
         if(pkVoteRecordDemo!=null){
             return "您已对此打卡进行过一次投票";
         }
