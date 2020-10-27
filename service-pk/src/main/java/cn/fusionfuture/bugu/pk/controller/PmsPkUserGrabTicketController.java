@@ -2,10 +2,9 @@ package cn.fusionfuture.bugu.pk.controller;
 
 
 import cn.fusionfuture.bugu.pk.service.IPmsPkUserGrabTicketService;
-import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;

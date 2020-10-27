@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper">
 
-    <select id="queryBasicMonitorPlanVO" resultType="cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO">
+    <select id="queryBasicMonitorPlanVO" resultType="cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO">
         SELECT
             pms_monitor_plan.id,
             pms_monitor_plan.`name`,
@@ -25,7 +25,7 @@
         ORDER BY pms_monitor_plan.id DESC
     </select>
 
-    <select id="queryDetailedMonitorPlanVO" resultType="cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO">
+    <select id="queryDetailedMonitorPlanVO" resultType="cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO">
         SELECT
             pms_monitor_plan.image_url,
             pms_monitor_plan.name,
@@ -50,7 +50,7 @@
         ORDER BY pms_monitor_plan.id DESC
     </select>
 
-    <select id="querySimpleMonitorPlanVO" resultType="cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO">
+    <select id="querySimpleMonitorPlanVO" resultType="cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO">
         SELECT
             pms_monitor_plan.name,
             pms_monitor_plan.monitor_quantity,

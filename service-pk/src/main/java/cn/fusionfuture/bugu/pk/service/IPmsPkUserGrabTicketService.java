@@ -1,6 +1,6 @@
 package cn.fusionfuture.bugu.pk.service;
 
-import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkUserGrabTicket;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
@@ -30,7 +30,7 @@ public interface IPmsPkUserGrabTicketService extends IService<PmsPkUserGrabTicke
      * @create 2020/10/25 13:16
      * @update 2020/10/25 13:16
      * @param [pn, ps, uid]
-     * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO>
+     * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO>
      **/
     PageInfo<BasicPkPlanVO> queryUserVotePlanByUserId(Integer pn, Integer ps, Long uid);
 }

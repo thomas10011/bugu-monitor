@@ -1,6 +1,6 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
-import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkUserGrabTicket;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkUserGrabTicketMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkUserGrabTicketService;

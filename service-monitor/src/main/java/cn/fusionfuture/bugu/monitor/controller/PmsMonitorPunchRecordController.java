@@ -3,10 +3,10 @@ package cn.fusionfuture.bugu.monitor.controller;
 
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
-import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.monitor.vo.DetailedPunchVO;
-import cn.fusionfuture.bugu.monitor.vo.PlanTrendVO;
-import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
+import cn.fusionfuture.bugu.monitor.vo.punch.BasicPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.punch.DetailedPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.punch.PlanTrendVO;
+import cn.fusionfuture.bugu.monitor.vo.punch.SimplePunchVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

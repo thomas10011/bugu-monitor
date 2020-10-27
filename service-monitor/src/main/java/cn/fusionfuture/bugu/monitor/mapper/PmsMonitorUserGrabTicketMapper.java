@@ -1,6 +1,6 @@
 package cn.fusionfuture.bugu.monitor.mapper;
 
-import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorUserGrabTicket;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -22,7 +22,7 @@ public interface PmsMonitorUserGrabTicketMapper extends BaseMapper<PmsMonitorUse
      * @create 2020/10/25 14:13
      * @update 2020/10/25 14:13
      * @param [uid]
-     * @return java.util.List<cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO>
+     * @return java.util.List<cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO>
      **/
     List<BasicMonitorPlanVO> queryUserVotePlanByUserId(Long uid);
 }

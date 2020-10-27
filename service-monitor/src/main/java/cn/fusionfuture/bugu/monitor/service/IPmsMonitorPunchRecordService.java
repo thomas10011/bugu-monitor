@@ -1,9 +1,9 @@
 package cn.fusionfuture.bugu.monitor.service;
 
-import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
-import cn.fusionfuture.bugu.monitor.vo.DetailedPunchVO;
-import cn.fusionfuture.bugu.monitor.vo.PlanTrendVO;
-import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
+import cn.fusionfuture.bugu.monitor.vo.punch.BasicPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.punch.DetailedPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.punch.PlanTrendVO;
+import cn.fusionfuture.bugu.monitor.vo.punch.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -54,7 +54,7 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @author zws
      * @since 2020/9/26 16:10
      * @param [punchId] 
-     * @return cn.fusionfuture.bugu.monitor.vo.BasicPunchVO 
+     * @return cn.fusionfuture.bugu.monitor.vo.punch.BasicPunchVO
      **/
     BasicPunchVO queryBasicPunchVO(Long punchId);
 
@@ -64,7 +64,7 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @create 2020/10/27 15:05
      * @update 2020/10/27 15:05
      * @param [punchId]
-     * @return cn.fusionfuture.bugu.monitor.vo.DetailedPunchVO
+     * @return cn.fusionfuture.bugu.monitor.vo.punch.DetailedPunchVO
      **/
     DetailedPunchVO queryDetailedPunchVO(Long punchId);
     /*
@@ -72,7 +72,7 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @author zws
      * @since 2020/10/15 19:33
      * @param [planId]
-     * @return cn.fusionfuture.bugu.monitor.vo.SimplePunchVO
+     * @return cn.fusionfuture.bugu.monitor.vo.punch.SimplePunchVO
      **/
     List<SimplePunchVO> querySimplePunchVO(Long planId);
     

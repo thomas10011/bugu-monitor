@@ -1,13 +1,11 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
-import ch.qos.logback.classic.jmx.MBeanUtil;
 import cn.fusionfuture.bugu.pk.mapper.*;
-import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.NewPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.NewPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
-import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
@@ -75,7 +73,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
             }
             pkPunchRecordMapper.insert(pkPunchRecord);
         }
-        pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPkPlanId(pkPlan.getId());
+        pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPunchVictoryCount(0).setPkPlanId(pkPlan.getId());
         userCreatePlanMapper.insert(pmsUserCreatePlan);
         return pkPlan.getId();
     }

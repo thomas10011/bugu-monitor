@@ -2,31 +2,27 @@ package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchStatusMapper;
-import cn.fusionfuture.bugu.monitor.vo.*;
+import cn.fusionfuture.bugu.monitor.mapper.PmsUserMonitorPlanMapper;
+import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.NewMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
-import com.alibaba.nacos.client.naming.utils.CollectionUtils;
+import cn.fusionfuture.bugu.pojo.entity.PmsUserMonitorPlan;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.scripting.xmltags.ForEachSqlNode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -50,9 +46,14 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
     @Autowired
     PmsMonitorPunchStatusMapper monitorPunchStatusMapper;
 
+    @Autowired
+    PmsUserMonitorPlanMapper userMonitorPlanMapper;
+
     @Override
     public Long createMonitorPlan(NewMonitorPlanVO newMonitorPlanVO) {
         PmsMonitorPlan monitorPlan = new PmsMonitorPlan();
+        PmsUserMonitorPlan userMonitorPlan=new PmsUserMonitorPlan();
+
 
         BeanUtils.copyProperties(newMonitorPlanVO, monitorPlan);
         // 插入前把已打卡次数置为零
@@ -72,6 +73,9 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
             }
             monitorPunchRecordMapper.insert(monitorPunchRecord);
         }
+        userMonitorPlan.setMonitorPlanId(monitorPlan.getId()).setUserId(monitorPlan.getUserId())
+                .setPunchVictoryCount(0);
+        userMonitorPlanMapper.insert(userMonitorPlan);
         return monitorPlan.getId();
     }
 

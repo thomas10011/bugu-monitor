@@ -1,8 +1,8 @@
 package cn.fusionfuture.bugu.monitor.mapper;
 
-import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
@@ -24,7 +24,7 @@ public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
      * 查询BasicMonitorPlanVO
      * @author thomas
      * @since 2020/9/12 1:34 上午
-     * @return java.util.List<cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO>
+     * @return java.util.List<cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO>
      **/
     List<BasicMonitorPlanVO> queryBasicMonitorPlanVO(Long uid);
 
@@ -33,7 +33,7 @@ public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
      * @author zws
      * @since 2020/10/14 18:32
      * @param [pid]
-     * @return cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO
+     * @return cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO
      **/
     DetailedMonitorPlanVO queryDetailedMonitorPlanVO(Long pid);
 
@@ -42,7 +42,7 @@ public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
      * @author zws
      * @since 2020/9/26 15:57
      * @param [planId]
-     * @return cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO
+     * @return cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO
      **/
     SimpleMonitorPlanVO querySimpleMonitorPlanVO(Long planId);
 

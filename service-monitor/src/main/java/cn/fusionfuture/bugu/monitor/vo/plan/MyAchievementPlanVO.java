@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.monitor.vo;
+package cn.fusionfuture.bugu.monitor.vo.plan;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,17 +10,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @author thomas
+ * @author zws
  * @version 1.0
- * @class MonitorPlanVO
+ * @class MyAchievementPlanVO
  * @description TODO
- * @date 2020/9/11 10:50 下午
+ * @date 2020/10/28 4:13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="BasicMonitorPlanVO", description="按照用户id查询相关监督计划")
-public class BasicMonitorPlanVO {
+@ApiModel(value="MyAchievementPlanVO", description="成就界面按照用户id查询用户创建的监督计划")
+public class MyAchievementPlanVO {
 
     @ApiModelProperty(value = "计划的id", example = "1318520212345098242")
     private Long id;
@@ -43,6 +43,9 @@ public class BasicMonitorPlanVO {
     @ApiModelProperty(value = "已打卡次数",example = "1")
     private Integer punchCount;
 
+    @ApiModelProperty(value = "监督人数",example ="1")
+    private Integer monitorCount;
+
     @ApiModelProperty(value = "打卡总次数",example = "10")
     private Integer punchQuantity;
 
@@ -51,5 +54,4 @@ public class BasicMonitorPlanVO {
 
     @ApiModelProperty(value = "结束时间")
     private LocalDateTime endTime;
-
 }

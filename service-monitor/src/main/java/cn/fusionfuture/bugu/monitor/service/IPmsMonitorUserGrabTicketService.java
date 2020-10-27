@@ -1,11 +1,9 @@
 package cn.fusionfuture.bugu.monitor.service;
 
-import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorUserGrabTicket;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 /**
  * <p>
@@ -32,7 +30,7 @@ public interface IPmsMonitorUserGrabTicketService extends IService<PmsMonitorUse
      * @create 2020/10/25 14:10
      * @update 2020/10/25 14:10
      * @param [pn, ps, uid]
-     * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO>
+     * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO>
      **/
     PageInfo<BasicMonitorPlanVO> queryUserVotePlanByUserId(Integer pn, Integer ps, Long uid);
 }

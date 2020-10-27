@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper">
 
-    <select id="queryPkUserAttendPlanByUserId" resultType="cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO">
+    <select id="queryPkUserAttendPlanByUserId" resultType="cn.fusionfuture.bugu.pk.vo.plan.MyAchievementPlanVO">
     SELECT
         pms_pk_plan.id,
         pms_pk_plan.name,
@@ -10,6 +10,8 @@
         pms_pk_plan.punch_quantity,
         pms_pk_plan.start_time,
         pms_pk_plan.end_time,
+        pms_pk_plan.enrolled_quantity,
+        pms_user_attend_plan.punch_victory_count,
         pms_pk_pattern.description AS plan_pattern,
         pms_pk_plan_status.description AS plan_status
     FROM
@@ -36,7 +38,7 @@
             AND pms_user_attend_plan.pk_plan_id= #{planId}
     </select>
 
-    <select id="queryDetailedPkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO">
+    <select id="queryDetailedPkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO">
         SELECT
             pms_pk_plan.name,
             pms_pk_plan.image_url,
@@ -65,7 +67,7 @@
             pms_user_attend_plan.pk_plan_id= #{pid}
     </select>
 
-    <select id="queryPkUserAttendPlanByPlanId" resultType="cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO">
+    <select id="queryPkUserAttendPlanByPlanId" resultType="cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO">
     SELECT
         pms_pk_plan.id,
         pms_pk_plan.name,

@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.pk.vo;
+package cn.fusionfuture.bugu.pk.vo.plan;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,6 +1,9 @@
 package cn.fusionfuture.bugu.pk.service;
 
 import cn.fusionfuture.bugu.pk.vo.*;
+import cn.fusionfuture.bugu.pk.vo.punch.DetailedPunchVO;
+import cn.fusionfuture.bugu.pk.vo.punch.PlanTrendVO;
+import cn.fusionfuture.bugu.pk.vo.punch.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -62,7 +65,7 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
       * @create 2020/10/27 15:35
       * @update 2020/10/27 15:35
       * @param [punchId]
-      * @return cn.fusionfuture.bugu.pk.vo.DetailedPunchVO
+      * @return cn.fusionfuture.bugu.pk.vo.punch.DetailedPunchVO
       **/
      DetailedPunchVO queryDetailedPunchVO(Long punchId);
 
@@ -72,9 +75,9 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
       * @create 2020/10/23 20:42
       * @update 2020/10/23 20:42
       * @param [userId, planId]
-      * @return java.util.List<cn.fusionfuture.bugu.pk.vo.SimplePunchVO>
+      * @return java.util.List<cn.fusionfuture.bugu.pk.vo.punch.SimplePunchVO>
       **/
-     List<SimplePunchVO> querySimplePunchVO(Long userId,Long planId);
+     List<SimplePunchVO> querySimplePunchVO(Long userId, Long planId);
 
      /*
       * @author zws
@@ -82,7 +85,7 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
       * @create 2020/10/23 20:42
       * @update 2020/10/23 20:42
       * @param [userId]
-      * @return java.util.List<cn.fusionfuture.bugu.pk.vo.PlanTrendVO>
+      * @return java.util.List<cn.fusionfuture.bugu.pk.vo.punch.PlanTrendVO>
       **/
      List<PlanTrendVO> queryPkPlanTrendVO (Long userId);
 

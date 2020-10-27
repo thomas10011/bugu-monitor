@@ -1,6 +1,6 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
-import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.MyAchievementPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserMonitorPlan;
 import cn.fusionfuture.bugu.monitor.mapper.PmsUserMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsUserMonitorPlanService;
@@ -26,7 +26,7 @@ public class PmsUserMonitorPlanServiceImpl extends ServiceImpl<PmsUserMonitorPla
 
 
     @Override
-    public PageInfo<BasicMonitorPlanVO> queryMonitorPlanByUserId(Integer pn, Integer ps, Long uid) {
+    public PageInfo<MyAchievementPlanVO> queryMonitorPlanByUserId(Integer pn, Integer ps, Long uid) {
         PageHelper.startPage(pn, ps);
         return new PageInfo<>(userMonitorPlanMapper.queryMonitorPlanByUserId(uid));
     }

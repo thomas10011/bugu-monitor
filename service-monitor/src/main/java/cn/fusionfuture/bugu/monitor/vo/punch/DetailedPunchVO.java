@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.monitor.vo;
+package cn.fusionfuture.bugu.monitor.vo.punch;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

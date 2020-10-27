@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.pk.vo;
+package cn.fusionfuture.bugu.pk.vo.plan;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,6 +42,12 @@ public class BasicPkPlanVO implements Serializable {
 
     @ApiModelProperty(value = "打卡总次数",example = "10")
     private Integer punchQuantity;
+
+    @ApiModelProperty(value = "报名人数",example = "10")
+    private Integer enrolledQuantity;
+
+    @ApiModelProperty(value = "打卡成功次数",example = "2")
+    private Integer punchVictoryCount;
 
     @ApiModelProperty(value = "pk计划单人金额",example = "90")
     private BigDecimal totalBonus;

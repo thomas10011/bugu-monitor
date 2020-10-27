@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper">
-    <select id="queryBasicPkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO">
+    <select id="queryBasicPkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO">
         SELECT
             pms_pk_plan.id,
             pms_pk_plan.name,
@@ -23,7 +23,7 @@
         ORDER BY pms_pk_plan.id DESC
     </select>
 
-    <select id="querySimplePkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO">
+    <select id="querySimplePkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO">
         SELECT
             pms_pk_plan.name,
             pms_pk_plan.punch_quantity,

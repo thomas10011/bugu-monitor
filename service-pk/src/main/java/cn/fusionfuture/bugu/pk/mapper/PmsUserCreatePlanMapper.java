@@ -1,9 +1,10 @@
 package cn.fusionfuture.bugu.pk.mapper;
 
 
-import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.UserCreatePlanRecordVO;
+import cn.fusionfuture.bugu.pk.vo.plan.MyAchievementPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserCreatePlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,9 +27,9 @@ public interface PmsUserCreatePlanMapper extends BaseMapper<PmsUserCreatePlan> {
      * @author zws
      * @since 2020/9/12 16:45
      * @param [uid]
-     * @return java.util.List<cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO>
+     * @return java.util.List<cn.fusionfuture.bugu.pk.vo.plan.MyAchievementPlanVO>
      **/
-    List<BasicPkPlanVO> queryPkUserCreatePlanByUserId(Long uid);
+    List<MyAchievementPlanVO> queryPkUserCreatePlanByUserId(Long uid);
 
     /*
      * TODO 根据用户id和计划id选中用户参与计划表中的一条记录
@@ -44,7 +45,7 @@ public interface PmsUserCreatePlanMapper extends BaseMapper<PmsUserCreatePlan> {
      * @author zws
      * @since 2020/10/14 22:30
      * @param [uid, pid]
-     * @return cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO
+     * @return cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO
      **/
     DetailedPkPlanVO queryDetailedPkPlanVO(@Param("uid") Long uid, @Param("pid") Long pid);
 }

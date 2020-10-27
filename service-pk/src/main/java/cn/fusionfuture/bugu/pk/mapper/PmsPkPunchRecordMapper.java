@@ -1,7 +1,7 @@
 package cn.fusionfuture.bugu.pk.mapper;
 
 import cn.fusionfuture.bugu.pk.dto.SimplePunchDTO;
-import cn.fusionfuture.bugu.pk.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.pk.vo.punch.BasicPunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,7 +23,7 @@ public interface PmsPkPunchRecordMapper extends BaseMapper<PmsPkPunchRecord> {
      * @author zws
      * @since 2020/9/25 20:05
      * @param [punchId] 
-     * @return java.util.List<cn.fusionfuture.bugu.pk.vo.BasicPunchVO> 
+     * @return java.util.List<cn.fusionfuture.bugu.pk.vo.punch.BasicPunchVO>
      **/
     BasicPunchVO queryBasicPunchVO(Long punchId);
 

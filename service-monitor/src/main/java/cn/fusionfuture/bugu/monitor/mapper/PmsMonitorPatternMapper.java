@@ -1,6 +1,5 @@
 package cn.fusionfuture.bugu.monitor.mapper;
 
-import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.MonitorPlanPatternVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPattern;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

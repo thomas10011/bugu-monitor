@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.monitor.vo;
+package cn.fusionfuture.bugu.pk.vo.plan;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,20 +8,20 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /**
  * @author zwswl
  * @version 1.0
- * @class MonitorPlanVO
+ * @class PkPlanVO
  * @description TODO
- * @date 2020/9/9 11:00
+ * @date 2020/9/10 10:30
  */
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="MonitorPlanVO对象", description="创建一个监督计划")
-public class NewMonitorPlanVO {
+@ApiModel(value="PkPlanVO对象", description="创建pk计划传入的对象")
+public class NewPkPlanVO {
 
     @ApiModelProperty(value = "计划标题",example = "每日背单词")
     private String name;
@@ -29,20 +29,20 @@ public class NewMonitorPlanVO {
     @ApiModelProperty(value = "创建者用户id",example = "1309123491764805634")
     private Long userId;
 
-    @ApiModelProperty(value = "计划描述",example = "http://www.bifengo.com/img/db6dad1b4d4c7e5b0fbbee7d4f2d6b6b83130323.html")
+    @ApiModelProperty(value = "计划描述",example = "每天背至少30个新单词")
     private String description;
 
-    @ApiModelProperty(value = "监督计划封面图片url",example = "每天背至少30个新单词")
+    @ApiModelProperty(value = "pk计划封面图片url",example = "http://www.bifengo.com/img/db6dad1b4d4c7e5b0fbbee7d4f2d6b6b83130323.html")
     private String imageUrl;
 
     @ApiModelProperty(value = "是否匿名发布")
     private Boolean isAnonymouslyPublish;
 
-    @ApiModelProperty(value = "监督模式id",example = "3")
-    private Integer monitorPatternId;
+    @ApiModelProperty(value = "pk计划模式id",example = "2")
+    private Integer pkPatternId;
 
-    @ApiModelProperty(value = "监督人数",example = "2")
-    private Integer monitorQuantity;
+    @ApiModelProperty(value = "pk人数",example = "10")
+    private Integer pkQuantity;
 
     @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
@@ -62,8 +62,8 @@ public class NewMonitorPlanVO {
     @ApiModelProperty(value = "奖池奖金形式")
     private Boolean bonusType;
 
-    @ApiModelProperty(value = "监督者奖金总数",example = "90")
-    private BigDecimal monitorBonus;
+    @ApiModelProperty(value = "pk者奖金总数",example = "90")
+    private BigDecimal pkBonus;
 
     @ApiModelProperty(value = "投票者奖金总数",example = "10")
     private BigDecimal voteBonus;
@@ -74,6 +74,4 @@ public class NewMonitorPlanVO {
     @ApiModelProperty(value = "是否上传至布谷金巢")
     private Boolean isUploadBugu;
 
-    @ApiModelProperty(value = "计划状态id",example = "2")
-    private Integer planStatusId;
 }

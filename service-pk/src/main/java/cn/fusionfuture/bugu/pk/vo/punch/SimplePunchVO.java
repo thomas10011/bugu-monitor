@@ -1,4 +1,4 @@
-package cn.fusionfuture.bugu.monitor.vo;
+package cn.fusionfuture.bugu.pk.vo.punch;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @class SimplePunchVO
  * @description TODO
- * @date 2020/10/15 19:20
+ * @date 2020/10/15 20:58
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="SimplePunchVO", description="打卡日历中的简略打卡信息")
+@ApiModel(value="SimplePunchVO", description="打卡日历界面的简略打卡信息")
 public class SimplePunchVO {
 
     @ApiModelProperty(value = "打卡的id",example = "1318520214740045826")

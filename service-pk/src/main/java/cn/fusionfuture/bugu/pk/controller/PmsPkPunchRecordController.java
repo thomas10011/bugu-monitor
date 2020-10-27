@@ -3,6 +3,9 @@ package cn.fusionfuture.bugu.pk.controller;
 
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
 import cn.fusionfuture.bugu.pk.vo.*;
+import cn.fusionfuture.bugu.pk.vo.punch.DetailedPunchVO;
+import cn.fusionfuture.bugu.pk.vo.punch.PlanTrendVO;
+import cn.fusionfuture.bugu.pk.vo.punch.SimplePunchVO;
 import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -76,7 +79,7 @@ public class PmsPkPunchRecordController {
     @GetMapping(value = "plan/punch/detail/{uid}&{pid}")
     public List<SimplePunchVO> querySimplePunchVO(@Validated
                                                       @ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
-                                                      @ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
+                                                  @ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
         return pkPunchRecordService.querySimplePunchVO(uid,pid);
     }
 

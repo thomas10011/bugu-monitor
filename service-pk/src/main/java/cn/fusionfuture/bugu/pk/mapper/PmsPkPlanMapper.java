@@ -1,11 +1,9 @@
 package cn.fusionfuture.bugu.pk.mapper;
 
-import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.yaml.snakeyaml.scanner.ScannerImpl;
 
 import java.util.List;
 
@@ -24,7 +22,7 @@ public interface PmsPkPlanMapper extends BaseMapper<PmsPkPlan> {
      * @author zws
      * @since 2020/9/12 16:44
      * @param [uid]
-     * @return java.util.List<cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO>
+     * @return java.util.List<cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO>
      **/
     List<BasicPkPlanVO> queryBasicPkPlanVO(Long userId);
     
@@ -33,7 +31,7 @@ public interface PmsPkPlanMapper extends BaseMapper<PmsPkPlan> {
      * @author zws
      * @since 2020/9/25 19:44
      * @param [planId] 
-     * @return cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO 
+     * @return cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO
      **/
     SimplePkPlanVO querySimplePkPlanVO(Long planId);
 

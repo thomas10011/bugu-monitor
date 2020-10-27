@@ -4,24 +4,20 @@ package cn.fusionfuture.bugu.monitor.controller;
 import cn.fusionfuture.bugu.monitor.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
-import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.NewMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanType;
-import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiKeyAuthDefinition;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * <p>

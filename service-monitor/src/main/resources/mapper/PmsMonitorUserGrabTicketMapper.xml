@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fusionfuture.bugu.monitor.mapper.PmsMonitorUserGrabTicketMapper">
 
-    <select id="queryUserVotePlanByUserId" resultType="cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO">
+    <select id="queryUserVotePlanByUserId" resultType="cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO">
     SELECT
         distinct pms_monitor_plan.id,
         pms_monitor_plan.name,

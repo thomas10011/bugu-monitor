@@ -1,9 +1,9 @@
 package cn.fusionfuture.bugu.pk.service;
 
-import cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.NewPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.NewPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
@@ -32,7 +32,7 @@ public interface IPmsPkPlanService extends IService<PmsPkPlan> {
     * @author zws
     * @since 2020/9/13 15:24
     * @param [pn, ps, uid]
-    * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.pk.vo.BasicPkPlanVO>
+    * @return com.github.pagehelper.PageInfo<cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO>
     **/
     PageInfo<BasicPkPlanVO> queryBasicPkPlanVO(Integer pn,Integer ps,Long userId);
 
@@ -41,7 +41,7 @@ public interface IPmsPkPlanService extends IService<PmsPkPlan> {
      * @author zws
      * @since 2020/9/25 19:51
      * @param [planId] 
-     * @return cn.fusionfuture.bugu.pk.vo.SimplePkPlanVO 
+     * @return cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO
      **/
     SimplePkPlanVO querySimplePkPlanVO(Long planId);
 
@@ -50,7 +50,7 @@ public interface IPmsPkPlanService extends IService<PmsPkPlan> {
      * @author zws
      * @since 2020/10/14 22:33
      * @param [uid, pid]
-     * @return cn.fusionfuture.bugu.pk.vo.DetailedPkPlanVO
+     * @return cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO
      **/
     DetailedPkPlanVO queryDetailedPkPlanVO(Long uid,Long pid);
 

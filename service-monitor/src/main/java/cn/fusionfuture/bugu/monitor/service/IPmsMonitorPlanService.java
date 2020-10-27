@@ -1,14 +1,12 @@
 package cn.fusionfuture.bugu.monitor.service;
 
-import cn.fusionfuture.bugu.monitor.vo.BasicMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.NewMonitorPlanVO;
-import cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.NewMonitorPlanVO;
+import cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 /**
  * <p>
@@ -45,7 +43,7 @@ public interface IPmsMonitorPlanService extends IService<PmsMonitorPlan> {
      * @author zws
      * @since 2020/10/14 18:48
      * @param [pid]
-     * @return cn.fusionfuture.bugu.monitor.vo.DetailedMonitorPlanVO
+     * @return cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO
      **/
     DetailedMonitorPlanVO queryDetailedMonitorPlanVO(Long pid);
 
@@ -54,7 +52,7 @@ public interface IPmsMonitorPlanService extends IService<PmsMonitorPlan> {
      * @author zws
      * @since 2020/9/26 15:54
      * @param [planId]
-     * @return cn.fusionfuture.bugu.monitor.vo.SimpleMonitorPlanVO
+     * @return cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO
      **/
     SimpleMonitorPlanVO querySimpleMonitorPlanVO(Long planId);
 
