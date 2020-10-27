@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -21,24 +22,23 @@ import java.util.List;
 @ApiModel(value="PunchWithImageVO", description="打卡记录相关VO")
 public class PunchWithImageVO {
 
-    @ApiModelProperty(value = "pk计划模式",example = "多人打卡")
-    private String planPattern;
 
-    @ApiModelProperty(value = "计划标题",example = "打败抑郁症")
+    @ApiModelProperty(name = "打卡id",example = "1318520213938933761")
+    private Long id;
+
+    @ApiModelProperty(value = "计划名称",example = "每日背单词")
     private String name;
 
-    @ApiModelProperty(value = "打卡内容",example = "小小测试一下")
+    @ApiModelProperty(value = "打卡内容",example = "今天忘记了！")
     private String content;
 
-    @ApiModelProperty(value = "打卡被点赞次数",example = "1")
-    private Integer likeCount;
+    @ApiModelProperty(value = "打卡时间")
+    private LocalDateTime punchTime;
 
-    @ApiModelProperty(value = "打卡被认可次数",example = "1")
-    private Integer agreeCount;
+    @ApiModelProperty(value = "当前打卡所处的打卡周期")
+    private Integer currentPunchCycle;
 
-    @ApiModelProperty(value = "打卡被否认次数",example = "1")
-    private Integer disagreeCount;
-
-    @ApiModelProperty(value = "打卡图片")
+    @ApiModelProperty
     private List<String> imageUrls;
+
 }

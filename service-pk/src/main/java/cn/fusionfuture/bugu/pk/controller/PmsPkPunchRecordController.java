@@ -58,11 +58,18 @@ public class PmsPkPunchRecordController {
         pkPunchRecordService.cancelLike(punchId);
     }
 
-    @ApiOperation(value = "根据打卡id查询打卡相关信息")
-    @GetMapping(value = "/punch/detail/{punchId}")
+    @ApiOperation(value = "根据打卡id查询打卡相关信息(打卡日历下的打卡信息）")
+    @GetMapping(value = "/punch/basic/{punchId}")
     public PunchWithImageVO queryPunchWithImageVO(@Validated
                                                       @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
         return pkPunchRecordService.queryPunchWithImageVO(punchId);
+    }
+
+    @ApiOperation(value = "根据打卡id查询打卡详情（打卡详情界面）")
+    @GetMapping(value = "/punch/detailed/{punchId}")
+    public DetailedPunchVO queryDetailedPunchVO(@Validated
+                                                @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
+        return pkPunchRecordService.queryDetailedPunchVO(punchId);
     }
 
     @ApiOperation(value = "根据用户id和计划id查询打卡相关信息")

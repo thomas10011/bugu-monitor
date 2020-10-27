@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="SimplePunchVO", description="打卡日历界面的简略打卡信息")
+@ApiModel(value="SimplePunchVO", description="打卡日历中的简略打卡信息")
 public class SimplePunchVO {
 
     @ApiModelProperty(value = "打卡的id",example = "1318520214740045826")

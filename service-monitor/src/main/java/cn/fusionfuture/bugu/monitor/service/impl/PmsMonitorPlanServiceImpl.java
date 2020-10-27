@@ -60,7 +60,7 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
         Integer punchQuantity=monitorPlan.getPunchQuantity();
         for(int i=0;i<punchQuantity;i++){
             PmsMonitorPunchRecord monitorPunchRecord=new PmsMonitorPunchRecord();
-            monitorPunchRecord.setAgreeCount(0).setDisagreeCount(0)
+            monitorPunchRecord.setAgreeCount(0).setDisagreeCount(0).setCurrentPunchCycle(i+1)
                     .setLikeCount(0).setCommentQuantity(0).setMonitorPlanId(monitorPlan.getId())
                     .setUserId(monitorPlan.getUserId()).setStatusId(PunchStatus.NotPunched)
                     .setStartTime(monitorPlan.getStartTime().plusDays(i*monitorPlan.getPunchCycle()));

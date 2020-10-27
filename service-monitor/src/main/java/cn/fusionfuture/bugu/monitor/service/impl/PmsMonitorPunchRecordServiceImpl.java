@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.monitor.dto.SimplePunchDTO;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.*;
 import cn.fusionfuture.bugu.monitor.vo.BasicPunchVO;
+import cn.fusionfuture.bugu.monitor.vo.DetailedPunchVO;
 import cn.fusionfuture.bugu.monitor.vo.PlanTrendVO;
 import cn.fusionfuture.bugu.monitor.vo.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
@@ -114,16 +115,37 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
         Long planId=monitorPunchRecord.getMonitorPlanId();
         PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
         basicPunchVO.setName(monitorPlan.getName())
-                .setId(punchId)
-                .setPlanPattern(monitorPatternMapper.selectById(monitorPlan.getMonitorPatternId()).getDescription())
-                .setAgreeCount(monitorPunchRecord.getAgreeCount())
-                .setDisagreeCount(monitorPunchRecord.getDisagreeCount())
                 .setContent(monitorPunchRecord.getContent())
-                .setLikeCount(monitorPunchRecord.getLikeCount())
-                .setCommentQuantity(monitorPunchRecord.getCommentQuantity())
+                .setCurrentPunchCycle(monitorPunchRecord.getCurrentPunchCycle())
+                .setId(punchId)
+                .setPunchTime(monitorPunchRecord.getPunchTime())
                 .setImageUrls(monitorPunchImageUrlMapper.queryImageByPunchId(punchId));
         return basicPunchVO;
     }
+
+    @Override
+    public DetailedPunchVO queryDetailedPunchVO(Long punchId){
+        PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
+        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(monitorPunchRecord.getMonitorPlanId());
+        HashMap<String,String> puncher = userFeignService.getDetailsForMessage(monitorPunchRecord.getUserId()).getData();
+
+        DetailedPunchVO detailedPunchVO=new DetailedPunchVO();
+        detailedPunchVO.setUserName(puncher.get("userName"))
+                .setUserImage(puncher.get("avatarUrl"))
+                .setPlanPattern(monitorPatternMapper.selectById(monitorPlan.getMonitorPatternId()).getDescription())
+                .setName(monitorPlan.getName())
+                .setPunchId(punchId)
+                .setContent(monitorPunchRecord.getContent())
+                .setLikeCount(monitorPunchRecord.getLikeCount())
+                .setAgreeCount(monitorPunchRecord.getAgreeCount())
+                .setDisagreeCount(monitorPunchRecord.getDisagreeCount())
+                .setCommentQuantity(monitorPunchRecord.getCommentQuantity())
+                .setImageUrls(monitorPunchImageUrlMapper.queryImageByPunchId(monitorPunchRecord.getId()))
+                .setPunchTime(monitorPunchRecord.getPunchTime())
+                .setCurrentPunchCycle(monitorPunchRecord.getCurrentPunchCycle());
+        return detailedPunchVO;
+    }
+
 
     @Override
     public List<SimplePunchVO> querySimplePunchVO(Long planId) {
@@ -204,7 +226,7 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
                     .setCommentQuantity(monitorPunchRecord.getCommentQuantity())
                     .setImageUrls(monitorPunchImageUrlMapper.queryImageByPunchId(monitorPunchRecord.getId()))
                     .setPunchTime(monitorPunchRecord.getPunchTime())
-                    .setCurrentPunchCycle(getCurrentPunchCycle(currentTime,planId));
+                    .setCurrentPunchCycle(monitorPunchRecord.getCurrentPunchCycle());
             monitorPlanTrendDTOS.add(monitorPlanTrendDTO);
         }
 

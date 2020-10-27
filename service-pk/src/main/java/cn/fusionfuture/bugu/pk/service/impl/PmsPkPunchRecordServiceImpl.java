@@ -126,6 +126,29 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     }
 
     @Override
+    public DetailedPunchVO queryDetailedPunchVO(Long punchId){
+        PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(pkPunchRecord.getPkPlanId());
+        HashMap<String,String> puncher = userFeignService.getDetailsForMessage(pkPunchRecord.getUserId()).getData();
+
+        DetailedPunchVO detailedPunchVO=new DetailedPunchVO();
+        detailedPunchVO.setUserName(puncher.get("userName"))
+                .setUserImage(puncher.get("avatarUrl"))
+                .setPlanPattern(pkPatternMapper.selectById(pkPlan.getPkPatternId()).getDescription())
+                .setName(pkPlan.getName())
+                .setPunchId(punchId)
+                .setContent(pkPunchRecord.getContent())
+                .setLikeCount(pkPunchRecord.getLikeCount())
+                .setAgreeCount(pkPunchRecord.getAgreeCount())
+                .setDisagreeCount(pkPunchRecord.getDisagreeCount())
+                .setCommentQuantity(pkPunchRecord.getCommentQuantity())
+                .setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(pkPunchRecord.getId()))
+                .setPunchTime(pkPunchRecord.getPunchTime())
+                .setCurrentPunchCycle(pkPunchRecord.getCurrentPunchCycle());
+        return detailedPunchVO;
+    }
+
+    @Override
     public List<SimplePunchVO> querySimplePunchVO(Long userId,Long planId) {
         List<SimplePunchDTO> simplePunchDTOS=pkPunchRecordMapper.querySimplePunchDTO(userId,planId);
         List<SimplePunchVO> simplePunchVOS=new ArrayList<SimplePunchVO>() ;
@@ -203,7 +226,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
                     .setCommentQuantity(pkPunchRecord.getCommentQuantity())
                     .setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(pkPunchRecord.getId()))
                     .setPunchTime(pkPunchRecord.getPunchTime())
-                    .setCurrentPunchCycle(getCurrentPunchCycle(currentTime,planId));
+                    .setCurrentPunchCycle(pkPunchRecord.getCurrentPunchCycle());
             pkPlanTrendDTOS.add(pkPlanTrendDTO);
         }
 
