@@ -53,4 +53,6 @@ public interface IPopularPlanService {
 
     void updatePlanHeadcount(Long planId, Integer headcount) throws IOException;
 
+    void updateUserAvatar(Long planId, String url) throws IOException;
+
 }

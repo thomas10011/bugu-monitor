@@ -1,9 +1,13 @@
 package cn.fusionfuture.bugu.transaction.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import cn.fusionfuture.bugu.transaction.service.ITmsPlanTransactionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -14,6 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/pojo/tms-plan-transaction")
+@Api(tags = "计划相关交易记录查询")
 public class TmsPlanTransactionController {
+
+    @Autowired
+    ITmsPlanTransactionService planTransactionService;
+
+    @ApiOperation(value = "分页查询羽毛支出")
+    @GetMapping(value = "/feather/expense")
+    public Object queryFeatherExpenseByPage(@ApiParam(value = "用户id") @NonNull @PathVariable(value = "uid") Long uid,
+                                            @ApiParam(value = "页码编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
+                                            @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
+        return planTransactionService.queryFeatherExpenseByPage(uid, pn, ps);
+    }
+
+    @ApiOperation(value = "分页查询羽毛收入")
+    @GetMapping(value = "/feather/income")
+    public Object queryFeatherIncomeByPage(@ApiParam(value = "用户id") @NonNull @PathVariable(value = "uid") Long uid,
+                                            @ApiParam(value = "页码编号") @RequestParam(name = "pn", defaultValue = "1") Integer pn,
+                                            @ApiParam(value = "页面大小") @RequestParam(name = "ps", defaultValue = "5") Integer ps) {
+        return planTransactionService.queryFeatherIncomeByPage(uid, pn, ps);
+    }
 
 }

@@ -66,13 +66,15 @@ public class TmsPlanTransaction implements Serializable {
     private Integer paymentTypeId;
 
     @ApiModelProperty(value = "表示计划的类型")
-    private Integer planTypeId;
+    private String planType;
 
     @ApiModelProperty(value = "表示交易的类型，如制定计划、参与计划等")
-    private Integer transactionTypeId;
+    private String transactionType;
 
     @ApiModelProperty(value = "用户id")
     private Long userId;
 
+    @ApiModelProperty(value = "表示计划的标题")
+    private String planTitle;
 
 }
