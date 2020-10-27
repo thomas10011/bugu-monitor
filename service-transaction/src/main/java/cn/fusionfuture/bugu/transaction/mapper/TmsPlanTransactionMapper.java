@@ -1,7 +1,10 @@
 package cn.fusionfuture.bugu.transaction.mapper;
 
 import cn.fusionfuture.bugu.pojo.entity.TmsPlanTransaction;
+import cn.fusionfuture.bugu.transaction.vo.PlanTransactionVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface TmsPlanTransactionMapper extends BaseMapper<TmsPlanTransaction> {
 
+    List<PlanTransactionVO> queryPlanIncome(Long uid);
+
+    List<PlanTransactionVO> queryPlanExpense(Long uid);
 }

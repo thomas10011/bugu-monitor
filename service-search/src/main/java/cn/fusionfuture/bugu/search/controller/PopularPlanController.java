@@ -55,7 +55,7 @@ public class PopularPlanController {
     @GetMapping(value = "/popular/status")
     @ApiOperation(value = "供计划相关微服务调用，更新计划的状态")
     public void updatePlanStatus(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
-                                 @ApiParam(value = "计划状态的index") @NonNull String status) throws IOException {
+                                 @ApiParam(value = "计划状态的") @NonNull @RequestParam(value = "st") String status) throws IOException {
 
         popularPlanService.updatePlanStatus(pid, status);
 
@@ -66,6 +66,14 @@ public class PopularPlanController {
     public void updatePlanHeadcount(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
                                     @ApiParam(value = "计划参与的人数") @NonNull @RequestParam(value = "hc") Integer hc) throws IOException {
         popularPlanService.updatePlanHeadcount(pid, hc);
+
+    }
+
+    @GetMapping(value = "/popular/avatar")
+    @ApiOperation(value = "供计划相关微服务调用，更新用户头像")
+    public void updateUserAvatar(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
+                                    @ApiParam(value = "用户头像url") @NonNull @RequestParam(value = "hc") String url) throws IOException {
+        popularPlanService.updateUserAvatar(pid, url);
 
     }
 

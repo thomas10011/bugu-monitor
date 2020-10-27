@@ -106,7 +106,7 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
     public void updatePlanStatus(Long planId, String status) throws IOException {
         UpdateRequest updateRequest = new UpdateRequest("plan", planId.toString());
         Map<String, Object> parameters = Collections.singletonMap("status", status);
-        Script script = new Script(ScriptType.INLINE, "painless", "ctx._source.rt = parameters.status", parameters);
+        Script script = new Script(ScriptType.INLINE, "painless", "ctx._source.st = params.status", parameters);
         updateRequest.script(script);
         client.update(updateRequest, RequestOptions.DEFAULT);
     }
@@ -115,9 +115,18 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
     public void updatePlanHeadcount(Long planId, Integer headcount) throws IOException {
         UpdateRequest updateRequest = new UpdateRequest("plan", planId.toString());
         Map<String, Object> parameters = Collections.singletonMap("headcount", headcount);
-        Script script = new Script(ScriptType.INLINE, "painless", "ctx._source.rt = parameters.headcount", parameters);
+        Script script = new Script(ScriptType.INLINE, "painless", "ctx._source.hc = params.headcount", parameters);
         updateRequest.script(script);
         client.update(updateRequest, RequestOptions.DEFAULT);
 
+    }
+
+    @Override
+    public void updateUserAvatar(Long planId, String url) throws IOException {
+        UpdateRequest updateRequest = new UpdateRequest("plan", planId.toString());
+        Map<String, Object> parameters = Collections.singletonMap("url", url);
+        Script script = new Script(ScriptType.INLINE, "painless", "ctx._source.at = params.url", parameters);
+        updateRequest.script(script);
+        client.update(updateRequest, RequestOptions.DEFAULT);
     }
 }
