@@ -4,11 +4,11 @@
 
     <select id="queryPlanIncome" resultType="cn.fusionfuture.bugu.transaction.vo.PlanTransactionVO">
         SELECT
-        id, plan_type, transaction_type, plan_title, create_time
+        id, plan_type AS ptp, transaction_type AS ttp, plan_title AS tt, create_time AS t
         FROM
         tms_plan_transaction
         WHERE
-        id = #{uid} AND transaction_amount &gt; 0
+        user_id = #{uid} AND transaction_amount &gt; 0
         ORDER BY
         create_time
         DESC
@@ -16,11 +16,11 @@
 
     <select id="queryPlanExpense" resultType="cn.fusionfuture.bugu.transaction.vo.PlanTransactionVO">
         SELECT
-        id, plan_type, transaction_type, plan_title, create_time
+        id, plan_type AS ptp, transaction_type AS ttp, plan_title AS tt, create_time AS t
         FROM
         tms_plan_transaction
         WHERE
-        id = #{uid} AND transaction_amount &lt; 0
+        user_id = #{uid} AND transaction_amount &lt; 0
         ORDER BY
         create_time
         DESC
