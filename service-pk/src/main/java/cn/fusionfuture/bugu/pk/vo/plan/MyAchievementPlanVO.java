@@ -33,6 +33,9 @@ public class MyAchievementPlanVO {
     @ApiModelProperty(value = "计划描述",example = "每天背至少40个新单词")
     private String description;
 
+    @ApiModelProperty(value = "是否匿名发布")
+    private Boolean isAnonymouslyPublish;
+
     @ApiModelProperty(value = "计划状态描述",example = "报名中")
     private String planStatus;
 

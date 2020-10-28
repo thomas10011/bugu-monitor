@@ -6,6 +6,7 @@
         pms_monitor_plan.id,
         pms_monitor_plan.name,
         pms_monitor_plan.description,
+        pms_monitor_plan.is_anonymously_publish,
         pms_monitor_plan.punch_count,
         pms_monitor_plan.punch_quantity,
         pms_monitor_plan.start_time,
