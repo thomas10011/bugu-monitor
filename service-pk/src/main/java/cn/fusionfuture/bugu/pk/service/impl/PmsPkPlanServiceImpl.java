@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.NewPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
+import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
@@ -52,11 +53,9 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         PmsPkPlan pkPlan = new PmsPkPlan();
         PmsUserCreatePlan pmsUserCreatePlan=new PmsUserCreatePlan();
         BeanUtils.copyProperties(newPkPlanVO, pkPlan);
-        //设置计划的已报名人数
-        pkPlan.setEnrolledQuantity(1);
-        //设置计划的状态为报名中（报名中，进行中，已完成）
-        pkPlan.setPlanStatusId(1);
-        pkPlan.setTotalBonus(newPkPlanVO.getTotalBonus());
+        //设置计划的已报名人数,设置计划的状态为报名中（报名中，进行中，已完成）
+        pkPlan.setEnrolledQuantity(1).setPlanStatusId(PkPlanStatus.REGISTERING.getIndex())
+                .setTotalBonus(newPkPlanVO.getTotalBonus()).setLikeCount(0);
         pkPlanMapper.insert(pkPlan);
         Integer punchQuantity=pkPlan.getPunchQuantity();
         for(int i=0;i<punchQuantity;i++){
@@ -116,5 +115,19 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
             return userCreatePlanMapper.queryDetailedPkPlanVO(uid,pid);
         }
         return null;
+    }
+
+    @Override
+    public void like(Long planId) {
+        //点赞操作，将计划的点赞数+1
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
+        pkPlanMapper.updateById(pkPlan.setLikeCount(pkPlan.getLikeCount()+1));
+    }
+
+    @Override
+    public void cancelLike(Long planId) {
+        //取消，将计划的点赞数-1
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
+        pkPlanMapper.updateById(pkPlan.setLikeCount(pkPlan.getLikeCount()-1));
     }
 }

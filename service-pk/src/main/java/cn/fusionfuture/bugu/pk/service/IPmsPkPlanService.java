@@ -62,4 +62,25 @@ public interface IPmsPkPlanService extends IService<PmsPkPlan> {
      * @return void
      **/
     String checkIsPunched(Long userId,Long planId);
+
+    /*
+     * @author zws
+     * @description 根据计划id对计划进行点赞操作
+     * @create 2020/10/28 22:51
+     * @update 2020/10/28 22:51
+     * @param [planId]
+     * @return void
+     **/
+    void like(Long planId);
+
+    /*
+     * @author zws
+     * @description 根据计划id取消对计划的点赞
+     * @create 2020/10/28 22:54
+     * @update 2020/10/28 22:54
+     * @param [planId]
+     * @return void
+     **/
+    void cancelLike(Long planId);
+
 }

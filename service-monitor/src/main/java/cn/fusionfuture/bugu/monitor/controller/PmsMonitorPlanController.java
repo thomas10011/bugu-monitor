@@ -85,4 +85,18 @@ public class PmsMonitorPlanController {
                                      @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return monitorPlanService.checkIsPunched(planId);
     }
+
+    @PostMapping( "/monitor-plan/like")
+    @ApiOperation(value = "用户点赞一个计划（供message调用）")
+    public void like(@ApiParam(value = "计划id") @RequestParam(value = "pid") Long pid){
+        monitorPlanService.like(pid);
+    }
+
+    @PostMapping( "/monitor-plan/cancel-like")
+    @ApiOperation(value = "用户对一个计划取消点赞（供message调用）")
+    public void cancelLike(@ApiParam(value = "计划id") @RequestParam(value = "pid") Long pid){
+        monitorPlanService.cancelLike(pid);
+    }
+
+
 }

@@ -104,7 +104,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
 
     @Override
     public void like(Long punchId){
-        //点赞操作，将计划的点赞数+1
+        //点赞操作，将打卡的点赞数+1
         PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
         pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()+1);
         pkPunchRecordMapper.updateById(pkPunchRecord);
@@ -112,7 +112,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
 
     @Override
     public void cancelLike(Long punchId){
-        //取消点赞，将计划的点赞数-1
+        //取消点赞，将打卡的点赞数-1
         PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
         pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()-1);
         pkPunchRecordMapper.updateById(pkPunchRecord);

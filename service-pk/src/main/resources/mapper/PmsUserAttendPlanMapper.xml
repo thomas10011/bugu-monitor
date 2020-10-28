@@ -11,6 +11,7 @@
         pms_pk_plan.start_time,
         pms_pk_plan.end_time,
         pms_pk_plan.enrolled_quantity,
+        pms_pk_plan.like_count,
         pms_user_attend_plan.punch_victory_count,
         pms_pk_pattern.description AS plan_pattern,
         pms_pk_plan_status.description AS plan_status

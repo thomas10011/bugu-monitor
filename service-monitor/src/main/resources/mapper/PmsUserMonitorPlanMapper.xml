@@ -10,6 +10,7 @@
         pms_monitor_plan.punch_quantity,
         pms_monitor_plan.start_time,
         pms_monitor_plan.end_time,
+        pms_monitor_plan.like_count,
         pms_monitor_plan.monitor_quantity,
         pms_monitor_pattern.description AS plan_pattern,
         pms_monitor_plan_status.description AS plan_status

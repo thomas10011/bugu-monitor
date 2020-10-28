@@ -39,6 +39,9 @@ public class MyAchievementPlanVO {
     @ApiModelProperty(value = "计划类型描述",example = "多人pk")
     private String planPattern;
 
+    @ApiModelProperty(value = "点赞次数",example = "1")
+    private Integer likeCount;
+
     @ApiModelProperty(value = "打卡总次数",example = "10")
     private Integer punchQuantity;
 

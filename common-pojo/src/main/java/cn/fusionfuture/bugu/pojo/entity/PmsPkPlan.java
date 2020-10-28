@@ -55,6 +55,9 @@ public class PmsPkPlan implements Serializable {
     @ApiModelProperty(value = "pk计划封面图片url")
     private String imageUrl;
 
+    @ApiModelProperty(value = "点赞次数")
+    private Integer likeCount;
+
     @ApiModelProperty(value = "是否匿名发布")
     private Boolean isAnonymouslyPublish;
 

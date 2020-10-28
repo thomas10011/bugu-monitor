@@ -56,8 +56,8 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
 
 
         BeanUtils.copyProperties(newMonitorPlanVO, monitorPlan);
-        // 插入前把已打卡次数置为零
-        monitorPlanMapper.insert(monitorPlan.setPunchCount(0));
+        // 插入前把已打卡次数置为零,将点赞次数置为0
+        monitorPlanMapper.insert(monitorPlan.setPunchCount(0).setLikeCount(0));
         Integer punchQuantity=monitorPlan.getPunchQuantity();
         for(int i=0;i<punchQuantity;i++){
             PmsMonitorPunchRecord monitorPunchRecord=new PmsMonitorPunchRecord();
@@ -110,5 +110,19 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
             }
         }
         return "访问异常";
+    }
+
+    @Override
+    public void like(Long planId) {
+        //点赞操作，将计划的点赞数+1
+        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
+        monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()+1));
+    }
+
+    @Override
+    public void cancelLike(Long planId) {
+        //取消点赞，将计划的点赞数-1
+        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
+        monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()-1));
     }
 }
