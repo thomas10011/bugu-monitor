@@ -89,6 +89,8 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
         //点赞操作，将打卡的点赞数+1
         PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
         monitorPunchRecordMapper.updateById(monitorPunchRecord.setLikeCount(monitorPunchRecord.getLikeCount()+1));
+        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(monitorPunchRecord.getMonitorPlanId());
+        monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()+1));
     }
 
     @Override
@@ -96,6 +98,8 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
         //取消点赞操作，将计划的点赞数-1
         PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
         monitorPunchRecordMapper.updateById(monitorPunchRecord.setLikeCount(monitorPunchRecord.getLikeCount()+1));
+        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(monitorPunchRecord.getMonitorPlanId());
+        monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()-1));
     }
     @Override
     public BasicPunchVO queryBasicPunchVO(Long punchId){

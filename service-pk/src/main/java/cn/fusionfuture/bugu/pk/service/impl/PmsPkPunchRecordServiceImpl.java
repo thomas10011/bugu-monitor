@@ -108,6 +108,8 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
         PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
         pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()+1);
         pkPunchRecordMapper.updateById(pkPunchRecord);
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(pkPunchRecord.getPkPlanId());
+        pkPlanMapper.updateById(pkPlan.setLikeCount(pkPlan.getLikeCount()+1));
     }
 
     @Override
@@ -116,6 +118,8 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
         PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
         pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()-1);
         pkPunchRecordMapper.updateById(pkPunchRecord);
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(pkPunchRecord.getPkPlanId());
+        pkPlanMapper.updateById(pkPlan.setLikeCount(pkPlan.getLikeCount()-1));
     }
 
     @Override
