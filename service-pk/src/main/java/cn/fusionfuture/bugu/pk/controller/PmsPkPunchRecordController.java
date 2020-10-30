@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.pk.controller;
 
 
+import cn.fusionfuture.bugu.pk.dto.PunchForMessageDTO;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
 import cn.fusionfuture.bugu.pk.vo.*;
 import cn.fusionfuture.bugu.pk.vo.punch.DetailedPunchVO;
@@ -89,6 +90,13 @@ public class PmsPkPunchRecordController {
                                                             @ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid){
 
         return pkPunchRecordService.queryPkPlanTrendVO(uid);
+    }
+
+    @ApiOperation(value = "根据打卡id查询打卡信息（message_service调用)")
+    @GetMapping(value = "/punch/for-message/{punchId}")
+    public PunchForMessageDTO queryPunchForMessageDTO(@Validated
+                                                      @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
+        return pkPunchRecordService.getPunchForMessageDTO(punchId);
     }
 
 }

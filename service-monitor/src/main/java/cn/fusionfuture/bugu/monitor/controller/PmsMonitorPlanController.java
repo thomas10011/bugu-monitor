@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.monitor.controller;
 
 
+import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.monitor.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
@@ -73,7 +74,7 @@ public class PmsMonitorPlanController {
     }
 
     @GetMapping(value = "/monitor-plan/simple-info/{planId}")
-    @ApiOperation(value= "查询计划简略信息（供message_service调用）")
+    @ApiOperation(value= "查询计划简略信息")
     public SimpleMonitorPlanVO querySimpleMonitorPlanVO(@Validated
                                               @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return monitorPlanService.querySimpleMonitorPlanVO(planId);
@@ -86,17 +87,13 @@ public class PmsMonitorPlanController {
         return monitorPlanService.checkIsPunched(planId);
     }
 
-    @PostMapping( "/monitor-plan/like")
-    @ApiOperation(value = "用户点赞一个计划（供message调用）")
-    public void like(@ApiParam(value = "计划id") @RequestParam(value = "pid") Long pid){
-        monitorPlanService.like(pid);
+    @GetMapping(value = "/monitor-plan/for-message/{planId}")
+    @ApiOperation(value= "根据计划id查询计划信息（message_service调用)")
+    public PlanForMessageDTO queryPlanForMessageDTO(@Validated
+                                 @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
+        return monitorPlanService.getPlanForMessageDTO(planId);
     }
 
-    @PostMapping( "/monitor-plan/cancel-like")
-    @ApiOperation(value = "用户对一个计划取消点赞（供message调用）")
-    public void cancelLike(@ApiParam(value = "计划id") @RequestParam(value = "pid") Long pid){
-        monitorPlanService.cancelLike(pid);
-    }
 
 
 }

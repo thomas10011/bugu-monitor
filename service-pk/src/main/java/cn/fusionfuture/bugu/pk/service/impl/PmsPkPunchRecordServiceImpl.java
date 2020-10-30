@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.dto.PkPlanTrendDTO;
+import cn.fusionfuture.bugu.pk.dto.PunchForMessageDTO;
 import cn.fusionfuture.bugu.pk.dto.SimplePunchDTO;
 import cn.fusionfuture.bugu.pk.feign.UserFeignService;
 import cn.fusionfuture.bugu.pk.mapper.*;
@@ -277,5 +278,20 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
             }
         }
         return 0;
+    }
+    @Override
+    public PunchForMessageDTO getPunchForMessageDTO(Long punchId) {
+        PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(pkPunchRecord.getPkPlanId());
+
+        PunchForMessageDTO plan=new PunchForMessageDTO();
+        plan.setPlanPattern(pkPatternMapper.selectById(pkPlan.getPkPatternId()).getDescription())
+                .setName(pkPlan.getName())
+                .setContent(pkPunchRecord.getContent())
+                .setLikeCount(pkPunchRecord.getLikeCount())
+                .setAgreeCount(pkPunchRecord.getAgreeCount())
+                .setDisagreeCount(pkPunchRecord.getDisagreeCount())
+                .setImageUrls(pkPunchImageUrlMapper.queryImageByPunchId(pkPunchRecord.getId()));
+        return plan;
     }
 }

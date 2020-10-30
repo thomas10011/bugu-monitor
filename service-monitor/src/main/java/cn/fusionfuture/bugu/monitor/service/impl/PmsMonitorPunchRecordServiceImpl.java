@@ -1,6 +1,8 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.dto.MonitorPlanTrendDTO;
+import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
+import cn.fusionfuture.bugu.monitor.dto.PunchForMessageDTO;
 import cn.fusionfuture.bugu.monitor.dto.SimplePunchDTO;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.*;
@@ -265,5 +267,21 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
             }
         }
         return 0;
+    }
+
+    @Override
+    public PunchForMessageDTO getPunchForMessageDTO(Long punchId) {
+        PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
+        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(monitorPunchRecord.getMonitorPlanId());
+
+        PunchForMessageDTO plan=new PunchForMessageDTO();
+        plan.setPlanPattern(monitorPatternMapper.selectById(monitorPlan.getMonitorPatternId()).getDescription())
+                .setName(monitorPlan.getName())
+                .setContent(monitorPunchRecord.getContent())
+                .setLikeCount(monitorPunchRecord.getLikeCount())
+                .setAgreeCount(monitorPunchRecord.getAgreeCount())
+                .setDisagreeCount(monitorPunchRecord.getDisagreeCount())
+                .setImageUrls(monitorPunchImageUrlMapper.queryImageByPunchId(monitorPunchRecord.getId()));
+        return plan;
     }
 }

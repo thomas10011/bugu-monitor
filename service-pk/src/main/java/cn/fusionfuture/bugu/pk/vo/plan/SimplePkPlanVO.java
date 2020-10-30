@@ -23,7 +23,7 @@ public class SimplePkPlanVO {
     private String name;
 
     @ApiModelProperty(value = "pk模式",example = "多人pk")
-    private String pkPattern;
+    private String planPattern;
 
     @ApiModelProperty(value = "pk人数",example = "5")
     private Integer pkQuantity;

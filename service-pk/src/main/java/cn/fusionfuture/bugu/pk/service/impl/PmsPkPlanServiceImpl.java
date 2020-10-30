@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
@@ -129,5 +130,10 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         //取消，将计划的点赞数-1
         PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
         pkPlanMapper.updateById(pkPlan.setLikeCount(pkPlan.getLikeCount()-1));
+    }
+
+    @Override
+    public PlanForMessageDTO getPlanForMessageDTO(Long planId) {
+        return pkPlanMapper.queryPlanForMessageDTO(planId);
     }
 }

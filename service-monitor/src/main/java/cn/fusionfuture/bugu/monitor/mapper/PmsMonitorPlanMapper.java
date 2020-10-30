@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.monitor.mapper;
 
+import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO;
@@ -45,6 +46,16 @@ public interface PmsMonitorPlanMapper extends BaseMapper<PmsMonitorPlan> {
      * @return cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO
      **/
     SimpleMonitorPlanVO querySimpleMonitorPlanVO(Long planId);
+
+    /*
+     * @author zws
+     * @description message_service获取计划相关信息
+     * @create 2020/10/30 15:20
+     * @update 2020/10/30 15:20
+     * @param []
+     * @return cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO
+     **/
+    PlanForMessageDTO queryPlanForMessageDTO(Long planId);
 
 
 

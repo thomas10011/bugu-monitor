@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.monitor.controller;
 
 
+import cn.fusionfuture.bugu.monitor.dto.PunchForMessageDTO;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPunchRecordService;
 import cn.fusionfuture.bugu.monitor.vo.punch.BasicPunchVO;
@@ -91,5 +92,12 @@ public class PmsMonitorPunchRecordController {
                                                             @ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid){
 
         return monitorPunchRecordService.queryMonitorPlanTrendVO(uid);
+    }
+
+    @ApiOperation(value = "根据打卡id查询打卡信息（message_service调用)")
+    @GetMapping(value = "/punch/for-message/{punchId}")
+    public PunchForMessageDTO queryPunchForMessageDTO(@Validated
+                                                @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId) {
+        return monitorPunchRecordService.getPunchForMessageDTO(punchId);
     }
 }

@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.pk.mapper;
 
+import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
@@ -34,6 +35,16 @@ public interface PmsPkPlanMapper extends BaseMapper<PmsPkPlan> {
      * @return cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO
      **/
     SimplePkPlanVO querySimplePkPlanVO(Long planId);
+
+    /*
+     * @author zws
+     * @description message_service获取计划相关信息
+     * @create 2020/10/30 15:20
+     * @update 2020/10/30 15:20
+     * @param []
+     * @return cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO
+     **/
+    PlanForMessageDTO queryPlanForMessageDTO(Long planId);
 
 
 }

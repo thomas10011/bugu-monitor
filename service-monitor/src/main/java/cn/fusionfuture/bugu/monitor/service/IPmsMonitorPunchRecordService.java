@@ -1,5 +1,7 @@
 package cn.fusionfuture.bugu.monitor.service;
 
+import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
+import cn.fusionfuture.bugu.monitor.dto.PunchForMessageDTO;
 import cn.fusionfuture.bugu.monitor.vo.punch.BasicPunchVO;
 import cn.fusionfuture.bugu.monitor.vo.punch.DetailedPunchVO;
 import cn.fusionfuture.bugu.monitor.vo.punch.PlanTrendVO;
@@ -95,4 +97,14 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @return java.lang.Integer
      **/
     Integer getCurrentPunchCycle(LocalDateTime currentTime,Long planId);
+
+    /*
+     * @author zws
+     * @description message_service获取打卡相关信息
+     * @create 2020/10/30 15:13
+     * @update 2020/10/30 15:13
+     * @param [punchId]
+     * @return cn.fusionfuture.bugu.monitor.dto.PunchForMessageDTO
+     **/
+    PunchForMessageDTO getPunchForMessageDTO(Long punchId);
 }

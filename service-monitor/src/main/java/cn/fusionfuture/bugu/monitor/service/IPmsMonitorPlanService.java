@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.monitor.service;
 
+import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.plan.NewMonitorPlanVO;
@@ -84,4 +85,14 @@ public interface IPmsMonitorPlanService extends IService<PmsMonitorPlan> {
      * @return void
      **/
     void cancelLike(Long planId);
+
+    /*
+     * @author zws
+     * @description message_service获取计划相关信息
+     * @create 2020/10/30 15:14
+     * @update 2020/10/30 15:14
+     * @param [planId]
+     * @return cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO
+     **/
+    PlanForMessageDTO getPlanForMessageDTO(Long planId);
 }

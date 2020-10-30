@@ -62,4 +62,17 @@
             pms_monitor_plan.id = #{planId} AND
             pms_monitor_plan.monitor_pattern_id = pms_monitor_pattern.id
     </select>
+
+    <select id="queryPlanForMessageDTO" resultType="cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO">
+        SELECT
+            pms_monitor_plan.name,
+            pms_monitor_plan.monitor_quantity,
+            pms_monitor_pattern.description AS plan_pattern
+        FROM
+            pms_monitor_plan,
+            pms_monitor_pattern
+        WHERE
+            pms_monitor_plan.id = #{planId} AND
+            pms_monitor_plan.monitor_pattern_id = pms_monitor_pattern.id
+    </select>
 </mapper>

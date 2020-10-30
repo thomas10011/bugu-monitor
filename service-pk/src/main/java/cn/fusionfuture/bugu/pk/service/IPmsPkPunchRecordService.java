@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.pk.service;
 
+import cn.fusionfuture.bugu.pk.dto.PunchForMessageDTO;
 import cn.fusionfuture.bugu.pk.vo.*;
 import cn.fusionfuture.bugu.pk.vo.punch.DetailedPunchVO;
 import cn.fusionfuture.bugu.pk.vo.punch.PlanTrendVO;
@@ -98,4 +99,14 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
       * @return java.lang.Integer
       **/
      Integer getCurrentPunchCycle(LocalDateTime currentTime,Long planId);
+
+     /*
+      * @author zws
+      * @description message_service获取打卡相关信息
+      * @create 2020/10/30 15:13
+      * @update 2020/10/30 15:13
+      * @param [punchId]
+      * @return cn.fusionfuture.bugu.pk.dto.PunchForMessageDTO
+      **/
+     PunchForMessageDTO getPunchForMessageDTO(Long punchId);
 }

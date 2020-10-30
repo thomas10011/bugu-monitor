@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.pk.service;
 
+import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.NewPkPlanVO;
@@ -82,5 +83,15 @@ public interface IPmsPkPlanService extends IService<PmsPkPlan> {
      * @return void
      **/
     void cancelLike(Long planId);
+
+    /*
+     * @author zws
+     * @description message_service获取计划相关信息
+     * @create 2020/10/30 15:14
+     * @update 2020/10/30 15:14
+     * @param [planId]
+     * @return cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO
+     **/
+    PlanForMessageDTO getPlanForMessageDTO(Long planId);
 
 }

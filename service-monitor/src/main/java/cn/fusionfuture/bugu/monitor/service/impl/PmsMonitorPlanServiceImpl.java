@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
+import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchStatusMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsUserMonitorPlanMapper;
@@ -124,5 +125,10 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
         //取消点赞，将计划的点赞数-1
         PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
         monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()-1));
+    }
+
+    @Override
+    public PlanForMessageDTO getPlanForMessageDTO(Long planId) {
+        return monitorPlanMapper.queryPlanForMessageDTO(planId);
     }
 }

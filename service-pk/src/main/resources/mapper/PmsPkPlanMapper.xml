@@ -26,7 +26,21 @@
     <select id="querySimplePkPlanVO" resultType="cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO">
         SELECT
             pms_pk_plan.name,
-            pms_pk_plan.punch_quantity,
+            pms_pk_plan.pk_quantity,
+            pms_pk_plan.enrolled_quantity,
+            pms_pk_pattern.description AS plan_pattern
+        FROM
+            pms_pk_plan,
+            pms_pk_pattern
+        WHERE
+            pms_pk_plan.id = #{planId} AND
+            pms_pk_plan.pk_pattern_id = pms_pk_pattern.id
+    </select>
+
+    <select id="queryPlanForMessageDTO" resultType="cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO">
+        SELECT
+            pms_pk_plan.name,
+            pms_pk_plan.pk_quantity,
             pms_pk_plan.enrolled_quantity,
             pms_pk_pattern.description AS plan_pattern
         FROM

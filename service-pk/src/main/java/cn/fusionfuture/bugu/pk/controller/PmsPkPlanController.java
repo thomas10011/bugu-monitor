@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.pk.controller;
 
 
+import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.pk.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
@@ -87,16 +88,11 @@ public class PmsPkPlanController {
         return pkPlanService.checkIsPunched(userId,planId);
     }
 
-    @PostMapping(value = "/pk-plan/like")
-    @ApiOperation(value= "对计划进行点赞（供message调用）")
-    public void like(@ApiParam(value = "计划id") @RequestParam(name = "pid") Long pid){
-        pkPlanService.like(pid);
-    }
-
-    @PostMapping(value = "/pk-plan/cancel-like")
-    @ApiOperation(value= "取消对计划的点赞（供message调用）")
-    public void cancelLike(@ApiParam(value = "计划id") @RequestParam(name = "pid") Long pid){
-        pkPlanService.cancelLike(pid);
+    @GetMapping(value = "/pk-plan/for-message/{planId}")
+    @ApiOperation(value= "根据计划id查询计划信息（message_service调用)")
+    public PlanForMessageDTO queryPlanForMessageDTO(@Validated
+                                                    @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
+        return pkPlanService.getPlanForMessageDTO(planId);
     }
 
 }
