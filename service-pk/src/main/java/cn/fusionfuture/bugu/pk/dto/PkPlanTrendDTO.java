@@ -34,6 +34,9 @@ public class PkPlanTrendDTO implements Serializable {
     @ApiModelProperty(name = "name,计划的标题",example = "每日单词")
     private String name;
 
+    @ApiModelProperty(name = "计划id",example = "1318520214740045826")
+    private Long planId;
+
     @ApiModelProperty(name = "打卡id",example = "1318520214740045826")
     private Long punchId;
 
