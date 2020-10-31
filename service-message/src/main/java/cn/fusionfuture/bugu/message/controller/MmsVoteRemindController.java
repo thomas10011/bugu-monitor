@@ -7,6 +7,8 @@ import cn.fusionfuture.bugu.message.service.IMmsVoteRemindService;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
 import cn.fusionfuture.bugu.message.vo.input.IVoteVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
+import cn.fusionfuture.bugu.pojo.api.ResultCode;
+import cn.fusionfuture.bugu.pojo.constants.VoteJudge;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,25 +58,38 @@ public class MmsVoteRemindController {
     @PostMapping(value = "/vote-remind")
     @ApiOperation(value = "发送投票提醒")
     public CommonResult<?> addVote (IVoteVO iVoteVO) throws JsonProcessingException {
-        MmsVoteRemind mmsVoteRemind = new MmsVoteRemind();
-        BeanUtils.copyProperties(iVoteVO,mmsVoteRemind);
-        iMmsVoteRemindService.addVoteRemind(mmsVoteRemind);
+
+        Integer status = 0;
 
         //        同步pk服务和监督服务数据
         Integer planType = iVoteVO.getPlanTypeId();
         if(planType==PK_PLAN){
-            pkFeignService.vote(iVoteVO.getSendUserId(),iVoteVO.getPunchId(),iVoteVO.getIsApproved());
+          status = pkFeignService.vote(iVoteVO.getSendUserId(),iVoteVO.getPunchId(),iVoteVO.getIsApproved()).getData();
+          System.out.println("status"+status);
         }
         else if(planType==MONITOR_PLAN){
-            monitorFeignService.vote(iVoteVO.getSendUserId(),iVoteVO.getPunchId(),iVoteVO.getIsApproved());
+          status = monitorFeignService.vote(iVoteVO.getSendUserId(),iVoteVO.getPunchId(),iVoteVO.getIsApproved()).getData();
+
+        }
+        if(status==VoteJudge.VoteSUCCESS){
+            MmsVoteRemind mmsVoteRemind = new MmsVoteRemind();
+            BeanUtils.copyProperties(iVoteVO,mmsVoteRemind);
+            iMmsVoteRemindService.addVoteRemind(mmsVoteRemind);
+
+            ObjectMapper mapper = new ObjectMapper();
+            String messaged = mapper.writeValueAsString(mmsVoteRemind);
+            messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iVoteVO.getMessageType()+"\"}";
+            iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsVoteRemind.getReceiveUserId()+"");
+
+            return CommonResult.success();
+        }
+        else if(status==VoteJudge.IsVoted){
+            return CommonResult.fail(ResultCode.USER_HAS_VOTED);
+        }else {
+            return CommonResult.fail(ResultCode.USER_HAS_NOT_ENROLLED);
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        String messaged = mapper.writeValueAsString(mmsVoteRemind);
-        messaged = messaged.substring(0,messaged.lastIndexOf("}"))+",\"messageType\":\""+iVoteVO.getMessageType()+"\"}";
-        iMmsRabbitMQGatewayService.sendMessage2Mqtt(messaged, mmsVoteRemind.getReceiveUserId()+"");
 
-        return CommonResult.success();
     }
 
     /**

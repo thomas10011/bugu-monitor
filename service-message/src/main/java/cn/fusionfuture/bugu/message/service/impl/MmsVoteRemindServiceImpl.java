@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.message.feign.PkFeignService;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.VoteVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.PunchForMessageDTO;
 import cn.fusionfuture.bugu.pojo.entity.MmsPunchRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
 import cn.fusionfuture.bugu.pojo.entity.MmsVoteRemind;
@@ -17,10 +18,6 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import cn.fusionfuture.bugu.message.vo.feignvo.BasicPunchVO;
-import cn.fusionfuture.bugu.message.vo.feignvo.PunchWithImageVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,33 +83,33 @@ public class MmsVoteRemindServiceImpl extends ServiceImpl<MmsVoteRemindMapper, M
 //            pk计划信息
             Long punchId = mmsVoteRemind.getPunchId();
             if(planType==PK_PLAN){
-                PunchWithImageVO punchWithImageVO = pkFeignService.queryPunchWithImageVO(punchId).getData();
-                voteVO.setPlanPattern(punchWithImageVO.getPlanPattern());
-                voteVO.setPlanName(punchWithImageVO.getName());
-                voteVO.setPunchContent(punchWithImageVO.getContent());
-                if(punchWithImageVO.getImageUrls().size()>0){
-                    voteVO.setPunchImageUrl(punchWithImageVO.getImageUrls().get(0));
+                PunchForMessageDTO punchForMessageDTO = pkFeignService.queryPunchForMessageDTO(punchId).getData();
+                voteVO.setPlanPattern(punchForMessageDTO.getPlanPattern());
+                voteVO.setPlanName(punchForMessageDTO.getName());
+                voteVO.setPunchContent(punchForMessageDTO.getContent());
+                if(punchForMessageDTO.getImageUrls().size()>0){
+                    voteVO.setPunchImageUrl(punchForMessageDTO.getImageUrls().get(0));
                 }
-                voteVO.setVoteCount(punchWithImageVO.getAgreeCount()+punchWithImageVO.getDisagreeCount());
+                voteVO.setVoteCount(punchForMessageDTO.getAgreeCount()+punchForMessageDTO.getDisagreeCount());
                 if(voteVO.getIsApproved()){
-                    voteVO.setCurrentVoteCount(punchWithImageVO.getAgreeCount());
+                    voteVO.setCurrentVoteCount(punchForMessageDTO.getAgreeCount());
                 }else{
-                    voteVO.setCurrentVoteCount(punchWithImageVO.getDisagreeCount());
+                    voteVO.setCurrentVoteCount(punchForMessageDTO.getDisagreeCount());
                 }
             }else{
 //                监督计划
-                BasicPunchVO basicPunchVO = monitorFeignService.queryBasicPunchVO(punchId).getData();
-                voteVO.setPlanPattern(basicPunchVO.getPlanPattern());
-                voteVO.setPlanName(basicPunchVO.getName());
-                voteVO.setPunchContent(basicPunchVO.getContent());
-                if(basicPunchVO.getImageUrls().size()>0){
-                    voteVO.setPunchImageUrl(basicPunchVO.getImageUrls().get(0));
+                PunchForMessageDTO punchForMessageDTO = monitorFeignService.queryPunchForMessageDTO(punchId).getData();
+                voteVO.setPlanPattern(punchForMessageDTO.getPlanPattern());
+                voteVO.setPlanName(punchForMessageDTO.getName());
+                voteVO.setPunchContent(punchForMessageDTO.getContent());
+                if(punchForMessageDTO.getImageUrls().size()>0){
+                    voteVO.setPunchImageUrl(punchForMessageDTO.getImageUrls().get(0));
                 }
-                voteVO.setVoteCount(basicPunchVO.getAgreeCount()+basicPunchVO.getDisagreeCount());
+                voteVO.setVoteCount(punchForMessageDTO.getAgreeCount()+punchForMessageDTO.getDisagreeCount());
                 if(voteVO.getIsApproved()){
-                    voteVO.setCurrentVoteCount(basicPunchVO.getAgreeCount());
+                    voteVO.setCurrentVoteCount(punchForMessageDTO.getAgreeCount());
                 }else{
-                    voteVO.setCurrentVoteCount(basicPunchVO.getDisagreeCount());
+                    voteVO.setCurrentVoteCount(punchForMessageDTO.getDisagreeCount());
                 }
             }
 

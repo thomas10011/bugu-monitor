@@ -105,7 +105,7 @@ public class MmsEnrollRemindServiceImpl extends ServiceImpl<MmsEnrollRemindMappe
                 enrollVO.setPlanName(simplePkPlanVO.getName());
             }else{
                 SimpleMonitorPlanVO simpleMonitorPlanVO = monitorFeignService.querySimpleMonitorPlanVO(planId).getData();
-//                enrollVO.setCurrentEnrollCount(simpleMonitorPlanVO.getEnrolledQuantity());
+                enrollVO.setCurrentEnrollCount(simpleMonitorPlanVO.getMonitorQuantity());
                 enrollVO.setMaxEnrollQuantity(simpleMonitorPlanVO.getMonitorQuantity());
                 enrollVO.setPlanPattern(simpleMonitorPlanVO.getPlanPattern());
                 enrollVO.setPlanName(simpleMonitorPlanVO.getName());

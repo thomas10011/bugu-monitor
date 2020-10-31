@@ -31,7 +31,15 @@ public enum ResultCode {
 
     USER_DEFAULT("A0001", "用户端错误"),
 
-    USER_NOT_EXISTED("A0201", "用户不存在");
+    USER_NOT_EXISTED("A0201", "用户不存在"),
+
+    USER_HAS_VOTED("A0202","用户已投票"),
+
+    USER_HAS_NOT_ENROLLED("A0203","用户不能参与投票");
+
+
+
+
 
 
 

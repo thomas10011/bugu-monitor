@@ -8,8 +8,7 @@ import cn.fusionfuture.bugu.message.service.IMmsCommentRemindService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.CommentVO;
 import cn.fusionfuture.bugu.message.vo.PunchCommentVO;
-import cn.fusionfuture.bugu.message.vo.feignvo.BasicPunchVO;
-import cn.fusionfuture.bugu.message.vo.feignvo.PunchWithImageVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.PunchForMessageDTO;
 import cn.fusionfuture.bugu.pojo.entity.MmsCommentRemind;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -104,21 +103,21 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
 //            pk计划信息
             Long punchId = mmsCommentRemind.getPunchId();
             if(planType==PK_PLAN){
-                PunchWithImageVO punchWithImageVO = pkFeignService.queryPunchWithImageVO(punchId).getData();
-                commentVO.setPlanPattern(punchWithImageVO.getPlanPattern());
-                commentVO.setPlanName(punchWithImageVO.getName());
-                commentVO.setPunchContent(punchWithImageVO.getContent());
-                if(punchWithImageVO.getImageUrls().size()>0){
-                    commentVO.setPunchImageUrl(punchWithImageVO.getImageUrls().get(0));
+                PunchForMessageDTO punchForMessageDTO = pkFeignService.queryPunchForMessageDTO(punchId).getData();
+                commentVO.setPlanPattern(punchForMessageDTO.getPlanPattern());
+                commentVO.setPlanName(punchForMessageDTO.getName());
+                commentVO.setPunchContent(punchForMessageDTO.getContent());
+                if(punchForMessageDTO.getImageUrls().size()>0){
+                    commentVO.setPunchImageUrl(punchForMessageDTO.getImageUrls().get(0));
                 }
             }else{
 //                监督计划
-                BasicPunchVO basicPunchVO = monitorFeignService.queryBasicPunchVO(punchId).getData();
-                commentVO.setPlanPattern(basicPunchVO.getPlanPattern());
-                commentVO.setPlanName(basicPunchVO.getName());
-                commentVO.setPunchContent(basicPunchVO.getContent());
-                if(basicPunchVO.getImageUrls().size()>0){
-                    commentVO.setPunchImageUrl(basicPunchVO.getImageUrls().get(0));
+                PunchForMessageDTO punchForMessageDTO = monitorFeignService.queryPunchForMessageDTO(punchId).getData();
+                commentVO.setPlanPattern(punchForMessageDTO.getPlanPattern());
+                commentVO.setPlanName(punchForMessageDTO.getName());
+                commentVO.setPunchContent(punchForMessageDTO.getContent());
+                if(punchForMessageDTO.getImageUrls().size()>0){
+                    commentVO.setPunchImageUrl(punchForMessageDTO.getImageUrls().get(0));
                 }
             }
             commentVOList.add(commentVO);

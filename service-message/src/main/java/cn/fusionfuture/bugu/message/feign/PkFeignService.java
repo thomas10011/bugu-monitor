@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.message.feign;
 
+import cn.fusionfuture.bugu.message.vo.feignvo.PunchForMessageDTO;
 import cn.fusionfuture.bugu.message.vo.feignvo.PunchWithImageVO;
 import cn.fusionfuture.bugu.message.vo.feignvo.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
@@ -26,11 +27,16 @@ public interface PkFeignService {
      **/
 //    @GetMapping(value = "/feign")
 //    String getTest();
-    @ApiOperation(value = "根据打卡id查询打卡相关信息")
-    @GetMapping(value = "/punch/detail/{punchId}")
-    CommonResult<PunchWithImageVO> queryPunchWithImageVO(@Validated @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId);
+//    @ApiOperation(value = "根据打卡id查询打卡相关信息(打卡日历下的打卡信息）")
+//    @GetMapping(value = "/punch/basic/{punchId}")
+//     CommonResult<PunchWithImageVO> queryPunchWithImageVO(@Validated
+//                                                  @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId);
+    @ApiOperation(value = "根据打卡id查询打卡信息（message_service调用)")
+    @GetMapping(value = "/punch/for-message/{punchId}")
+    CommonResult<PunchForMessageDTO> queryPunchForMessageDTO(@Validated
+                                                      @ApiParam(value = "打卡id") @PathVariable(value = "punchId") Long punchId);
 
-    @GetMapping(value = "/pk-plan/simple-info/{planId}")
+        @GetMapping(value = "/pk-plan/simple-info/{planId}")
     @ApiOperation(value= "查询计划简略信息")
     CommonResult<SimplePkPlanVO> querySimplePkPlanVO(@Validated @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId);
 
@@ -38,9 +44,13 @@ public interface PkFeignService {
     @ApiOperation(value = "对一条打卡记录进行点赞")
     void like(@ApiParam(value = "打卡id") @RequestParam(value = "punchId") Long punchId);
 
+    @PostMapping("/punch/cancelLike")
+    @ApiOperation(value = "对一条打卡记录取消点赞")
+    public void cancleLike(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId);
+
     @PostMapping("/vote")
     @ApiOperation(value = "投票")
-    void vote(@ApiParam(value = "用户id") @RequestParam(value = "userId") Long userId,
+    CommonResult<Integer> vote(@ApiParam(value = "用户id") @RequestParam(value = "userId") Long userId,
                      @ApiParam(value = "打卡id") @RequestParam(value = "punchId") Long punchId,
                      @ApiParam(value = "投票结果") @RequestParam(value = "voteResult") Boolean voteResult);
 

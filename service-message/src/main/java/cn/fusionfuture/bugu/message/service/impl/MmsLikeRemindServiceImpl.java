@@ -7,6 +7,7 @@ import cn.fusionfuture.bugu.message.mapper.MmsLikeRemindMapper;
 import cn.fusionfuture.bugu.message.service.IMmsLikeRemindService;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
+import cn.fusionfuture.bugu.message.vo.feignvo.PunchForMessageDTO;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,9 +16,6 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import cn.fusionfuture.bugu.message.vo.feignvo.BasicPunchVO;
-import cn.fusionfuture.bugu.message.vo.feignvo.PunchWithImageVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,24 +88,24 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
 //            pk计划信息
             Long punchId = mmsLikeRemind.getPunchId();
             if(planType==PK_PLAN){
-                PunchWithImageVO punchWithImageVO = pkFeignService.queryPunchWithImageVO(punchId).getData();
-                likeVO.setPlanPattern(punchWithImageVO.getPlanPattern());
-                likeVO.setPlanName(punchWithImageVO.getName());
-                likeVO.setPunchContent(punchWithImageVO.getContent());
-                if(punchWithImageVO.getImageUrls().size()>0){
-                    likeVO.setPunchImageUrl(punchWithImageVO.getImageUrls().get(0));
+                PunchForMessageDTO punchForMessageDTO = pkFeignService.queryPunchForMessageDTO(punchId).getData();
+                likeVO.setPlanPattern(punchForMessageDTO.getPlanPattern());
+                likeVO.setPlanName(punchForMessageDTO.getName());
+                likeVO.setPunchContent(punchForMessageDTO.getContent());
+                if(punchForMessageDTO.getImageUrls().size()>0){
+                    likeVO.setPunchImageUrl(punchForMessageDTO.getImageUrls().get(0));
                 }
-                likeVO.setLikeCount(punchWithImageVO.getLikeCount());
+                likeVO.setLikeCount(punchForMessageDTO.getLikeCount());
             }else{
 //                监督计划
-                BasicPunchVO basicPunchVO = monitorFeignService.queryBasicPunchVO(punchId).getData();
-                likeVO.setPlanPattern(basicPunchVO.getPlanPattern());
-                likeVO.setPlanName(basicPunchVO.getName());
-                likeVO.setPunchContent(basicPunchVO.getContent());
-                if(basicPunchVO.getImageUrls().size()>0){
-                    likeVO.setPunchImageUrl(basicPunchVO.getImageUrls().get(0));
+                PunchForMessageDTO punchForMessageDTO = monitorFeignService.queryPunchForMessageDTO(punchId).getData();
+                likeVO.setPlanPattern(punchForMessageDTO.getPlanPattern());
+                likeVO.setPlanName(punchForMessageDTO.getName());
+                likeVO.setPunchContent(punchForMessageDTO.getContent());
+                if(punchForMessageDTO.getImageUrls().size()>0){
+                    likeVO.setPunchImageUrl(punchForMessageDTO.getImageUrls().get(0));
                 }
-                likeVO.setLikeCount(basicPunchVO.getLikeCount());
+                likeVO.setLikeCount(punchForMessageDTO.getLikeCount());
             }
 
             likeVOList.add(likeVO);
@@ -117,5 +115,33 @@ public class MmsLikeRemindServiceImpl extends ServiceImpl<MmsLikeRemindMapper, M
         pageUtil.copyAtrr(mmsLikeRemindList,likeVOPageInfo);
 //        BeanUtils.copyProperties(mmsLikeRemindList,likeVOPageInfo);
         return likeVOPageInfo;
+    }
+
+    /**
+     * 返回当前用户是否对该打卡进行点赞
+     * @author LiLan
+     * @since 2020/10/28 8:20
+     * @param uid, pid
+     * @return java.lang.Boolean
+     **/
+    @Override
+    public Boolean isLike(Long uid, Long pid) {
+        QueryWrapper<MmsLikeRemind> queryWrapper = new QueryWrapper<MmsLikeRemind>();
+        queryWrapper.eq("send_user_id", uid).eq("punch_id",pid);
+        List<MmsLikeRemind> mmsLikeReminds = mmsLikeRemindMapper.selectList(queryWrapper);
+        if(mmsLikeReminds.size()>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean cancelLike(Long uid, Long pid) {
+        QueryWrapper<MmsLikeRemind> queryWrapper = new QueryWrapper<MmsLikeRemind>();
+        queryWrapper.eq("send_user_id", uid).eq("punch_id",pid);
+        if(mmsLikeRemindMapper.delete(queryWrapper)>=1){
+            return true;
+        }
+        return false;
     }
 }

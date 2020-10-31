@@ -18,5 +18,7 @@ public interface IMmsLikeRemindService extends IService<MmsLikeRemind> {
 
     void addLikeRemind(MmsLikeRemind mmsLikeRemind);
     PageInfo<LikeVO> getLikeRemind(Integer pn, Integer ps, Long id);
+    Boolean isLike(Long uid, Long pid);
+    Boolean cancelLike(Long uid, Long pid);
 
 }
