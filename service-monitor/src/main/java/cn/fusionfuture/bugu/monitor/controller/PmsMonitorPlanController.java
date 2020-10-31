@@ -11,6 +11,7 @@ import cn.fusionfuture.bugu.monitor.vo.plan.NewMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.plan.SimpleMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanType;
+import cn.fusionfuture.bugu.utils.oss.OssUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * <p>
@@ -92,6 +97,12 @@ public class PmsMonitorPlanController {
     public PlanForMessageDTO queryPlanForMessageDTO(@Validated
                                  @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return monitorPlanService.getPlanForMessageDTO(planId);
+    }
+
+    @GetMapping("/plan/policy")
+    @ApiOperation(value = "获取上传图片需要的policy")
+    public Map<String, String> getPolicy() throws IOException, ServletException {
+        return OssUtil.getPolicy("/plan");
     }
 
 
