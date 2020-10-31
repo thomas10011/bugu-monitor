@@ -23,6 +23,9 @@ import java.util.List;
 @ApiModel(value="PlanTrendVO", description="首页动态所需的详细信息")
 public class PlanTrendVO {
 
+    @ApiModelProperty(name = "用户id",example = "1309123491764805634")
+    private Long userId;
+
     @ApiModelProperty(name = "用户名",example = "小小")
     private String userName;
 

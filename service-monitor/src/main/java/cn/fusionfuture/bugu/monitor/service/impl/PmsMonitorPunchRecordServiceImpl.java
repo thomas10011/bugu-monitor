@@ -128,7 +128,8 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
         HashMap<String,String> puncher = userFeignService.getDetailsForMessage(monitorPunchRecord.getUserId()).getData();
 
         DetailedPunchVO detailedPunchVO=new DetailedPunchVO();
-        detailedPunchVO.setUserName(puncher.get("userName"))
+        detailedPunchVO.setUserId(monitorPunchRecord.getUserId())
+                .setUserName(puncher.get("userName"))
                 .setUserImage(puncher.get("avatarUrl"))
                 .setPlanPattern(monitorPatternMapper.selectById(monitorPlan.getMonitorPatternId()).getDescription())
                 .setName(monitorPlan.getName())
@@ -237,7 +238,8 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
             HashMap<String,String> puncher = userFeignService.getDetailsForMessage(monitorPlanTrendDemoDTO.getUid()).getData();
 
             PlanTrendVO planTrendVO =new PlanTrendVO();
-            planTrendVO.setUserName(puncher.get("userName"))
+            planTrendVO.setUserId(monitorPlanTrendDemoDTO.getUid())
+                    .setUserName(puncher.get("userName"))
                     .setUserImage(puncher.get("avatarUrl"))
                     .setPlanPattern(monitorPlanTrendDemoDTO.getPlanPattern())
                     .setName(monitorPlanTrendDemoDTO.getName())
