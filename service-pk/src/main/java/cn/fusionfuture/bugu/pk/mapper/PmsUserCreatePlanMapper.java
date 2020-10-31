@@ -32,7 +32,7 @@ public interface PmsUserCreatePlanMapper extends BaseMapper<PmsUserCreatePlan> {
     List<MyAchievementPlanVO> queryPkUserCreatePlanByUserId(Long uid);
 
     /*
-     * TODO 根据用户id和计划id选中用户参与计划表中的一条记录
+     * 根据用户id和计划id选中用户参与计划表中的一条记录
      * @author zws
      * @since 2020/9/23 10:00
      * @param [planId, userId]

@@ -216,7 +216,7 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
             monitorPlanTrendDTO.setUid(monitorPlan.getUserId())
                     .setName(monitorPlan.getName())
                     .setPlanPattern(monitorPatternMapper.selectById(monitorPlan.getMonitorPatternId()).getDescription())
-                    .setPlanId(monitorPlan.getId())
+                    .setPlanId(planId)
                     .setPunchId(monitorPunchRecord.getId())
                     .setContent(monitorPunchRecord.getContent())
                     .setLikeCount(monitorPunchRecord.getLikeCount())

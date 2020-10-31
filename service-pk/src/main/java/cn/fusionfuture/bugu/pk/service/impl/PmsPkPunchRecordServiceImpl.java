@@ -227,7 +227,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
             pkPlanTrendDTO.setUid(pkPunchRecord.getUserId())
                     .setName(pkPlan.getName())
                     .setPlanPattern(pkPatternMapper.selectById(pkPlan.getPkPatternId()).getDescription())
-                    .setPlanId(pkPlan.getId())
+                    .setPlanId(planId)
                     .setPunchId(pkPunchRecord.getId())
                     .setContent(pkPunchRecord.getContent())
                     .setLikeCount(pkPunchRecord.getLikeCount())
