@@ -1,9 +1,11 @@
 package cn.fusionfuture.bugu.message.service.impl;
 import cn.fusionfuture.bugu.message.feign.UserFeignService;
+import cn.fusionfuture.bugu.message.mapper.MmsMessageOwnerMapper;
 import cn.fusionfuture.bugu.message.util.PageUtil;
 import cn.fusionfuture.bugu.message.vo.LikeVO;
 import cn.fusionfuture.bugu.message.vo.MessageVO;
 import cn.fusionfuture.bugu.pojo.entity.MmsLikeRemind;
+import cn.fusionfuture.bugu.pojo.entity.MmsMessageOwner;
 import cn.fusionfuture.bugu.pojo.entity.MmsPrivateChat;
 import cn.fusionfuture.bugu.message.mapper.MmsPrivateChatMapper;
 import cn.fusionfuture.bugu.message.service.IMmsPrivateChatService;
@@ -34,11 +36,27 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
     MmsPrivateChatMapper mmsPrivateChatMapper;
 
     @Autowired
+    MmsMessageOwnerMapper mmsMessageOwnerMapper;
+
+    @Autowired
     UserFeignService userFeignService;
 
     @Override
     public void sendPraivateChat(MmsPrivateChat mmsPrivateChat) {
         mmsPrivateChatMapper.insert(mmsPrivateChat);
+        MmsMessageOwner mmsMessageOwner1 = new MmsMessageOwner();
+        Long messageId = mmsPrivateChat.getId();
+
+//        System.out.println(mmsPrivateChatMapper.getMessageId());
+        mmsMessageOwner1.setMessageId(messageId);
+        mmsMessageOwner1.setOwnerId(mmsPrivateChat.getSendUserId());
+        mmsMessageOwner1.setOtherId(mmsPrivateChat.getReceiveUserId());
+        mmsMessageOwnerMapper.insert(mmsMessageOwner1);
+        MmsMessageOwner mmsMessageOwner2 = new MmsMessageOwner();
+        mmsMessageOwner2.setMessageId(messageId);
+        mmsMessageOwner2.setOwnerId(mmsPrivateChat.getReceiveUserId());
+        mmsMessageOwner2.setOtherId(mmsPrivateChat.getSendUserId());
+        mmsMessageOwnerMapper.insert(mmsMessageOwner2);
     }
 
     @Override
@@ -68,7 +86,15 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         for(MmsPrivateChat mmsPrivateChat:mmsPrivateChatArray) {
             MessageVO messageVO = new MessageVO();
             BeanUtils.copyProperties(mmsPrivateChat,messageVO);
-            //  调用其他微服务获取完整数据
+            Long messageId = mmsPrivateChat.getId();
+            QueryWrapper<MmsMessageOwner> queryWrapper1 = new QueryWrapper<>();
+            queryWrapper1.eq("message_id",messageId).eq("owner_id",id);
+            List<MmsMessageOwner> mmsMessageOwnerList = mmsMessageOwnerMapper.selectList(queryWrapper1);
+            if(mmsMessageOwnerList.size()>=1){
+                Boolean isChecked = mmsMessageOwnerList.get(0).getIsChecked();
+                messageVO.setIsChecked(isChecked);
+            }
+              //  调用其他微服务获取完整数据
             HashMap<String,String> sender = userFeignService.getDetailsForMessage(messageVO.getSendUserId()).getData();
             messageVO.setSendUserName(sender.get("userName"));
             messageVO.setSendAvatarUrl(sender.get("avatarUrl"));
@@ -95,9 +121,16 @@ public class MmsPrivateChatServiceImpl extends ServiceImpl<MmsPrivateChatMapper,
         PageHelper.startPage(pn, ps);
         PageInfo<MmsPrivateChat> mmsReceivePrivateChatList = new PageInfo<>(mmsPrivateChatMapper.selectList(queryWrapper)) ;
 
-        MmsPrivateChat updateEntity = new MmsPrivateChat();
+//        更新message_owner表中的消息状态
+        QueryWrapper<MmsMessageOwner> ownerQueryWrapper = new QueryWrapper<MmsMessageOwner>();
+        ownerQueryWrapper.eq("owner_id",id).eq("other_id",sendId);
+        MmsMessageOwner updateEntity = new MmsMessageOwner();
         updateEntity.setIsChecked(true);
-        mmsPrivateChatMapper.update(updateEntity,queryWrapper);
+        mmsMessageOwnerMapper.update(updateEntity,ownerQueryWrapper);
+
+//        MmsPrivateChat updateEntity = new MmsPrivateChat();
+//        updateEntity.setIsChecked(true);
+//        mmsPrivateChatMapper.update(updateEntity,queryWrapper);
 
         List<MessageVO> messageVOList = new ArrayList<>();
         for(MmsPrivateChat mmsPrivateChat:mmsReceivePrivateChatList.getList()) {
