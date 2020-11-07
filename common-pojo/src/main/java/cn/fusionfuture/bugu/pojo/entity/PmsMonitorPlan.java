@@ -70,7 +70,7 @@ public class PmsMonitorPlan implements Serializable {
     private LocalDateTime startTime;
 
     @ApiModelProperty(value = "计划持续时间")
-    private LocalDateTime lastTime;
+    private Integer lastTime;
 
     @ApiModelProperty(value = "计划结束时间")
     private LocalDateTime endTime;

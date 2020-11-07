@@ -1,12 +1,15 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
+import cn.fusionfuture.bugu.pk.dto.PopularPlanDTO;
+import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.NewPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
+import cn.fusionfuture.bugu.pojo.constants.PkPlanType;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
@@ -49,8 +52,12 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
     @Autowired
     PmsUserAttendPlanMapper userAttendPlanMapper;
 
+    @Autowired
+    SearchFeignService searchFeignService;
+
     @Override
     public Long createPkPlan(NewPkPlanVO newPkPlanVO) {
+
         PmsPkPlan pkPlan = new PmsPkPlan();
         PmsUserCreatePlan pmsUserCreatePlan=new PmsUserCreatePlan();
         BeanUtils.copyProperties(newPkPlanVO, pkPlan);
@@ -75,6 +82,18 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         }
         pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPunchVictoryCount(0).setPkPlanId(pkPlan.getId());
         userCreatePlanMapper.insert(pmsUserCreatePlan);
+        PopularPlanDTO popularPlanDTO = new PopularPlanDTO();
+        popularPlanDTO
+                .setId(pkPlan.getId())
+                .setUid(newPkPlanVO.getUserId())
+                .setTt(newPkPlanVO.getName())
+                .setTp(PkPlanType.getValue(newPkPlanVO.getPkPatternId()))
+                .setCv(newPkPlanVO.getImageUrl())
+                .setHc(pkPlan.getEnrolledQuantity())
+                .setRt(0)
+                .setSt(PkPlanStatus.REGISTERING.getValue())
+                .setAw(newPkPlanVO.getTotalBonus());
+        searchFeignService.createPopularPlan(popularPlanDTO);
         return pkPlan.getId();
     }
 

@@ -40,26 +40,11 @@ public class PmsPkPlanController {
     @Autowired
     IPmsPkPlanService pkPlanService;
 
-    @Autowired
-    SearchFeignService searchFeignService;
-
     @ApiOperation(value = "创建一个pk计划")
     @PostMapping(value = "/pk-plan")
     public Long createPkPlan(@RequestBody NewPkPlanVO newPkPlanVO) {
 
         Long id=pkPlanService.createPkPlan(newPkPlanVO);
-        PopularPlanDTO popularPlanDTO = new PopularPlanDTO();
-        popularPlanDTO
-                .setId(id)
-                .setUid(newPkPlanVO.getUserId())
-                .setTt(newPkPlanVO.getName())
-                .setTp(PkPlanType.getValue(newPkPlanVO.getPkPatternId()))
-                .setCv(newPkPlanVO.getImageUrl())
-                .setHc(0)
-                .setRt(0)
-                .setSt(PkPlanStatus.REGISTERING.getValue())
-                .setAw(newPkPlanVO.getTotalBonus());
-        searchFeignService.createPopularPlan(popularPlanDTO);
         return id;
     }
 
