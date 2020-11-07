@@ -73,8 +73,8 @@ public class PmsPkPlan implements Serializable {
     @ApiModelProperty(value = "计划开始时间")
     private LocalDateTime startTime;
 
-    @ApiModelProperty(value = "计划持续时间")
-    private LocalDateTime lastTime;
+    @ApiModelProperty(value = "计划持续天数")
+    private Integer lastTime;
 
     @ApiModelProperty(value = "计划结束时间")
     private LocalDateTime endTime;

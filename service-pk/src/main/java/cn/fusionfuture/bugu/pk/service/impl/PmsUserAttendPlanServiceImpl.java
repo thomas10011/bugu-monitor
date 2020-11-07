@@ -1,5 +1,7 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
+import cn.fusionfuture.bugu.pk.feign.UserFeignService;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
@@ -15,6 +17,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 /**
  * <p>
@@ -36,6 +40,9 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
     @Autowired
     PmsPkPunchRecordMapper pkPunchRecordMapper;
 
+    @Autowired
+    SearchFeignService searchFeignService;
+
     @Override
     public PageInfo<MyAchievementPlanVO> queryPkUserAttendPlanByUserId(Integer pn, Integer ps, Long uid){
         PageHelper.startPage(pn,ps);
@@ -43,7 +50,7 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
     }
 
     @Override
-    public Long userAttendPlan(Long userId,Long planId){
+    public Long userAttendPlan(Long userId,Long planId) throws IOException {
 
         //用户参与pk计划记录
         PmsUserAttendPlan userAttendPlanRecord=new PmsUserAttendPlan();
@@ -70,6 +77,7 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
                 }
                 pkPunchRecordMapper.insert(pkPunchRecord);
             }
+            searchFeignService.updatePlanHeadcount(planId,pkPlan.getEnrolledQuantity());
             //返回用户参加pk计划记录id
             return userAttendPlanRecord.getId();
         }

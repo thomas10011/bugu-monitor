@@ -54,7 +54,7 @@ public class PmsMonitorPlanController {
                 .setTt(newMonitorPlanVO.getName())
                 .setTp(MonitorPlanType.getValue(newMonitorPlanVO.getMonitorPatternId()))
                 .setCv(newMonitorPlanVO.getImageUrl())
-                .setHc(0)
+                .setHc(newMonitorPlanVO.getMonitorQuantity())
                 .setRt(0)
                 .setSt(MonitorPlanStatus.REGISTERING.getValue())
                 .setAw(newMonitorPlanVO.getTotalBonus());

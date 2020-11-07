@@ -6,6 +6,8 @@ import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 
+import java.io.IOException;
+
 /**
  * <p>
  *  服务类
@@ -32,6 +34,6 @@ public interface IPmsUserAttendPlanService extends IService<PmsUserAttendPlan> {
      * @param [userId, planId]
      * @return java.lang.Long
      **/
-    Long userAttendPlan(Long userId,Long planId);
+    Long userAttendPlan(Long userId,Long planId) throws IOException;
 
 }

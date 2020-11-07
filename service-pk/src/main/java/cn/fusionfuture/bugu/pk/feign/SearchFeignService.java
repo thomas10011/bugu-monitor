@@ -24,14 +24,23 @@ import java.io.IOException;
 @FeignClient(name = "search-service")
 public interface SearchFeignService {
 
-    /*
-     * 查询首页展示所需的数据
-     * @author zws
-     * @since 2020/10/11 15:27
-     * @param popularPlanDTO 要保存的信息
-     * @return cn.fusionfuture.bugu.pojo.api.CommonResult<?>
-     **/
     @PostMapping(value = "popular")
     CommonResult<?> createPopularPlan(@ApiParam(value = "首页计划的dto") @RequestBody PopularPlanDTO popularPlanDTO);
+
+    @GetMapping(value = "/popular/status")
+    @ApiOperation(value = "供计划相关微服务调用，更新计划的状态")
+    public void updatePlanStatus(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
+                                 @ApiParam(value = "计划状态的") @NonNull @RequestParam(value = "st") String status) throws IOException;
+
+    @GetMapping(value = "/popular/headcount")
+    @ApiOperation(value = "供计划相关微服务调用，更新计划的参与人数")
+    public void updatePlanHeadcount(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
+                                    @ApiParam(value = "计划参与的人数") @NonNull @RequestParam(value = "hc") Integer hc) throws IOException;
+
+    @GetMapping(value = "/popular/avatar")
+    @ApiOperation(value = "供计划相关微服务调用，更新用户头像")
+    public void updateUserAvatar(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
+                                 @ApiParam(value = "用户头像url") @NonNull @RequestParam(value = "hc") String url) throws IOException;
+
 
 }
