@@ -4,7 +4,7 @@
 
     <select id="queryPkUserCreatePlanByUserId" resultType="cn.fusionfuture.bugu.pk.vo.plan.MyAchievementPlanVO">
     SELECT
-        pms_pk_plan.id,
+        distinct pms_pk_plan.id,
         pms_pk_plan.name,
         pms_pk_plan.description,
         pms_pk_plan.punch_quantity,

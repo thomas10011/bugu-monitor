@@ -3,7 +3,7 @@
 <mapper namespace="cn.fusionfuture.bugu.monitor.mapper.PmsUserMonitorPlanMapper">
     <select id="queryMonitorPlanByUserId" resultType="cn.fusionfuture.bugu.monitor.vo.plan.MyAchievementPlanVO">
     SELECT
-        pms_monitor_plan.id,
+        distinct pms_monitor_plan.id,
         pms_monitor_plan.name,
         pms_monitor_plan.description,
         pms_monitor_plan.is_anonymously_publish,

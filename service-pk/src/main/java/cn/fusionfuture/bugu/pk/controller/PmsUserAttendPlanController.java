@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 /**
  * <p>
  *  前端控制器
@@ -37,7 +39,7 @@ public class PmsUserAttendPlanController {
     @PostMapping(value = "/attend")
     @ApiOperation(value = "用户参与pk计划")
     public Long punch(@ApiParam(value = "用户id") @RequestParam Long userId,
-                      @ApiParam(value = "计划id") @RequestParam Long planId) {
+                      @ApiParam(value = "计划id") @RequestParam Long planId) throws IOException {
         return userAttendPlanService.userAttendPlan(userId,planId);
     }
 
