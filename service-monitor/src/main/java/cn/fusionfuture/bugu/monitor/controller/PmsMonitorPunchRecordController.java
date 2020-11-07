@@ -42,7 +42,7 @@ public class PmsMonitorPunchRecordController {
     @GetMapping("/policy")
     @ApiOperation(value = "获取上传图片需要的policy")
     public Map<String, String> getPolicy() throws IOException, ServletException {
-        return OssUtil.getPolicy("/punch");
+        return OssUtil.getPolicy("punch/");
     }
 
     @ApiOperation(value = "用户打卡一个计划")

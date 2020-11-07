@@ -89,7 +89,7 @@ public class PmsPkPlanController {
     @GetMapping("/plan/policy")
     @ApiOperation(value = "获取上传图片需要的policy")
     public Map<String, String> getPolicy() throws IOException, ServletException {
-        return OssUtil.getPolicy("/plan");
+        return OssUtil.getPolicy("plan/");
     }
 
 }

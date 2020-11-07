@@ -38,7 +38,7 @@ public class PmsPkPunchRecordController {
     @GetMapping("/policy")
     @ApiOperation(value = "获取上传图片所需的policy")
     public Map<String, String> getPolicy() throws IOException, ServletException {
-        return OssUtil.getPolicy("/punch");
+        return OssUtil.getPolicy("punch/");
     }
 
     @PostMapping("/punch")
