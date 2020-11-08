@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author zws
@@ -59,4 +60,10 @@ public class PkPlanVO {
 
     @ApiModelProperty(value = "计划结束时间")
     private LocalDateTime endTime;
+
+    @ApiModelProperty(value = "参与者userid list")
+    private List<Long> userIdList;
+
+
+
 }

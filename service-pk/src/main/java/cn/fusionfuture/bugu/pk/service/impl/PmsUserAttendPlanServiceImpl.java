@@ -12,6 +12,7 @@ import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsUserAttendPlanService;
+import cn.hutool.core.lang.Console;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -61,15 +62,16 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
             pkPlan.setEnrolledQuantity(pkPlan.getEnrolledQuantity()+1);
             pkPlanMapper.updateById(pkPlan);
             userAttendPlanMapper.insert(userAttendPlanRecord);
+
             //创建该用户的打卡记录
             Integer punchQuantity=pkPlan.getPunchQuantity();
             for(int i=0;i<punchQuantity;i++){
                 PmsPkPunchRecord pkPunchRecord=new PmsPkPunchRecord();
                 pkPunchRecord.setAgreeCount(0).setDisagreeCount(0)
-                        .setLikeCount(0).setCommentQuantity(0).setPkPlanId(planId)
+                        .setLikeCount(0).setCommentQuantity(0).setPkPlanId(pkPlan.getId()).setCurrentPunchCycle(i+1)
                         .setUserId(userId).setStatusId(PunchStatus.NotPunched)
                         .setStartTime(pkPlan.getStartTime().plusDays(i*pkPlan.getPunchCycle()));
-                if(pkPlan.getStartTime().plusDays(pkPlan.getPunchQuantity()*pkPlan.getPunchCycle()).isAfter(pkPlan.getEndTime())){
+                if(pkPlan.getStartTime().plusDays((i+1)*pkPlan.getPunchCycle()).isAfter(pkPlan.getEndTime())){
                     pkPunchRecord.setExpiredTime(pkPlan.getEndTime());
                 }
                 else{
@@ -77,7 +79,9 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
                 }
                 pkPunchRecordMapper.insert(pkPunchRecord);
             }
-            searchFeignService.updatePlanHeadcount(planId,pkPlan.getEnrolledQuantity());
+
+
+            //searchFeignService.updatePlanHeadcount(planId,pkPlan.getEnrolledQuantity());
             //返回用户参加pk计划记录id
             return userAttendPlanRecord.getId();
         }

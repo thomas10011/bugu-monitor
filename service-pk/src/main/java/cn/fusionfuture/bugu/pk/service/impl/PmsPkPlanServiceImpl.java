@@ -11,6 +11,7 @@ import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
+import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserCreatePlan;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -137,7 +139,20 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
     @Override
     public PkPlanVO queryPkPlanVO(Long pid) {
         if(pkPlanMapper.queryPkPlanVO(pid) != null){
-            return pkPlanMapper.queryPkPlanVO(pid);
+            PkPlanVO pkPlan= pkPlanMapper.queryPkPlanVO(pid);
+            List<Long> userIdList= new ArrayList<>();
+
+            userIdList.add(pkPlanMapper.selectById(pid).getUserId());
+            QueryWrapper<PmsUserAttendPlan> userAttendPlanQueryWrapper=new QueryWrapper<>();
+            userAttendPlanQueryWrapper.eq("pk_plan_id",pid);
+            List<PmsUserAttendPlan> userAttendPlans=userAttendPlanMapper.selectList(userAttendPlanQueryWrapper);
+            for (PmsUserAttendPlan userAttendPlan:userAttendPlans
+                 ) {
+                userIdList.add(userAttendPlan.getUserId());
+            }
+
+            pkPlan.setUserIdList(userIdList);
+            return pkPlan;
         }
         return null;
     }
