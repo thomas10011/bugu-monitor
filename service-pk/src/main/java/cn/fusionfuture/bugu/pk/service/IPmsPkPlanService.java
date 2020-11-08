@@ -1,10 +1,7 @@
 package cn.fusionfuture.bugu.pk.service;
 
 import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
-import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.NewPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.*;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
@@ -54,6 +51,16 @@ public interface IPmsPkPlanService extends IService<PmsPkPlan> {
      * @return cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO
      **/
     DetailedPkPlanVO queryDetailedPkPlanVO(Long uid,Long pid);
+
+    /*
+     * @author zws
+     * @description TODO queryPkPlanVO
+     * @create 2020/11/8 14:51
+     * @update 2020/11/8 14:51
+     * @param [pid] 
+     * @return cn.fusionfuture.bugu.pk.vo.plan.PkPlanVO 
+     **/
+    PkPlanVO queryPkPlanVO(Long pid);
 
     /*
      * 根据计划id定时刷新计划在当前所属周期的打卡情况

@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.pk.mapper;
 
 import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.PkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -45,6 +46,16 @@ public interface PmsPkPlanMapper extends BaseMapper<PmsPkPlan> {
      * @return cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO
      **/
     PlanForMessageDTO queryPlanForMessageDTO(Long planId);
+
+    /*
+     * @author zws
+     * @description TODO queryPkPlanVO
+     * @create 2020/11/8 14:53
+     * @update 2020/11/8 14:53
+     * @param [planId]
+     * @return cn.fusionfuture.bugu.pk.vo.plan.PkPlanVO
+     **/
+    PkPlanVO queryPkPlanVO(Long pid);
 
 
 }

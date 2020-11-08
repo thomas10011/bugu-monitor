@@ -5,10 +5,7 @@ import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.pk.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPlanService;
-import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.NewPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.*;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanType;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanType;
@@ -62,6 +59,13 @@ public class PmsPkPlanController {
     public SimplePkPlanVO querySimplePkPlanVO(@Validated
                                                   @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return pkPlanService.querySimplePkPlanVO(planId);
+    }
+
+    @GetMapping(value = "/pk-plan/pk-plan-vo/{planId}")
+    @ApiOperation(value= "查询计划信息")
+    public PkPlanVO queryPkPlanVO(@Validated
+                                              @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
+        return pkPlanService.queryPkPlanVO(planId);
     }
 
     @GetMapping(value = "/pk-plan/detailed-info/{uid}&{pid}")

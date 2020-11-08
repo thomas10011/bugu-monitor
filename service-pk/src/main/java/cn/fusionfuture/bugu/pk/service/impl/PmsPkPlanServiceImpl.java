@@ -4,10 +4,7 @@ import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.pk.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.mapper.*;
-import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.DetailedPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.NewPkPlanVO;
-import cn.fusionfuture.bugu.pk.vo.plan.SimplePkPlanVO;
+import cn.fusionfuture.bugu.pk.vo.plan.*;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanType;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
@@ -133,6 +130,14 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         }
         else if(userCreatePlanMapper.queryByUserIdAndPlanId(uid,pid) != null){
             return userCreatePlanMapper.queryDetailedPkPlanVO(uid,pid);
+        }
+        return null;
+    }
+
+    @Override
+    public PkPlanVO queryPkPlanVO(Long pid) {
+        if(pkPlanMapper.queryPkPlanVO(pid) != null){
+            return pkPlanMapper.queryPkPlanVO(pid);
         }
         return null;
     }
