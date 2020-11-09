@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.pk.service.impl;
 import cn.fusionfuture.bugu.pk.dto.PkPlanTrendDTO;
 import cn.fusionfuture.bugu.pk.dto.PunchForMessageDTO;
 import cn.fusionfuture.bugu.pk.dto.SimplePunchDTO;
+import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.feign.UserFeignService;
 import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.vo.*;
@@ -19,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +60,9 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
 
     @Autowired
     UserFeignService userFeignService;
+
+    @Autowired
+    SearchFeignService searchFeignService;
 
     @Override
     public String punch(Long userId, Long planId, String content, List<String> imageUrls) {
@@ -104,23 +109,26 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     }
 
     @Override
-    public void like(Long punchId){
+    public void like(Long punchId) throws IOException {
         //点赞操作，将打卡的点赞数+1
         PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
         pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()+1);
         pkPunchRecordMapper.updateById(pkPunchRecord);
         PmsPkPlan pkPlan=pkPlanMapper.selectById(pkPunchRecord.getPkPlanId());
         pkPlanMapper.updateById(pkPlan.setLikeCount(pkPlan.getLikeCount()+1));
+        searchFeignService.ratePopularPlan(pkPlan.getId());
+
     }
 
     @Override
-    public void cancelLike(Long punchId){
+    public void cancelLike(Long punchId) throws IOException {
         //取消点赞，将打卡的点赞数-1
         PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
         pkPunchRecord.setLikeCount(pkPunchRecord.getLikeCount()-1);
         pkPunchRecordMapper.updateById(pkPunchRecord);
         PmsPkPlan pkPlan=pkPlanMapper.selectById(pkPunchRecord.getPkPlanId());
         pkPlanMapper.updateById(pkPlan.setLikeCount(pkPlan.getLikeCount()-1));
+        searchFeignService.cancelRatePopularPlan(pkPlan.getId());
     }
 
     @Override

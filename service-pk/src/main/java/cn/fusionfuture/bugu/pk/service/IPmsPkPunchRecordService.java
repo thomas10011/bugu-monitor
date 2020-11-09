@@ -8,6 +8,7 @@ import cn.fusionfuture.bugu.pk.vo.punch.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
       * @param [punchId]
       * @return void
       **/
-     void like(Long punchId);
+     void like(Long punchId) throws IOException;
 
      /*
       * @author zws
@@ -48,7 +49,7 @@ public interface IPmsPkPunchRecordService extends IService<PmsPkPunchRecord> {
       * @param [punchId]
       * @return void
       **/
-     void cancelLike(Long punchId);
+     void cancelLike(Long punchId) throws IOException;
 
      /*
       * @author zws

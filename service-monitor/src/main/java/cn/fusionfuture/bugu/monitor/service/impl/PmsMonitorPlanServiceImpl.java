@@ -114,20 +114,6 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
     }
 
     @Override
-    public void like(Long planId) {
-        //点赞操作，将计划的点赞数+1
-        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
-        monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()+1));
-    }
-
-    @Override
-    public void cancelLike(Long planId) {
-        //取消点赞，将计划的点赞数-1
-        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
-        monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()-1));
-    }
-
-    @Override
     public PlanForMessageDTO getPlanForMessageDTO(Long planId) {
         return monitorPlanMapper.queryPlanForMessageDTO(planId);
     }

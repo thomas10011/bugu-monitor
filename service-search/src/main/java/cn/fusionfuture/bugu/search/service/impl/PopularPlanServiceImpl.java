@@ -83,10 +83,19 @@ public class PopularPlanServiceImpl implements IPopularPlanService {
     }
 
     @Override
-    public void ratePopularPlan(Long pid) throws IOException {
+    public void cancelRatePopularPlan(Long pid) throws IOException {
         UpdateRequest updateRequest = new UpdateRequest("plan", pid.toString());
         Map<String, Object> parameters = Collections.singletonMap("count", 4);
         Script script = new Script("ctx._source.rt += 1");
+        updateRequest.script(script);
+        client.update(updateRequest, RequestOptions.DEFAULT);
+    }
+
+    @Override
+    public void ratePopularPlan(Long pid) throws IOException {
+        UpdateRequest updateRequest = new UpdateRequest("plan", pid.toString());
+        Map<String, Object> parameters = Collections.singletonMap("count", 4);
+        Script script = new Script("ctx._source.rt -= 1");
         updateRequest.script(script);
         client.update(updateRequest, RequestOptions.DEFAULT);
     }

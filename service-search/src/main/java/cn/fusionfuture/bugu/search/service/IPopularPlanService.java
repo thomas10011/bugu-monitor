@@ -40,6 +40,16 @@ public interface IPopularPlanService {
      * @param pid 计划的id
      **/
     void ratePopularPlan(Long pid) throws IOException;
+
+    /*
+     * 取消对计划的点赞
+     * @author zws
+     * @since 2020/11/9 15:20
+     * @param [pid]
+     * @return void
+     **/
+    void cancelRatePopularPlan(Long pid) throws IOException;
+
     /**
      * 创建计划的首页数据
      * @author thomas

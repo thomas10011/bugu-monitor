@@ -9,6 +9,7 @@ import cn.fusionfuture.bugu.monitor.vo.punch.SimplePunchVO;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPunchRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @param [punchId]
      * @return void
      **/
-    void like(Long punchId);
+    void like(Long punchId) throws IOException;
 
     /*
      * @author zws
@@ -49,7 +50,7 @@ public interface IPmsMonitorPunchRecordService extends IService<PmsMonitorPunchR
      * @param [punchId]
      * @return void
      **/
-    void cancelLike(Long punchId);
+    void cancelLike(Long punchId) throws IOException;
 
     /*
      *  通过打卡id查询打卡相关信息(打卡日历下方的信息）

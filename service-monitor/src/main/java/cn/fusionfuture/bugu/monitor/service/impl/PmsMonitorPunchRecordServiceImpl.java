@@ -4,6 +4,7 @@ import cn.fusionfuture.bugu.monitor.dto.MonitorPlanTrendDTO;
 import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.monitor.dto.PunchForMessageDTO;
 import cn.fusionfuture.bugu.monitor.dto.SimplePunchDTO;
+import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.*;
 import cn.fusionfuture.bugu.monitor.vo.punch.BasicPunchVO;
@@ -18,6 +19,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -49,6 +51,9 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
 
     @Autowired
     UserFeignService userFeignService;
+
+    @Autowired
+    SearchFeignService searchFeignService;
 
     @Override
     public String punch(Long planId, String content, List<String> imageUrls) {
@@ -87,21 +92,23 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     }
 
     @Override
-    public void like(Long punchId){
+    public void like(Long punchId) throws IOException {
         //点赞操作，将打卡的点赞数+1
         PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
         monitorPunchRecordMapper.updateById(monitorPunchRecord.setLikeCount(monitorPunchRecord.getLikeCount()+1));
         PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(monitorPunchRecord.getMonitorPlanId());
         monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()+1));
+        searchFeignService.ratePopularPlan(monitorPlan.getId());
     }
 
     @Override
-    public void cancelLike(Long punchId){
+    public void cancelLike(Long punchId) throws IOException {
         //取消点赞操作，将计划的点赞数-1
         PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
         monitorPunchRecordMapper.updateById(monitorPunchRecord.setLikeCount(monitorPunchRecord.getLikeCount()+1));
         PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(monitorPunchRecord.getMonitorPlanId());
         monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()-1));
+        searchFeignService.cancelRatePopularPlan(monitorPlan.getId());
     }
     @Override
     public BasicPunchVO queryBasicPunchVO(Long punchId){

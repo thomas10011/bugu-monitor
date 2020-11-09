@@ -49,4 +49,12 @@ public interface SearchFeignService {
     public void updateUserAvatar(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid,
                                  @ApiParam(value = "用户头像url") @NonNull @RequestParam(value = "hc") String url) throws IOException;
 
+    @GetMapping(value = "/popular/rate")
+    @ApiOperation(value = "供计划微服务调用，给一个计划点赞")
+    public void ratePopularPlan(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid) throws IOException;
+
+    @GetMapping(value = "/popular/cancel-rate")
+    @ApiOperation(value = "供计划微服务调用，给一个计划取消点赞")
+    public void cancelRatePopularPlan(@ApiParam(value = "计划的id") @NonNull @RequestParam(value = "pid") Long pid) throws IOException;
+
 }
