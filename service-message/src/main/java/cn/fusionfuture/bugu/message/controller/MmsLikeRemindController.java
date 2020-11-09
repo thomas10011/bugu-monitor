@@ -88,6 +88,8 @@ public class MmsLikeRemindController {
      * @param uid, pid
      * @return java.lang.Boolean
      **/
+    @PostMapping(value = "/cancel-like")
+    @ApiOperation(value = "取消点赞")
     public Boolean cancelLike(@ApiParam(value = "即当前用户id") @RequestParam(name = "uid") Long uid,
                               @ApiParam(value = "打卡id") @RequestParam(name = "pid") Long pid,
                               @ApiParam(value = "打卡所属的计划类型") @RequestParam(name = "ptype") Integer planType){
