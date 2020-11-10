@@ -34,6 +34,6 @@ public interface IPmsUserAttendPlanService extends IService<PmsUserAttendPlan> {
      * @param [userId, planId]
      * @return java.lang.Long
      **/
-    Long userAttendPlan(Long userId,Long planId) throws IOException;
+    String userAttendPlan(Long userId,Long planId) throws IOException;
 
 }

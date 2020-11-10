@@ -27,7 +27,7 @@ public class PmsPkUserGrabTicketController {
 
     @PostMapping(value = "/grab-ticket")
     @ApiOperation(value = "用户进行抢票操作")
-    public Long userGrabTicket(@ApiParam(value = "用户id") @RequestParam Long userId,
+    public String userGrabTicket(@ApiParam(value = "用户id") @RequestParam Long userId,
                                @ApiParam(value = "计划id") @RequestParam Long planId){
         return pkUserGrabTicketService.userGrabTicket(userId,planId);
     }

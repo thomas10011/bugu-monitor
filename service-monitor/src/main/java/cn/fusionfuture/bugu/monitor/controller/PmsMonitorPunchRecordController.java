@@ -55,13 +55,13 @@ public class PmsMonitorPunchRecordController {
 
     @PostMapping("/punch/like")
     @ApiOperation(value = "对一条打卡记录进行点赞")
-    public void like(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId){
+    public void like(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId) throws IOException {
         monitorPunchRecordService.like(punchId);
     }
 
     @PostMapping("/punch/cancelLike")
     @ApiOperation(value = "对一条打卡记录取消点赞")
-    public void cancelLike(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId){
+    public void cancelLike(@ApiParam(value = "打卡id") @RequestParam(name = "punchId") Long punchId) throws IOException {
         monitorPunchRecordService.cancelLike(punchId);
     }
 

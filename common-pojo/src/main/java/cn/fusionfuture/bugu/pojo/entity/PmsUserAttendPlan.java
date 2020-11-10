@@ -49,11 +49,17 @@ public class PmsUserAttendPlan extends Wrapper<PmsUserAttendPlan> implements Ser
     @ApiModelProperty(value = "pk计划id")
     private Long pkPlanId;
 
+    @ApiModelProperty(value = "需要打卡的总次数")
+    private Integer punchQuantity;
+
     @ApiModelProperty(value = "打卡次数")
     private Integer punchCount;
 
     @ApiModelProperty(value = "打卡成功次数")
     private Integer punchVictoryCount;
+
+    @ApiModelProperty(value = "计划是否成功")
+    private Integer isSuccess;
 
 
 

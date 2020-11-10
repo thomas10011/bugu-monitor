@@ -1,9 +1,16 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
+import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
+import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
+import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
+import cn.fusionfuture.bugu.pojo.entity.PmsMonitorUserGrabTicket;
+import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkUserGrabTicket;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkUserGrabTicketMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkUserGrabTicketService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -23,18 +30,38 @@ public class PmsPkUserGrabTicketServiceImpl extends ServiceImpl<PmsPkUserGrabTic
 
     @Autowired
     PmsPkUserGrabTicketMapper pkUserGrabTicketMapper;
+
+    @Autowired
+    PmsPkPlanMapper pkPlanMapper;
+
     @Override
-    public Long userGrabTicket(Long userId,Long planId){
+    public String userGrabTicket(Long userId,Long planId){
 
-        //保存用户抢票记录
-        PmsPkUserGrabTicket pkUserGrabTicketRecord=new PmsPkUserGrabTicket();
-        pkUserGrabTicketRecord.setUserId(userId);
-        pkUserGrabTicketRecord.setPkPlanId(planId);
-        pkUserGrabTicketMapper.insert(pkUserGrabTicketRecord);
-
-        //返回用户抢票记录id
-        return pkUserGrabTicketRecord.getId();
-
+        //判断是否为自己创建的计划，用户不能报名自己创建的计划
+        PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
+        if(pkPlan.getUserId().equals(userId)){
+            return "你不能对自己创建的计划投票";
+        }
+        else {
+            Integer planStatusId = pkPlan.getPlanStatusId();
+            //检查PK计划是否处在报名中或进行中
+            if (planStatusId.equals(PkPlanStatus.REGISTERING.getIndex()) || planStatusId.equals(PkPlanStatus.GRABBING.getIndex())) {
+                //检查用户是否已经抢票
+                QueryWrapper<PmsPkUserGrabTicket> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("user_id", userId).eq("pk_plan_id", planId);
+                if (pkUserGrabTicketMapper.selectOne(queryWrapper) != null) {
+                    return "不能重复对计划进行抢票";
+                } else {
+                    //插入一条用户抢票获得监督机会的记录
+                    PmsPkUserGrabTicket userPkPlanRecord = new PmsPkUserGrabTicket();
+                    userPkPlanRecord.setUserId(userId).setPkPlanId(planId);
+                    pkUserGrabTicketMapper.insert(userPkPlanRecord);
+                    return "抢票成功";
+                }
+            } else {
+                return "计划已停止抢票";
+            }
+        }
     }
 
     @Override
