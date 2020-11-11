@@ -138,6 +138,11 @@ public class MmsCommentRemindServiceImpl extends ServiceImpl<MmsCommentRemindMap
         for (MmsCommentRemind mmsCommentRemind : mmsCommentRemindList) {
             PunchCommentVO commentVO = new PunchCommentVO();
             BeanUtils.copyProperties(mmsCommentRemind,commentVO);
+            HashMap<String,String> sender = userFeignService.getDetailsForMessage(mmsCommentRemind.getSendUserId()).getData();
+            commentVO.setSendUserName(sender.get("userName"));
+            commentVO.setSendAvatarUrl(sender.get("avatarUrl"));
+            HashMap<String,String> sender1 = userFeignService.getDetailsForMessage(mmsCommentRemind.getReceiveUserId()).getData();
+            commentVO.setReceiveUserName(sender1.get("userName"));
 //            commentVO.setId(mmsCommentRemind.getId());
 //            commentVO.setSendTime(mmsCommentRemind.getCreateTime());
 //            commentVO.setSendUserId(mmsCommentRemind.getSendUserId());
