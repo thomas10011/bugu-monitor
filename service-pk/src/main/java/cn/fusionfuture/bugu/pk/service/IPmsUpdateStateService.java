@@ -43,6 +43,16 @@ public interface IPmsUpdateStateService{
 
     /*
      * @author zws
+     * @description 检测打卡是否已截至
+     * @create 2020/11/11 21:39
+     * @update 2020/11/11 21:39
+     * @param [uid]
+     * @return void
+     **/
+    //void checkPunchIsEnd(Long uid);
+
+    /*
+     * @author zws
      * @description 判断打卡结果
      * @create 2020/11/9 22:03
      * @update 2020/11/9 22:03
