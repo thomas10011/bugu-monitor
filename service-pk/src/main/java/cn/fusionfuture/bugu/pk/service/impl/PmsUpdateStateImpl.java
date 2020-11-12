@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
@@ -15,6 +16,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import java.util.List;
  * @author zws
  * @version 1.0
  * @class PmsUpdateStateImpl
- * @description TODO
+ * @description 用于检测计划状态，打卡结果并更新
  * @date 2020/11/9 20:25
  */
 @Service
@@ -41,31 +43,36 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
     @Autowired
     PmsPkPunchRecordMapper pkPunchRecordMapper;
 
+    @Autowired
+    SearchFeignService searchFeignService;
+
     @Override
-    public void checkPlanIsStart(Long uid) {
+    public void checkPlanIsStart(Long uid) throws IOException {
         List<PmsPkPlan> pkPlans=new ArrayList<>();
         QueryWrapper<PmsPkPlan> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",uid).eq("plan_status_id",1);
+        queryWrapper.eq("user_id",uid).eq("plan_status_id",PkPlanStatus.REGISTERING.getIndex());
         pkPlans.addAll(pkPlanMapper.selectList(queryWrapper));
         for (PmsPkPlan pkPlan:pkPlans
              ) {
             if(LocalDateTime.now().isAfter(pkPlan.getStartTime())){
-                pkPlan.setPlanStatusId(2);
+                searchFeignService.updatePlanStatus(pkPlan.getId(),PkPlanStatus.GRABBING.getValue());
+                pkPlan.setPlanStatusId(PkPlanStatus.GRABBING.getIndex());
             }
                 pkPlanMapper.updateById(pkPlan);
         }
     }
 
     @Override
-    public void checkPlanIsEnd(Long uid) {
+    public void checkPlanIsEnd(Long uid) throws IOException {
         List<PmsPkPlan> pkPlans=new ArrayList<>();
         QueryWrapper<PmsPkPlan> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",uid).eq("plan_status_id",2);
+        queryWrapper.eq("user_id",uid).eq("plan_status_id",PkPlanStatus.GRABBING.getIndex());
         pkPlans.addAll(pkPlanMapper.selectList(queryWrapper));
         for (PmsPkPlan pkPlan:pkPlans
         ) {
             if(LocalDateTime.now().isAfter(pkPlan.getEndTime())){
-                pkPlan.setPlanStatusId(3);
+                searchFeignService.updatePlanStatus(pkPlan.getId(),PkPlanStatus.COMPLETE.getValue());
+                pkPlan.setPlanStatusId(PkPlanStatus.COMPLETE.getIndex());
             }
             pkPlanMapper.updateById(pkPlan);
         }

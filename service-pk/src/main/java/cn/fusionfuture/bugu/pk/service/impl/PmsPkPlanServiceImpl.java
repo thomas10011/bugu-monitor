@@ -79,7 +79,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
             }
             pkPunchRecordMapper.insert(pkPunchRecord);
         }
-        pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPunchVictoryCount(0).setPkPlanId(pkPlan.getId());
+        pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPunchVictoryCount(0).setPkPlanId(pkPlan.getId()).setPunchQuantity(pkPlan.getPunchQuantity());
         userCreatePlanMapper.insert(pmsUserCreatePlan);
         PopularPlanDTO popularPlanDTO = new PopularPlanDTO();
         popularPlanDTO

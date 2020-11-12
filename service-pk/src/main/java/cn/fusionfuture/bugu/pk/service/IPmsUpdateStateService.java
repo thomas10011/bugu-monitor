@@ -2,6 +2,8 @@ package cn.fusionfuture.bugu.pk.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.io.IOException;
+
 /**
  * <p>
  *  服务类
@@ -19,7 +21,7 @@ public interface IPmsUpdateStateService{
      * @param [uid]
      * @return void
      **/
-    void checkPlanIsStart(Long uid);
+    void checkPlanIsStart(Long uid) throws IOException;
 
     /*
      * @author zws
@@ -29,7 +31,7 @@ public interface IPmsUpdateStateService{
      * @param [uid]
      * @return void
      **/
-    void checkPlanIsEnd(Long uid);
+    void checkPlanIsEnd(Long uid) throws IOException;
 
     /*
      * @author zws

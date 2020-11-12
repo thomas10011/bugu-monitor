@@ -49,5 +49,8 @@ public class PmsUserMonitorPlan implements Serializable {
     @ApiModelProperty(value = "打卡成功次数")
     private Integer punchVictoryCount;
 
+    @ApiModelProperty(value = "计划是否成功")
+    private Integer isSuccess;
+
 
 }
