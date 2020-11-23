@@ -30,42 +30,46 @@ public class UmsMonitorAchievementController {
 
     @GetMapping(value = "/achievement/monitor/plan-count/{uid}")
     @ApiOperation(value = "供计划微服务远程调用 更新用户监督的计划数，总数+1")
-    void updatePlanCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid) {
+    void updatePlanCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                         @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt) {
         UmsMonitorAchievement achievement = monitorAchievementService.getById(uid);
         monitorAchievementService.updateById(
                 new UmsMonitorAchievement()
                         .setUserId(uid)
-                        .setPlanCount(achievement.getPlanCount() + 1));
+                        .setPlanCount(achievement.getPlanCount() + amt));
     }
 
     @GetMapping(value = "/achievement/monitor/success-count/{uid}")
     @ApiOperation(value = "供计划微服务远程调用 更新用户监督的成功的计划数 总数+1" )
-    void updateSuccessCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid) {
+    void updateSuccessCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                            @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt) {
         UmsMonitorAchievement achievement = monitorAchievementService.getById(uid);
         monitorAchievementService.updateById(
                 new UmsMonitorAchievement()
                         .setUserId(uid)
-                        .setSuccessCount(achievement.getSuccessCount() + 1));
+                        .setSuccessCount(achievement.getSuccessCount() + amt));
     }
 
     @GetMapping(value = "/achievement/monitor/vote-count/{uid}")
     @ApiOperation(value = "供计划微服务远程调用 更新用户监督的计划的投票总数 总数+1" )
-    void updateVoteCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid) {
+    void updateVoteCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                         @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt) {
         UmsMonitorAchievement achievement = monitorAchievementService.getById(uid);
         monitorAchievementService.updateById(
                 new UmsMonitorAchievement()
                         .setUserId(uid)
-                        .setVoteCount(achievement.getVoteCount() + 1));
+                        .setVoteCount(achievement.getVoteCount() + amt));
     }
 
     @GetMapping(value = "/achievement/monitor/assist-count/{uid}")
     @ApiOperation(value = "供计划微服务远程调用 更新用户助力人数 总数+1" )
-    void updateAssistCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid) {
+    void updateAssistCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                           @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt) {
         UmsMonitorAchievement achievement = monitorAchievementService.getById(uid);
         monitorAchievementService.updateById(
                 new UmsMonitorAchievement()
                         .setUserId(uid)
-                        .setAssistCount(achievement.getAssistCount() + 1));
+                        .setAssistCount(achievement.getAssistCount() + amt));
     }
 
 }

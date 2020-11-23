@@ -41,7 +41,7 @@ public class EsTest {
                 .size(2);
 
         searchRequest.source(searchSourceBuilder);
-        GetRequest getRequest = new GetRequest("/plan/1");
+//        GetRequest getRequest = new GetRequest("/plan/1");
         SearchResponse res = client.search(searchRequest, RequestOptions.DEFAULT);
 //        GetResponse response = client.get(getRequest, RequestOptions.DEFAULT);
         log.info(res.toString());

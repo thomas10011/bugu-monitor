@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 /**
  * @author zws
  * @version 1.0
@@ -24,13 +26,13 @@ public class PmsUpdateStateController {
 
     @GetMapping("/check/plan-is-start/{uid}")
     @ApiOperation(value = "根据用户id检查用户创建的计划是否开始并更新")
-    public void checkPlanIsStart(@ApiParam(value = "用户的id") @PathVariable Long uid){
+    public void checkPlanIsStart(@ApiParam(value = "用户的id") @PathVariable Long uid) throws IOException {
         updateStateService.checkPlanIsStart(uid);
     }
 
     @GetMapping("/check/plan-is-end/{uid}")
     @ApiOperation(value = "根据用户id检查用户创建的计划是否结束并更新")
-    public void checkPlanIsEnd(@ApiParam(value = "用户的id") @PathVariable Long uid){
+    public void checkPlanIsEnd(@ApiParam(value = "用户的id") @PathVariable Long uid) throws IOException {
         updateStateService.checkPlanIsEnd(uid);
     }
 
