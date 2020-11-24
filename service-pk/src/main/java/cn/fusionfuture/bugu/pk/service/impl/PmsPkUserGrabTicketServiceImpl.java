@@ -1,13 +1,12 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
+import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
+import cn.fusionfuture.bugu.pk.mapper.PmsUserCreatePlanMapper;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
-import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
-import cn.fusionfuture.bugu.pojo.entity.PmsMonitorUserGrabTicket;
-import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
-import cn.fusionfuture.bugu.pojo.entity.PmsPkUserGrabTicket;
+import cn.fusionfuture.bugu.pojo.entity.*;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkUserGrabTicketMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsPkUserGrabTicketService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -16,6 +15,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -33,6 +34,12 @@ public class PmsPkUserGrabTicketServiceImpl extends ServiceImpl<PmsPkUserGrabTic
 
     @Autowired
     PmsPkPlanMapper pkPlanMapper;
+
+    @Autowired
+    PmsUserAttendPlanMapper userAttendPlanMapper;
+
+    @Autowired
+    PmsUserCreatePlanMapper userCreatePlanMapper;
 
     @Override
     public String userGrabTicket(Long userId,Long planId){
@@ -68,6 +75,20 @@ public class PmsPkUserGrabTicketServiceImpl extends ServiceImpl<PmsPkUserGrabTic
     public PageInfo<BasicPkPlanVO> queryUserVotePlanByUserId(Integer pn, Integer ps, Long uid){
 
         PageHelper.startPage(pn,ps);
-        return new PageInfo<>(pkUserGrabTicketMapper.queryUserVotePlanByUserId(uid));
+        List<BasicPkPlanVO> basicPkPlanVOList=pkUserGrabTicketMapper.queryUserVotePlanByUserId(uid);
+//        for (BasicPkPlanVO basicPkPlanVO:basicPkPlanVOList
+//             ) {
+//            QueryWrapper<PmsUserAttendPlan> queryWrapper1=new QueryWrapper();
+//            queryWrapper1.eq("user_id",uid).eq("pk_plan_id", basicPkPlanVO.getId());
+//            if(userAttendPlanMapper.selectOne(queryWrapper1)!=null){
+//                basicPkPlanVO.setPunchVictoryCount(userAttendPlanMapper.selectOne(queryWrapper1).getPunchVictoryCount());
+//            }
+//            QueryWrapper<PmsUserCreatePlan> queryWrapper2=new QueryWrapper();
+//            queryWrapper2.eq("user_id", uid).eq("pk_plan_id", basicPkPlanVO.getId());
+//            if(userCreatePlanMapper.selectOne(queryWrapper2)!=null){
+//                basicPkPlanVO.setPunchVictoryCount(userCreatePlanMapper.selectOne(queryWrapper2).getPunchVictoryCount());
+//            }
+//        }
+        return new PageInfo<>(basicPkPlanVOList);
     }
 }

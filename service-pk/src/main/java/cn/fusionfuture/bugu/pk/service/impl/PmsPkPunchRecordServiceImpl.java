@@ -11,6 +11,7 @@ import cn.fusionfuture.bugu.pk.vo.punch.BasicPunchVO;
 import cn.fusionfuture.bugu.pk.vo.punch.DetailedPunchVO;
 import cn.fusionfuture.bugu.pk.vo.punch.PlanTrendVO;
 import cn.fusionfuture.bugu.pk.vo.punch.SimplePunchVO;
+import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
 import cn.fusionfuture.bugu.pk.service.IPmsPkPunchRecordService;
@@ -210,7 +211,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
             PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
             //如果计划正在进行中
             Integer planStatusId=pkPlan.getPlanStatusId();
-            if(planStatusId.equals(2)) {
+            if(planStatusId.equals(PkPlanStatus.GRABBING.getIndex())) {
                 //查询获取用户相关计划id
                 QueryWrapper<PmsPkPunchRecord> queryWrapper2=new QueryWrapper<>();
                 queryWrapper2.eq("pk_plan_id",planId);
