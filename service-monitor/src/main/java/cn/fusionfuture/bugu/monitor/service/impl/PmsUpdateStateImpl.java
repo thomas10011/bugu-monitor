@@ -78,8 +78,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
         queryWrapper.eq("user_id",uid).eq("is_success",2);
         userMonitorPlans.addAll(userMonitorPlanMapper.selectList(queryWrapper));
         if(userMonitorPlans.size()!=0) {
-            for (PmsUserMonitorPlan userMonitorPlan : userMonitorPlans
-            ) {
+            for (PmsUserMonitorPlan userMonitorPlan : userMonitorPlans) {
                 PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(userMonitorPlan.getMonitorPlanId());
                 if(monitorPlan.getPlanStatusId().equals(MonitorPlanStatus.COMPLETE.getIndex())) {
                     int midCount = monitorPlan.getPunchQuantity() / 2;

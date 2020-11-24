@@ -29,42 +29,46 @@ public class UmsPkPlanAchievementController {
 
     @GetMapping(value = "/achievement/pk-plan/plan-count/{uid}")
     @ApiOperation(value = "供计划微服务远程调用 更新用户的pk计划的总数，总数+1")
-    void updatePlanCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid) {
+    void updatePlanCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                         @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt) {
         UmsPkPlanAchievement achievement = pkPlanAchievementService.getById(uid);
         pkPlanAchievementService.updateById(
                 new UmsPkPlanAchievement()
                         .setUserId(uid)
-                        .setPlanCount(achievement.getPlanCount() + 1));
+                        .setPlanCount(achievement.getPlanCount() + amt));
     }
 
     @GetMapping(value = "/achievement/pk-plan/success-count/{uid}")
     @ApiOperation(value = "供计划微服务远程调用 更新用户pk计划的成功次数，总数+1")
-    void updateSuccessCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid) {
+    void updateSuccessCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                            @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt) {
         UmsPkPlanAchievement achievement = pkPlanAchievementService.getById(uid);
         pkPlanAchievementService.updateById(
                 new UmsPkPlanAchievement()
                         .setUserId(uid)
-                        .setSuccessCount(achievement.getSuccessCount() + 1));
+                        .setSuccessCount(achievement.getSuccessCount() + amt));
     }
 
     @GetMapping(value = "/achievement/pk-plan/defeat-count/{uid}")
     @ApiOperation(value = "供计划微服务远程调用 更新用户战胜的人数，总数+1")
-    void updateDefeatCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid) {
+    void updateDefeatCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                           @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt) {
         UmsPkPlanAchievement achievement = pkPlanAchievementService.getById(uid);
         pkPlanAchievementService.updateById(
                 new UmsPkPlanAchievement()
                         .setUserId(uid)
-                        .setDefeatCount(achievement.getDefeatCount() + 1));
+                        .setDefeatCount(achievement.getDefeatCount() + amt));
     }
 
     @GetMapping(value = "/achievement/pk-plan/victory-count/{uid}")
     @ApiOperation(value = "供计划微服务远程调用 更新用户胜利次数，总数+1")
-    void updateVictoryCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid) {
+    void updateVictoryCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
+                            @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt) {
         UmsPkPlanAchievement achievement = pkPlanAchievementService.getById(uid);
         pkPlanAchievementService.updateById(
                 new UmsPkPlanAchievement()
                         .setUserId(uid)
-                        .setVictoryCount(achievement.getVictoryCount() + 1));
+                        .setVictoryCount(achievement.getVictoryCount() + amt));
     }
 
 }
