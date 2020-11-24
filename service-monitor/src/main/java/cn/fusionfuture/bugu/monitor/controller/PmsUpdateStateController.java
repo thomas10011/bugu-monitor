@@ -1,11 +1,13 @@
 package cn.fusionfuture.bugu.monitor.controller;
 
 import cn.fusionfuture.bugu.monitor.service.IPmsUpdateStateService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -16,6 +18,8 @@ import java.io.IOException;
  * @description 用于检测打卡以及计划结果并更新
  * @date 2020/11/12 12:14
  */
+@RestController
+@Api(tags = "检测器")
 public class PmsUpdateStateController {
 
     @Autowired

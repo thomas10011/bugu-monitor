@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.feign.UserFeignService;
+import cn.fusionfuture.bugu.pk.feign.UserPkAchievementFeignService;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
@@ -46,6 +47,9 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
 
     @Autowired
     SearchFeignService searchFeignService;
+
+    @Autowired
+    UserPkAchievementFeignService userPkAchievementFeignService;
 
     @Override
     public PageInfo<MyAchievementPlanVO> queryPkUserAttendPlanByUserId(Integer pn, Integer ps, Long uid){
@@ -101,7 +105,9 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
                             }
                             pkPunchRecordMapper.insert(pkPunchRecord);
                         }
+                        userPkAchievementFeignService.updatePlanCount(userId,1);
                         return "报名成功";
+
                     }
                     //报名人数已满
                     else{

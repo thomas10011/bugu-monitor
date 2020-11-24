@@ -1,6 +1,8 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
+import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
+import cn.fusionfuture.bugu.monitor.feign.UserMonitorAchievementFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsUserMonitorPlanMapper;
@@ -38,6 +40,12 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 
     @Autowired
     SearchFeignService searchFeignService;
+
+    @Autowired
+    UserFeignService userFeignService;
+
+    @Autowired
+    UserMonitorAchievementFeignService userMonitorAchievementFeignService;
 
     @Override
     public void checkPlanIsStart(Long uid) throws IOException {
@@ -84,6 +92,8 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                     int midCount = monitorPlan.getPunchQuantity() / 2;
                     if (userMonitorPlan.getPunchVictoryCount() > midCount) {
                         userMonitorPlan.setIsSuccess(1);
+                        //userFeignService.updateSuccessCount(uid,1);
+
                     } else {
                         userMonitorPlan.setIsSuccess(0);
                     }
@@ -113,6 +123,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                         PmsUserMonitorPlan userMonitorPlan=userMonitorPlanMapper.selectOne(queryWrapper2);
                         userMonitorPlan.setPunchVictoryCount(userMonitorPlan.getPunchVictoryCount()+1);
                         userMonitorPlanMapper.updateById(userMonitorPlan);
+                        userMonitorAchievementFeignService.updateSuccessCount(uid,1);
                     }
                 }
                 else{

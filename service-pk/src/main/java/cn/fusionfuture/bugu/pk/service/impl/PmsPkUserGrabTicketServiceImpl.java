@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.pk.service.impl;
 
+import cn.fusionfuture.bugu.pk.feign.UserFeignService;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserCreatePlanMapper;
@@ -41,6 +42,9 @@ public class PmsPkUserGrabTicketServiceImpl extends ServiceImpl<PmsPkUserGrabTic
     @Autowired
     PmsUserCreatePlanMapper userCreatePlanMapper;
 
+    @Autowired
+    UserFeignService userFeignService;
+
     @Override
     public String userGrabTicket(Long userId,Long planId){
 
@@ -63,6 +67,7 @@ public class PmsPkUserGrabTicketServiceImpl extends ServiceImpl<PmsPkUserGrabTic
                     PmsPkUserGrabTicket userPkPlanRecord = new PmsPkUserGrabTicket();
                     userPkPlanRecord.setUserId(userId).setPkPlanId(planId);
                     pkUserGrabTicketMapper.insert(userPkPlanRecord);
+                    userFeignService.updatePlanCount(userId,1);
                     return "抢票成功";
                 }
             } else {

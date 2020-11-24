@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.pk.service.impl;
 import cn.fusionfuture.bugu.pk.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.pk.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
+import cn.fusionfuture.bugu.pk.feign.UserPkAchievementFeignService;
 import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.vo.plan.*;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
@@ -54,6 +55,9 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
     @Autowired
     SearchFeignService searchFeignService;
 
+    @Autowired
+    UserPkAchievementFeignService userPkAchievementFeignService;
+
     @Override
     public Long createPkPlan(NewPkPlanVO newPkPlanVO) {
 
@@ -81,6 +85,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         }
         pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPunchVictoryCount(0).setPkPlanId(pkPlan.getId()).setPunchQuantity(pkPlan.getPunchQuantity());
         userCreatePlanMapper.insert(pmsUserCreatePlan);
+        userPkAchievementFeignService.updatePlanCount(pkPlan.getUserId(),1);
         PopularPlanDTO popularPlanDTO = new PopularPlanDTO();
         popularPlanDTO
                 .setId(pkPlan.getId())

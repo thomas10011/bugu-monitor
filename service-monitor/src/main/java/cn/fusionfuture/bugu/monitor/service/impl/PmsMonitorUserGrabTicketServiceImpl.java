@@ -1,5 +1,6 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
+import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
@@ -31,6 +32,9 @@ public class PmsMonitorUserGrabTicketServiceImpl extends ServiceImpl<PmsMonitorU
     @Autowired
     PmsMonitorPlanMapper monitorPlanMapper;
 
+    @Autowired
+    UserFeignService userFeignService;
+
     @Override
     public String userGrabTicket(Long userId,Long planId){
 
@@ -48,6 +52,7 @@ public class PmsMonitorUserGrabTicketServiceImpl extends ServiceImpl<PmsMonitorU
                 PmsMonitorUserGrabTicket userMonitorPlanRecord = new PmsMonitorUserGrabTicket();
                 userMonitorPlanRecord.setUserId(userId).setMonitorPlanId(planId);
                 monitorUserGrabTicketMapper.insert(userMonitorPlanRecord);
+                userFeignService.updatePlanCount(userId,1);
                 return "抢票成功";
             }
         }
