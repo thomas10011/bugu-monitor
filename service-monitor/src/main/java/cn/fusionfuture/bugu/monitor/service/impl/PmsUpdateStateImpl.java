@@ -52,14 +52,16 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
         List<PmsMonitorPlan> monitorPlans=new ArrayList<>();
         QueryWrapper<PmsMonitorPlan> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("user_id",uid).eq("plan_status_id",MonitorPlanStatus.REGISTERING.getIndex());
-        monitorPlans.addAll(monitorPlanMapper.selectList(queryWrapper));
-        for (PmsMonitorPlan monitorPlan:monitorPlans
-        ) {
-            if(LocalDateTime.now().isAfter(monitorPlan.getStartTime())){
-                monitorPlan.setPlanStatusId(MonitorPlanStatus.UNDERWAY.getIndex());
-                searchFeignService.updatePlanStatus(monitorPlan.getId(),MonitorPlanStatus.UNDERWAY.getValue());
+        if(monitorPlanMapper.selectList(queryWrapper).size()!=0) {
+            monitorPlans.addAll(monitorPlanMapper.selectList(queryWrapper));
+            for (PmsMonitorPlan monitorPlan : monitorPlans
+            ) {
+                if (LocalDateTime.now().isAfter(monitorPlan.getStartTime())) {
+                    monitorPlan.setPlanStatusId(MonitorPlanStatus.UNDERWAY.getIndex());
+                    searchFeignService.updatePlanStatus(monitorPlan.getId(), MonitorPlanStatus.UNDERWAY.getValue());
+                }
+                monitorPlanMapper.updateById(monitorPlan);
             }
-            monitorPlanMapper.updateById(monitorPlan);
         }
     }
 
@@ -68,14 +70,16 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
         List<PmsMonitorPlan> monitorPlans=new ArrayList<>();
         QueryWrapper<PmsMonitorPlan> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("user_id",uid).eq("plan_status_id",MonitorPlanStatus.UNDERWAY.getIndex());
-        monitorPlans.addAll(monitorPlanMapper.selectList(queryWrapper));
-        for (PmsMonitorPlan monitorPlan:monitorPlans
-        ) {
-            if(LocalDateTime.now().isAfter(monitorPlan.getEndTime())){
-                monitorPlan.setPlanStatusId(MonitorPlanStatus.COMPLETE.getIndex());
-                searchFeignService.updatePlanStatus(monitorPlan.getId(),MonitorPlanStatus.COMPLETE.getValue());
+        if(monitorPlanMapper.selectList(queryWrapper).size()!=0) {
+            monitorPlans.addAll(monitorPlanMapper.selectList(queryWrapper));
+            for (PmsMonitorPlan monitorPlan : monitorPlans
+            ) {
+                if (LocalDateTime.now().isAfter(monitorPlan.getEndTime())) {
+                    monitorPlan.setPlanStatusId(MonitorPlanStatus.COMPLETE.getIndex());
+                    searchFeignService.updatePlanStatus(monitorPlan.getId(), MonitorPlanStatus.COMPLETE.getValue());
+                }
+                monitorPlanMapper.updateById(monitorPlan);
             }
-            monitorPlanMapper.updateById(monitorPlan);
         }
     }
 

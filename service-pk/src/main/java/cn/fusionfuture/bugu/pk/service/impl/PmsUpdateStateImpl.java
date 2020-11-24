@@ -59,14 +59,16 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
         List<PmsPkPlan> pkPlans=new ArrayList<>();
         QueryWrapper<PmsPkPlan> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("user_id",uid).eq("plan_status_id",PkPlanStatus.REGISTERING.getIndex());
-        pkPlans.addAll(pkPlanMapper.selectList(queryWrapper));
-        for (PmsPkPlan pkPlan:pkPlans
-             ) {
-            if(LocalDateTime.now().isAfter(pkPlan.getStartTime())){
-                searchFeignService.updatePlanStatus(pkPlan.getId(),PkPlanStatus.GRABBING.getValue());
-                pkPlan.setPlanStatusId(PkPlanStatus.GRABBING.getIndex());
-            }
+        if(pkPlanMapper.selectList(queryWrapper).size()!=0) {
+            pkPlans.addAll(pkPlanMapper.selectList(queryWrapper));
+            for (PmsPkPlan pkPlan : pkPlans
+            ) {
+                if (LocalDateTime.now().isAfter(pkPlan.getStartTime())) {
+                    searchFeignService.updatePlanStatus(pkPlan.getId(), PkPlanStatus.GRABBING.getValue());
+                    pkPlan.setPlanStatusId(PkPlanStatus.GRABBING.getIndex());
+                }
                 pkPlanMapper.updateById(pkPlan);
+            }
         }
     }
 
@@ -75,14 +77,16 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
         List<PmsPkPlan> pkPlans=new ArrayList<>();
         QueryWrapper<PmsPkPlan> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("user_id",uid).eq("plan_status_id",PkPlanStatus.GRABBING.getIndex());
-        pkPlans.addAll(pkPlanMapper.selectList(queryWrapper));
-        for (PmsPkPlan pkPlan:pkPlans
-        ) {
-            if(LocalDateTime.now().isAfter(pkPlan.getEndTime())){
-                searchFeignService.updatePlanStatus(pkPlan.getId(),PkPlanStatus.COMPLETE.getValue());
-                pkPlan.setPlanStatusId(PkPlanStatus.COMPLETE.getIndex());
+        if(pkPlanMapper.selectList(queryWrapper).size()!=0) {
+            pkPlans.addAll(pkPlanMapper.selectList(queryWrapper));
+            for (PmsPkPlan pkPlan : pkPlans
+            ) {
+                if (LocalDateTime.now().isAfter(pkPlan.getEndTime())) {
+                    searchFeignService.updatePlanStatus(pkPlan.getId(), PkPlanStatus.COMPLETE.getValue());
+                    pkPlan.setPlanStatusId(PkPlanStatus.COMPLETE.getIndex());
+                }
+                pkPlanMapper.updateById(pkPlan);
             }
-            pkPlanMapper.updateById(pkPlan);
         }
     }
 
