@@ -2,13 +2,11 @@ package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
-import cn.fusionfuture.bugu.monitor.feign.UserMonitorAchievementFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsUserMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsUpdateStateService;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
-import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +42,6 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
     @Autowired
     UserFeignService userFeignService;
 
-    @Autowired
-    UserMonitorAchievementFeignService userMonitorAchievementFeignService;
 
     @Override
     public void checkPlanIsStart(Long uid) throws IOException {
@@ -127,7 +123,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                         PmsUserMonitorPlan userMonitorPlan=userMonitorPlanMapper.selectOne(queryWrapper2);
                         userMonitorPlan.setPunchVictoryCount(userMonitorPlan.getPunchVictoryCount()+1);
                         userMonitorPlanMapper.updateById(userMonitorPlan);
-                        userMonitorAchievementFeignService.updateSuccessCount(uid,1);
+                        userFeignService.updateMonitorSuccessCount(uid,1);
                     }
                 }
                 else{

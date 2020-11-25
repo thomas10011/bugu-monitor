@@ -2,13 +2,11 @@ package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.feign.UserFeignService;
-import cn.fusionfuture.bugu.pk.feign.UserPkAchievementFeignService;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserCreatePlanMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsUpdateStateService;
-import cn.fusionfuture.bugu.pk.vo.UserAttendPlanRecordVO;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
@@ -51,8 +49,6 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
     @Autowired
     UserFeignService userFeignService;
 
-    @Autowired
-    UserPkAchievementFeignService userPkAchievementFeignService;
 
     @Override
     public void checkPlanIsStart(Long uid) throws IOException {
@@ -104,7 +100,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                     if (userAttendPlan.getPunchVictoryCount() > midCount) {
                         userAttendPlan.setIsSuccess(1);
                         //userFeignService.updateSuccessCount(uid,1);
-                        userPkAchievementFeignService.updateSuccessCount(uid,1);
+                        userFeignService.updatePkSuccessCount(uid,1);
                     } else {
                         userAttendPlan.setIsSuccess(0);
                     }
@@ -127,7 +123,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                     int midCount = userCreatePlan.getPunchQuantity() / 2;
                     if (userCreatePlan.getPunchVictoryCount() > midCount) {
                         userCreatePlan.setIsSuccess(1);
-                        userPkAchievementFeignService.updateVictoryCount(uid,1);
+                        userFeignService.updateVictoryCount(uid,1);
                     } else {
                         userCreatePlan.setIsSuccess(0);
                     }
@@ -173,7 +169,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                         PmsUserAttendPlan userAttendPlan=userAttendPlanMapper.selectOne(queryWrapper2);
                         userAttendPlan.setPunchVictoryCount(userAttendPlan.getPunchVictoryCount()+1);
                         userAttendPlanMapper.updateById(userAttendPlan);
-                        userPkAchievementFeignService.updateSuccessCount(uid,1);
+                        userFeignService.updatePkSuccessCount(uid,1);
                     }
                     else{
                         QueryWrapper<PmsUserCreatePlan> queryWrapper3=new QueryWrapper<>();
@@ -181,7 +177,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                         PmsUserCreatePlan userCreatePlan=userCreatePlanMapper.selectOne(queryWrapper3);
                         userCreatePlan.setPunchVictoryCount(userCreatePlan.getPunchVictoryCount()+1);
                         userCreatePlanMapper.updateById(userCreatePlan);
-                        userPkAchievementFeignService.updateSuccessCount(uid,1);
+                        userFeignService.updatePkSuccessCount(uid,1);
                     }
                 }
                 else{

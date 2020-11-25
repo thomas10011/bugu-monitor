@@ -1,7 +1,7 @@
 package cn.fusionfuture.bugu.monitor.service.impl;
 
 import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
-import cn.fusionfuture.bugu.monitor.feign.UserMonitorAchievementFeignService;
+import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchStatusMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsUserMonitorPlanMapper;
@@ -52,7 +52,7 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
     PmsUserMonitorPlanMapper userMonitorPlanMapper;
 
     @Autowired
-    UserMonitorAchievementFeignService userMonitorAchievementFeignService;
+    UserFeignService userFeignService;
 
     @Override
     public Long createMonitorPlan(NewMonitorPlanVO newMonitorPlanVO) {
@@ -80,8 +80,8 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
         }
         userMonitorPlan.setMonitorPlanId(monitorPlan.getId()).setUserId(monitorPlan.getUserId())
                 .setPunchVictoryCount(0);
-        userMonitorAchievementFeignService.updatePlanCount(monitorPlan.getUserId(),1);
-        userMonitorAchievementFeignService.updateParticipateCount(monitorPlan.getUserId(),monitorPlan.getMonitorQuantity());
+        userFeignService.updateMonitorPlanCount(monitorPlan.getUserId(),1);
+        userFeignService.updateMonitorParticipateCount(monitorPlan.getUserId(),monitorPlan.getMonitorQuantity());
         userMonitorPlanMapper.insert(userMonitorPlan);
         return monitorPlan.getId();
     }

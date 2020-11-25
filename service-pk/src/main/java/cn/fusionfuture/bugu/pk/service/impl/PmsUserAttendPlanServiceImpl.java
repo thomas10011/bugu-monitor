@@ -2,20 +2,16 @@ package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.feign.UserFeignService;
-import cn.fusionfuture.bugu.pk.feign.UserPkAchievementFeignService;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
-import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
 import cn.fusionfuture.bugu.pk.vo.plan.MyAchievementPlanVO;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPunchRecord;
-import cn.fusionfuture.bugu.pojo.entity.PmsPkUserGrabTicket;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
 import cn.fusionfuture.bugu.pk.service.IPmsUserAttendPlanService;
-import cn.hutool.core.lang.Console;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -49,7 +45,7 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
     SearchFeignService searchFeignService;
 
     @Autowired
-    UserPkAchievementFeignService userPkAchievementFeignService;
+    UserFeignService userFeignService;
 
     @Override
     public PageInfo<MyAchievementPlanVO> queryPkUserAttendPlanByUserId(Integer pn, Integer ps, Long uid){
@@ -105,7 +101,7 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
                             }
                             pkPunchRecordMapper.insert(pkPunchRecord);
                         }
-                        userPkAchievementFeignService.updatePlanCount(userId,1);
+                        userFeignService.updatePkPlanCount(userId,1);
                         return "报名成功";
 
                     }
