@@ -36,6 +36,7 @@ public class GlobalExceptionHandler {
     public CommonResult handlerNoHandlerFoundException(NoHandlerFoundException e) throws Throwable {
         errorDispose(e);
         outPutErrorWarn(NoHandlerFoundException.class, ResultCode.NOT_FOUND, e);
+        log.error(e.getMessage());
         return CommonResult.fail(ResultCode.NOT_FOUND);
     }
 
@@ -47,6 +48,7 @@ public class GlobalExceptionHandler {
             HttpRequestMethodNotSupportedException e) throws Throwable {
         errorDispose(e);
         outPutErrorWarn(HttpRequestMethodNotSupportedException.class, ResultCode.METHOD_NOT_ALLOWED, e);
+        log.error(e.getMessage());
         return CommonResult.fail(ResultCode.METHOD_NOT_ALLOWED);
     }
 
@@ -58,6 +60,7 @@ public class GlobalExceptionHandler {
             HttpMediaTypeNotSupportedException e) throws Throwable {
         errorDispose(e);
         outPutErrorWarn(HttpMediaTypeNotSupportedException.class, ResultCode.UNSUPPORTED_MEDIA_TYPE, e);
+        log.error(e.getMessage());
         return CommonResult.fail(ResultCode.UNSUPPORTED_MEDIA_TYPE);
     }
 
@@ -67,7 +70,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public CommonResult handlerException(Exception e) throws Throwable {
         errorDispose(e);
-        log.info(e.getMessage());
+        log.error(e.getMessage());
         return ifDepthExceptionType(e);
     }
 
@@ -83,7 +86,6 @@ public class GlobalExceptionHandler {
 //            return handlerFeignException((FeignException) cause);
 //        }
 //        outPutError(Exception.class, CommonErrorCode.EXCEPTION, throwable);
-        log.info(cause.getMessage());
         return CommonResult.fail(ResultCode.INTERNAL_SERVER_ERROR);
     }
 

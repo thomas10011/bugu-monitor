@@ -21,6 +21,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
     UserFeignService userFeignService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long createPkPlan(NewPkPlanVO newPkPlanVO) {
 
         PmsPkPlan pkPlan = new PmsPkPlan();
@@ -163,6 +165,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void like(Long planId) {
         //点赞操作，将计划的点赞数+1
         PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);

@@ -23,6 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,6 +56,7 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
     UserFeignService userFeignService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long createMonitorPlan(NewMonitorPlanVO newMonitorPlanVO) {
         PmsMonitorPlan monitorPlan = new PmsMonitorPlan();
         PmsUserMonitorPlan userMonitorPlan=new PmsUserMonitorPlan();

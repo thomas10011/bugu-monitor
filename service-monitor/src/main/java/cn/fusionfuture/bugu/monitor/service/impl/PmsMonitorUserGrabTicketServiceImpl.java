@@ -15,6 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -37,6 +38,7 @@ public class PmsMonitorUserGrabTicketServiceImpl extends ServiceImpl<PmsMonitorU
     UserFeignService userFeignService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer userGrabTicket(Long userId,Long planId){
 
         PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);

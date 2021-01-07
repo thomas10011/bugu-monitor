@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -34,6 +35,7 @@ public class PmsPkVoteRecordServiceImpl extends ServiceImpl<PmsPkVoteRecordMappe
     PmsPkUserGrabTicketMapper pkUserGrabTicketMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer vote(Long userId, Long punchId, Boolean voteResult){
 
         //在打卡之前先需要先判断用户是否已经对该打卡对应的计划抢票

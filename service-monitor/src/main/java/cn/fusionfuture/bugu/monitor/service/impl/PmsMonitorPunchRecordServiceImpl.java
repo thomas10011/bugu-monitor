@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -56,6 +57,7 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     SearchFeignService searchFeignService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String punch(Long planId, String content, List<String> imageUrls) {
         //获取当前时间
         LocalDateTime currentTime=LocalDateTime.now();
@@ -92,6 +94,7 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void like(Long punchId) throws IOException {
         //点赞操作，将打卡的点赞数+1
         PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
@@ -102,6 +105,7 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void cancelLike(Long punchId) throws IOException {
         //取消点赞操作，将计划的点赞数-1
         PmsMonitorPunchRecord monitorPunchRecord=monitorPunchRecordMapper.selectById(punchId);
@@ -110,6 +114,7 @@ public class PmsMonitorPunchRecordServiceImpl extends ServiceImpl<PmsMonitorPunc
         monitorPlanMapper.updateById(monitorPlan.setLikeCount(monitorPlan.getLikeCount()-1));
         searchFeignService.cancelRatePopularPlan(monitorPlan.getId());
     }
+
     @Override
     public BasicPunchVO queryBasicPunchVO(Long punchId){
 

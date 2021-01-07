@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -66,6 +67,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     SearchFeignService searchFeignService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String punch(Long userId, Long planId, String content, List<String> imageUrls) {
         //获取当前时间
         LocalDateTime currentTime = LocalDateTime.now();
@@ -110,6 +112,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void like(Long punchId) throws IOException {
         //点赞操作，将打卡的点赞数+1
         PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);
@@ -122,6 +125,7 @@ public class PmsPkPunchRecordServiceImpl extends ServiceImpl<PmsPkPunchRecordMap
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void cancelLike(Long punchId) throws IOException {
         //取消点赞，将打卡的点赞数-1
         PmsPkPunchRecord pkPunchRecord=pkPunchRecordMapper.selectById(punchId);

@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -69,6 +70,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 
     @Override
     @Scheduled(cron="0 11 0 * * ?")
+    @Transactional(rollbackFor = Exception.class)
     public void judgePlanResult() {
         List<PmsUserAttendPlan> userAttendPlans=new ArrayList<>();
         QueryWrapper<PmsUserAttendPlan> queryWrapper=new QueryWrapper<>();
@@ -136,6 +138,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 
     @Override
     @Scheduled(cron="0 21 0 * * ?")
+    @Transactional(rollbackFor = Exception.class)
     public void judgePunchResult() {
         List<PmsPkPunchRecord> pkPunchRecords=new ArrayList<>();
         QueryWrapper<PmsPkPunchRecord> queryWrapper1=new QueryWrapper<>();
