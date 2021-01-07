@@ -21,7 +21,7 @@ public interface IPmsUpdateStateService{
      * @param [uid]
      * @return void
      **/
-    void checkPlanIsStart(Long uid) throws IOException;
+    void checkPlanIsStart() throws IOException;
 
     /*
      * @author zws
@@ -31,7 +31,7 @@ public interface IPmsUpdateStateService{
      * @param [uid]
      * @return void
      **/
-    void checkPlanIsEnd(Long uid) throws IOException;
+    void checkPlanIsEnd() throws IOException;
 
     /*
      * @author zws
@@ -41,7 +41,7 @@ public interface IPmsUpdateStateService{
      * @param [uid]
      * @return void
      **/
-    void judgePlanResult(Long uid);
+    void judgePlanResult();
 
     /*
      * @author zws
@@ -61,5 +61,5 @@ public interface IPmsUpdateStateService{
      * @param [punchId]
      * @return void
      **/
-    void judgePunchResult(Long uid);
+    void judgePunchResult();
 }

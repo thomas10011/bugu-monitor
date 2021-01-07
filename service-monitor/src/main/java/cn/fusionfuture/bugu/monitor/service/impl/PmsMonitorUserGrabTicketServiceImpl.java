@@ -3,6 +3,7 @@ package cn.fusionfuture.bugu.monitor.service.impl;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
+import cn.fusionfuture.bugu.pojo.constants.GrabTicketsJudge;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsMonitorUserGrabTicket;
@@ -36,7 +37,7 @@ public class PmsMonitorUserGrabTicketServiceImpl extends ServiceImpl<PmsMonitorU
     UserFeignService userFeignService;
 
     @Override
-    public String userGrabTicket(Long userId,Long planId){
+    public Integer userGrabTicket(Long userId,Long planId){
 
         PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
         Integer planStatusId=monitorPlan.getPlanStatusId();
@@ -46,18 +47,18 @@ public class PmsMonitorUserGrabTicketServiceImpl extends ServiceImpl<PmsMonitorU
             QueryWrapper<PmsMonitorUserGrabTicket> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_id", userId).eq("monitor_plan_id", planId);
             if (monitorUserGrabTicketMapper.selectOne(queryWrapper) != null) {
-                return "不能重复对计划抢票";
+                return GrabTicketsJudge.CAN_NOT_REPEAT;
             } else {
                 //插入一条用户抢票获得监督机会的记录
                 PmsMonitorUserGrabTicket userMonitorPlanRecord = new PmsMonitorUserGrabTicket();
                 userMonitorPlanRecord.setUserId(userId).setMonitorPlanId(planId);
                 monitorUserGrabTicketMapper.insert(userMonitorPlanRecord);
                 userFeignService.updatePlanCount(userId,1);
-                return "抢票成功";
+                return GrabTicketsJudge.SUCCESS;
             }
         }
         else{
-            return "计划已停止抢票";
+            return GrabTicketsJudge.GRAB_TICKET_IS_END;
         }
     }
     @Override

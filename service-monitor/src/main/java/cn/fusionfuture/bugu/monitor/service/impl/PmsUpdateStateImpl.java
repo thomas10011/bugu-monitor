@@ -4,12 +4,16 @@ import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
 import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorPunchRecordMapper;
+import cn.fusionfuture.bugu.monitor.mapper.PmsMonitorUpdateStateMapper;
 import cn.fusionfuture.bugu.monitor.mapper.PmsUserMonitorPlanMapper;
 import cn.fusionfuture.bugu.monitor.service.IPmsUpdateStateService;
 import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -25,6 +29,8 @@ import java.util.List;
  * @date 2020/11/12 11:33
  */
 @Service
+@Component
+@EnableScheduling
 public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 
     @Autowired
@@ -37,6 +43,9 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
     PmsMonitorPunchRecordMapper monitorPunchRecordMapper;
 
     @Autowired
+    PmsMonitorUpdateStateMapper monitorUpdateStateMapper;
+
+    @Autowired
     SearchFeignService searchFeignService;
 
     @Autowired
@@ -44,46 +53,23 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 
 
     @Override
-    public void checkPlanIsStart(Long uid) throws IOException {
-        List<PmsMonitorPlan> monitorPlans=new ArrayList<>();
-        QueryWrapper<PmsMonitorPlan> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",uid).eq("plan_status_id",MonitorPlanStatus.REGISTERING.getIndex());
-        if(monitorPlanMapper.selectList(queryWrapper).size()!=0) {
-            monitorPlans.addAll(monitorPlanMapper.selectList(queryWrapper));
-            for (PmsMonitorPlan monitorPlan : monitorPlans
-            ) {
-                if (LocalDateTime.now().isAfter(monitorPlan.getStartTime())) {
-                    monitorPlan.setPlanStatusId(MonitorPlanStatus.UNDERWAY.getIndex());
-                    searchFeignService.updatePlanStatus(monitorPlan.getId(), MonitorPlanStatus.UNDERWAY.getValue());
-                }
-                monitorPlanMapper.updateById(monitorPlan);
-            }
-        }
+    @Scheduled(cron="0 1 0 * * ?")
+    public void checkPlanIsStart() throws IOException {
+        monitorUpdateStateMapper.checkPlanIsStart();
     }
 
+    @Scheduled(cron="0 11 0 * * ?")
     @Override
-    public void checkPlanIsEnd(Long uid) throws IOException {
-        List<PmsMonitorPlan> monitorPlans=new ArrayList<>();
-        QueryWrapper<PmsMonitorPlan> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",uid).eq("plan_status_id",MonitorPlanStatus.UNDERWAY.getIndex());
-        if(monitorPlanMapper.selectList(queryWrapper).size()!=0) {
-            monitorPlans.addAll(monitorPlanMapper.selectList(queryWrapper));
-            for (PmsMonitorPlan monitorPlan : monitorPlans
-            ) {
-                if (LocalDateTime.now().isAfter(monitorPlan.getEndTime())) {
-                    monitorPlan.setPlanStatusId(MonitorPlanStatus.COMPLETE.getIndex());
-                    searchFeignService.updatePlanStatus(monitorPlan.getId(), MonitorPlanStatus.COMPLETE.getValue());
-                }
-                monitorPlanMapper.updateById(monitorPlan);
-            }
-        }
+    public void checkPlanIsEnd() throws IOException {
+        monitorUpdateStateMapper.checkPlanIsEnd();
     }
 
+    @Scheduled(cron="0 21 0 * * ?")
     @Override
-    public void judgePlanResult(Long uid) {
+    public void judgePlanResult() {
         List<PmsUserMonitorPlan> userMonitorPlans=new ArrayList<>();
         QueryWrapper<PmsUserMonitorPlan> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",uid).eq("is_success",2);
+        queryWrapper.eq("is_success",2);
         userMonitorPlans.addAll(userMonitorPlanMapper.selectList(queryWrapper));
         if(userMonitorPlans.size()!=0) {
             for (PmsUserMonitorPlan userMonitorPlan : userMonitorPlans) {
@@ -106,11 +92,12 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
         }
     }
 
+    @Scheduled(cron="0 31 0 * * ?")
     @Override
-    public void judgePunchResult(Long uid) {
+    public void judgePunchResult() {
         List<PmsMonitorPunchRecord> monitorPunchRecords=new ArrayList<>();
         QueryWrapper<PmsMonitorPunchRecord> queryWrapper1=new QueryWrapper<>();
-        queryWrapper1.eq("user_id",uid).eq("status_id",2);
+        queryWrapper1.eq("status_id",2);
         monitorPunchRecords.addAll(monitorPunchRecordMapper.selectList(queryWrapper1));
         for (PmsMonitorPunchRecord monitorPunchRecord:monitorPunchRecords
         ) {
@@ -118,12 +105,11 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                 if(monitorPunchRecord.getAgreeCount()>=monitorPunchRecord.getDisagreeCount()){
                     monitorPunchRecord.setStatusId(3);
                     QueryWrapper<PmsUserMonitorPlan> queryWrapper2=new QueryWrapper<>();
-                    queryWrapper2.eq("user_id",uid).eq("monitor_plan_id",monitorPunchRecord.getMonitorPlanId());
+                    queryWrapper2.eq("monitor_plan_id",monitorPunchRecord.getMonitorPlanId());
                     if(userMonitorPlanMapper.selectOne(queryWrapper2)!=null){
                         PmsUserMonitorPlan userMonitorPlan=userMonitorPlanMapper.selectOne(queryWrapper2);
                         userMonitorPlan.setPunchVictoryCount(userMonitorPlan.getPunchVictoryCount()+1);
                         userMonitorPlanMapper.updateById(userMonitorPlan);
-                        userFeignService.updateMonitorSuccessCount(uid,1);
                     }
                 }
                 else{

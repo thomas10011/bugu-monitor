@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fusionfuture.bugu.monitor.mapper.PmsMonitorUpdateStateMapper">
+    <update id="checkPlanIsStart" >
+        UPDATE
+        pms_monitor_plan
+        SET
+        plan_status_id=2
+        WHERE
+        plan_status_id=1
+        AND CURRENT_TIMESTAMP > start_time
+    </update>
+    <update id="checkPlanIsEnd" >
+        UPDATE
+        pms_monitor_plan
+        SET
+        plan_status_id=3
+        WHERE
+        plan_status_id=2
+        AND CURRENT_TIMESTAMP > end_time
+    </update>
+</mapper>

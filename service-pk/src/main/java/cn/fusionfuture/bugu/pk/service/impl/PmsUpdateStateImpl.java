@@ -2,10 +2,7 @@ package cn.fusionfuture.bugu.pk.service.impl;
 
 import cn.fusionfuture.bugu.pk.feign.SearchFeignService;
 import cn.fusionfuture.bugu.pk.feign.UserFeignService;
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
-import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
-import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
-import cn.fusionfuture.bugu.pk.mapper.PmsUserCreatePlanMapper;
+import cn.fusionfuture.bugu.pk.mapper.*;
 import cn.fusionfuture.bugu.pk.service.IPmsUpdateStateService;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
@@ -14,6 +11,9 @@ import cn.fusionfuture.bugu.pojo.entity.PmsUserAttendPlan;
 import cn.fusionfuture.bugu.pojo.entity.PmsUserCreatePlan;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -29,6 +29,8 @@ import java.util.List;
  * @date 2020/11/9 20:25
  */
 @Service
+@Component
+@EnableScheduling
 public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 
     @Autowired
@@ -44,6 +46,9 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
     PmsPkPunchRecordMapper pkPunchRecordMapper;
 
     @Autowired
+    PmsPkUpdateStateMapper pkUpdateStateMapper;
+
+    @Autowired
     SearchFeignService searchFeignService;
 
     @Autowired
@@ -51,46 +56,23 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 
 
     @Override
-    public void checkPlanIsStart(Long uid) throws IOException {
-        List<PmsPkPlan> pkPlans=new ArrayList<>();
-        QueryWrapper<PmsPkPlan> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",uid).eq("plan_status_id",PkPlanStatus.REGISTERING.getIndex());
-        if(pkPlanMapper.selectList(queryWrapper).size()!=0) {
-            pkPlans.addAll(pkPlanMapper.selectList(queryWrapper));
-            for (PmsPkPlan pkPlan : pkPlans
-            ) {
-                if (LocalDateTime.now().isAfter(pkPlan.getStartTime())) {
-                    searchFeignService.updatePlanStatus(pkPlan.getId(), PkPlanStatus.GRABBING.getValue());
-                    pkPlan.setPlanStatusId(PkPlanStatus.GRABBING.getIndex());
-                }
-                pkPlanMapper.updateById(pkPlan);
-            }
-        }
+    @Scheduled(cron="0 1 0 * * ?")
+    public void checkPlanIsStart() throws IOException {
+        pkUpdateStateMapper.checkPlanIsStart();
     }
 
     @Override
-    public void checkPlanIsEnd(Long uid) throws IOException {
-        List<PmsPkPlan> pkPlans=new ArrayList<>();
-        QueryWrapper<PmsPkPlan> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",uid).eq("plan_status_id",PkPlanStatus.GRABBING.getIndex());
-        if(pkPlanMapper.selectList(queryWrapper).size()!=0) {
-            pkPlans.addAll(pkPlanMapper.selectList(queryWrapper));
-            for (PmsPkPlan pkPlan : pkPlans
-            ) {
-                if (LocalDateTime.now().isAfter(pkPlan.getEndTime())) {
-                    searchFeignService.updatePlanStatus(pkPlan.getId(), PkPlanStatus.COMPLETE.getValue());
-                    pkPlan.setPlanStatusId(PkPlanStatus.COMPLETE.getIndex());
-                }
-                pkPlanMapper.updateById(pkPlan);
-            }
-        }
+    @Scheduled(cron="0 1 0 * * ?")
+    public void checkPlanIsEnd() throws IOException {
+       pkUpdateStateMapper.checkPlanIsEnd();
     }
 
     @Override
-    public void judgePlanResult(Long uid) {
+    @Scheduled(cron="0 11 0 * * ?")
+    public void judgePlanResult() {
         List<PmsUserAttendPlan> userAttendPlans=new ArrayList<>();
         QueryWrapper<PmsUserAttendPlan> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("user_id",uid).eq("is_success",2);
+        queryWrapper.eq("is_success",2);
         userAttendPlans.addAll(userAttendPlanMapper.selectList(queryWrapper));
         if(userAttendPlans.size()!=0) {
             for (PmsUserAttendPlan userAttendPlan : userAttendPlans
@@ -100,7 +82,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                     if (userAttendPlan.getPunchVictoryCount() > midCount) {
                         userAttendPlan.setIsSuccess(1);
                         //userFeignService.updateSuccessCount(uid,1);
-                        userFeignService.updatePkSuccessCount(uid,1);
+                        //userFeignService.updatePkSuccessCount(uid,1);
                     } else {
                         userAttendPlan.setIsSuccess(0);
                     }
@@ -114,7 +96,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 
         List<PmsUserCreatePlan> userCreatePlans=new ArrayList<>();
         QueryWrapper<PmsUserCreatePlan> queryWrapper1=new QueryWrapper<>();
-        queryWrapper1.eq("user_id",uid).eq("is_success",2);
+        queryWrapper1.eq("is_success",2);
         userCreatePlans.addAll(userCreatePlanMapper.selectList(queryWrapper1));
         if(userCreatePlans.size()!=0) {
             for (PmsUserCreatePlan userCreatePlan : userCreatePlans
@@ -123,7 +105,7 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                     int midCount = userCreatePlan.getPunchQuantity() / 2;
                     if (userCreatePlan.getPunchVictoryCount() > midCount) {
                         userCreatePlan.setIsSuccess(1);
-                        userFeignService.updateVictoryCount(uid,1);
+                        //userFeignService.updateVictoryCount(uid,1);
                     } else {
                         userCreatePlan.setIsSuccess(0);
                     }
@@ -153,10 +135,11 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
 //    }
 
     @Override
-    public void judgePunchResult(Long uid) {
+    @Scheduled(cron="0 21 0 * * ?")
+    public void judgePunchResult() {
         List<PmsPkPunchRecord> pkPunchRecords=new ArrayList<>();
         QueryWrapper<PmsPkPunchRecord> queryWrapper1=new QueryWrapper<>();
-        queryWrapper1.eq("user_id",uid).eq("status_id",2);
+        queryWrapper1.eq("status_id",2);
         pkPunchRecords.addAll(pkPunchRecordMapper.selectList(queryWrapper1));
         for (PmsPkPunchRecord pkPunchRecord:pkPunchRecords
         ) {
@@ -164,20 +147,20 @@ public class PmsUpdateStateImpl implements IPmsUpdateStateService {
                 if(pkPunchRecord.getAgreeCount()>=pkPunchRecord.getDisagreeCount()){
                     pkPunchRecord.setStatusId(3);
                     QueryWrapper<PmsUserAttendPlan> queryWrapper2=new QueryWrapper<>();
-                    queryWrapper2.eq("user_id",uid).eq("pk_plan_id",pkPunchRecord.getPkPlanId());
+                    queryWrapper2.eq("pk_plan_id",pkPunchRecord.getPkPlanId());
                     if(userAttendPlanMapper.selectOne(queryWrapper2)!=null){
                         PmsUserAttendPlan userAttendPlan=userAttendPlanMapper.selectOne(queryWrapper2);
                         userAttendPlan.setPunchVictoryCount(userAttendPlan.getPunchVictoryCount()+1);
                         userAttendPlanMapper.updateById(userAttendPlan);
-                        userFeignService.updatePkSuccessCount(uid,1);
+                        //userFeignService.updatePkSuccessCount(uid,1);
                     }
                     else{
                         QueryWrapper<PmsUserCreatePlan> queryWrapper3=new QueryWrapper<>();
-                        queryWrapper3.eq("user_id",uid).eq("pk_plan_id",pkPunchRecord.getPkPlanId());
+                        queryWrapper3.eq("pk_plan_id",pkPunchRecord.getPkPlanId());
                         PmsUserCreatePlan userCreatePlan=userCreatePlanMapper.selectOne(queryWrapper3);
                         userCreatePlan.setPunchVictoryCount(userCreatePlan.getPunchVictoryCount()+1);
                         userCreatePlanMapper.updateById(userCreatePlan);
-                        userFeignService.updatePkSuccessCount(uid,1);
+                        //userFeignService.updatePkSuccessCount(uid,1);
                     }
                 }
                 else{

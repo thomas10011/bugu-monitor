@@ -5,7 +5,7 @@ import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserAttendPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsUserCreatePlanMapper;
 import cn.fusionfuture.bugu.pk.vo.plan.BasicPkPlanVO;
-import cn.fusionfuture.bugu.pojo.constants.MonitorPlanStatus;
+import cn.fusionfuture.bugu.pojo.constants.GrabTicketsJudge;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.entity.*;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkUserGrabTicketMapper;
@@ -46,12 +46,12 @@ public class PmsPkUserGrabTicketServiceImpl extends ServiceImpl<PmsPkUserGrabTic
     UserFeignService userFeignService;
 
     @Override
-    public String userGrabTicket(Long userId,Long planId){
+    public Integer userGrabTicket(Long userId,Long planId){
 
         //判断是否为自己创建的计划，用户不能报名自己创建的计划
         PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
         if(pkPlan.getUserId().equals(userId)){
-            return "你不能对自己创建的计划投票";
+            return GrabTicketsJudge.CAN_NOT_GRAB_TICKET_FOR_YOURS_PLAN;
         }
         else {
             Integer planStatusId = pkPlan.getPlanStatusId();
@@ -61,17 +61,17 @@ public class PmsPkUserGrabTicketServiceImpl extends ServiceImpl<PmsPkUserGrabTic
                 QueryWrapper<PmsPkUserGrabTicket> queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq("user_id", userId).eq("pk_plan_id", planId);
                 if (pkUserGrabTicketMapper.selectOne(queryWrapper) != null) {
-                    return "不能重复对计划进行抢票";
+                    return GrabTicketsJudge.CAN_NOT_REPEAT;
                 } else {
                     //插入一条用户抢票获得监督机会的记录
                     PmsPkUserGrabTicket userPkPlanRecord = new PmsPkUserGrabTicket();
                     userPkPlanRecord.setUserId(userId).setPkPlanId(planId);
                     pkUserGrabTicketMapper.insert(userPkPlanRecord);
                     userFeignService.updatePlanCount(userId,1);
-                    return "抢票成功";
+                    return GrabTicketsJudge.SUCCESS;
                 }
             } else {
-                return "计划已停止抢票";
+                return GrabTicketsJudge.GRAB_TICKET_IS_END;
             }
         }
     }

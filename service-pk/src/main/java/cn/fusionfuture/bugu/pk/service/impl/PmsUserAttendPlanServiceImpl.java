@@ -5,6 +5,7 @@ import cn.fusionfuture.bugu.pk.feign.UserFeignService;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPlanMapper;
 import cn.fusionfuture.bugu.pk.mapper.PmsPkPunchRecordMapper;
 import cn.fusionfuture.bugu.pk.vo.plan.MyAchievementPlanVO;
+import cn.fusionfuture.bugu.pojo.constants.EnrollJudge;
 import cn.fusionfuture.bugu.pojo.constants.PkPlanStatus;
 import cn.fusionfuture.bugu.pojo.constants.PunchStatus;
 import cn.fusionfuture.bugu.pojo.entity.PmsPkPlan;
@@ -54,12 +55,12 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
     }
 
     @Override
-    public String userAttendPlan(Long userId,Long planId) throws IOException {
+    public Integer userAttendPlan(Long userId,Long planId) throws IOException {
 
         //判断用户是否为计划创建者，创建者不能报名该计划
         PmsPkPlan pkPlan=pkPlanMapper.selectById(planId);
         if(pkPlan.getUserId().equals(userId)){
-            return "不能报名自己创建的计划";
+            return EnrollJudge.CAN_NOT_ENROLL_YOURS_PLAN;
         }
         //用户不是计划创建者
         else {
@@ -72,7 +73,7 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
                 queryWrapper.eq("user_id", userId).eq("pk_plan_id", planId);
                 //用户已经报名
                 if (userAttendPlanMapper.selectOne(queryWrapper) != null) {
-                    return "不能重复对计划进行报名";
+                    return EnrollJudge.CAN_NOT_REPEAT;
                 }
                 //用户未报名
                 else {
@@ -102,18 +103,18 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
                             pkPunchRecordMapper.insert(pkPunchRecord);
                         }
                         userFeignService.updatePkPlanCount(userId,1);
-                        return "报名成功";
+                        return EnrollJudge.SUCCESS;
 
                     }
                     //报名人数已满
                     else{
-                        return "计划报名人数已满";
+                        return EnrollJudge.POPULATION_IS_FULL;
                     }
                 }
             }
             //计划报名已截至
             else{
-                return "计划已停止报名";
+                return EnrollJudge.ENROLL_IS_END;
             }
         }
     }

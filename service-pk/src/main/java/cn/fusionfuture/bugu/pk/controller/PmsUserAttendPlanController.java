@@ -38,7 +38,7 @@ public class PmsUserAttendPlanController {
 
     @PostMapping(value = "/attend")
     @ApiOperation(value = "用户参与pk计划")
-    public String punch(@ApiParam(value = "用户id") @RequestParam Long userId,
+    public Integer punch(@ApiParam(value = "用户id") @RequestParam Long userId,
                       @ApiParam(value = "计划id") @RequestParam Long planId) throws IOException {
         return userAttendPlanService.userAttendPlan(userId,planId);
     }

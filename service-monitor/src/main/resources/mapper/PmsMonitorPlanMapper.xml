@@ -75,4 +75,6 @@
             pms_monitor_plan.id = #{planId} AND
             pms_monitor_plan.monitor_pattern_id = pms_monitor_pattern.id
     </select>
+
+
 </mapper>

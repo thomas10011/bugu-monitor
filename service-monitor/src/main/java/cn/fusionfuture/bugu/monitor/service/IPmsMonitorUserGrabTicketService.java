@@ -22,7 +22,7 @@ public interface IPmsMonitorUserGrabTicketService extends IService<PmsMonitorUse
      * @param [userId, planId] 
      * @return java.lang.String
      **/
-    String userGrabTicket(Long userId,Long planId);
+    Integer userGrabTicket(Long userId,Long planId);
 
     /*
      * @author zws
