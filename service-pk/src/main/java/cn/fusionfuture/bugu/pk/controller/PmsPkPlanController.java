@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -38,14 +39,14 @@ public class PmsPkPlanController {
     IPmsPkPlanService pkPlanService;
 
     @ApiOperation(value = "创建一个pk计划")
-    @PostMapping(value = "/pk-plan")
+    @PostMapping(value = "/plan")
     public Long createPkPlan(@RequestBody NewPkPlanVO newPkPlanVO) {
 
         Long id=pkPlanService.createPkPlan(newPkPlanVO);
         return id;
     }
 
-    @GetMapping(value = "/pk-plan/{userId}")
+    @GetMapping(value = "/plan/{userId}")
     @ApiOperation(value = "根据用户id查询pk计划")
     public PageInfo<BasicPkPlanVO> queryBasicPkPlanVO(@Validated
                                                       @ApiParam(value = "用户id") @PathVariable(value = "userId") Long userId,
@@ -54,21 +55,21 @@ public class PmsPkPlanController {
         return pkPlanService.queryBasicPkPlanVO(pn, ps, userId);
     }
 
-    @GetMapping(value = "/pk-plan/simple-info/{planId}")
+    @GetMapping(value = "/plan/simple-info/{planId}")
     @ApiOperation(value= "查询计划简略信息")
     public SimplePkPlanVO querySimplePkPlanVO(@Validated
                                                   @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return pkPlanService.querySimplePkPlanVO(planId);
     }
 
-    @GetMapping(value = "/pk-plan/pk-plan-vo/{planId}")
+    @GetMapping(value = "/plan/plan-vo/{planId}")
     @ApiOperation(value= "查询计划信息")
     public PkPlanVO queryPkPlanVO(@Validated
                                               @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
         return pkPlanService.queryPkPlanVO(planId);
     }
 
-    @GetMapping(value = "/pk-plan/detailed-info/{uid}&{pid}")
+    @GetMapping(value = "/plan/detailed-info/{uid}&{pid}")
     @ApiOperation(value= "查询计划详细信息")
     public DetailedPkPlanVO queryDetailedPkPlanVO(@Validated
                                                   @ApiParam(value = "用户id") @RequestParam(name = "uid") Long uid,
@@ -76,14 +77,14 @@ public class PmsPkPlanController {
         return pkPlanService.queryDetailedPkPlanVO(uid,pid);
     }
 
-    @PostMapping(value = "/pk-plan/check-isPunched")
+    @PostMapping(value = "/plan/check-isPunched")
     @ApiOperation(value= "查询当前时间计划打卡状态")
     public String checkIsPunched(@ApiParam(value = "用户id") @RequestParam(name = "userId") Long userId,
                                  @ApiParam(value = "计划id") @RequestParam(name = "planId") Long planId){
         return pkPlanService.checkIsPunched(userId,planId);
     }
 
-    @GetMapping(value = "/pk-plan/for-message/{planId}")
+    @GetMapping(value = "/plan/for-message/{planId}")
     @ApiOperation(value= "根据计划id查询计划信息（message_service调用)")
     public PlanForMessageDTO queryPlanForMessageDTO(@Validated
                                                     @ApiParam(value = "计划id") @PathVariable(value = "planId") Long planId){
@@ -94,6 +95,18 @@ public class PmsPkPlanController {
     @ApiOperation(value = "获取上传图片需要的policy")
     public Map<String, String> getPolicy() throws IOException, ServletException {
         return OssUtil.getPolicy("plan/");
+    }
+
+    @GetMapping("/plan/starttime")
+    @ApiOperation(value = "查询一个计划的开始时间")
+    public LocalDateTime getStartTime(@ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
+        return pkPlanService.getById(pid).getStartTime();
+    }
+
+    @GetMapping("/plan/endtime")
+    @ApiOperation(value = "查询一个计划的开始时间")
+    public LocalDateTime getEndTime(@ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
+        return pkPlanService.getById(pid).getEndTime();
     }
 
 }

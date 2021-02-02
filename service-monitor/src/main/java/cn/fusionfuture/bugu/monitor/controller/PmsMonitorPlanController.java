@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -106,5 +107,16 @@ public class PmsMonitorPlanController {
     }
 
 
+    @GetMapping("/plan/starttime")
+    @ApiOperation(value = "查询一个计划的开始时间")
+    public LocalDateTime getStartTime(@ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
+        return monitorPlanService.getById(pid).getStartTime();
+    }
+
+    @GetMapping("/plan/endtime")
+    @ApiOperation(value = "查询一个计划的开始时间")
+    public LocalDateTime getEndTime(@ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
+        return monitorPlanService.getById(pid).getEndTime();
+    }
 
 }
