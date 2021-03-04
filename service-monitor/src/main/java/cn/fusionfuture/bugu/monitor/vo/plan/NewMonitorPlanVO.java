@@ -29,10 +29,10 @@ public class NewMonitorPlanVO {
     @ApiModelProperty(value = "创建者用户id",example = "1309123491764805634")
     private Long userId;
 
-    @ApiModelProperty(value = "计划描述",example = "http://www.bifengo.com/img/db6dad1b4d4c7e5b0fbbee7d4f2d6b6b83130323.html")
+    @ApiModelProperty(value = "计划描述",example = "每天背至少30个新单词")
     private String description;
 
-    @ApiModelProperty(value = "监督计划封面图片url",example = "每天背至少30个新单词")
+    @ApiModelProperty(value = "监督计划封面图片url",example = "http://www.bifengo.com/img/db6dad1b4d4c7e5b0fbbee7d4f2d6b6b83130323.html")
     private String imageUrl;
 
     @ApiModelProperty(value = "是否匿名发布")
