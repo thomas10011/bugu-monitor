@@ -18,6 +18,6 @@ public @interface EnableIgnoreResponse {
      * 是否进行全局返回结果处理封装
      * @return true:进行处理;  false:不进行处理
      */
-    boolean errorDispose() default true;
+    boolean dispose() default true;
 
 }

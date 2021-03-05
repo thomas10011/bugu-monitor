@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author thomas
- * @description 该注解用于启用全局统一异常处理
+ * @description 该注解用于启用全局统一返回结果处理
  * @create 2020/8/16 3:19 下午
  * @update 2020/8/16 3:19 下午
  **/
