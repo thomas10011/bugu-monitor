@@ -88,7 +88,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         }
         pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPunchVictoryCount(0).setPkPlanId(pkPlan.getId()).setPunchQuantity(pkPlan.getPunchQuantity());
         userCreatePlanMapper.insert(pmsUserCreatePlan);
-        userFeignService.updatePkPlanCount(pkPlan.getUserId(),1);\
+        userFeignService.updatePkPlanCount(pkPlan.getUserId(),1);
         // 获取用户头像 准备在es中创建首页信息。
         String at = userFeignService.getUserAvatar(pkPlan.getUserId());
         PopularPlanDTO popularPlanDTO = new PopularPlanDTO();
