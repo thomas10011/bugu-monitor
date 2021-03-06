@@ -66,10 +66,11 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         PmsPkPlan pkPlan = new PmsPkPlan();
         PmsUserCreatePlan pmsUserCreatePlan=new PmsUserCreatePlan();
         BeanUtils.copyProperties(newPkPlanVO, pkPlan);
-        //设置计划的已报名人数,设置计划的状态为报名中（报名中，进行中，已完成）
+        // 设置计划的已报名人数,设置计划的状态为报名中（报名中，进行中，已完成）
         pkPlan.setEnrolledQuantity(1).setPlanStatusId(PkPlanStatus.REGISTERING.getIndex())
                 .setTotalBonus(newPkPlanVO.getTotalBonus()).setLikeCount(0);
         pkPlanMapper.insert(pkPlan);
+
         Integer punchQuantity=pkPlan.getPunchQuantity();
         for(int i=0;i<punchQuantity;i++){
             PmsPkPunchRecord pkPunchRecord=new PmsPkPunchRecord();
@@ -87,7 +88,9 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         }
         pmsUserCreatePlan.setUserId(pkPlan.getUserId()).setPunchCount(0).setPunchVictoryCount(0).setPkPlanId(pkPlan.getId()).setPunchQuantity(pkPlan.getPunchQuantity());
         userCreatePlanMapper.insert(pmsUserCreatePlan);
-        userFeignService.updatePkPlanCount(pkPlan.getUserId(),1);
+        userFeignService.updatePkPlanCount(pkPlan.getUserId(),1);\
+        // 获取用户头像 准备在es中创建首页信息。
+        String at = userFeignService.getUserAvatar(pkPlan.getUserId());
         PopularPlanDTO popularPlanDTO = new PopularPlanDTO();
         popularPlanDTO
                 .setId(pkPlan.getId())
@@ -97,6 +100,8 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
                 .setCv(newPkPlanVO.getImageUrl())
                 .setHc(pkPlan.getEnrolledQuantity())
                 .setRt(0)
+                .setAt(at)
+                .setAts(null)   // 这里应该设置为所有参与的用户的头像
                 .setSt(PkPlanStatus.REGISTERING.getValue())
                 .setAw(newPkPlanVO.getTotalBonus());
         searchFeignService.createPopularPlan(popularPlanDTO);

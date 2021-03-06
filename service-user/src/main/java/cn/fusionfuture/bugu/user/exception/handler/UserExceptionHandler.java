@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class UserExceptionHandler {
     /**
-     * NoHandlerFoundException 绑定用户微信时出现异常
+     * WechatBindException 绑定用户微信时出现异常
      */
     @ExceptionHandler(value = WechatBindException.class)
     @ResponseStatus(HttpStatus.OK)

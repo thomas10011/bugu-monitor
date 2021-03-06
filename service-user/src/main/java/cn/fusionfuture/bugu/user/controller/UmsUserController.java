@@ -39,10 +39,10 @@ public class UmsUserController {
     HttpServletRequest request;
 
 
-    @GetMapping("/get-personal-details")
+    @GetMapping("/user/{uid}/details")
     @Valid
     @ApiOperation(value = "获取个人信息")
-    CommonResult<?> getPersonalDetails(@ApiParam(value = "用户id") @RequestParam Long id) {
+    CommonResult<?> getPersonalDetails(@ApiParam(value = "用户id") @PathVariable("uid") Long id) {
         Long uid = Long.parseLong(request.getHeader("uid"));
         UserDetailsVO userDetailsVO = iUmsUserService.getPersonalDetails(id, uid);
         if (userDetailsVO == null) {
@@ -57,5 +57,11 @@ public class UmsUserController {
     @ApiOperation(value = "远程调用获取用户名和头像")
     HashMap<String,String> getDetailsForMessage(@ApiParam(value = "用户id") @RequestParam Long id){
         return iUmsUserService.getDetailsForMessage(id);
+    }
+
+    @GetMapping("/user/{uid}/avatar-url")
+    @ApiOperation("根据id查询用户头像地址")
+    String getUserAvatar(@PathVariable("uid") Long uid) {
+        return iUmsUserService.getById(uid).getAvatarUrl();
     }
 }

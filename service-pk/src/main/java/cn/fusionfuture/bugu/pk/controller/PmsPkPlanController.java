@@ -42,7 +42,7 @@ public class PmsPkPlanController {
     @PostMapping(value = "/plan")
     public Long createPkPlan(@RequestBody NewPkPlanVO newPkPlanVO) {
 
-        Long id=pkPlanService.createPkPlan(newPkPlanVO);
+        Long id = pkPlanService.createPkPlan(newPkPlanVO);
         return id;
     }
 

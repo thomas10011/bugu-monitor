@@ -4,6 +4,7 @@ package cn.fusionfuture.bugu.monitor.controller;
 import cn.fusionfuture.bugu.monitor.dto.PlanForMessageDTO;
 import cn.fusionfuture.bugu.monitor.dto.PopularPlanDTO;
 import cn.fusionfuture.bugu.monitor.feign.SearchFeignService;
+import cn.fusionfuture.bugu.monitor.feign.UserFeignService;
 import cn.fusionfuture.bugu.monitor.service.IPmsMonitorPlanService;
 import cn.fusionfuture.bugu.monitor.vo.plan.BasicMonitorPlanVO;
 import cn.fusionfuture.bugu.monitor.vo.plan.DetailedMonitorPlanVO;
@@ -44,10 +45,14 @@ public class PmsMonitorPlanController {
     @Autowired
     SearchFeignService searchFeignService;
 
+    @Autowired
+    UserFeignService userFeignService;
+
     @ApiOperation(value = "创建监督计划")
     @PostMapping(value = "/monitor-plan")
     public Long createMonitorPlan(@RequestBody NewMonitorPlanVO newMonitorPlanVO) {
         Long id = monitorPlanService.createMonitorPlan(newMonitorPlanVO);
+        String at = userFeignService.getUserAvatar(id);
         PopularPlanDTO popularPlanDTO = new PopularPlanDTO();
         popularPlanDTO
                 .setId(id)
@@ -58,6 +63,7 @@ public class PmsMonitorPlanController {
                 .setHc(newMonitorPlanVO.getMonitorQuantity())
                 .setRt(0)
                 .setSt(MonitorPlanStatus.REGISTERING.getValue())
+                .setAt(at)
                 .setAw(newMonitorPlanVO.getTotalBonus());
         searchFeignService.createPopularPlan(popularPlanDTO);
         return id;
