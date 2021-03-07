@@ -1,7 +1,7 @@
 package cn.fusionfuture.bugu.user.service;
 
-import cn.fusionfuture.bugu.user.exception.WechatBindException;
 import cn.fusionfuture.bugu.pojo.entity.UmsUserAuthWechat;
+import cn.fusionfuture.bugu.user.exception.WechatBindException;
 import cn.fusionfuture.bugu.user.vo.UserOauthVO;
 import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
 import com.baomidou.mybatisplus.extension.service.IService;

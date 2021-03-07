@@ -1,13 +1,10 @@
 package cn.fusionfuture.bugu.user.service.impl;
 
-import cn.fusionfuture.bugu.pojo.api.CommonResult;
-import cn.fusionfuture.bugu.pojo.api.ResultCode;
 import cn.fusionfuture.bugu.pojo.entity.UmsUser;
 import cn.fusionfuture.bugu.user.mapper.UmsUserMapper;
 import cn.fusionfuture.bugu.user.service.IUmsUserService;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

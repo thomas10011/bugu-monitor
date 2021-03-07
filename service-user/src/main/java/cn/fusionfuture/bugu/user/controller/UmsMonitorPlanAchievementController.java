@@ -2,8 +2,6 @@ package cn.fusionfuture.bugu.user.controller;
 
 
 import cn.fusionfuture.bugu.pojo.entity.UmsMonitorPlanAchievement;
-import cn.fusionfuture.bugu.pojo.entity.UmsPkPlanAchievement;
-import cn.fusionfuture.bugu.user.service.IUmsMonitorAchievementService;
 import cn.fusionfuture.bugu.user.service.IUmsMonitorPlanAchievementService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

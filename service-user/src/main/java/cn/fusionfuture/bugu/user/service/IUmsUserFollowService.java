@@ -4,7 +4,6 @@ import cn.fusionfuture.bugu.pojo.entity.UmsUserFollow;
 import cn.fusionfuture.bugu.user.vo.UserFollowVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * <p>
