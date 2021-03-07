@@ -53,4 +53,8 @@ public interface UserFeignService {
     void updateMonitorParticipateCount(@ApiParam(value = "用户id") @PathVariable(value = "uid") Long uid,
                                 @ApiParam(value = "增加或者减少的总数，默认为1") @RequestParam(value = "amt", defaultValue = "1") Integer amt);
 
+    @GetMapping("/user/{uid}/avatar-url")
+    @ApiOperation("根据id查询用户头像地址")
+    String getUserAvatar(@PathVariable("uid") Long uid);
+
 }

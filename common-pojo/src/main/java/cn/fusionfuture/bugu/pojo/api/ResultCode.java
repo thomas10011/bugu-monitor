@@ -35,7 +35,10 @@ public enum ResultCode {
 
     USER_HAS_VOTED("A0202","用户已投票"),
 
-    USER_HAS_NOT_ENROLLED("A0203","用户不能参与投票");
+    USER_HAS_NOT_ENROLLED("A0203","用户不能参与投票"),
+
+    USER_BIND_FAILED("A0301", "用户微信绑定失败")
+    ;
 
 
 

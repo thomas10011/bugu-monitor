@@ -7,8 +7,6 @@ import cn.fusionfuture.bugu.user.mapper.UmsUserFollowMapper;
 import cn.fusionfuture.bugu.user.mapper.UmsUserMapper;
 import cn.fusionfuture.bugu.user.service.IUmsUserFollowService;
 import cn.fusionfuture.bugu.user.vo.UserFollowVO;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;

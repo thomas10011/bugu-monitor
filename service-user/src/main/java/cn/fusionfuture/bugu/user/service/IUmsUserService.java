@@ -1,6 +1,5 @@
 package cn.fusionfuture.bugu.user.service;
 
-import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.entity.UmsUser;
 import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
 import com.baomidou.mybatisplus.extension.service.IService;

@@ -1,6 +1,7 @@
 package cn.fusionfuture.bugu.user.controller;
 
 
+import cn.fusionfuture.bugu.user.exception.WechatBindException;
 import cn.fusionfuture.bugu.user.service.IUmsUserWxMiniProgramAuthService;
 import cn.fusionfuture.bugu.user.vo.UserOauthVO;
 import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
@@ -25,7 +26,7 @@ public class UmsUserWxMiniProgramAuthController {
 
     @PostMapping("/wechat-bind")
     @Valid
-    WechatBindDetailsVO getWechatBind(@RequestBody HashMap<String, Object> param) {
+    WechatBindDetailsVO getWechatBind(@RequestBody HashMap<String, Object> param) throws WechatBindException {
         return iUmsUserAuthWechatService.getWechatBind(
                 (String) param.get("code"),
                 (String) param.get("username"),

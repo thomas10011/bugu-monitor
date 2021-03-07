@@ -1,22 +1,19 @@
 package cn.fusionfuture.bugu.dispose.exception;
 
-import cn.fusionfuture.bugu.dispose.annotation.EnableIgnoreResponse;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.api.ResultCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
+import java.util.Arrays;
+
 
 /**
  * @author thomas
@@ -27,6 +24,7 @@ import java.lang.reflect.Method;
  */
 @RestControllerAdvice
 @Slf4j
+@Order(1)
 public class GlobalExceptionHandler {
     /**
      * NoHandlerFoundException 404 异常处理
@@ -34,8 +32,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public CommonResult handlerNoHandlerFoundException(NoHandlerFoundException e) throws Throwable {
-        errorDispose(e);
-        outPutErrorWarn(NoHandlerFoundException.class, ResultCode.NOT_FOUND, e);
+        ExceptionUtil.logWarn(e);
         log.error(e.getMessage());
         return CommonResult.fail(ResultCode.NOT_FOUND);
     }
@@ -46,8 +43,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public CommonResult handlerHttpRequestMethodNotSupportedException(
             HttpRequestMethodNotSupportedException e) throws Throwable {
-        errorDispose(e);
-        outPutErrorWarn(HttpRequestMethodNotSupportedException.class, ResultCode.METHOD_NOT_ALLOWED, e);
         log.error(e.getMessage());
         return CommonResult.fail(ResultCode.METHOD_NOT_ALLOWED);
     }
@@ -58,8 +53,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public CommonResult handlerHttpMediaTypeNotSupportedException(
             HttpMediaTypeNotSupportedException e) throws Throwable {
-        errorDispose(e);
-        outPutErrorWarn(HttpMediaTypeNotSupportedException.class, ResultCode.UNSUPPORTED_MEDIA_TYPE, e);
         log.error(e.getMessage());
         return CommonResult.fail(ResultCode.UNSUPPORTED_MEDIA_TYPE);
     }
@@ -69,8 +62,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public CommonResult handlerException(Exception e) throws Throwable {
-        errorDispose(e);
-        log.error(e.getMessage());
+        ExceptionUtil.logError(e);
+        System.out.println(e.getStackTrace()[0].toString());
         return ifDepthExceptionType(e);
     }
 
@@ -109,51 +102,6 @@ public class GlobalExceptionHandler {
 //        return Result.ofFail(CommonErrorCode.RPC_ERROR);
 //    }
 
-    /**
-     * 校验是否进行异常处理
-     *
-     * @param e   异常
-     * @param <T> extends Throwable
-     * @throws Throwable 异常
-     */
-    private <T extends Throwable> void errorDispose(T e) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HandlerMethod handlerMethod = (HandlerMethod) request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingHandler");
 
-        if (handlerMethod == null) {
-            return;
-        }
-        // 获取异常 Controller
-        Class<?> beanType = handlerMethod.getBeanType();
-        // 获取异常方法
-        Method method = handlerMethod.getMethod();
-
-        // 判断方法是否存在 IgnoreResponseAdvice 注解
-        EnableIgnoreResponse methodAnnotation = method.getAnnotation(EnableIgnoreResponse.class);
-        if (methodAnnotation != null) {
-            // 是否使用异常处理
-            if (methodAnnotation.errorDispose()) {
-                throw e;
-            } else {
-                return;
-            }
-        }
-        // 判类是否存在 IgnoreResponseAdvice 注解
-        EnableIgnoreResponse classAnnotation = beanType.getAnnotation(EnableIgnoreResponse.class);
-        if (classAnnotation != null) {
-            if (classAnnotation.errorDispose()) {
-                throw e;
-            }
-        }
-    }
-
-    public void outPutError(Class errorType, Enum secondaryErrorType, Throwable throwable) {
-        log.error("[{}] {}: {}", errorType.getSimpleName(), secondaryErrorType, throwable.getMessage(),
-                throwable);
-    }
-
-    public void outPutErrorWarn(Class errorType, Enum secondaryErrorType, Throwable throwable) {
-        log.warn("[{}] {}: {}", errorType.getSimpleName(), secondaryErrorType, throwable.getMessage());
-    }
 
 }

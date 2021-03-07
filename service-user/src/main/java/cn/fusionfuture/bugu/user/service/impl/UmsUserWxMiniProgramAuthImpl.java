@@ -2,6 +2,7 @@ package cn.fusionfuture.bugu.user.service.impl;
 
 import cn.fusionfuture.bugu.pojo.constants.MiniProgramConstants;
 import cn.fusionfuture.bugu.pojo.entity.*;
+import cn.fusionfuture.bugu.user.exception.WechatBindException;
 import cn.fusionfuture.bugu.user.mapper.*;
 import cn.fusionfuture.bugu.user.service.IUmsUserWxMiniProgramAuthService;
 import cn.fusionfuture.bugu.user.vo.UserOauthVO;
@@ -9,10 +10,8 @@ import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.gson.JsonObject;
-import io.micrometer.core.instrument.util.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +28,7 @@ import java.util.List;
  * @since 2020-08-17
  */
 @Service
+@Slf4j
 public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatMapper, UmsUserAuthWechat> implements IUmsUserWxMiniProgramAuthService {
     @Autowired
     UmsUserAuthWechatMapper umsUserAuthWechatMapper;
@@ -46,7 +46,7 @@ public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatM
     UmsPkPlanAchievementMapper umsPkPlanAchievementMapper;
 
     @Override
-    public WechatBindDetailsVO getWechatBind(String code, String userName, String avatarUrl, Integer gender) {
+    public WechatBindDetailsVO getWechatBind(String code, String userName, String avatarUrl, Integer gender) throws WechatBindException {
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("appid", MiniProgramConstants.APP_ID);
         paramMap.put("secret", MiniProgramConstants.APP_SECRETE);
@@ -54,7 +54,11 @@ public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatM
         paramMap.put("grant_type", "authorization_code");
         // 调用微信后台接口获取openid和session_key
         String result = HttpUtil.get("https://api.weixin.qq.com/sns/jscode2session", paramMap);
-        System.out.println(result);
+        log.info(result);
+        String errCode = JSONUtil.parseObj(result).get("errcode").toString();
+        if (errCode!=null && !"0".equals(errCode)) {
+            throw new WechatBindException("绑定微信出现错误");
+        }
         JSONObject hashMap = JSONUtil.parseObj(result);
         String openid = hashMap.get("openid").toString();
         String sessionKey = hashMap.get("session_key").toString();
