@@ -1,6 +1,5 @@
 package cn.fusionfuture.bugu.user.vo;
 
-import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

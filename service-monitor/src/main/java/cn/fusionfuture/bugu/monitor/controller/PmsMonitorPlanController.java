@@ -64,6 +64,7 @@ public class PmsMonitorPlanController {
                 .setRt(0)
                 .setSt(MonitorPlanStatus.REGISTERING.getValue())
                 .setAt(at)
+                .setAts(null)   // 参加该计划的用户头像的url
                 .setAw(newMonitorPlanVO.getTotalBonus());
         searchFeignService.createPopularPlan(popularPlanDTO);
         return id;

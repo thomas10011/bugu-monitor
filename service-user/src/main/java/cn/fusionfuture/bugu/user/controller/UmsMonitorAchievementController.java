@@ -2,15 +2,12 @@ package cn.fusionfuture.bugu.user.controller;
 
 
 import cn.fusionfuture.bugu.pojo.entity.UmsMonitorAchievement;
-import cn.fusionfuture.bugu.pojo.entity.UmsUserFollow;
 import cn.fusionfuture.bugu.user.service.IUmsMonitorAchievementService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * <p>

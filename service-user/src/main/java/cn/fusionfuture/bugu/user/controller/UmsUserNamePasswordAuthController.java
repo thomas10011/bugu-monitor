@@ -1,6 +1,5 @@
 package cn.fusionfuture.bugu.user.controller;
 
-import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.user.service.IUmsUserNamePasswordAuthService;
 import cn.fusionfuture.bugu.user.vo.UserOauthVO;
 import org.springframework.beans.factory.annotation.Autowired;

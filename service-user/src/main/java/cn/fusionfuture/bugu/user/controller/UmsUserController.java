@@ -1,21 +1,19 @@
 package cn.fusionfuture.bugu.user.controller;
 
 
-import cn.fusionfuture.bugu.dispose.annotation.EnableIgnoreResponse;
 import cn.fusionfuture.bugu.pojo.api.CommonResult;
 import cn.fusionfuture.bugu.pojo.api.ResultCode;
-import com.github.pagehelper.PageInfo;
+import cn.fusionfuture.bugu.user.service.IUmsUserService;
+import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.*;
-import cn.fusionfuture.bugu.user.service.IUmsUserService;
-import cn.fusionfuture.bugu.user.vo.UserDetailsVO;
-import cn.fusionfuture.bugu.user.vo.WechatBindDetailsVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;

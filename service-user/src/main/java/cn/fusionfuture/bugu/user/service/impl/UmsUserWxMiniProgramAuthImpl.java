@@ -1,8 +1,8 @@
 package cn.fusionfuture.bugu.user.service.impl;
 
-import cn.fusionfuture.bugu.user.exception.WechatBindException;
 import cn.fusionfuture.bugu.pojo.constants.MiniProgramConstants;
 import cn.fusionfuture.bugu.pojo.entity.*;
+import cn.fusionfuture.bugu.user.exception.WechatBindException;
 import cn.fusionfuture.bugu.user.mapper.*;
 import cn.fusionfuture.bugu.user.service.IUmsUserWxMiniProgramAuthService;
 import cn.fusionfuture.bugu.user.vo.UserOauthVO;
@@ -56,7 +56,7 @@ public class UmsUserWxMiniProgramAuthImpl extends ServiceImpl<UmsUserAuthWechatM
         String result = HttpUtil.get("https://api.weixin.qq.com/sns/jscode2session", paramMap);
         log.info(result);
         String errCode = JSONUtil.parseObj(result).get("errcode").toString();
-        if (!errCode.equals("0")) {
+        if (errCode!=null && !"0".equals(errCode)) {
             throw new WechatBindException("绑定微信出现错误");
         }
         JSONObject hashMap = JSONUtil.parseObj(result);
