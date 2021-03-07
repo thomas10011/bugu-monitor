@@ -26,7 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -119,6 +121,14 @@ public class PmsMonitorPlanServiceImpl extends ServiceImpl<PmsMonitorPlanMapper,
             }
         }
         return "访问异常";
+    }
+
+    @Override
+    public Map<Integer,Integer> getPunchSchedule(Long planId) {
+        PmsMonitorPlan monitorPlan=monitorPlanMapper.selectById(planId);
+        Map<Integer,Integer> maps=new HashMap<>();
+        maps.put(monitorPlan.getPunchCount(),monitorPlan.getPunchQuantity());
+        return maps;
     }
 
     @Override

@@ -112,6 +112,12 @@ public class PmsMonitorPlanController {
         return OssUtil.getPolicy("plan/");
     }
 
+    @GetMapping("/plan/schedule/{pid}")
+    @ApiOperation(value = "查询一个计划的打卡进度条")
+    public Map<Integer,Integer> getPunchSchedule(@Validated
+            @ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
+        return monitorPlanService.getPunchSchedule(pid);
+    }
 
     @GetMapping("/plan/starttime")
     @ApiOperation(value = "查询一个计划的开始时间")
@@ -124,5 +130,6 @@ public class PmsMonitorPlanController {
     public LocalDateTime getEndTime(@ApiParam(value = "计划id") @PathVariable(value = "pid") Long pid) {
         return monitorPlanService.getById(pid).getEndTime();
     }
+
 
 }

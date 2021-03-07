@@ -37,6 +37,9 @@ public class DetailedMonitorPlanVO {
     @ApiModelProperty(value = "计划类型描述",example = "多人监督")
     private String planPattern;
 
+    @ApiModelProperty(value = "参与监督人数",example = "2")
+    private String monitorQuantity;
+
     @ApiModelProperty(value = "已打卡次数",example = "1")
     private Integer punchCount;
 

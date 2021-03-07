@@ -30,6 +30,7 @@
             pms_monitor_plan.image_url,
             pms_monitor_plan.name,
             pms_monitor_plan.description,
+            pms_monitor_plan.monitor_quantity,
             pms_monitor_plan.punch_count,
             pms_monitor_plan.punch_cycle,
             pms_monitor_plan.punch_quantity,

@@ -77,6 +77,8 @@ public class PmsUserAttendPlanServiceImpl extends ServiceImpl<PmsUserAttendPlanM
                 }
                 //用户未报名
                 else {
+                    //pk计划报名监督人数加1
+                    pkPlan.setMonitorCount(pkPlan.getMonitorCount()+1);
                     //插入一条用户参与计划的记录
                     PmsUserAttendPlan userAttendPlanRecord=new PmsUserAttendPlan();
                     userAttendPlanRecord.setUserId(userId).setPkPlanId(planId).setPunchCount(0).setPunchVictoryCount(0).setPunchQuantity(pkPlan.getPunchQuantity());

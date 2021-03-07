@@ -39,6 +39,7 @@
             pms_pk_plan.enrolled_quantity,
             pms_pk_plan.punch_cycle,
             pms_pk_plan.punch_quantity,
+            pms_pk_plan.monitor_count,
             pms_pk_plan.total_bonus,
             pms_pk_plan.pk_bonus,
             pms_pk_plan.start_time,

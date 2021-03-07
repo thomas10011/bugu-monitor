@@ -9,6 +9,8 @@ import cn.fusionfuture.bugu.pojo.entity.PmsMonitorPlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 
+import java.util.Map;
+
 /**
  * <p>
  *  服务类
@@ -65,6 +67,15 @@ public interface IPmsMonitorPlanService extends IService<PmsMonitorPlan> {
      * @return void
      **/
     String checkIsPunched(Long planId);
+
+    /*
+     * 根据计划di查询计划打卡进度条
+     * @author zws
+     * @since 2021/3/7 20:46
+     * @param [planId]
+     * @return java.util.Map
+     **/
+    Map<Integer,Integer> getPunchSchedule(Long planId);
 
     /*
      * @author zws

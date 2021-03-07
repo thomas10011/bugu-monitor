@@ -40,6 +40,9 @@ public class DetailedPkPlanVO {
     @ApiModelProperty(value = "pk人数",example = "10")
     private Integer pkQuantity;
 
+    @ApiModelProperty(value = "报名监督人数",example = "1")
+    private Integer monitorCount;
+
     @ApiModelProperty(value = "已报名人数",example = "3")
     private Integer enrolledQuantity ;
 

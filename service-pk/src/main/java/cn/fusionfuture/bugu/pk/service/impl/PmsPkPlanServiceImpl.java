@@ -67,7 +67,7 @@ public class PmsPkPlanServiceImpl extends ServiceImpl<PmsPkPlanMapper, PmsPkPlan
         PmsUserCreatePlan pmsUserCreatePlan=new PmsUserCreatePlan();
         BeanUtils.copyProperties(newPkPlanVO, pkPlan);
         // 设置计划的已报名人数,设置计划的状态为报名中（报名中，进行中，已完成）
-        pkPlan.setEnrolledQuantity(1).setPlanStatusId(PkPlanStatus.REGISTERING.getIndex())
+        pkPlan.setEnrolledQuantity(1).setMonitorCount(0).setPlanStatusId(PkPlanStatus.REGISTERING.getIndex())
                 .setTotalBonus(newPkPlanVO.getTotalBonus()).setLikeCount(0);
         pkPlanMapper.insert(pkPlan);
 
